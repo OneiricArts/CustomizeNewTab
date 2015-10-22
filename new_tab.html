@@ -1,42 +1,107 @@
 <!doctype html>
 <html>
   
-  <head>
-    <script src="libs/jquery-2.1.4.min.js"></script>
-    <!-- bootstrap 3.3.5 -->
-    <script src="libs/bootstrap-3.3.5-dist/js/bootstrap.min.js"></script>
-    <script src="/js/myScript.js"></script>
+	<head>
+		<script src="libs/jquery-2.1.4.min.js"></script>
+		<script src="libs/jquery.xml2json.js"></script>
+
+		<script src="libs/bootstrap-4.0.0-alpha/js/bootstrap.min.js"></script>
+
+		<script src="/js/NFLschedule.js"></script>
+		<script src="/js/myScript.js"></script>
+
+		<link rel="stylesheet" type="text/css" 
+		href="libs/bootstrap-4.0.0-alpha/css/bootstrap.min.css">
+
+		<style type="text/css">
+			#nfl_games{
+    			width: 100%;
+	    		overflow: hidden; /* contain floated elements */
+			}
+
+			.game_days{
+			    float: left;
+			}
+
+			.logo-img {
+				width: 28px;
+				height: 21px;
+			}
+
+			.game_time {
+				padding-left: 5px;
+			}
+
+		</style>
+	</head>
+
+	<body>
+	
+	
+
+	<div id="NFLschedule">
+		<div id="week_number"> ## </div>
+		<div id="nfl_games">
 
 
-    <link rel="stylesheet" type="text/css" href="libs/bootstrap/css/bootstrap.css">
-    <link rel="stylesheet" type="text/css" href="libs/bootstrap/css/bootstrap.min.css">
-    <link rel="stylesheet" type="text/css" href="libs/bootstrap/css/bootstrap-responsive.css">
-    <link rel="stylesheet" type="text/css" href="libs/bootstrap/css/bootstrap-responsive.min.css">
-  </head>
-  
-  <body>
-    
-    
-
-    
-    
-    <div class="list-group">
-      <a href="#" class="list-group-item active">
-        Bookmarks
-      </a>
-      <a href="http://www.reddit.com/r/Android" class="list-group-item">r/Android</a>
-      <a href="http://www.reddit.com/r/Apple" class="list-group-item">r/Apple</a>
-      <a href="http://www.reddit.com/r/nfl" class="list-group-item">r/nfl</a>
-      <a href="http://www.reddit.com/r/nba" class="list-group-item">r/nba</a>
-      
-      <a href="http://www.theverge.com/" class="list-group-item">The Verge</a>
 
 
-    </div>
+</div>
 
-    
+<div class="container-fluid">
+
+		<div class="row">
+
+			<div id="game_day_template" class="col-sm-4" style="display: none;">
+
+				<div  class="card" >
+					<div class="card-block">
+						<h4 class="card-title">Title Goes Here</h4>
+					</div>
+
+					<ul class="list-group list-group-flush">
+						
+						<li class="list-group-item"
+						id="game_item_template" 
+						style="display: none;">
+
+							<span id="home-team">Home Team </span>
+							vs.
+							<span id="away-team"> Away Team</span>
+							@ 
+							<span id="game-time"> TIME </span>
+								
+						</li>
+					</ul>
+				</div>
+			</div>
+
+		</div>
+
+	</div>
+	</div>
+
+
+
+
+	
+	<div class="list-group">
+	  <a href="#" class="list-group-item active">
+		Bookmarks
+	  </a>
+	  <a href="http://www.reddit.com/r/Android" class="list-group-item">r/Android</a>
+	  <a href="http://www.reddit.com/r/Apple" class="list-group-item">r/Apple</a>
+	  <a href="http://www.reddit.com/r/nfl" class="list-group-item">r/nfl</a>
+	  <a href="http://www.reddit.com/r/nba" class="list-group-item">r/nba</a>
+	  
+	  <a href="http://www.theverge.com/" class="list-group-item">The Verge</a>
+
+
+	</div>
+
+	
   </body>
-    
+	
 </html>
 
 

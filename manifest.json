@@ -1,8 +1,11 @@
 {
-  "manifest_version": 2,
-  "name": "CustomizeNewTab",
-  "version": "0.1",
-  "chrome_url_overrides": {
-    "newtab": "new_tab.html"
-  }
+	"manifest_version": 2,
+	"name": "CustomizeNewTab",
+	"version": "0.1",
+	"chrome_url_overrides": {
+		"newtab": "new_tab.html"
+	},
+	"permissions": [
+		"http://www.nfl.com/"
+	]
 }
