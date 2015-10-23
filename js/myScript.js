@@ -1,5 +1,2 @@
-console.log('test');
-
-$('.content');
-
-NFLschedule.getInfo();
+if(debug){console.log('myScript running ...');}
+NFLschedule.handler();

@@ -6,6 +6,7 @@
 		"newtab": "new_tab.html"
 	},
 	"permissions": [
+		"storage",
 		"http://www.nfl.com/"
 	]
 }
