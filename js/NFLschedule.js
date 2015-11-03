@@ -7,7 +7,7 @@ var NFLschedule = (function(){
 		$('#week_number').text("Week " + jsonObj.gms.w);
 		
 		// determines order
-		var days = ["Mon", "Thu", "Sun"];
+		var days = ["Thu", "Sun", "Mon"];
 		
 		var games_by_days = {
 			"Sun": [],
@@ -54,14 +54,20 @@ var NFLschedule = (function(){
 
 				var $home_team = $game_item.find('#home-team');
 				var $away_team = $game_item.find('#away-team');
+
+				var $home_score = $game_item.find('#home-score');
+				var $away_score = $game_item.find('#away-score');
 				var $game_time = $game_item.find('#game-time');
 
 				var game = games_by_days[days[i]][j];
 
 				$home_team.html(game.hnn);
 				$away_team.html(game.vnn);
+
+				$home_score.html(game.hs);
+				$away_score.html(game.vs);
+
 				var arrtime = game.t.split(':');
-				
 				var hrs = arrtime[0];
 				var mins = arrtime[1];
 
@@ -119,8 +125,10 @@ var NFLschedule = (function(){
 			if(debug){console.log('handler...');}
 
 			if(result.gamesJson) {
-				displayAllDays(result.gamesJson);
-				getDataFromAPI(result.gamesJson);
+				//displayAllDays(result.gamesJson);
+				//getDataFromAPI(result.gamesJson);
+				getDataFromAPI(null);
+
 			}
 			else {
 				getDataFromAPI(null);

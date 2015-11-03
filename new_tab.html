@@ -38,67 +38,70 @@
 	<body>
 	
 	
+		<div class="container-fluid">
+	
 
-	<div id="NFLschedule">
-		<div id="week_number"> ## </div>
-		<div id="nfl_games">
-
-
+				<div id="week_number"> ## </div>
 
 
-</div>
+				<div class="card-columns">
+					<div id="nfl_games" >
 
-<div class="container-fluid">
+							<div id="game_day_template" class="card" 
+							style="display: none">
+								
+								<div class="card-block">
+									<h4 class="card-title">Title Goes Here</h4>
+								</div>
 
-		<div class="row">
+								<ul class="list-group list-group-flush">
+									
+									<li class="list-group-item"
+									id="game_item_template" 
+									style="display: none;">
 
-			<div id="game_day_template" class="col-sm-4" style="display: none;">
+										<span id="home-team">Home Team </span>
 
-				<div  class="card" >
-					<div class="card-block">
-						<h4 class="card-title">Title Goes Here</h4>
+										<span id="home-score">0</span>
+										|
+										<span id="away-score">0</span>
+
+										<span id="away-team"> Away Team</span>
+										
+										@ 
+										<span id="game-time"> TIME </span>
+
+										<span class="glyphicon glyphicon-remove"></span></p>
+											
+									</li>
+								</ul>
+							</div>
+
 					</div>
 
-					<ul class="list-group list-group-flush">
-						
-						<li class="list-group-item"
-						id="game_item_template" 
-						style="display: none;">
-
-							<span id="home-team">Home Team </span>
-							vs.
-							<span id="away-team"> Away Team</span>
-							@ 
-							<span id="game-time"> TIME </span>
+						<div class="card">
 								
-						</li>
-					</ul>
-				</div>
-			</div>
+							<div class="card-block">
+								<h4 class="card-title">Bookmarks</h4>
+							</div>
+
+
+							<div class="list-group">
+
+								<a href="http://www.reddit.com/r/Android" class="list-group-item">r/Android</a>
+								<a href="http://www.reddit.com/r/Apple" class="list-group-item">r/Apple</a>
+								<a href="http://www.reddit.com/r/nfl" class="list-group-item">r/nfl</a>
+								<a href="http://www.reddit.com/r/nba" class="list-group-item">r/nba</a>
+
+								<a href="http://www.theverge.com/" class="list-group-item">The Verge</a>
+
+							</div>
+
+						</div>
+
+					</div>
 
 		</div>
-
-	</div>
-	</div>
-
-
-
-
-	
-	<div class="list-group">
-	  <a href="#" class="list-group-item active">
-		Bookmarks
-	  </a>
-	  <a href="http://www.reddit.com/r/Android" class="list-group-item">r/Android</a>
-	  <a href="http://www.reddit.com/r/Apple" class="list-group-item">r/Apple</a>
-	  <a href="http://www.reddit.com/r/nfl" class="list-group-item">r/nfl</a>
-	  <a href="http://www.reddit.com/r/nba" class="list-group-item">r/nba</a>
-	  
-	  <a href="http://www.theverge.com/" class="list-group-item">The Verge</a>
-
-
-	</div>
-
 	
   </body>
 	
