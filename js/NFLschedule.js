@@ -7,31 +7,29 @@ var NFLschedule = (function(){
 		$('#week_number').text("Week " + jsonObj.gms.w);
 		
 		// determines order
-		var days = ["Thu", "Sun", "Mon"];
+		var days = [];//= ["Thu", "Sun", "Mon"];
 		
 		var games_by_days = {
+/*			
+			Don't need this ... get the games in order
 			"Sun": [],
 			"Mon": [],
-			"Thu": [],
+			"Thu": [],*/
 		};
 
 		for (var i = 0; i < jsonObj.gms.g.length; i++) {
 			game = jsonObj.gms.g[i];
 			
-			try {
-				games_by_days[game.d].push(game);	
-			} catch (e) {
+			key = game.d + " @ " + game.t;
+			console.log(key)
 
-				/* if its a type error, means can't push.
-					probably means that a day (key) was encountered
-					that i hadn't though I would see. so just add it
-				
-					replace with if has key / else ?
-				*/
-				if (e instanceof TypeError) {
-					games_by_days[game.d] = [game];	
-				} 
+			if(games_by_days[key]) {
+				games_by_days[key].push(game);
+			} else {
+				games_by_days[key] = [game];
+				days.push(key);
 			}
+
 		};
 
 		// go through all days
