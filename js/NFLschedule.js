@@ -74,7 +74,7 @@ var NFLschedule = (function(){
 				date.setMinutes(parseInt(mins));
 				console.log(date.toString() + ' || ' + hrs+":"+mins + ' --> ' + date.toLocaleTimeString() );*/
 
-				$game_time.html(hrs + ":" + mins + " (EST)");
+				$game_time.html(hrs + ":" + mins /* + " (EST)"*/);
 				$game_list.append($game_item);
 				$game_item.removeAttr('style');
 			}
