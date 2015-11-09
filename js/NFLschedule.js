@@ -2,26 +2,25 @@ var debug = false;
 
 var NFLschedule = (function(){
 
-	function displayAllDays(jsonObj) {
+	var days = [];	 //api gets games in order inside week	
+	var games_by_days = {};
+	var week_number;
+	
 
-		$('#week_number').text("Week " + jsonObj.gms.w);
-		
-		// determines order
-		var days = [];//= ["Thu", "Sun", "Mon"];
-		
-		var games_by_days = {
-/*			
-			Don't need this ... get the games in order
-			"Sun": [],
-			"Mon": [],
-			"Thu": [],*/
-		};
+	var url = 'http://www.nfl.com/liveupdate/scorestrip/ss.xml'
+	var xhr = new XMLHttpRequest();
+
+	function formatData(jsonObj) {
+
+		week_number = jsonObj.gms.w;
+
+		$('#week_number').text("Week " + week_number);
 
 		for (var i = 0; i < jsonObj.gms.g.length; i++) {
 			game = jsonObj.gms.g[i];
 			
 			key = game.d + " @ " + game.t;
-			console.log(key)
+			//console.log(key)
 
 			if(games_by_days[key]) {
 				games_by_days[key].push(game);
@@ -29,8 +28,27 @@ var NFLschedule = (function(){
 				games_by_days[key] = [game];
 				days.push(key);
 			}
+		}	
+	}
 
+	function saveLocalData() {
+
+		var local_data = {
+			'w': week_number,
+			'gms': games_by_days,
+			'days': days
 		};
+
+		console.log(days);
+
+		chrome.storage.local.set({'gamesJson': local_data}, 
+			function() {
+				if(debug){console.log('Settings saved');}
+		});
+	}
+
+	function displayAllDays(jsonObj) {
+
 
 		// go through all days
 		for (var i = 0; i < days.length; i++) {
@@ -55,6 +73,7 @@ var NFLschedule = (function(){
 
 				var $home_score = $game_item.find('#home-score');
 				var $away_score = $game_item.find('#away-score');
+				
 				var $game_time = $game_item.find('#game-time');
 
 				var game = games_by_days[days[i]][j];
@@ -77,6 +96,15 @@ var NFLschedule = (function(){
 				$game_time.html(hrs + ":" + mins /* + " (EST)"*/);
 				$game_list.append($game_item);
 				$game_item.removeAttr('style');
+				
+
+				var $remove = $game_item.find('#remove');
+				$remove.click({eid: game.eid, game:$game_item, 
+					daytimekey: game.d + " @ " + game.t},removeGame);
+
+				//console.log(game);
+
+				$game_item.attr('id', game.eid);
 			}
 
 			$('#nfl_games').append($game_div);
@@ -84,13 +112,13 @@ var NFLschedule = (function(){
 		}
 	}
 
-	function getDataFromAPI(storedjsonObj) {
+	/* 
+		gets the game data for the week if no local data is present, or if 
+		week has been updated 
+	*/
+	function getNewWeekData(localJsonObj) {
 
-		var url = 'http://www.nfl.com/liveupdate/scorestrip/ss.xml'
-
-		var xhr = new XMLHttpRequest();
-		xhr.open("GET", url, true);
-		
+		xhr.open("GET", url, true);		
 		xhr.onreadystatechange = function() {
 			if(debug){console.log('got xml');}
 
@@ -99,20 +127,81 @@ var NFLschedule = (function(){
 			if(response) {
 				var jsonObj = $.xml2json(response);
 
-				if( storedjsonObj && (jsonObj.gms.w == storedjsonObj.gms.w) ) {
-					// do nothing, already up to date
+				console.log('doing shit')
+				console.log(localJsonObj)
+				console.log( "==>" + localJsonObj['w']);
+
+				console.log(localJsonObj['w'] == jsonObj.gms.w);
+
+				// same week, display old data
+				if(  localJsonObj && (localJsonObj['w'] == jsonObj.gms.w) ) {
+
+					games_by_days = localJsonObj['gms'];
+					days = localJsonObj['days'];
+					week_number = localJsonObj['w'];
+
+					console.log(games_by_days);
+					console.log(days);
+					console.log(week_number);
+
 				}
 
 				else {
-					chrome.storage.local.set({'gamesJson': jsonObj}, 
-					function() {
-						if(debug){console.log('Settings saved');}
-					});
-					displayAllDays(jsonObj);	
+					formatData(jsonObj);
+					saveLocalData();
+				}	
+
+				displayAllDays();
+				
+			}
+		}
+		xhr.send();
+	}
+
+	function updateGames() {
+
+		xhr.open("GET", url, true);
+		xhr.onreadystatechange = function() {
+
+			for (var i = 0; i < result.gms.g.length; i++) {
+				game = jsonObj.gms.g[i];
+				
+				key = game.eid;
+
+
+				if (game.q == 'iP') { //TODO
+					var $home_score = $games[key].find('#home-score');
+					var $away_score = $games[key].find('#away-score');
+
+					$home_score.html(game.hs);
+					$away_score.html(game.vs);
 				}
 			}
 		}
 		xhr.send();
+	}
+
+	function removeGame(event) {
+		console.log('removeGame');
+		//console.log(event.data.eid);
+		//console.log(event.data.game);
+		//console.log(event.data.daytimekey);
+
+		daytimekey = event.data.daytimekey;
+
+		if(daytimekey in games_by_days) {
+			for (var i = 0; i < games_by_days[daytimekey].length; i++) {
+				console.log(games_by_days[daytimekey][i].eid)
+				if(games_by_days[daytimekey][i].eid == event.data.eid) {
+					games_by_days[daytimekey].splice(i, 1);
+					break;
+				}
+			}
+		} 
+
+		event.data.game.remove();
+
+		saveLocalData();
 	}
 
 
@@ -123,15 +212,14 @@ var NFLschedule = (function(){
 			if(debug){console.log('handler...');}
 
 			if(result.gamesJson) {
-				//displayAllDays(result.gamesJson);
-				//getDataFromAPI(result.gamesJson);
-				getDataFromAPI(null);
-
+				getNewWeekData(result.gamesJson);
 			}
 			else {
-				getDataFromAPI(null);
+				getNewWeekData(null);
 			}
 		});
+
+
 	}
 
 	/* API for other js code */
