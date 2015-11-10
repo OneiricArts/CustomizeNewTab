@@ -4,8 +4,9 @@
 Bootstrap 4 got rid of panels ... I went back to panels. Change that to cards sometime before Bootstrap 4 is stable. But Bootstrap 4 didn't like my glyphs, and after a lot of frustration I decided to ditch it for now.
 
 ## //TODO
-1. Have View options (upcoming & current games only, favorites, etc.)
-
+1. Have View options (upcoming & current games only, favorites, etc.) (theres a filter glyph too) ... lower priority since you can just delete shit.
+2. Use (one of) eye-open / fire / bullhorn / bell to signal live game. use one of them plus text in a button for red zone? 
+3. Update Needs to add multiple events to live games.
 ... these will totally get done. 
 
 ## Bugs
