@@ -1,4 +1,4 @@
-var debug = false;
+var debug = true;
 
 var NFLschedule = (function(){
 	
@@ -11,13 +11,19 @@ var NFLschedule = (function(){
 	//week_number = jsonObj.gms.w;
 
 	function saveLocalData() {
+
+
 		chrome.storage.local.set({'gamesJson': localJsonObj}, 
 			function() {
 				if(debug){console.log('Settings saved');}
 		});
+
+		
 	}
+
 	function resetGames() {
 		getNewWeekData(false);	
+		//saveLocalData();
 	}
 
 	function displayAllDays() {
@@ -54,18 +60,13 @@ var NFLschedule = (function(){
 			var hrs = arrtime[0];
 			var mins = arrtime[1];
 
-			/*var date = new Date();
-			date.setHours(parseInt(hrs)+4);
-			date.setMinutes(parseInt(mins));
-			console.log(date.toString() + ' || ' + hrs+":"+mins + ' --> ' + date.toLocaleTimeString() );*/
-
-			$game_time.html(hrs + ":" + mins /* + " (EST)"*/);
+			// in EST
+			$game_time.html(game.d + ' ' + hrs + ":" + mins);
 			
 			$game_table.append($game_item);
 			$game_item.removeAttr('style');
 
 			$games[game.eid] = $game_item;
-			console.log($games);
 			
 			var $remove = $game_item.find('#remove');
 			$remove.click({eid: game.eid, game:$game_item},removeGame);
@@ -94,6 +95,10 @@ var NFLschedule = (function(){
 				else { // new week, update
 					localJsonObj = null;
 					localJsonObj = jsonObj;
+
+					console.log('got all new data');
+					console.log(localJsonObj);
+					saveLocalData();
 				}	
 
 				displayAllDays();
@@ -108,10 +113,22 @@ var NFLschedule = (function(){
 		h="SD" hnn="chargers" hs="0" v="CHI" vnn="bears" vs="0" p="SD" rz="1" 
 		ga="" gt="REG"/>
 
-
 		<g eid="2015110900" gsis="56634" d="Mon" t="8:30" q="1" k="06:50" 
 		h="SD" hnn="chargers" hs="7" v="CHI" vnn="bears" vs="0" p="CHI" rz="0" 
 		ga="" gt="REG"/>
+
+
+		<g eid="2015110809" gsis="56632" d="Sun" t="4:25" q="F" h="IND" 
+		hnn="colts" hs="27" v="DEN" vnn="broncos" vs="24" rz="0" 
+		ga="" gt="REG"/>
+
+		<g eid="2015110810" gsis="56633" d="Sun" t="8:30" q="FO" h="DAL" 
+		hnn="cowboys" hs="27" v="PHI" vnn="eagles" vs="33" rz="0" ga="" 
+		gt="REG"/>
+		
+		<g eid="2015110900" gsis="56634" d="Mon" t="8:30" q="H" h="SD" 
+		hnn="chargers" hs="16" v="CHI" vnn="bears" vs="7" rz="0" ga="" 
+		gt="REG"/>
 	*/
 	function updateGames() { 
 
@@ -168,9 +185,9 @@ var NFLschedule = (function(){
 
 			if(result.gamesJson) {
 				localJsonObj = null;
+				console.log(result.gamesJson.gms.g.length);
 				localJsonObj = result.gamesJson;
 				getNewWeekData(true);
-
 			}
 			else {
 				getNewWeekData(false);
