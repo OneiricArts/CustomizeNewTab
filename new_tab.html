@@ -12,6 +12,7 @@
 
 		<script src="/js/NFLschedule.js"></script>
 		<script src="/js/NBAschedule.js"></script>
+		<script src="/js/Bookmarks.js"></script>
 		<script src="/js/myScript.js"></script>
 
 		<!-- <link href="https://fonts.googleapis.com/icon?family=Material+Icons"
@@ -47,13 +48,13 @@
 								<span>/</span>
 
 								<button id="refresh_scores"
-								class="btn btn-xs btn-default">
+								class="btn btn-xs btn-default pull-right">
 		    						<span class="glyphicon glyphicon-refresh"></span> 
 		    						Scores
 		 						</button>
 
 		 						<button id="reset_games"
-		 						class="btn btn-xs btn-default">
+		 						class="btn btn-xs btn-default pull-right">
 		    						<span class="glyphicon glyphicon-cloud-download"></span> 
 		    						Games
 		 						</button>
@@ -135,16 +136,67 @@
 
 		            <div class="col-sm-2">
 		                <div class="panel panel-default">
-		                    <div class="panel-heading">Bookmarks</div>
+		                    <div class="panel-heading">
+		                    	Bookmarks
+								<button type="button" class="btn btn-default btn-xs pull-right" 
+								data-toggle="modal" data-target="#myModal">
+								<span class="glyphicon glyphicon-plus"></span>
+								</button>
+		                    </div>
 		                	<div class="panel-body">
+
 								
-								<div class="list-group">
+								<div id="bookmark-list" class="list-group">
 									<a href="http://www.reddit.com/r/Android" class="list-group-item">r/Android</a>
 									<a href="http://www.reddit.com/r/Apple" class="list-group-item">r/Apple</a>
 									<a href="http://www.reddit.com/r/nfl" class="list-group-item">r/nfl</a>
 									<a href="http://www.reddit.com/r/nba" class="list-group-item">r/nba</a>
 									<a href="http://www.theverge.com/" class="list-group-item">The Verge</a>
 								</div>
+
+
+
+
+<!-- Modal -->
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" 
+aria-labelledby="myModalLabel">
+
+<div class="modal-dialog modal-sm" role="document">
+<div class="modal-content">
+
+	<div class="modal-header">
+
+		<button type="button" class="close" data-dismiss="modal" 
+		aria-label="Close">
+		<span aria-hidden="true">&times;</span>
+		</button>
+
+		<h4 class="modal-title" id="myModalLabel">Add Bookmark</h4>
+
+	</div>
+	<div class="modal-body">
+
+		<form class="form-horizontal">
+			<div class="form-group-sm">
+				<input type="text" class="form-control" 
+				id="bookmark_name" placeholder="Name">
+			</div>
+			<div class="form-group-sm">
+				<input type="text" class="form-control" 
+				id="bookmark_url" placeholder="URL">
+			</div>
+		</form>
+
+	</div>
+<div class="modal-footer">
+<button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+<button type="button" id="addBookmark" class="btn btn-primary" data-dismiss="modal">Add Bookmark</button>
+
+</div>
+</div>
+</div>
+</div>
+
 
 		                	</div>
 
