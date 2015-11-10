@@ -7,13 +7,40 @@ Bootstrap 4 got rid of panels ... I went back to panels. Change that to cards so
 1. Have View options (upcoming & current games only, favorites, etc.) (theres a filter glyph too) ... lower priority since you can just delete shit.
 2. Use (one of) eye-open / fire / bullhorn / bell to signal live game. use one of them plus text in a button for red zone? 
 3. Update Needs to add multiple events to live games.
+4. Remove <all_urls> permission (add nba url)
 ... these will totally get done. 
 
 ## Bugs
 Currently Downloading / Resetting All games just appends to current list. A refresh fixes this problem (for me and dev work it is adequite for now).
 
+## NBA API REsponse Example
+
+```
+<g eid="2015110900" gsis="56634" d="Mon" t="8:30" q="1" k="08:11" 
+h="SD" hnn="chargers" hs="0" v="CHI" vnn="bears" vs="0" p="SD" rz="1" 
+ga="" gt="REG"/>
+
+<g eid="2015110900" gsis="56634" d="Mon" t="8:30" q="1" k="06:50" 
+h="SD" hnn="chargers" hs="7" v="CHI" vnn="bears" vs="0" p="CHI" rz="0" 
+ga="" gt="REG"/>
+
+<g eid="2015110809" gsis="56632" d="Sun" t="4:25" q="F" h="IND" 
+hnn="colts" hs="27" v="DEN" vnn="broncos" vs="24" rz="0" 
+ga="" gt="REG"/>
+
+<g eid="2015110810" gsis="56633" d="Sun" t="8:30" q="FO" h="DAL" 
+hnn="cowboys" hs="27" v="PHI" vnn="eagles" vs="33" rz="0" ga="" 
+gt="REG"/>
+
+<g eid="2015110900" gsis="56634" d="Mon" t="8:30" q="H" h="SD" 
+hnn="chargers" hs="16" v="CHI" vnn="bears" vs="7" rz="0" ga="" 
+gt="REG"/>
+```
+
+
 ##Coding Stuff
 
+```javascript
 try {
 	games_by_days[game.d].push(game);	
 } catch (e) {
@@ -34,3 +61,4 @@ if(games_by_days[game.d]) {
 } else {
 	games_by_days[game.d] = [game];
 }
+```

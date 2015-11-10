@@ -110,29 +110,6 @@ var NFLschedule = (function(){
 		xhr.send();
 	}
 
-	// TODO -- still need $games obj
-	/*
-		<g eid="2015110900" gsis="56634" d="Mon" t="8:30" q="1" k="08:11" 
-		h="SD" hnn="chargers" hs="0" v="CHI" vnn="bears" vs="0" p="SD" rz="1" 
-		ga="" gt="REG"/>
-
-		<g eid="2015110900" gsis="56634" d="Mon" t="8:30" q="1" k="06:50" 
-		h="SD" hnn="chargers" hs="7" v="CHI" vnn="bears" vs="0" p="CHI" rz="0" 
-		ga="" gt="REG"/>
-
-
-		<g eid="2015110809" gsis="56632" d="Sun" t="4:25" q="F" h="IND" 
-		hnn="colts" hs="27" v="DEN" vnn="broncos" vs="24" rz="0" 
-		ga="" gt="REG"/>
-
-		<g eid="2015110810" gsis="56633" d="Sun" t="8:30" q="FO" h="DAL" 
-		hnn="cowboys" hs="27" v="PHI" vnn="eagles" vs="33" rz="0" ga="" 
-		gt="REG"/>
-		
-		<g eid="2015110900" gsis="56634" d="Mon" t="8:30" q="H" h="SD" 
-		hnn="chargers" hs="16" v="CHI" vnn="bears" vs="7" rz="0" ga="" 
-		gt="REG"/>
-	*/
 	function updateGames() { 
 
 		xhr.open("GET", url, true);		
