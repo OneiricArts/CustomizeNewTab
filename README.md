@@ -1,4 +1,8 @@
 
+## Stylistic Changes
+
+Bootstrap 4 got rid of panels ... I went back to panels. Change that to cards sometime before Bootstrap 4 is stable. But Bootstrap 4 didn't like my glyphs, and after a lot of frustration I decided to ditch it for now.
+
 #Coding Stuff
 
 try {
