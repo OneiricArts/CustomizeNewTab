@@ -11,19 +11,25 @@ var NFLschedule = (function(){
 	//week_number = jsonObj.gms.w;
 
 	function saveLocalData() {
-
-
 		chrome.storage.local.set({'gamesJson': localJsonObj}, 
 			function() {
 				if(debug){console.log('Settings saved');}
 		});
-
-		
 	}
 
 	function resetGames() {
+
+		var $game_table_rows = $('#game_table tr');
+
+		// remove rows besides header and hidden template
+		// ^ thats why starts at 2
+		for(var i = 2; i < $game_table_rows.length; i++) {
+			$game_table_rows[i].remove();
+		}
+
 		getNewWeekData(false);	
-		//saveLocalData();
+		//saveLocalData(); <--- concurency doesn't allow it here. 
+		//runs alongside getNewWeekData so needs to be called from there
 	}
 
 	function displayAllDays() {
@@ -95,9 +101,6 @@ var NFLschedule = (function(){
 				else { // new week, update
 					localJsonObj = null;
 					localJsonObj = jsonObj;
-
-					console.log('got all new data');
-					console.log(localJsonObj);
 					saveLocalData();
 				}	
 
