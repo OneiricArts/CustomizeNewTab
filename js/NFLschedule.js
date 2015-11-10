@@ -119,28 +119,46 @@ var NFLschedule = (function(){
 			if(response) {
 				var jsonObj = $.xml2json(response);
 
+				var done = ['F', 'FO'];
+				var playing = ['1', '2', '3', '4'];
+
 				console.log('updating...');
+
 				for (var i = 0; i < jsonObj.gms.g.length; i++) {
 					
 					var game = jsonObj.gms.g[i];
-					var q = game.q;
 
-					if (q == '1' || q == '2' || q == '3' || q == '4' ) { 
-						console.log('changing scores.. ' + game.hs + '-' + game.vs);
-						var $scores = $games[game.eid].find('#score');
-						$scores.html(game.hs + '-' + game.vs);
+					for (var j = 0; j < localJsonObj.gms.g.length; j++) {
 
-						for (var j = 0; j < localJsonObj.gms.g.length; j++) {
-							if(localJsonObj.gms.g[j].eid == game.eid) {
-								localJsonObj.gms.g[j] = game;
-								saveLocalData();
+						var lgame = localJsonObj.gms.g[j];
+
+						if(lgame.eid == game.eid) {
+
+							if( (done.indexOf(lgame.q) < 0) &&
+								(done.indexOf(game.q) >= 0) ) {
+								updateScore(game, j);
 							}
+
+							if( playing.indexOf(game.q) >= 0 ) {
+								updateScore(game, j)
+							}
+							break;
 						}
 					}
 				}
 			}
 		}
 		xhr.send();
+	}
+
+	function updateScore(game, index) {
+		console.log('changing scores.. ' + game.hs + '-' + game.vs);
+		var $scores = $games[game.eid].find('#score');
+		$scores.html(game.hs + '-' + game.vs);
+
+		// update local info
+		localJsonObj.gms.g[index] = game;
+		saveLocalData();
 	}
 
 	function removeGame(event) {
