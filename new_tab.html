@@ -19,91 +19,134 @@
 	</head>
 
 	<body>
+		<nav class="navbar navbar-default">
+			<div class="container-fluid">
+				<div class="navbar-header">			
+					<p class="navbar-text">
+						New Tab Page by OneiricArts
+					</p>
+				</div>
+			</div>
+		</nav>
 
 		<div class="container-fluid">
 
+			<!-- div class="panel panel-default"> -->
+	        
+		        <div class="row">
 
-   <div class="panel panel-default">
-        
-        <div class="row">
+		            <div class="col-xs-6 col-sm-4">
+		                
+		                <div class="panel panel-default">
 
-            <div class="col-lg-5 col-md-5">
-                
-                <div class="panel panel-default">
+		                    <div class="panel-heading">
 
-                    <div class="panel-heading">
+		                    	<span> NFL /</span>
+								<span id="week_number"> ## </span>
+								<span>/</span>
 
-                    	<span> NFL /</span>
-						<span id="week_number"> ## </span>
-						<span>/</span>
+								<button id="refresh_scores"
+								class="btn btn-xs btn-default">
+		    						<span class="glyphicon glyphicon-refresh"></span> 
+		    						Scores
+		 						</button>
 
-						<button id="refresh_scores"
-						class="btn btn-xs btn-default">
-    						<span class="glyphicon glyphicon-refresh"></span> 
-    						Scores
- 						</button>
+		 						<button id="reset_games"
+		 						class="btn btn-xs btn-default">
+		    						<span class="glyphicon glyphicon-cloud-download"></span> 
+		    						Games
+		 						</button>
 
- 						<button id="reset_games"
- 						class="btn btn-xs btn-default">
-    						<span class="glyphicon glyphicon-cloud-download"></span> 
-    						Games
- 						</button>
+		                    </div>
 
-                    </div>
+		                    <div class="panel-body">
 
-                    <div class="panel-body">
+								<div class="table-responsive">
+								    <table id="game_table" class="table table-striped table-condensed">
+										<thead>
+											<tr>
+												<th><span class="glyphicon glyphicon-time"></span></th>
+												<th>Home</th>
+												<th>Away</th>
+												<th>Score</th>
+												<th><span class="glyphicon glyphicon-edit"></span></th>
+											</tr>
+										</thead>
+										<tbody>
+											<tr id="game_item_template"
+											    style="display: none;">
 
-						<div class="table-responsive">
-						    <table id="game_table" class="table table-striped table-condensed">
-								<thead>
-									<tr>
-										<th><span class="glyphicon glyphicon-time"></span></th>
-										<th>Home</th>
-										<th>Away</th>
-										<th>Score</th>
-										<th><span class="glyphicon glyphicon-edit"></span></th>
-									</tr>
-								</thead>
-								<tbody>
-									<tr id="game_item_template"
-									    style="display: none;">
+												<td id="time">Sun 6:00</td>
+												<td id="home_team">Chi</td>
+												<td id="away_team">Pat</td>
+												<td id="score">0-0</td>
+												<!-- <td id="remove">{x}</td> -->
+												<td id="remove"><span class="glyphicon glyphicon-trash"></span></td>
+											</tr>
+										</tbody>
+								    </table>
+								</div>
 
-										<td id="time">Sun 6:00</td>
-										<td id="home_team">Chi</td>
-										<td id="away_team">Pat</td>
-										<td id="score">0-0</td>
-										<!-- <td id="remove">{x}</td> -->
-										<td id="remove"><span class="glyphicon glyphicon-trash"></span></td>
+							</div>  
+		                </div>
+		            </div>
 
-									</tr>
-								</tbody>
-						    </table>
-						</div>
-					</div>  
-                </div>
-            </div>
+		            <div class="col-xs-6 col-sm-4">
+		                <div class="panel panel-default">
+		                    <div class="panel-heading">NBA</div>
+		                	<div class="panel-body">
+								
+								<div class="table-responsive">
+								    <table id="game_table" class="table table-striped table-condensed">
+										<thead>
+											<tr>
+												<th><span class="glyphicon glyphicon-time"></span></th>
+												<th>Home</th>
+												<th>Away</th>
+												<th>Score</th>
+												<th><span class="glyphicon glyphicon-edit"></span></th>
+											</tr>
+										</thead>
+										<tbody>
+											<tr id="game_item_template">
+											    <!-- style="display: none;"> -->
 
-            <div class="col-lg-7 col-md-7 col-sm-7">
-                <div class="panel panel-default">
-                    <div class="panel-heading">Bookmarks</div>
-                	<div class="panel-body">
-						
-						<div class="list-group">
-							<a href="http://www.reddit.com/r/Android" class="list-group-item">r/Android</a>
-							<a href="http://www.reddit.com/r/Apple" class="list-group-item">r/Apple</a>
-							<a href="http://www.reddit.com/r/nfl" class="list-group-item">r/nfl</a>
-							<a href="http://www.reddit.com/r/nba" class="list-group-item">r/nba</a>
-							<a href="http://www.theverge.com/" class="list-group-item">The Verge</a>
-						</div>
+												<td id="time">Sun 6:00</td>
+												<td id="home_team">Chi</td>
+												<td id="away_team">Pat</td>
+												<td id="score">0-0</td>
+												<!-- <td id="remove">{x}</td> -->
+												<td id="remove"><span class="glyphicon glyphicon-trash"></span></td>
+											</tr>
+										</tbody>
+								    </table>
+								</div>
 
-                	</div>
+		                	</div>
 
-                </div>
-            </div>
-        </div>
-    </div>
+		                </div>
+		            </div>
 
+		            <div class="col-xs-6 col-sm-4">
+		                <div class="panel panel-default">
+		                    <div class="panel-heading">Bookmarks</div>
+		                	<div class="panel-body">
+								
+								<div class="list-group">
+									<a href="http://www.reddit.com/r/Android" class="list-group-item">r/Android</a>
+									<a href="http://www.reddit.com/r/Apple" class="list-group-item">r/Apple</a>
+									<a href="http://www.reddit.com/r/nfl" class="list-group-item">r/nfl</a>
+									<a href="http://www.reddit.com/r/nba" class="list-group-item">r/nba</a>
+									<a href="http://www.theverge.com/" class="list-group-item">The Verge</a>
+								</div>
 
+		                	</div>
+
+		                </div>
+		            </div>
+		        </div>
+
+	    	<!-- </div> -->
 
 		</div>
 	
