@@ -3,7 +3,10 @@
 
 Bootstrap 4 got rid of panels ... I went back to panels. Change that to cards sometime before Bootstrap 4 is stable. But Bootstrap 4 didn't like my glyphs, and after a lot of frustration I decided to ditch it for now.
 
-#Coding Stuff
+## Bugs
+Currently Downloading / Resetting All games just appends to current list. A refresh fixes this problem (for me and dev work it is adequite for now).
+
+##Coding Stuff
 
 try {
 	games_by_days[game.d].push(game);	
