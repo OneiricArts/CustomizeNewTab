@@ -44,71 +44,73 @@
 	
 	
 		<div class="container-fluid">
-	
-
-				<div id="week_number"> ## </div>
 
 
-				<div class="card-columns">
-					<div id="nfl_games" >
+   <div class="panel panel-default">
+        
+        <div class="row">
 
-							<div id="game_day_template" class="card" 
-							style="display: none">
-								
-								<div class="card-block">
-									<h4 class="card-title">Title Goes Here</h4>
-								</div>
+            <div class="col-lg-5 col-md-5">
+                
+                <div class="panel panel-default">
 
-								<ul class="list-group list-group-flush">
-									
-									<li class="list-group-item"
-									id="game_item_template" 
-									style="display: none;">
+                    <div class="panel-heading">NFL
+						<span id="week_number"> ## </span>
+						<span id="reset_games">{ResetGames}</span>
+						<span id="refresh_scores">{RefreshScores}</span>
+                    </div>
 
-										<span id="home-team">Home Team </span>
+                    <div class="panel-body">
 
-										<span id="home-score">0</span>
-										<span>-</span>
-										<span id="away-score">0</span>
+						<div class="table-responsive">
+						    <table id="game_table" class="table table-striped">
+								<thead>
+									<tr>
+									<th>Time</th>
+									<th>Home</th>
+									<th>Away</th>
+									<th>Score</th>
+									<th>{x}</th>
+									</tr>
+								</thead>
+								<tbody>
+									<tr id="game_item_template"
+									    style="display: none;">
 
-										<span id="away-team"> Away Team</span>
-										<span>@</span> 
-										<span id="game-time"> TIME </span>
+										<td id="time">Sun 6:00</td>
+										<td id="home_team">Chi</td>
+										<td id="away_team">Pat</td>
+										<td id="score">0-0</td>
+										<td id="remove">{x}</td>
+									</tr>
+								</tbody>
+						    </table>
+						</div>
+					</div>  
+                </div>
+            </div>
 
-										<span id="remove">{x}</span>
-										
-										<!-- <span><i class="material-icons">
-											remove_circle</i></span> -->
-
-										<!--<span class="glyphicon glyphicon-remove"></span></p>-->
-											
-									</li>
-								</ul>
-							</div>
-
-					</div>
-
-						<div class="card">
-								
-							<div class="card-block">
-								<h4 class="card-title">Bookmarks</h4>
-							</div>
-
-
-							<div class="list-group">
-
-								<a href="http://www.reddit.com/r/Android" class="list-group-item">r/Android</a>
-								<a href="http://www.reddit.com/r/Apple" class="list-group-item">r/Apple</a>
-								<a href="http://www.reddit.com/r/nfl" class="list-group-item">r/nfl</a>
-								<a href="http://www.reddit.com/r/nba" class="list-group-item">r/nba</a>
-
-								<a href="http://www.theverge.com/" class="list-group-item">The Verge</a>
-
-							</div>
-
+            <div class="col-lg-7 col-md-7 col-sm-7">
+                <div class="panel panel-default">
+                    <div class="panel-heading">Bookmarks</div>
+                	<div class="panel-body">
+						
+						<div class="list-group">
+							<a href="http://www.reddit.com/r/Android" class="list-group-item">r/Android</a>
+							<a href="http://www.reddit.com/r/Apple" class="list-group-item">r/Apple</a>
+							<a href="http://www.reddit.com/r/nfl" class="list-group-item">r/nfl</a>
+							<a href="http://www.reddit.com/r/nba" class="list-group-item">r/nba</a>
+							<a href="http://www.theverge.com/" class="list-group-item">The Verge</a>
 						</div>
 
-					</div>
+                	</div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+
 
 		</div>
 	
