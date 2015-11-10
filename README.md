@@ -8,6 +8,7 @@ Bootstrap 4 got rid of panels ... I went back to panels. Change that to cards so
 2. Use (one of) eye-open / fire / bullhorn / bell to signal live game. use one of them plus text in a button for red zone? 
 3. Update Needs to add multiple events to live games.
 4. Remove <all_urls> permission (add nba url)
+
 ... these will totally get done. 
 
 ### Bugs
