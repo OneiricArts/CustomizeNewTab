@@ -1,19 +1,19 @@
 
-## Stylistic Changes
+### Notes
 
 Bootstrap 4 got rid of panels ... I went back to panels. Change that to cards sometime before Bootstrap 4 is stable. But Bootstrap 4 didn't like my glyphs, and after a lot of frustration I decided to ditch it for now.
 
-## //TODO
+### //TODO
 1. Have View options (upcoming & current games only, favorites, etc.) (theres a filter glyph too) ... lower priority since you can just delete shit.
 2. Use (one of) eye-open / fire / bullhorn / bell to signal live game. use one of them plus text in a button for red zone? 
 3. Update Needs to add multiple events to live games.
 4. Remove <all_urls> permission (add nba url)
 ... these will totally get done. 
 
-## Bugs
+### Bugs
 Currently Downloading / Resetting All games just appends to current list. A refresh fixes this problem (for me and dev work it is adequite for now).
 
-## NBA API REsponse Example
+### NFL API Response Example
 
 ```
 <g eid="2015110900" gsis="56634" d="Mon" t="8:30" q="1" k="08:11" 
@@ -38,7 +38,7 @@ gt="REG"/>
 ```
 
 
-##Coding Stuff
+### Coding Stuff
 
 ```javascript
 try {
