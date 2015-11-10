@@ -12,7 +12,7 @@ Bootstrap 4 got rid of panels ... I went back to panels. Change that to cards so
 ... these will totally get done. 
 
 ### Bugs
-Currently Downloading / Resetting All games just appends to current list. A refresh fixes this problem (for me and dev work it is adequite for now).
+~~Currently Downloading / Resetting All games just appends to current list. A refresh fixes this problem (for me and dev work it is adequite for now).~~
 
 ### NFL API Response Example
 
