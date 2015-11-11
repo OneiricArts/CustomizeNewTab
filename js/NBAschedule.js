@@ -28,7 +28,7 @@ var NBAschedule = (function(){
 	}
 
 	function clearGames() {
-		var $game_table_rows = $('#NBA_game_table tr');
+		var $game_table_rows = $('#NBA-panel #NBA_game_table tr');
 		// remove rows besides header and hidden template (first 2)
 		for(var i = 2; i < $game_table_rows.length; i++) {
 			$game_table_rows[i].remove();
@@ -37,21 +37,25 @@ var NBAschedule = (function(){
 
 	function displayAllDays() {
 
-		var $game_table = $('#NBA_game_table');
+		var $game_table = $('#NBA-panel #NBA_game_table');
 
 		//console.log(localJsonObj.sports_content.games.game);
 
 		for (var i = 0; i < localJsonObj.sports_content.games.game.length; i++) {
 
+			var game = localJsonObj.sports_content.games.game[i];
+
 			var $game_item = $game_table.find('#game_item_template').clone();
 			$game_item.removeAttr('id');
+
+
+			$game_item.click({id: game.id},updateShit);
 
 			var $home_team = $game_item.find('#home_team');
 			var $away_team = $game_item.find('#away_team');
 			var $home_score = $game_item.find('#score');
 			var $game_time = $game_item.find('#time');
 
-			var game = localJsonObj.sports_content.games.game[i];
 
 			$home_team.html(game.home.nickname);
 			$away_team.html(game.visitor.nickname);
@@ -59,8 +63,40 @@ var NBAschedule = (function(){
 			$game_time.html(game.time-1200-300);
 			
 			$game_table.append($game_item);
-			$game_item.removeAttr('style');			
+			$game_item.show();	
+							
+			/*$game_table.append("<tr id='"  
+				+ game.id 
+				+ '#demo'
+				+ "' class='collapse'><td colspan='5'><span id='gameid'></td></tr>")*/		
+		
+			$game_item.attr('data-toggle', 'collapse');
+			//$game_item.attr('data-target', '#' + game.id);
+			$game_item.attr('data-target', '#demo');
 		}		
+	}
+
+	function updateShit(event) {
+		//$('#' +event.data.id + ' #gameid').html(event.data.id);
+		
+
+		var boxscoreurl = "http://data.nba.com/json/cms/noseason/game/"
+		+yyyy+mm+dd 
+		+ '/'
+		+ event.data.id
+		+"/boxscore.json";
+
+		$.getJSON(boxscoreurl, function(data) {
+
+			var game = data.sports_content.game;
+
+			$('#demo #game-id').html(event.data.id);
+			$('#demo #period-value').html(game.period_time.period_value);
+			$('#demo #game-clock').html(game.period_time.game_clock);
+
+			console.log('---------');
+			//console.log(data.sports_content);
+		});
 	}
 
 	/* 

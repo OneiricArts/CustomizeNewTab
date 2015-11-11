@@ -101,16 +101,17 @@
 		            </div>
 
 		            <div class="col-sm-5">
-		                <div class="panel panel-default">
+		                <div id="NBA-panel" class="panel panel-default">
+
 		                    <div class="panel-heading">
-
 		                    	<span>NBA / Today</span> 
-
 		                    </div>
 		                	
 		                	<div class="panel-body">
 								
 								<div class="table-responsive">
+								    
+
 								    <table id="NBA_game_table" class="table table-striped table-condensed">
 										<thead>
 											<tr>
@@ -123,6 +124,7 @@
 										</thead>
 										<tbody>
 											<tr id="game_item_template"
+											data-toggle="collapse" data-target="#demo"
 											    style="display: none;"> 
 
 												<td id="time">Sun 6:00</td>
@@ -139,8 +141,17 @@
 												</button></td>
 
 											</tr>
+
 										</tbody>
 								    </table>
+
+								</div>
+
+								<div id="demo" class="collapse">
+									<h3>Box Score:</h3>
+									<span id="game-id"></span>
+									<p>Period Value: <span id="period-value"></span></p>
+									<p>Game Clock: <span id="game-clock"></span></p>
 								</div>
 
 		                	</div>
