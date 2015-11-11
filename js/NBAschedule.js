@@ -15,6 +15,7 @@ var NBAschedule = (function(){
 	var yyyy = today.getFullYear();
 
 	//dd = '09';
+	//dd = '11';
 	var url = 'http://data.nba.com/5s/json/cms/noseason/scoreboard/' 
 	+ yyyy + mm + dd + '/games.json';
 
@@ -59,9 +60,13 @@ var NBAschedule = (function(){
 
 			$home_team.html(game.home.nickname);
 			$away_team.html(game.visitor.nickname);
+
+
 			$home_score.html(game.home.score + '-' + game.visitor.score);
-			$game_time.html(game.time-1200-300);
 			
+			//$game_time.html(game.time-1200-300);
+			$game_time.html(game.period_time.period_status + " " + game.period_time.game_clock);
+
 			$game_table.append($game_item);
 			$game_item.show();	
 							
