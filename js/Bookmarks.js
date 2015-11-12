@@ -48,7 +48,7 @@ var Bookmarks = (function(){
 	function saveLocal() {
 
 		var $list = $('#bookmark-list').html();
-		console.log($list);
+		//console.log($list);
 		chrome.storage.local.set({'localBookmarks': $list}, 
 			function() {
 				if(debug){console.log('Settings saved');}

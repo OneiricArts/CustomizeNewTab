@@ -114,6 +114,7 @@ var NBAschedule = (function(){
 		$.getJSON(url, function(data) {
 		  	console.log(data);
 		  	localJsonObj = data;
+		  	saveLocalData();
 		  	clearGames();
 		  	displayAllDays();
 		});
