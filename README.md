@@ -7,7 +7,8 @@ Performance: TODO
 Currently, seems to take less memory than default New Tab Page for Chroem? (using Google Chrome's Task manager)
 
 ### //TODO
-1. Have View options (upcoming & current games only, favorites, etc.) (theres a filter glyph too) ... lower priority since you can just delete shit.
+1. On hide in myScript have an api to terminate update function of NFL / NBA
+2. Have View options (upcoming & current games only, favorites, etc.) (theres a filter glyph too) ... lower priority since you can just delete shit.
 2. Use (one of) eye-open / fire / bullhorn / bell to signal live game. use one of them plus text in a button for red zone? 
 3. Update Needs to add multiple events to live games.
 4. Remove <all_urls> permission (add nba url)

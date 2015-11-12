@@ -38,6 +38,6 @@ function resizeColumns() {
 
     var colSize = (rem === 0) ? div : 2;
 
-    $myCols.children().removeClass().addClass('col-md-'+colSize);
+    $myCols.children().removeClass().addClass('col-sm-'+colSize);
 
 }

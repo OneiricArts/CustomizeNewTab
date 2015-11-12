@@ -4,6 +4,7 @@ var NBAschedule = (function(){
 	
 	var localJsonObj;
 	var $games = {};
+	var timeoutID;
 
 	/*
 		http://stackoverflow.com/questions/1531093/
@@ -78,7 +79,66 @@ var NBAschedule = (function(){
 			$game_item.attr('data-toggle', 'collapse');
 			//$game_item.attr('data-target', '#' + game.id);
 			$game_item.attr('data-target', '#demo');
-		}		
+
+			$games[game.id] = $game_item;
+		}	
+
+		updateScores();
+	}
+
+	function updateScores() {
+
+		console.log('updating scores...');
+		$.getJSON(url, function(data) {
+
+			local_games = localJsonObj.sports_content.games.game;
+			all_games = data.sports_content.games.game;
+
+			var i,j;
+			for (i=0, j=0; i < all_games.length; i++) {
+
+				// same game?
+				if(all_games[i].id == local_games[j].id) {
+					
+					var new_game_ui = all_games[i].period_time.period_status +  
+									  all_games[i].period_time.game_clock;
+
+					var old_game_ui = local_games[j].period_time.period_status +  
+									  local_games[j].period_time.game_clock;
+									  				  
+					if(new_game_ui !== old_game_ui) {
+						console.log('new!');
+						writeGameDetails($games[all_games[i].id], all_games[i], true);
+						local_games[j] = all_games[i];
+						saveLocalData();
+					}
+					j++;
+				}
+			}
+			timeoutID = window.setTimeout(updateScores, 5000);
+		});
+	}
+
+	function writeGameDetails($game, game, update) {
+
+		if(!update) {
+			var $home_team = $game.find('#home_team');
+			var $away_team = $game.find('#away_team');	
+
+			$home_team.html(game.home.nickname);
+			$away_team.html(game.visitor.nickname);	
+		}
+
+		var $home_score = $game.find('#score');
+		var $game_time = $game.find('#time');
+
+		$home_score.html(game.home.score + '-' + game.visitor.score);		
+		$game_time.html(game.period_time.period_status + " " + game.period_time.game_clock);
+		
+		if(update) {
+			//$game.fadeIn(100).fadeOut(100).fadeIn(100).fadeOut(100).fadeIn(100);
+			$game.effect("highlight", {color: '#FFFF99'}, 2000);
+		}
 	}
 
 	function updateShit(event) {
