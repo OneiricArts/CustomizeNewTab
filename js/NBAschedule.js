@@ -17,8 +17,11 @@ var NBAschedule = (function(){
 
 	//dd = '09';
 	//dd = '11';
+	//var url = 'http://data.nba.com/json/cms/noseason/scoreboard/' 
+
 	var url = 'http://data.nba.com/5s/json/cms/noseason/scoreboard/' 
 	+ yyyy + mm + dd + '/games.json';
+	var conf_standings_url = 'http://data.nba.com/json/cms/'+yyyy+'/standings/conference.json';
 
 	var xhr = new XMLHttpRequest();
 
@@ -42,6 +45,8 @@ var NBAschedule = (function(){
 
 		var $reset_games = $('#NBA-panel #reset_games');
 		$reset_games.click(resetGames);
+
+		$('#NBA-panel #standings-btn').click(standings);
 
 		//console.log(localJsonObj.sports_content.games.game);
 
@@ -160,10 +165,12 @@ var NBAschedule = (function(){
 			var game = data.sports_content.game;
 
 			$('#demo #game-id').html(event.data.id);
-			$('#demo #period-value').html(game.period_time.period_value);
+			$('#demo #period-value').html(boxscoreurl);
+
+			//$('#demo #period-value').html(game.period_time.period_value);
 			$('#demo #game-clock').html(game.period_time.game_clock);
 
-			console.log('---------');
+			//console.log('---------');
 			//console.log(data.sports_content);
 		});
 	}
@@ -188,6 +195,53 @@ var NBAschedule = (function(){
 		clearGames();
 		getNewWeekData(false);
 	}
+
+	function standings() {
+		var $modal_body = $('#NBA-standings .modal-body');
+
+		$.getJSON(conf_standings_url, function(data) {
+
+			var west = data.sports_content.standings.conferences.West.team;
+			var east = data.sports_content.standings.conferences.East.team;
+			var tabs = [west, east];
+
+			var $west = $modal_body.find('#West');
+			var $east = $modal_body.find('#East');
+			var $tabs = [$west, $east];
+
+			for(var i = 0; i < tabs.length; i++) {
+				var conf = tabs[i];
+			
+				var $standings_table = $modal_body.find('#standings-table-temp').clone();
+				$standings_table.removeAttr('id');
+
+				for(var j = 0; j < conf.length; j++) {
+
+					var $standings_item = $standings_table.find('#standings-item-temp').clone();
+					$standings_item.removeAttr('id');
+
+					$standings_item.find('#rank').html(j+1);
+					$standings_item.find('#team').html(conf[j].name);
+					$standings_item.find('#pct').html(conf[j].team_stats.pct);
+					$standings_item.find('#wins').html(conf[j].team_stats.wins);
+					$standings_item.find('#losses').html(conf[j].team_stats.losses);
+					$standings_item.find('#streak').html(conf[j].team_stats.streak);
+
+					if(j==7) { //playoff team divider
+						var border="border-bottom:3pt solid grey;";
+						$standings_item.attr("style",border);
+					}
+
+					$standings_table.append($standings_item);
+					$standings_item.show();	
+				}
+
+				$tabs[i].html($standings_table);
+				$standings_table.show();
+			}
+		});
+	}
+
 	/* 
 		gets the game data for the week if no local data is present, or if 
 		week has been updated 
