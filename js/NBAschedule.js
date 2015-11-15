@@ -58,7 +58,6 @@ var NBAschedule = (function(){
 			$game_item.removeAttr('id');
 
 
-			$game_item.click({id: game.id}, createGameDetails);
 
 			var $home_team = $game_item.find('#home_team');
 			var $away_team = $game_item.find('#away_team');
@@ -77,17 +76,17 @@ var NBAschedule = (function(){
 
 			$game_table.append($game_item);
 			$game_item.show();	
-							
-			/*$game_table.append("<tr id='"  
-				+ game.id 
-				+ '#demo'
-				+ "' class='collapse'><td colspan='5'><span id='gameid'></td></tr>")*/		
-		
-			$game_item.attr('data-toggle', 'collapse');
-			//$game_item.attr('data-target', '#' + game.id);
-			$game_item.attr('data-target', '#demo');
 
 			$games[game.id] = $game_item;
+			
+			/* if i want teh popup to be a row right under:
+			$game_table.append("<tr id='"  
+				+ game.id 
+				+ '#demo'
+				+ "' class='collapse'><td colspan='5'><span id='gameid'></td></tr>")	
+			$game_item.attr('data-target', '#' + game.id);*/
+			$game_item.click({game: game}, createGameDetails);
+
 
 			var $remove = $game_item.find('#remove');
 			$remove.click({id: game.id},removeGame);
@@ -154,24 +153,46 @@ var NBAschedule = (function(){
 	function createGameDetails(event) {
 		//$('#' +event.data.id + ' #gameid').html(event.data.id);
 	
+		$('#NBA-panel #NBA-game-info #header').html(event.data.game.visitor.nickname
+				+ ' @ ' + event.data.game.home.nickname);
+
 		var boxscoreurl = "http://data.nba.com/json/cms/noseason/game/"
 		+yyyy+mm+dd 
 		+ '/'
-		+ event.data.id
+		+ event.data.game.id
 		+"/boxscore.json";
 
+		var playbyplay_url = "http://data.nba.com/json/cms/noseason/game/"
+							+ yyyy+mm+dd + '/' + event.data.game.id
+							+ "/pbp_" + event.data.game.period_time.period_value 
+							+ ".json"
+
+		updatePlayByPlay(playbyplay_url);
+
 		$.getJSON(boxscoreurl, function(data) {
+			//var game = data.sports_content.game;
+			console.log("box score url: " + boxscoreurl);
+		});
+	}
 
-			var game = data.sports_content.game;
+	function updatePlayByPlay(playbyplay_url){
+		$.getJSON(playbyplay_url, function(data) {
+			console.log('pbp: ' + playbyplay_url);
 
-			$('#demo #game-id').html(event.data.id);
-			$('#demo #period-value').html(boxscoreurl);
+			var $tbody = $('#NBA-panel #NBA-game-info #pbp tbody');
 
-			//$('#demo #period-value').html(game.period_time.period_value);
-			$('#demo #game-clock').html(game.period_time.game_clock);
-
-			//console.log('---------');
-			//console.log(data.sports_content);
+			var plays = data.sports_content.game.play;
+			$tbody.html("");
+			var counter, i;
+			for (counter = 0, i = plays.length - 1; i >= 0, counter < 10; i--, counter++) {
+				var tr = "<tr>";
+				tr += "<td>" + plays[i].clock + "</td>";
+				tr += "<td>" + plays[i].description + "</td>";
+				tr += "<td>" + plays[i].home_score + "</td>";
+				tr += "<td>" + plays[i].visitor_score + "</td>";
+				tr += "</tr>";
+				$tbody.append( tr);
+			};
 		});
 	}
 
