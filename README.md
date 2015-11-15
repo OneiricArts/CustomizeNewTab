@@ -13,6 +13,7 @@ Currently, seems to take less memory than default New Tab Page for Chroem? (usin
 2. Use (one of) eye-open / fire / bullhorn / bell to signal live game. use one of them plus text in a button for red zone? 
 3. Update Needs to add multiple events to live games.
 4. Remove <all_urls> permission (add nba url)
+5. Currently, downloading new games clears data first. what happens when there is no internet connection? Retain old data? (actually, clear doesn't remove from local data, so if user refreshes page, old data will show. include last updated somewhere?)
 
 ... these will totally get done. 
 

@@ -30,16 +30,18 @@ var NBAschedule = (function(){
 	}
 
 	function clearGames() {
-		var $game_table_rows = $('#NBA-panel #NBA_game_table tr');
-		// remove rows besides header and hidden template (first 2)
-		for(var i = 2; i < $game_table_rows.length; i++) {
-			$game_table_rows[i].remove();
+		for(var game in $games) {
+			console.log($games[game]);
+			$games[game].remove();
 		}
 	}
 
 	function displayAllDays() {
 
 		var $game_table = $('#NBA-panel #NBA_game_table');
+
+		var $reset_games = $('#NBA-panel #reset_games');
+		$reset_games.click(resetGames);
 
 		//console.log(localJsonObj.sports_content.games.game);
 
@@ -51,7 +53,7 @@ var NBAschedule = (function(){
 			$game_item.removeAttr('id');
 
 
-			$game_item.click({id: game.id},updateShit);
+			$game_item.click({id: game.id}, createGameDetails);
 
 			var $home_team = $game_item.find('#home_team');
 			var $away_team = $game_item.find('#away_team');
@@ -81,6 +83,9 @@ var NBAschedule = (function(){
 			$game_item.attr('data-target', '#demo');
 
 			$games[game.id] = $game_item;
+
+			var $remove = $game_item.find('#remove');
+			$remove.click({id: game.id},removeGame);
 		}	
 
 		updateScores();
@@ -141,10 +146,9 @@ var NBAschedule = (function(){
 		}
 	}
 
-	function updateShit(event) {
+	function createGameDetails(event) {
 		//$('#' +event.data.id + ' #gameid').html(event.data.id);
-		
-
+	
 		var boxscoreurl = "http://data.nba.com/json/cms/noseason/game/"
 		+yyyy+mm+dd 
 		+ '/'
@@ -164,6 +168,26 @@ var NBAschedule = (function(){
 		});
 	}
 
+	function removeGame(event) {
+
+		console.log('NBA removeGame');
+
+		for (var i = 0; i < localJsonObj.sports_content.games.game.length; i++) {
+			if(localJsonObj.sports_content.games.game[i].id == event.data.id) 
+			{
+				localJsonObj.sports_content.games.game.splice(i, 1);
+				console.log(localJsonObj.sports_content.games.game.length);
+				$games[event.data.id].remove();
+				break;
+			}
+		}
+		saveLocalData();
+	}
+
+	function resetGames() {
+		clearGames();
+		getNewWeekData(false);
+	}
 	/* 
 		gets the game data for the week if no local data is present, or if 
 		week has been updated 
@@ -175,11 +199,11 @@ var NBAschedule = (function(){
 		$.getJSON(url, function(data) {
 			if(date && date == 
 				data.sports_content.sports_meta.season_meta.calendar_date){
-								console.log('Old Data Same as New Data');
-
+				console.log('Old Data Same as New Data, dont overwrite');		
 			}
 			else {
-			  	console.log(data);
+				console.log('replacing old data with new data');
+			  	//console.log(data);
 			  	localJsonObj = data;
 			  	saveLocalData();
 			  	clearGames();
