@@ -168,15 +168,23 @@ var NBAschedule = (function(){
 		gets the game data for the week if no local data is present, or if 
 		week has been updated 
 	*/
-	function getNewWeekData(exists) {
-		console.log('trying')
+	function getNewWeekData(date) {
+
+		console.log('Get New Data');
 
 		$.getJSON(url, function(data) {
-		  	console.log(data);
-		  	localJsonObj = data;
-		  	saveLocalData();
-		  	clearGames();
-		  	displayAllDays();
+			if(date && date == 
+				data.sports_content.sports_meta.season_meta.calendar_date){
+								console.log('Old Data Same as New Data');
+
+			}
+			else {
+			  	console.log(data);
+			  	localJsonObj = data;
+			  	saveLocalData();
+			  	clearGames();
+			  	displayAllDays();
+		  	}
 		});
 	}
 
@@ -189,13 +197,13 @@ var NBAschedule = (function(){
 
 			if(result.NBAgamesJson) {
 
-				console.log('A');
+				console.log('Display Old DataFirst');
 				localJsonObj = result.NBAgamesJson;
 				displayAllDays();
-				getNewWeekData();
+				getNewWeekData(localJsonObj.sports_content.sports_meta.season_meta.calendar_date);
 			}
 			else {
-				console.log('B');
+				console.log('No Old Data');
 				getNewWeekData();
 			}
 		});
