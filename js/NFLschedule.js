@@ -77,6 +77,7 @@ var NFLschedule = (function(){
 			var $remove = $game_item.find('#remove');
 			$remove.click({eid: game.eid, game:$game_item},removeGame);
 		}		
+		updateGames();
 	}
 
 	/* 
