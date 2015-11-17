@@ -1,5 +1,6 @@
-var debug = true;
+/*
 
+*/
 var NBAschedule = (function(){
 	
 	var localJsonObj;
@@ -198,13 +199,10 @@ var NBAschedule = (function(){
 
 	function removeGame(event) {
 
-		console.log('NBA removeGame');
-
 		for (var i = 0; i < localJsonObj.sports_content.games.game.length; i++) {
 			if(localJsonObj.sports_content.games.game[i].id == event.data.id) 
 			{
 				localJsonObj.sports_content.games.game.splice(i, 1);
-				console.log(localJsonObj.sports_content.games.game.length);
 				$games[event.data.id].remove();
 				break;
 			}
