@@ -110,14 +110,19 @@ var NBAschedule = (function(){
 				// same game?
 				if(all_games[i].id == local_games[j].id) {
 					
-					var new_game_ui = all_games[i].period_time.period_status +  
-									  all_games[i].period_time.game_clock;
+					var game_time = (all_games[i].period_time.period_status +  
+									  all_games[i].period_time.game_clock) ==
+									  (local_games[j].period_time.period_status +  
+									  local_games[j].period_time.game_clock);
 
-					var old_game_ui = local_games[j].period_time.period_status +  
-									  local_games[j].period_time.game_clock;
+					var visitor_scores = parseInt(all_games[i].visitor.score) == parseInt(local_games[j].visitor.score);
+					var home_scores = parseInt(all_games[i].home.score) == parseInt(local_games[j].home.score);
+
+					console.log(visitor_scores);
 									  				  
-					if(new_game_ui !== old_game_ui) {
-						console.log('new!');
+					if( (!game_time) || (!visitor_scores) || (!home_scores) ) {
+						
+						//console.log('new!');
 						writeGameDetails($games[all_games[i].id], all_games[i], true);
 						local_games[j] = all_games[i];
 						saveLocalData();
@@ -125,7 +130,31 @@ var NBAschedule = (function(){
 					j++;
 				}
 			}
-			timeoutID = window.setTimeout(updateScores, 5000);
+
+			for(var i = 0; i < local_games.length; i++) {
+
+				var visitor_score = parseInt(local_games[i].visitor.score);
+				var home_score = parseInt(local_games[i].home.score);
+
+				if( visitor_score > home_score) {
+					$games[local_games[i].id].find('#away_team').toggleClass('winning', true);
+					$games[local_games[i].id].find('#home_team').toggleClass('winning', false);
+				}
+
+				else if(visitor_score < home_score) {
+					$games[local_games[i].id].find('#home_team').toggleClass('winning', true);
+					$games[local_games[i].id].find('#away_team').toggleClass('winning', false);
+				}
+
+				else {
+					$games[local_games[i].id].find('#home_team').toggleClass('winning', false);
+					$games[local_games[i].id].find('#away_team').toggleClass('winning', false);
+
+				}
+
+			}
+
+			timeoutID = window.setTimeout(updateScores, 10000);
 		});
 	}
 
