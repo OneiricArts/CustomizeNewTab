@@ -2,9 +2,19 @@
 var Base = function() {
 	this.data = {};
 	this.datakey;
+	this.domElement;
 	//console.log(this)
 };
 
+
+Base.prototype.trigger = function (showOrHide) {
+	if(showOrHide) {
+		this.domElement.trigger(showOrHide);
+	}
+	else {
+		this.domElement.trigger();
+	}
+};
 
 Base.prototype.loadData = function (key, callbackSuccess, callbackFail) {
 
@@ -12,7 +22,7 @@ Base.prototype.loadData = function (key, callbackSuccess, callbackFail) {
 
 		if(result[key]) {
 			this.data = result[key];
-			console.log(this.data)
+			//console.log(this.data)
 			callbackSuccess.call(this);
 		}
 		else{

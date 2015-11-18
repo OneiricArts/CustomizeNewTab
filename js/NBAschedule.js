@@ -170,10 +170,10 @@ var NBAschedule = (function(){
 
 		updatePlayByPlay(playbyplay_url);
 
-		$.getJSON(boxscoreurl, function(data) {
+/*		$.getJSON(boxscoreurl, function(data) {
 			//var game = data.sports_content.game;
 			console.log("box score url: " + boxscoreurl);
-		});
+		});*/
 	}
 
 	function updatePlayByPlay(playbyplay_url){
