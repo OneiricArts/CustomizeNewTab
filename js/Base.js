@@ -33,14 +33,14 @@ Base.prototype.loadData = function (key, callbackSuccess, callbackFail) {
 	}.bind(this));
 };
 
-Base.prototype.saveData = function() {
+Base.prototype.saveData = function(callback) {
 	
-	console.log(this.data);
+	//console.log(this.data);
 	var obj = {};
 	obj[this.datakey] = this.data;
 
-	chrome.storage.local.set( obj, 
-		function() {
-			if(debug){console.log('Base Obj Settings saved');}
-	});
+	chrome.storage.local.set( obj, function() {
+		//if(debug){console.log('Base Obj Settings saved');}
+		callback.call(this);
+	}.bind(this));
 };
