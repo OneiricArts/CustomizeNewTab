@@ -40,7 +40,6 @@ Base.prototype.saveData = function(callback) {
 	obj[this.datakey] = this.data;
 
 	chrome.storage.local.set( obj, function() {
-		//if(debug){console.log('Base Obj Settings saved');}
-		callback.call(this);
+		if(callback){callback.call(this);}
 	}.bind(this));
 };
