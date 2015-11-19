@@ -115,8 +115,8 @@ var NBAschedule = (function(){
 									  (local_games[j].period_time.period_status +  
 									  local_games[j].period_time.game_clock);
 
-					var visitor_scores = parseInt(all_games[i].visitor.score) == parseInt(local_games[j].visitor.score);
-					var home_scores = parseInt(all_games[i].home.score) == parseInt(local_games[j].home.score);
+					var visitor_scores = all_games[i].visitor.score == local_games[j].visitor.score;
+					var home_scores = all_games[i].home.score == local_games[j].home.score;
 
 					console.log(visitor_scores);
 									  				  
@@ -149,9 +149,7 @@ var NBAschedule = (function(){
 				else {
 					$games[local_games[i].id].find('#home_team').toggleClass('winning', false);
 					$games[local_games[i].id].find('#away_team').toggleClass('winning', false);
-
 				}
-
 			}
 
 			timeoutID = window.setTimeout(updateScores, 10000);
@@ -172,6 +170,7 @@ var NBAschedule = (function(){
 		var $game_time = $game.find('#time');
 
 		$home_score.html(game.home.score + '-' + game.visitor.score);		
+		console.log(game.period_time.period_status + " " + game.period_time.game_clock);
 		$game_time.html(game.period_time.period_status + " " + game.period_time.game_clock);
 		
 		if(update) {
@@ -191,6 +190,9 @@ var NBAschedule = (function(){
 		+ '/'
 		+ event.data.game.id
 		+"/boxscore.json";
+
+		//console.log('=====> ' + event.data.game.period_time.period_value);
+		//console.log(event.data.game);
 
 		var playbyplay_url = "http://data.nba.com/json/cms/noseason/game/"
 							+ yyyy+mm+dd + '/' + event.data.game.id
