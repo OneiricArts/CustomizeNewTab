@@ -145,7 +145,7 @@ var NFLschedule = (function(){
 				}*/
 
 				var i,j;	// i for old, j for new
-				for (i=0, j=0; j < localJsonObj.gms.g.length; j++) {
+				for (i=0, j=0; j < localJsonObj.gms.g.length; i++) {
 
 					var new_game = jsonObj.gms.g[i];
 					var old_game = localJsonObj.gms.g[j];
@@ -154,11 +154,12 @@ var NFLschedule = (function(){
 
 					// same game?
 					if(new_game.eid == old_game.eid) {
-						if( (new_game.q !== old_game.q) || (new_game.hs !== old_game.hs) || 
+						/*if( (new_game.q !== old_game.q) || (new_game.hs !== old_game.hs) || 
 							(new_game.vs !== old_game.vs) ){				
 							updateScore(new_game, j);			
-						}
-						i++;
+						}*/
+						updateScore(new_game, j);
+						j++;
 					}
 				}
 			}
@@ -183,10 +184,13 @@ var NFLschedule = (function(){
 		var $scores = $games[game.eid].find('#score');
 		$scores.html(game.hs + '-' + game.vs);
 
-		console.log(game.k)
+		if(game.rz && (parseInt(game.rz) !== 0) ) {
+			$scores.append('[RZ]')
+
+		}
 		if(game.k) {
 			var $time = $games[game.eid].find('#time');
-			$time.html(game.q + "Q " + game.k);		
+			$time.html(game.q + "Q: " + game.k);		
 		}
 
 		styleScores(game);
