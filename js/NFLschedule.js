@@ -13,7 +13,6 @@ var NFLschedule = (function(){
 	function saveLocalData() {
 		chrome.storage.local.set({'gamesJson': localJsonObj}, 
 			function() {
-				if(debug){console.log('Settings saved');}
 		});
 	}
 
@@ -94,7 +93,6 @@ var NFLschedule = (function(){
 			if(response) {
 
 				var jsonObj = $.xml2json(response);
-				console.log('getNewWeekData');
 
 				// same week, don't update
 				if(exists && (localJsonObj.gms.w == jsonObj.gms.w) ) {}
@@ -120,10 +118,8 @@ var NFLschedule = (function(){
 			if(response) {
 				var jsonObj = $.xml2json(response);
 
-				var done = ['F', 'FO'];
+				/*var done = ['F', 'FO'];
 				var playing = ['1', '2', '3', '4'];
-
-				console.log('updating...');
 
 				for (var i = 0; i < jsonObj.gms.g.length; i++) {
 					
@@ -146,16 +142,53 @@ var NFLschedule = (function(){
 							break;
 						}
 					}
+				}*/
+
+				var i,j;	// i for old, j for new
+				for (i=0, j=0; j < localJsonObj.gms.g.length; j++) {
+
+					var new_game = jsonObj.gms.g[i];
+					var old_game = localJsonObj.gms.g[j];
+
+					styleScores(old_game);
+
+					// same game?
+					if(new_game.eid == old_game.eid) {
+						if( (new_game.q !== old_game.q) || (new_game.hs !== old_game.hs) || 
+							(new_game.vs !== old_game.vs) ){				
+							updateScore(new_game, j);			
+						}
+						i++;
+					}
 				}
 			}
 		}
 		xhr.send();
 	}
 
+	function styleScores(game) {
+		var visitor_score = parseInt(game.vs);
+		var home_score = parseInt(game.hs);
+
+		var home_winning = home_score > visitor_score;
+		var visitor_winning = visitor_score > home_score;
+
+		//console.log('styleScores => ' + home_winning + " " + visitor_winning);
+
+		$games[game.eid].find('#away_team').toggleClass('winning', visitor_winning);
+		$games[game.eid].find('#home_team').toggleClass('winning', home_winning);
+	}
+
 	function updateScore(game, index) {
-		console.log('changing scores.. ' + game.hs + '-' + game.vs);
 		var $scores = $games[game.eid].find('#score');
 		$scores.html(game.hs + '-' + game.vs);
+
+		if(game.k) {
+			var $time = $games[game.eid].find('#time');
+			$time.html(game.q + " " + game.k);		
+		}
+
+		styleScores(game);
 
 		// update local info
 		localJsonObj.gms.g[index] = game;
@@ -163,8 +196,6 @@ var NFLschedule = (function(){
 	}
 
 	function removeGame(event) {
-		console.log('removeGame');
-
 		for (var i = 0; i < localJsonObj.gms.g.length; i++) {
 			if(localJsonObj.gms.g[i].eid == event.data.eid) 
 			{
@@ -180,11 +211,8 @@ var NFLschedule = (function(){
 
 		chrome.storage.local.get('gamesJson', function (result) {
 			
-			if(debug){console.log('handler...');}
-
 			if(result.gamesJson) {
 				localJsonObj = null;
-				console.log(result.gamesJson.gms.g.length);
 				localJsonObj = result.gamesJson;
 				getNewWeekData(true);
 			}
