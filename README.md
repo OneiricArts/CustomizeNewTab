@@ -19,6 +19,7 @@ Currently, seems to take less memory than default New Tab Page for Chroem? (usin
 
 ### Bugs
 * For NBA, the time sometimes reads something like Final 2:30. It should just read Final in those situations.
+	- Tip off has similar problem
 * ~~Currently Downloading / Resetting All games just appends to current list. A refresh fixes this problem (for me and dev work it is adequite for now).~~
 
 ### NFL API Response Example

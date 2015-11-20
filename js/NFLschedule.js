@@ -184,20 +184,25 @@ var NFLschedule = (function(){
 		var $scores = $games[game.eid].find('#score');
 		$scores.html(game.hs + '-' + game.vs);
 
+		var $time = $games[game.eid].find('#time');
+
 		if(game.rz && (parseInt(game.rz) !== 0) ) {
 			$scores.append(' [RZ]')
 		}
 
 		if(game.k) {
-			var $time = $games[game.eid].find('#time');
 			$time.html(game.q + "Q: " + game.k);		
+		}
+
+		else if(game.q == 'F' || game.q == 'FO') {
+			$scores.html(game.hs + '-' + game.vs + ' [' + game.q + ']');
 		}
 
 		if(game.p) {
 			// add some class intead? similar to score compare
 			if(game.p == game.h) {
 				$games[game.eid].find('#home_team').html(game.hnn + ' (P)')
-				$games[game.eid].find('#away_team').html(game.hnn);
+				$games[game.eid].find('#away_team').html(game.vnn);
 			}
 			else if(game.p == game.v) {
 				$games[game.eid].find('#away_team').html(game.vnn + ' (P)')
