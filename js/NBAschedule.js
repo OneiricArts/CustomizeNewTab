@@ -79,6 +79,8 @@ var NBAschedule = (function(){
 			$game_item.show();	
 
 			$games[game.id] = $game_item;
+
+			styleScores(game);
 			
 			/* if i want teh popup to be a row right under:
 			$game_table.append("<tr id='"  
@@ -127,33 +129,29 @@ var NBAschedule = (function(){
 						local_games[j] = all_games[i];
 						saveLocalData();
 					}
+					styleScores(local_games[j]);
 					j++;
 				}
 			}
 
-			for(var i = 0; i < local_games.length; i++) {
-
-				var visitor_score = parseInt(local_games[i].visitor.score);
-				var home_score = parseInt(local_games[i].home.score);
-
-				if( visitor_score > home_score) {
-					$games[local_games[i].id].find('#away_team').toggleClass('winning', true);
-					$games[local_games[i].id].find('#home_team').toggleClass('winning', false);
-				}
-
-				else if(visitor_score < home_score) {
-					$games[local_games[i].id].find('#home_team').toggleClass('winning', true);
-					$games[local_games[i].id].find('#away_team').toggleClass('winning', false);
-				}
-
-				else {
-					$games[local_games[i].id].find('#home_team').toggleClass('winning', false);
-					$games[local_games[i].id].find('#away_team').toggleClass('winning', false);
-				}
-			}
+			/*for(var i = 0; i < local_games.length; i++) {
+			}*/
 
 			timeoutID = window.setTimeout(updateScores, 10000);
 		});
+	}
+
+	function styleScores(game) {
+		var visitor_score = parseInt(game.visitor.score);
+		var home_score = parseInt(game.home.score);
+
+		var home_winning = home_score > visitor_score;
+		var visitor_winning = visitor_score > home_score;
+
+		//console.log('styleScores => ' + home_winning + " " + visitor_winning);
+
+		$games[game.id].find('#away_team').toggleClass('winning', visitor_winning);
+		$games[game.id].find('#home_team').toggleClass('winning', home_winning);
 	}
 
 	function writeGameDetails($game, game, update) {

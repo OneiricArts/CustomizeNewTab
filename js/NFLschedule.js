@@ -183,9 +183,10 @@ var NFLschedule = (function(){
 		var $scores = $games[game.eid].find('#score');
 		$scores.html(game.hs + '-' + game.vs);
 
+		console.log(game.k)
 		if(game.k) {
 			var $time = $games[game.eid].find('#time');
-			$time.html(game.q + " " + game.k);		
+			$time.html(game.q + "Q " + game.k);		
 		}
 
 		styleScores(game);
