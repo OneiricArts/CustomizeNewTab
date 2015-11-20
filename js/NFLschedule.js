@@ -186,11 +186,23 @@ var NFLschedule = (function(){
 
 		if(game.rz && (parseInt(game.rz) !== 0) ) {
 			$scores.append(' [RZ]')
-
 		}
+
 		if(game.k) {
 			var $time = $games[game.eid].find('#time');
 			$time.html(game.q + "Q: " + game.k);		
+		}
+
+		if(game.p) {
+			// add some class intead? similar to score compare
+			if(game.p == game.h) {
+				$games[game.eid].find('#home_team').html(game.hnn + ' (P)')
+				$games[game.eid].find('#away_team').html(game.hnn);
+			}
+			else if(game.p == game.v) {
+				$games[game.eid].find('#away_team').html(game.vnn + ' (P)')
+				$games[game.eid].find('#home_team').html(game.hnn);
+			}
 		}
 
 		styleScores(game);
