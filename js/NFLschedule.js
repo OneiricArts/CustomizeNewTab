@@ -185,7 +185,7 @@ var NFLschedule = (function(){
 		$scores.html(game.hs + '-' + game.vs);
 
 		if(game.rz && (parseInt(game.rz) !== 0) ) {
-			$scores.append('[RZ]')
+			$scores.append(' [RZ]')
 
 		}
 		if(game.k) {
