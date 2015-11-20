@@ -29,13 +29,11 @@ var NBAschedule = (function(){
 	function saveLocalData() {
 		chrome.storage.local.set({'NBAgamesJson': localJsonObj}, 
 			function() {
-				if(debug){console.log('Settings saved');}
 		});
 	}
 
 	function clearGames() {
 		for(var game in $games) {
-			console.log($games[game]);
 			$games[game].remove();
 		}
 	}
@@ -100,7 +98,6 @@ var NBAschedule = (function(){
 
 	function updateScores() {
 
-		console.log('updating scores...');
 		$.getJSON(url, function(data) {
 
 			local_games = localJsonObj.sports_content.games.game;
@@ -119,8 +116,6 @@ var NBAschedule = (function(){
 
 					var visitor_scores = all_games[i].visitor.score == local_games[j].visitor.score;
 					var home_scores = all_games[i].home.score == local_games[j].home.score;
-
-					console.log(visitor_scores);
 									  				  
 					if( (!game_time) || (!visitor_scores) || (!home_scores) ) {
 						
@@ -168,7 +163,6 @@ var NBAschedule = (function(){
 		var $game_time = $game.find('#time');
 
 		$home_score.html(game.home.score + '-' + game.visitor.score);		
-		console.log(game.period_time.period_status + " " + game.period_time.game_clock);
 		$game_time.html(game.period_time.period_status + " " + game.period_time.game_clock);
 		
 		if(update) {
@@ -189,8 +183,6 @@ var NBAschedule = (function(){
 		+ event.data.game.id
 		+"/boxscore.json";
 
-		//console.log('=====> ' + event.data.game.period_time.period_value);
-		//console.log(event.data.game);
 
 		var playbyplay_url = "http://data.nba.com/json/cms/noseason/game/"
 							+ yyyy+mm+dd + '/' + event.data.game.id
@@ -296,16 +288,12 @@ var NBAschedule = (function(){
 	*/
 	function getNewWeekData(date) {
 
-		console.log('Get New Data');
 
 		$.getJSON(url, function(data) {
 			if(date && date == 
 				data.sports_content.sports_meta.season_meta.calendar_date){
-				console.log('Old Data Same as New Data, dont overwrite');		
 			}
 			else {
-				console.log('replacing old data with new data');
-			  	//console.log(data);
 			  	localJsonObj = data;
 			  	saveLocalData();
 			  	clearGames();
@@ -319,17 +307,13 @@ var NBAschedule = (function(){
 
 		chrome.storage.local.get('NBAgamesJson', function (result) {
 			
-			if(debug){console.log('NBA handler...');}
 
 			if(result.NBAgamesJson) {
-
-				console.log('Display Old DataFirst');
 				localJsonObj = result.NBAgamesJson;
 				displayAllDays();
 				getNewWeekData(localJsonObj.sports_content.sports_meta.season_meta.calendar_date);
 			}
 			else {
-				console.log('No Old Data');
 				getNewWeekData();
 			}
 		});
