@@ -38,8 +38,12 @@ var NBAschedule = (function(){
 		}
 	}
 
-	function displayAllDays() {
+	function displayAllDays(reset) {
 
+		if(reset) {
+		  	clearGames();
+		}
+		
 		var $game_table = $('#NBA-panel #NBA_game_table');
 
 		var $reset_games = $('#NBA-panel #reset_games');
@@ -296,8 +300,7 @@ var NBAschedule = (function(){
 			else {
 			  	localJsonObj = data;
 			  	saveLocalData();
-			  	clearGames();
-			  	displayAllDays();
+			  	displayAllDays(true);
 		  	}
 		});
 	}

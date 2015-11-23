@@ -194,6 +194,10 @@ var NFLschedule = (function(){
 			$time.html(game.q + "Q: " + game.k);		
 		}
 
+		else if(game.q == 'H') {
+			$time.html('@Half');	
+		}
+
 		else if(game.q == 'F' || game.q == 'FO') {
 			$scores.html(game.hs + '-' + game.vs + ' [' + game.q + ']');
 		}
