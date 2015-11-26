@@ -53,6 +53,11 @@ var NBAschedule = (function(){
 
 		//console.log(localJsonObj.sports_content.games.game);
 
+		if(localJsonObj.sports_content.games.game.length == 0) {
+			$game_table.html('<span class="glyphicon glyphicon-bell"></span> No Games Today');
+			return;
+		}
+
 		for (var i = 0; i < localJsonObj.sports_content.games.game.length; i++) {
 
 			var game = localJsonObj.sports_content.games.game[i];
