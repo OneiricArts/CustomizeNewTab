@@ -43,7 +43,7 @@ var NBAschedule = (function(){
 		$reset_games.click(resetGames);
 		$('#NBA-panel #standings-btn').click(standings);
 	}
-	
+
 	function displayAllDays(reset) {
 
 		if(reset) {
@@ -52,15 +52,13 @@ var NBAschedule = (function(){
 		
 		var $game_table = $('#NBA-panel #NBA_game_table');
 
-
-
 		if(localJsonObj.sports_content.games.game.length == 0) {
 			$game_table.html('<span class="glyphicon glyphicon-bell"></span> No Games Today');
 			return;
 		}
 
 		else {
-			var source = document.getElementById("animalTemplate").innerHTML;
+			var source = document.getElementById("NBA-schedule-template").innerHTML;
 			var template = Handlebars.compile(source);
 			var data = {games: localJsonObj.sports_content.games.game};
 			var output = template(data);
@@ -211,48 +209,22 @@ var NBAschedule = (function(){
 	}
 
 	function standings() {
-		var $modal_body = $('#NBA-standings .modal-body');
-
 		$.getJSON(conf_standings_url, function(data) {
 
-			var west = data.sports_content.standings.conferences.West.team;
-			var east = data.sports_content.standings.conferences.East.team;
-			var tabs = [west, east];
+			var source = document.getElementById("NBA-standings-template").innerHTML;
+			var template = Handlebars.compile(source);
+			var input = {teams: data.sports_content.standings.conferences.West.team};
+			var output = template(input);
+			$('#NBA-standings .modal-body #West').html(output);
 
-			var $west = $modal_body.find('#West');
-			var $east = $modal_body.find('#East');
-			var $tabs = [$west, $east];
-
-			for(var i = 0; i < tabs.length; i++) {
-				var conf = tabs[i];
+			input = {teams: data.sports_content.standings.conferences.East.team};
+			output = template(input);
+			$('#NBA-standings .modal-body #East').html(output);
 			
-				var $standings_table = $modal_body.find('#standings-table-temp').clone();
-				$standings_table.removeAttr('id');
-
-				for(var j = 0; j < conf.length; j++) {
-
-					var $standings_item = $standings_table.find('#standings-item-temp').clone();
-					$standings_item.removeAttr('id');
-
-					$standings_item.find('#rank').html(j+1);
-					$standings_item.find('#team').html(conf[j].name);
-					$standings_item.find('#pct').html(conf[j].team_stats.pct);
-					$standings_item.find('#wins').html(conf[j].team_stats.wins);
-					$standings_item.find('#losses').html(conf[j].team_stats.losses);
-					$standings_item.find('#streak').html(conf[j].team_stats.streak);
-
-					if(j==7) { //playoff team divider
-						var border="border-bottom:3pt solid grey;";
-						$standings_item.attr("style",border);
-					}
-
-					$standings_table.append($standings_item);
-					$standings_item.show();	
-				}
-
-				$tabs[i].html($standings_table);
-				$standings_table.show();
-			}
+			// Mark Playoff teams with grey line
+			var border="border-bottom:3pt solid grey;";
+			$($('#NBA-standings .modal-body #West tr')[8]).attr("style",border);
+			$($('#NBA-standings .modal-body #East tr')[8]).attr("style",border);
 		});
 	}
 
@@ -277,6 +249,8 @@ var NBAschedule = (function(){
 
 
 	function handler() {
+
+		cacheButtons();
 
 		chrome.storage.local.get('NBAgamesJson', function (result) {
 			
