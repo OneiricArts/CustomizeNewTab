@@ -156,6 +156,23 @@
 		                	<div class="panel-body">
 								
 								<div class="table-responsive">
+
+									<!-- HANDLEBARS TEMPLATE -->
+									<script id="NBA-schedule-template" type="text/x-handlebars-template">
+										{{#games}}
+										<tr id={{id}} data-toggle="collapse" 
+										data-target="#NBA-game-info">
+											<td id="time"> {{period_time.period_status }} 
+												{{period_time.game_clock}}</td>
+											<td id="home_team">{{home.nickname}}</td>
+											<td id="away_team">{{visitor.nickname}}</td>
+											<td id="h-score" align="center">{{home.score}} </td> 
+											<td id="v-score" align="center">{{visitor.score}}</td>
+											<td><button type="button" id="remove" class="btn btn-default btn-xs">
+												<span class="glyphicon glyphicon-trash"></span></button></td>
+										</tr>
+										{{/games}}
+									</script>
 								    
 								    <table id="NBA_game_table" class="table table-striped table-condensed">
 										<thead>
@@ -168,22 +185,7 @@
 												<th><span class="glyphicon glyphicon-edit"></span></th>
 											</tr>
 										</thead>
-										<tbody>
-											<!-- HANDLEBARS TEMPLATE -->
-											<script id="NBA-schedule-template" type="text/x-handlebars-template">
-												{{#games}}
-												<tr data-toggle="collapse" data-target="#NBA-game-info">
-													<td id="time"> {{period_time.period_status }} 
-														{{period_time.game_clock}}</td>
-													<td id="home_team">{{home.nickname}}</td>
-													<td id="away_team">{{visitor.nickname}}</td>
-													<td id="score" align="center">{{home.score}} </td> 
-													<td align="center">{{visitor.score}}</td>
-													<td><button type="button" id="remove" class="btn btn-default btn-xs">
-														<span class="glyphicon glyphicon-trash"></span></button></td>
-												</tr>
-												{{/games}}
-											</script>
+										<tbody id="NBA-schedul-games">
 										</tbody>
 								    </table>
 

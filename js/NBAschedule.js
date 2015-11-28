@@ -17,7 +17,7 @@ var NBAschedule = (function(){
 	var yyyy = today.getFullYear();
 
 	//dd = '09';
-	dd = '25';
+	//dd = '25';
 	//var url = 'http://data.nba.com/json/cms/noseason/scoreboard/' 
 
 	var url = 'http://data.nba.com/5s/json/cms/noseason/scoreboard/' 
@@ -44,6 +44,15 @@ var NBAschedule = (function(){
 		$('#NBA-panel #standings-btn').click(standings);
 	}
 
+	function cacheGames() {
+		var games = [];
+		$('#NBA-schedul-games tr').each(function(){
+			games[$(this).attr('id')] = $(this);
+		});
+
+		$games = games;
+	}
+
 	function displayAllDays(reset) {
 
 		if(reset) {
@@ -65,6 +74,7 @@ var NBAschedule = (function(){
 			$game_table.find('tbody').html(output);
 		}
 
+		cacheGames();
 		updateScores();
 	}
 
@@ -131,10 +141,13 @@ var NBAschedule = (function(){
 			$away_team.html(game.visitor.nickname);	
 		}
 
-		var $home_score = $game.find('#score');
+		var $home_score = $game.find('#h-score');
+		var $visitor_score = $game.find('#v-score');
 		var $game_time = $game.find('#time');
 
-		$home_score.html(game.home.score + '-' + game.visitor.score);		
+		$home_score.html(game.home.score); 
+		$visitor_score.html(game.visitor.score);
+
 		$game_time.html(game.period_time.period_status + " " + game.period_time.game_clock);
 		
 		if(update) {
