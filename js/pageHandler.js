@@ -7,6 +7,9 @@ $( document ).ready(function() {
 });
 
 
+/*
+	pageHandeler Object 
+*/
 function pageHandeler() {
 	Base.call(this);
 	this.datakey = 'pageHndler_widgets';
@@ -14,54 +17,46 @@ function pageHandeler() {
 };
 
 pageHandeler.prototype = Object.create(Base.prototype); // See note below
-
 pageHandeler.prototype.constructor = pageHandeler;
 
 pageHandeler.prototype.init = function(){
-	//console.log(this.data);
+
 	this.loadData(this.datakey, this.loadWidgets, this.setDefaults);
 
 	this.$myCols = $('.row');
-	console.log('-----');
-	console.log(this.$myCols)
 	var that = this;
 	$('#page_options button').on('click', {that: that}, triggerWidget);
 	//$('body').on('click', $('#page_options button'), triggerWidget);
 };
 
-
 pageHandeler.prototype.loadWidgets = function(){
-		
-		console.log('loadWidgets');
-		console.log(this.data);
 
-		NBAschedule.handler();
-		NFLschedule.handler();
+	NBAschedule.handler();
+	NFLschedule.handler();
 
-		if(this.data['NFL']) {
-		//NFLschedule.handler();
-		}
-		else {
-			$('#page_options #NFL-button').trigger("click");
-		}
+	if(this.data['NFL']) {
+	//NFLschedule.handler();
+	}
+	else {
+		$('#page_options #NFL-button').trigger("click");
+	}
 
-		if(this.data['NBA']) {
-		//NBAschedule.handler();
-		}
-		else {
-		$('#page_options #NBA-button').trigger("click");
-		}
+	if(this.data['NBA']) {
+	//NBAschedule.handler();
+	}
+	else {
+	$('#page_options #NBA-button').trigger("click");
+	}
 
-		if(this.data['Links']) {
-		}
-		else {
-			$('#page_options #Links-button').trigger("click");
-		}
+	if(this.data['Links']) {
+	}
+	else {
+		$('#page_options #Links-button').trigger("click");
+	}
 };
 
 pageHandeler.prototype.setDefaults = function(){
 
-	console.log('setDefaults');
 	this.data['NBA'] = true;
 	this.data['NFL'] = true;
 	this.data['Links'] = true;
@@ -71,14 +66,12 @@ pageHandeler.prototype.setDefaults = function(){
 
 function triggerWidget(event) {
 
-	console.log(event.data);
 	var that = event.data.that;
 
 	$(this).find('span').toggleClass('glyphicon-ok').toggleClass('glyphicon-remove');
 	var id = "#" + $(this).attr('id').split('-')[0] + "_col";
 	$(id).toggle();
 	resizeColumns();
-
 
 	if($(this).find('span').hasClass('glyphicon-ok')) {
 		that.data[$(this).attr('id').split('-')[0]] = true;

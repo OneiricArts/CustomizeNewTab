@@ -1,12 +1,9 @@
-var debug = true;
 
 var Bookmarks = (function(){
 	
 	$( document ).ready(function() {
 		displayLocal();
 		addHooks();
-		console.log('test');
-
 	});
 	
 	function addBookmark() {
@@ -48,19 +45,13 @@ var Bookmarks = (function(){
 	function saveLocal() {
 
 		var $list = $('#bookmark-list').html();
-		//console.log($list);
-		chrome.storage.local.set({'localBookmarks': $list}, 
-			function() {
-				if(debug){console.log('Settings saved');}
-		});
+		chrome.storage.local.set({'localBookmarks': $list});
 	}
 
 
 	function displayLocal() {
 		chrome.storage.local.get('localBookmarks', function (result) {
 			
-			if(debug){console.log('handler...');}
-
 			// if (false && result.localBookmarks) will reset
 			if(result.localBookmarks) {
 				$('#bookmark-list').html("");
