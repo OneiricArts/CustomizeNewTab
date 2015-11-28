@@ -41,7 +41,9 @@ var NBAschedule = (function(){
 	function cacheButtons() {
 		var $reset_games = $('#NBA-panel #reset_games');
 		$reset_games.click(resetGames);
-		$('#NBA-panel #standings-btn').click(standings);
+		$('#NBA-panel #standings-btn').on('click', standings);
+
+		$('body').on('click', '#NBA-panel #remove-game-btn', removeGame);
 	}
 
 	function cacheGames() {
@@ -203,13 +205,13 @@ var NBAschedule = (function(){
 		});
 	}
 
-	function removeGame(event) {
-
+	function removeGame() {
 		for (var i = 0; i < localJsonObj.sports_content.games.game.length; i++) {
-			if(localJsonObj.sports_content.games.game[i].id == event.data.id) 
+			var targetId = $(this).closest('tr').attr('id');
+			if(localJsonObj.sports_content.games.game[i].id == targetId) 
 			{
 				localJsonObj.sports_content.games.game.splice(i, 1);
-				$games[event.data.id].remove();
+				$games[targetId].remove();
 				break;
 			}
 		}
@@ -249,7 +251,7 @@ var NBAschedule = (function(){
 
 
 		$.getJSON(url, function(data) {
-			if(false && date && date == 
+			if( date && date == 
 				data.sports_content.sports_meta.season_meta.calendar_date){
 			}
 			else {
