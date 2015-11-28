@@ -206,6 +206,7 @@ var NBAschedule = (function(){
 	}
 
 	function removeGame() {
+		
 		for (var i = 0; i < localJsonObj.sports_content.games.game.length; i++) {
 			var targetId = $(this).closest('tr').attr('id');
 			if(localJsonObj.sports_content.games.game[i].id == targetId) 
