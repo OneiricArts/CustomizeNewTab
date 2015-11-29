@@ -1,11 +1,15 @@
 // Define the Person constructor
 var Base = function() {
+	this.initialized = false;
 	this.data = {};
 	this.datakey;
 	this.domElement;
 	//console.log(this)
 };
 
+Base.prototype.init = function () {
+	this.initialized = true;
+}
 
 Base.prototype.trigger = function (showOrHide) {
 	if(showOrHide) {
@@ -29,13 +33,11 @@ Base.prototype.loadData = function (key, callbackSuccess, callbackFail) {
 			callbackFail.call(this);
 		}
 		//this.functionName();
-
 	}.bind(this));
 };
 
 Base.prototype.saveData = function(callback) {
 	
-	//console.log(this.data);
 	var obj = {};
 	obj[this.datakey] = this.data;
 

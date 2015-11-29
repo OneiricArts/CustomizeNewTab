@@ -200,6 +200,9 @@ var NFLschedule = (function(){
 
 		else if(game.q == 'F' || game.q == 'FO') {
 			$scores.html(game.hs + '-' + game.vs + ' [' + game.q + ']');
+			$time.html(game.d + " " + game.t);
+			$games[game.eid].find('#home_team').html(game.hnn);
+			$games[game.eid].find('#away_team').html(game.vnn);
 		}
 
 		if(game.p) {
