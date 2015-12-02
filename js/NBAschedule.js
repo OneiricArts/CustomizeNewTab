@@ -16,6 +16,13 @@ var NBAschedule = (function(){
 	var mm = today.getMonth()+1; //January is 0!
 	var yyyy = today.getFullYear();
 
+	function twoDigits(n) {
+		return n<10? '0'+n:''+n
+	}
+
+	dd = twoDigits(dd);
+	mm = twoDigits(mm);
+
 	//dd = '09';
 	//dd = '25';
 	//var url = 'http://data.nba.com/json/cms/noseason/scoreboard/' 
