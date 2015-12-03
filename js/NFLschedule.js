@@ -4,7 +4,7 @@ var NFLschedule = (function(){
 	
 	var localJsonObj;
 	var $games = {};
-	var url = 'http://www.nfl.com/liveupdate/scorestrip/ss.xml'
+	var url = 'http://www.nfl.com/liveupdate/scorestrip/ss.json'
 	var xhr = new XMLHttpRequest();
 
 	//$('#week_number').text("Week " + week_number);
@@ -44,7 +44,7 @@ var NFLschedule = (function(){
 
 		var $game_table = $('#game_table');
 
-		for (var i = 0; i < localJsonObj.gms.g.length; i++) {
+		for (var i = 0; i < localJsonObj.gms.length; i++) {
 
 			var $game_item = $game_table.find('#game_item_template').clone();
 			$game_item.removeAttr('id');
@@ -54,7 +54,7 @@ var NFLschedule = (function(){
 			var $home_score = $game_item.find('#score');
 			var $game_time = $game_item.find('#time');
 
-			var game = localJsonObj.gms.g[i];
+			var game = localJsonObj.gms[i];
 
 			$home_team.html(game.hnn);
 			$away_team.html(game.vnn);
@@ -85,14 +85,13 @@ var NFLschedule = (function(){
 	*/
 	function getNewWeekData(exists) {
 
-		xhr.open("GET", url, true);		
-		xhr.onreadystatechange = function() {
+		$.getJSON(url, function(data) {
 
-			var response = xhr.responseXML;
+			var response = data;
 
 			if(response) {
 
-				var jsonObj = $.xml2json(response);
+				var jsonObj = response;
 
 				// same week, don't update
 				if(exists && (localJsonObj.gms.w == jsonObj.gms.w) ) {}
@@ -105,50 +104,20 @@ var NFLschedule = (function(){
 
 				displayAllDays();
 			}
-		}
-		xhr.send();
+		});
 	}
 
 	function updateGames() { 
 
-		xhr.open("GET", url, true);		
-		xhr.onreadystatechange = function() {
-			
-			var response = xhr.responseXML;
-			if(response) {
-				var jsonObj = $.xml2json(response);
-
-				/*var done = ['F', 'FO'];
-				var playing = ['1', '2', '3', '4'];
-
-				for (var i = 0; i < jsonObj.gms.g.length; i++) {
-					
-					var game = jsonObj.gms.g[i];
-
-					for (var j = 0; j < localJsonObj.gms.g.length; j++) {
-
-						var lgame = localJsonObj.gms.g[j];
-
-						if(lgame.eid == game.eid) {
-
-							if( (done.indexOf(lgame.q) < 0) &&
-								(done.indexOf(game.q) >= 0) ) {
-								updateScore(game, j);
-							}
-
-							if( playing.indexOf(game.q) >= 0 ) {
-								updateScore(game, j)
-							}
-							break;
-						}
-					}
-				}*/
+		$.getJSON(url, function(data) {
+			if(data) {
+				var jsonObj = data;
 
 				var i,j;	// i for old, j for new
-				for (i=0, j=0; j < localJsonObj.gms.g.length; i++) {
+				for (i=0, j=0; j < localJsonObj.gms.length; i++) {
 
-					var new_game = jsonObj.gms.g[i];
-					var old_game = localJsonObj.gms.g[j];
+					var new_game = jsonObj.gms[i];
+					var old_game = localJsonObj.gms[j];
 
 					styleScores(old_game);
 
@@ -163,8 +132,7 @@ var NFLschedule = (function(){
 					}
 				}
 			}
-		}
-		xhr.send();
+		});
 	}
 
 	function styleScores(game) {
@@ -186,7 +154,7 @@ var NFLschedule = (function(){
 
 		var $time = $games[game.eid].find('#time');
 
-		if(game.rz && (parseInt(game.rz) !== 0) ) {
+		if(parseInt(game.rz) > 0) {
 			$scores.append(' [RZ]')
 		}
 
@@ -220,15 +188,15 @@ var NFLschedule = (function(){
 		styleScores(game);
 
 		// update local info
-		localJsonObj.gms.g[index] = game;
+		localJsonObj.gms[index] = game;
 		saveLocalData();
 	}
 
 	function removeGame(event) {
-		for (var i = 0; i < localJsonObj.gms.g.length; i++) {
-			if(localJsonObj.gms.g[i].eid == event.data.eid) 
+		for (var i = 0; i < localJsonObj.gms.length; i++) {
+			if(localJsonObj.gms[i].eid == event.data.eid) 
 			{
-				localJsonObj.gms.g.splice(i, 1);
+				localJsonObj.gms.splice(i, 1);
 				break;
 			}
 		}
