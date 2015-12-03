@@ -51,6 +51,17 @@ var NBAschedule = (function(){
 		$('#NBA-panel #standings-btn').on('click', standings);
 
 		$('body').on('click', '#NBA-panel #remove-game-btn', removeGame);
+
+		$('body').on('hidden.bs.collapse', '.nba-collapse', function (e) {
+		console.log('Event fired on #' + e.currentTarget.id);
+		//console.log($(this).attr('class'));
+		});
+
+		$('body').on('hidden.bs.modal', '#NBA-standings', function (e) {
+		console.log('Event fired on #' + e.currentTarget.id);
+		//console.log($(this).attr('class'));
+		});
+
 	}
 
 	function cacheGames() {

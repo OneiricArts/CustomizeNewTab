@@ -159,7 +159,7 @@
 									<script id="NBA-schedule-template" type="text/x-handlebars-template">
 										{{#games}}
 										<tr id={{id}} data-toggle="collapse" 
-										data-target="#NBA-game-info">
+										data-target=#collapse-{{id}}>
 											<td id="time"> {{period_time.period_status }} 
 												{{period_time.game_clock}}</td>
 											<td id="home_team">{{home.nickname}}</td>
@@ -169,6 +169,17 @@
 											<td><button type="button" id="remove-game-btn" class="btn btn-default btn-xs">
 												<span class="glyphicon glyphicon-trash"></span></button></td>
 										</tr>
+										<tr><td colspan="6" style="padding: 0" class="nba-collapse" id=c{{id}}>
+										<div id=collapse-{{id}} class="collapse">
+										<span>Channels:
+										{{#each broadcasters.tv.broadcaster}}
+										    {{display_name}}
+										    {{#unless @last}}|{{/unless}}
+										{{/each}}
+										</span>
+										</div>
+										</td></tr>
+
 										{{/games}}
 									</script>
 								    
@@ -189,7 +200,7 @@
 
 								</div>
 
-								<div id="NBA-game-info" class="collapse">
+<!-- 								<div id="NBA-game-info" class="collapse">
 									<h4 id="header">Game info</h4>
 									<div id="pbp">
 										
@@ -206,8 +217,8 @@
 											<tbody></tbody>
 										</table>
 
-									</div>
-								</div>
+									</div> -->
+								<!-- </div> -->
 
 		                	</div>
 
