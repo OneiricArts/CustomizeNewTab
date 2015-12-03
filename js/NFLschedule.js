@@ -5,7 +5,6 @@ var NFLschedule = (function(){
 	var localJsonObj;
 	var $games = {};
 	var url = 'http://www.nfl.com/liveupdate/scorestrip/ss.json'
-	var xhr = new XMLHttpRequest();
 
 	//$('#week_number').text("Week " + week_number);
 	//week_number = jsonObj.gms.w;

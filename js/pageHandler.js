@@ -21,7 +21,7 @@ pageHandeler.prototype.constructor = pageHandeler;
 
 pageHandeler.prototype.init = function(){
 
-	this.loadData(this.datakey, this.loadWidgets, this.setDefaults);
+	this.loadData(this.loadWidgets, this.setDefaults);
 
 	this.$myCols = $('.row');
 	var that = this;
@@ -32,7 +32,10 @@ pageHandeler.prototype.init = function(){
 pageHandeler.prototype.loadWidgets = function(){
 
 	NBAschedule.handler();
-	NFLschedule.handler();
+	//NFLschedule.handler();
+
+	var nfl = new NFL();
+	nfl.init();
 
 	if(this.data['NFL']) {
 	//NFLschedule.handler();

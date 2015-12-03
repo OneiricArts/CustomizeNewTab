@@ -20,12 +20,12 @@ Base.prototype.trigger = function (showOrHide) {
 	}
 };
 
-Base.prototype.loadData = function (key, callbackSuccess, callbackFail) {
+Base.prototype.loadData = function (callbackSuccess, callbackFail) {
 
-	chrome.storage.local.get(key, function(result) {
+	chrome.storage.local.get(this.key, function(result) {
 
-		if(result[key]) {
-			this.data = result[key];
+		if(result[this.datakey]) {
+			this.data = result[this.datakey];
 			//console.log(this.data)
 			callbackSuccess.call(this);
 		}
