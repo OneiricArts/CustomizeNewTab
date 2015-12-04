@@ -10,20 +10,27 @@ function Sports() {
 	this.$games = {};
 
 	this.$games_identifier;
+
+	this.$game_table;
+	this.$no_games_message;
 };
 
 Sports.prototype = Object.create(Base.prototype); // See note below
 Sports.prototype.constructor = Sports;
 
 Sports.prototype.init = function() {
-	this.displaySchedule();
+	this.loadLocalSchedule();
+
 	this.specialInit();
+
+	this.$no_games_message = '<span class="glyphicon glyphicon-bell"></span> No Games Today';
 };
 
 Sports.prototype.specialInit = function() {};
 
 Sports.prototype.getData = function(url, callback) {
 
+	console.log('getting from internet.');
 	$.getJSON(url, function(result) {
 
 		if(result) {
@@ -45,36 +52,49 @@ Sports.prototype.getData = function(url, callback) {
 		no: get data & write to dom
 */
 
-Sports.prototype.displaySchedule = function() {
-	this.loadLocalSchedule();
-};
 
 Sports.prototype.getDataSchedule = function() {
-	this.getData(this.schedule_url, this.getSchedule);
+	this.getData(this.schedule_url, this.displaySchedule);
 };
 
+/* only done on start */
 Sports.prototype.loadLocalSchedule = function() {
-
 	this.loadData(this.displayLocalData, this.getDataSchedule);
 };
 
 Sports.prototype.displayLocalData = function() {
 	this.writeScheduleToDOM()
-	this.getData(this.schedule_url, this.getSchedule);
+	this.getDataSchedule();
 };
 
-Sports.prototype.getSchedule = function(newData) {
+Sports.prototype.displaySchedule = function(newData) {
 
+	// display new data
 	if(this.dataOutOfDate(newData)) {
 		this.data = newData;
 		this.saveData(this.writeScheduleToDOM());
 	} 
 
+	// display old data
 	else {
-		this.getData(this.schedule_url, this.updateEachGame);
+		//this.getData(this.schedule_url, this.updateEachGame);
 	}
 };
 
+Sports.prototype.initWriteScheduleToDOM = function() {
+	this.writeScheduleToDOM();
+	
+}
+
+Sports.prototype.writeScheduleToDOM = function() {
+	
+	if(this.data.gms.length == 0) {
+		this.$game_table.html(this.$no_games_message);
+		return;
+	}
+	this.writeScheduleToDOM2();
+	this.cacheScheduleActions();
+};
 
 /* FUNCTIONS THAT NEED TO BE OVERWRITTEN */
 
@@ -89,13 +109,20 @@ Sports.prototype.dataOutOfDate = function(newData) {};
 /*
 	write the schedule to the dom 
 */
-Sports.prototype.writeScheduleToDOM = function() {};
+Sports.prototype.writeScheduleToDOM2 = function() {};
+
+Sports.prototype.cacheScheduleActions = function() {};
 
 /*
 	Check individual Games for chances
 */
 Sports.prototype.updateEachGame = function(newData) {};
 
+
+Sports.prototype.resetSchedule = function() {
+	this.data = null;
+	this.saveData(this.getDataSchedule);
+};
 
 
 /* UNIVERSAL DOM MANIPULATION */
@@ -110,4 +137,13 @@ Sports.prototype.cacheGames = function(callback) {
 	$games = games;
 };
 
+Sports.prototype.displayTemplate = function($template, dataKey, dataObj, $element) {
+
+	var source = $template;
+	var template = Handlebars.compile(source);
+	var data = {};
+	data[dataKey] = dataObj;
+	var output = template(data);
+	$element.html(output);
+};
 
