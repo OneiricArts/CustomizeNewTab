@@ -94,6 +94,7 @@ Sports.prototype.writeScheduleToDOM = function() {
 	}
 	this.writeScheduleToDOM2();
 	this.cacheScheduleActions();
+	this.formatScheduleGames();
 };
 
 /* FUNCTIONS THAT NEED TO BE OVERWRITTEN */
@@ -117,6 +118,8 @@ Sports.prototype.cacheScheduleActions = function() {};
 	Check individual Games for chances
 */
 Sports.prototype.updateEachGame = function(newData) {};
+
+Sports.prototype.formatScheduleGames = function() {};
 
 
 Sports.prototype.resetSchedule = function() {
@@ -146,4 +149,7 @@ Sports.prototype.displayTemplate = function($template, dataKey, dataObj, $elemen
 	var output = template(data);
 	$element.html(output);
 };
+
+
+
 
