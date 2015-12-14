@@ -15,6 +15,8 @@ NFL.prototype.constructor = NFL;
 NFL.prototype.specialInit = function() {
 	this.$game_table = $('#NFL_col #NFL-schedule-table');
 	this.$game_template = $("#NFL-schedule-template").html();
+
+	this.playbyplay();
 };
 
 NFL.prototype.dataOutOfDate = function(newData) {
@@ -78,7 +80,7 @@ NFL.prototype.formatScheduleGames = function() {
 		var $time = this.$games[game.eid].find('#time');
 
 		if(parseInt(game.rz) > 0) {
-			$scores.append(' [RZ]')
+			//$scores.append(' [RZ]')
 		}
 
 		/* game quarter */
@@ -87,12 +89,48 @@ NFL.prototype.formatScheduleGames = function() {
 		}
 
 		else if(game.q == 'F' || game.q == 'FO') {
-			$time.html(game.d + " " + game.q);
+			$time.html(game.d + ", " + game.q);
 		}
 
 		else if(game.q !== 'P'){
 			$time.html(game.q + "Q");		
 		}
+
+		else {
+			//$time.html(game.q);	
+		}
 		/* /game quarter */
 	}
+};
+
+NFL.prototype.playbyplay = function() {
+
+	id = 2015120300; // game.eid
+
+	var pbp_url = 'http://www.nfl.com/liveupdate/game-center/'+id+'/'+id+'_gtd.json'
+	
+	$.getJSON(pbp_url, function(result) {
+
+		var drives = result[id]['drives'];
+		var curr = drives.crntdrv;
+		var plays = drives[curr].plays;
+
+		keys = []
+		for(k in plays) {
+			keys.push(parseInt(k));
+		}
+		keys.sort();
+		console.log(keys)
+
+		for (var i = 0; i < keys.length; i++) {
+			var desc = plays[keys[i]].desc;
+			var down = plays[keys[i]].down;
+			var ydstogo = plays[keys[i]].ydstogo;
+			var ydsnet = plays[keys[i]].ydsnet;
+
+			console.log(ydsnet);
+
+			console.log(down  +'|' + ydstogo + '|' + ydsnet + '| --' + desc);
+		};
+	});
 };

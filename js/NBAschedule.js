@@ -270,8 +270,9 @@ var NBAschedule = (function(){
 
 
 		$.getJSON(url, function(data) {
+
 			if( date && date == 
-				data.sports_content.sports_meta.season_meta.calendar_date){
+				data.sports_content.sports_meta.date_time.split(' ')[0]){
 			}
 			else {
 			  	localJsonObj = data;
@@ -292,7 +293,7 @@ var NBAschedule = (function(){
 			if(result.NBAgamesJson) {
 				localJsonObj = result.NBAgamesJson;
 				displayAllDays();
-				getNewWeekData(localJsonObj.sports_content.sports_meta.season_meta.calendar_date);
+				getNewWeekData(localJsonObj.sports_content.sports_meta.date_time.split(' ')[0]);
 			}
 			else {
 				getNewWeekData();
