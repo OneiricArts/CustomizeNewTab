@@ -95,6 +95,11 @@ var NBAschedule = (function(){
 		}
 
 		cacheGames();
+
+		for (var i = 0; i < localJsonObj.sports_content.games.game.length; i++) {
+			styleScores(localJsonObj.sports_content.games.game[i]);
+		}
+
 		updateScores();
 	}
 
@@ -231,6 +236,7 @@ var NBAschedule = (function(){
 			{
 				localJsonObj.sports_content.games.game.splice(i, 1);
 				$games[targetId].remove();
+				$('#c'+targetId).remove();
 				break;
 			}
 		}
@@ -270,13 +276,22 @@ var NBAschedule = (function(){
 
 
 		$.getJSON(url, function(data) {
-
-			if( date && date == 
-				data.sports_content.sports_meta.date_time.split(' ')[0]){
+			console.log('----');
+			console.log(yyyy + mm + dd === date)
+			console.log(data)
+			console.log('----');
+			
+			if( date && date === yyyy + mm + dd){
+				//data.sports_content.sports_meta.season_meta.calendar_date){
+				//data.sports_content.sports_meta.date_time.split(' ')[0]){
+				/*
+					the date's are wonky .. check start date of game[0], or against current date
+				*/	
 			}
 			else {
 			  	localJsonObj = data;
 			  	saveLocalData();
+			  	console.log('sds')
 			  	displayAllDays(true);
 		  	}
 		});
@@ -293,7 +308,8 @@ var NBAschedule = (function(){
 			if(result.NBAgamesJson) {
 				localJsonObj = result.NBAgamesJson;
 				displayAllDays();
-				getNewWeekData(localJsonObj.sports_content.sports_meta.date_time.split(' ')[0]);
+				//getNewWeekData(localJsonObj.sports_content.sports_meta.date_time.split(' ')[0]);
+				getNewWeekData(localJsonObj.sports_content.sports_meta.season_meta.calendar_date);
 			}
 			else {
 				getNewWeekData();

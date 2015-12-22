@@ -16,7 +16,7 @@ NFL.prototype.specialInit = function() {
 	this.$game_table = $('#NFL_col #NFL-schedule-table');
 	this.$game_template = $("#NFL-schedule-template").html();
 
-	this.playbyplay();
+	//this.playbyplay();
 };
 
 NFL.prototype.dataOutOfDate = function(newData) {
@@ -82,7 +82,7 @@ NFL.prototype.formatScheduleGames = function() {
 		if(parseInt(game.rz) > 0) {
 			//$scores.append(' [RZ]')
 		}
-
+		
 		/* game quarter */
 		if(game.q == 'H') {
 			$time.html('@Half');	
@@ -101,6 +101,27 @@ NFL.prototype.formatScheduleGames = function() {
 		}
 		/* /game quarter */
 	}
+};
+
+NFL.prototype.updateEachGame = function(newData) {
+	console.log('teasdfsdfst')
+
+	var counter = 0;
+	var i,j;	// i for old, j for new
+	for (i=0, j=0; j < this.data.gms.length; i++) {
+
+		var new_game = newData.gms[i];
+		var old_game = this.data.gms[j];
+
+		if(new_game.eid == old_game.eid) {
+			this.data.gms[j] = new_game;
+			j++;
+			counter++;
+		}
+	}
+	this.saveData();
+	this.writeScheduleToDOM();
+	console.log(counter);
 };
 
 NFL.prototype.playbyplay = function() {

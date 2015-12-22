@@ -12,7 +12,7 @@ function Sports() {
 	this.$games_identifier;
 
 	this.$game_table;
-	this.$no_games_message;
+	this.$no_games_message = '<span class="glyphicon glyphicon-bell"></span> No Games Today';
 };
 
 Sports.prototype = Object.create(Base.prototype); // See note below
@@ -22,13 +22,11 @@ Sports.prototype.init = function() {
 	this.loadLocalSchedule();
 
 	this.specialInit();
-
-	this.$no_games_message = '<span class="glyphicon glyphicon-bell"></span> No Games Today';
 };
 
 Sports.prototype.specialInit = function() {};
 
-Sports.prototype.getData = function(url, callback) {
+Sports.prototype.getJsonData = function(url, callback) {
 
 	console.log('getting from internet.');
 	$.getJSON(url, function(result) {
@@ -53,9 +51,7 @@ Sports.prototype.getData = function(url, callback) {
 */
 
 
-Sports.prototype.getDataSchedule = function() {
-	this.getData(this.schedule_url, this.displaySchedule);
-};
+
 
 /* only done on start */
 Sports.prototype.loadLocalSchedule = function() {
@@ -65,6 +61,10 @@ Sports.prototype.loadLocalSchedule = function() {
 Sports.prototype.displayLocalData = function() {
 	this.writeScheduleToDOM()
 	this.getDataSchedule();
+};
+
+Sports.prototype.getDataSchedule = function() {
+	this.getJsonData(this.schedule_url, this.displaySchedule);
 };
 
 Sports.prototype.displaySchedule = function(newData) {
@@ -77,7 +77,7 @@ Sports.prototype.displaySchedule = function(newData) {
 
 	// display old data
 	else {
-		//this.getData(this.schedule_url, this.updateEachGame);
+		this.getJsonData(this.schedule_url, this.updateEachGame);
 	}
 };
 
@@ -130,14 +130,15 @@ Sports.prototype.resetSchedule = function() {
 
 /* UNIVERSAL DOM MANIPULATION */
 Sports.prototype.cacheGames = function(callback) {
-	var games = [];
-	var id = this.$games_identifier
+	var games = {};
+	var id = this.$games_identifier;
 
 	$(id).each(function(){
 		games[$(this).attr('id')] = $(this);
 	});
 
-	$games = games;
+	this.$games = games;
+	console.log(this.$games);
 };
 
 Sports.prototype.displayTemplate = function($template, dataKey, dataObj, $element) {
