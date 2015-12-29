@@ -32,14 +32,46 @@ Sports.prototype.getJsonData = function(url, callback) {
 	$.getJSON(url, function(result) {
 
 		if(result) {
-			callback.call(this, result);
+			this.getScores.call(this, result, callback);
+			//callback.call(this, result);
 		}
 		else {
 			// TODO handle error
 		}
 	}.bind(this));
 	// TODO handle timeout, and network error
+
 };
+
+Sports.prototype.getScores = function(schedule, callback) {
+	console.log('--->>>>')
+	console.log(schedule)
+		var url = 'http://www.nfl.com/liveupdate/scores/scores.json'
+		$.getJSON(url, function(result) {
+
+		if(result) {
+			for (var i = 0; i < schedule.gms.length; i++) {
+				//console.log(result[schedule.gms[i].eid])
+				schedule.gms[i]['extrainfo'] = result[schedule.gms[i].eid];
+
+				if(schedule.gms[i].q == 'F' || schedule.gms[i].q == 'FO') {
+					schedule.gms[i]['done'] = true; 
+				}
+
+				if(schedule.gms[i]['extrainfo'].home.score['1'] == null) {
+					schedule.gms[i]['noscoretable'] = true;
+				}
+			}
+
+			console.log(schedule.gms);
+			callback.call(this,schedule);
+		}
+		else {
+			// TODO handle error
+		}
+	}.bind(this));
+};
+
 
 /*
 	Display the Schedule
@@ -70,7 +102,7 @@ Sports.prototype.getDataSchedule = function() {
 Sports.prototype.displaySchedule = function(newData) {
 
 	// display new data
-	if(this.dataOutOfDate(newData)) {
+	if(true || this.dataOutOfDate(newData)) {
 		this.data = newData;
 		this.saveData(this.writeScheduleToDOM());
 	} 

@@ -69,6 +69,13 @@ var Bookmarks = (function(){
 
 		var $editBookmarks = $('#editBookmarks');
 		$editBookmarks.click(editBookmarks);
+
+		/*$('#bookmark-panel').on('click', 'a', function(event){
+			console.log('00000000000')
+			event.preventDefault();
+			console.log($(this).attr("href"))
+			chrome.tabs.create({ url: $(this).attr("href") });
+		});*/
 	}
 	/* API for other js code */
 	return {

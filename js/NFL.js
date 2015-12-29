@@ -21,6 +21,7 @@ NFL.prototype.specialInit = function() {
 
 NFL.prototype.dataOutOfDate = function(newData) {
 
+	return false;
 	if(this.data == null) {return true;}
 	return !((this.data.gms) && this.data.gms.w == newData.gms.w);
 };
@@ -57,7 +58,7 @@ NFL.prototype.removeGame = function(event) {
 		{
 			that.data.gms.splice(i, 1);
 			that.$games[targetId].remove();
-			//$(this).closest('tr').remove();
+			$('#c'+targetId).remove();
 			break;
 		}
 	}
@@ -124,34 +125,3 @@ NFL.prototype.updateEachGame = function(newData) {
 	console.log(counter);
 };
 
-NFL.prototype.playbyplay = function() {
-
-	id = 2015120300; // game.eid
-
-	var pbp_url = 'http://www.nfl.com/liveupdate/game-center/'+id+'/'+id+'_gtd.json'
-	
-	$.getJSON(pbp_url, function(result) {
-
-		var drives = result[id]['drives'];
-		var curr = drives.crntdrv;
-		var plays = drives[curr].plays;
-
-		keys = []
-		for(k in plays) {
-			keys.push(parseInt(k));
-		}
-		keys.sort();
-		console.log(keys)
-
-		for (var i = 0; i < keys.length; i++) {
-			var desc = plays[keys[i]].desc;
-			var down = plays[keys[i]].down;
-			var ydstogo = plays[keys[i]].ydstogo;
-			var ydsnet = plays[keys[i]].ydsnet;
-
-			console.log(ydsnet);
-
-			console.log(down  +'|' + ydstogo + '|' + ydsnet + '| --' + desc);
-		};
-	});
-};

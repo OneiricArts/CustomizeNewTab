@@ -25,7 +25,7 @@ var NBAschedule = (function(){
 
 	//dd = '09';
 	//dd = '25';
-	//var url = 'http://data.nba.com/json/cms/noseason/scoreboard/' 
+	//var url = 'http://data.nba.com/json/cms/noseason/scoreboard/20151212/games.json' 
 
 	var url = 'http://data.nba.com/5s/json/cms/noseason/scoreboard/' 
 	+ yyyy + mm + dd + '/games.json';
