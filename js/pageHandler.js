@@ -37,6 +37,9 @@ pageHandeler.prototype.loadWidgets = function(){
 	var nba = new NBA();
 	nba.init();
 
+	var links = new Links();
+	links.init();
+
 	if(this.data['NFL']) {
 	//NFLschedule.handler();
 	}

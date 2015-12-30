@@ -114,15 +114,7 @@ Sports.prototype.cacheGames = function(callback) {
 	console.log(this.$games);
 };
 
-Sports.prototype.displayTemplate = function($template, dataKey, dataObj, $element) {
 
-	var source = $template;
-	var template = Handlebars.compile(source);
-	var data = {};
-	data[dataKey] = dataObj;
-	var output = template(data);
-	$element.html(output);
-};
 
 
 

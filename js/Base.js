@@ -11,15 +11,6 @@ Base.prototype.init = function () {
 	this.initialized = true;
 }
 
-Base.prototype.trigger = function (showOrHide) {
-	if(showOrHide) {
-		this.domElement.trigger(showOrHide);
-	}
-	else {
-		this.domElement.trigger();
-	}
-};
-
 Base.prototype.loadData = function (callbackSuccess, callbackFail) {
 
 	chrome.storage.local.get(this.key, function(result) {
@@ -44,4 +35,14 @@ Base.prototype.saveData = function(callback) {
 	chrome.storage.local.set( obj, function() {
 		if(callback){callback.call(this);}
 	}.bind(this));
+};
+
+Base.prototype.displayTemplate = function($template, dataKey, dataObj, $element) {
+
+	var source = $template;
+	var template = Handlebars.compile(source);
+	var data = {};
+	data[dataKey] = dataObj;
+	var output = template(data);
+	$element.html(output);
 };

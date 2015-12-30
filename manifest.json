@@ -8,7 +8,8 @@
 	"permissions": [
 		"storage",
 		"http://www.nfl.com/",
-		"<all_urls>"
+		"<all_urls>",
+		"topSites"
 	],
 	"icons": { "16": "icon16.png",
           "128": "icon128.png" },
