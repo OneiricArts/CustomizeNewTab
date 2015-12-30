@@ -7,31 +7,52 @@ function NFL() {
 
 	this.datakey = 'NFL_DATA';
 	this.schedule_url = 'http://www.nfl.com/liveupdate/scorestrip/ss.json';
+
+	this.$game_table = $('#NFL_col #NFL-schedule-table');
+	this.$game_template = $("#NFL-schedule-template").html();
 };
 
 NFL.prototype = Object.create(Sports.prototype); // See note below
 NFL.prototype.constructor = NFL;
 
-NFL.prototype.specialInit = function() {
-	this.$game_table = $('#NFL_col #NFL-schedule-table');
-	this.$game_template = $("#NFL-schedule-template").html();
+NFL.prototype.massageData = function(data, callback) {
 
-	//this.playbyplay();
+	var url = 'http://www.nfl.com/liveupdate/scores/scores.json'
+	$.getJSON(url, function(result) {
+
+		for (var i = 0; i < data.gms.length; i++) {
+
+			data.gms[i]['extrainfo'] = result[data.gms[i].eid];
+
+			if(data.gms[i].q == 'F' || data.gms[i].q == 'FO') {
+				data.gms[i]['done'] = true; 
+			}
+
+			if(data.gms[i]['extrainfo'].home.score['1'] == null) {
+				data.gms[i]['noscoretable'] = true;
+			}
+		}
+
+		//console.log(data.gms);
+		callback.call(this,data);		
+	}.bind(this));
 };
 
 NFL.prototype.dataOutOfDate = function(newData) {
 
-	return false;
 	if(this.data == null) {return true;}
-	return !((this.data.gms) && this.data.gms.w == newData.gms.w);
+	if(this.data.w == null) {return true;}
+	return !(this.data.w == newData.w);
 };
 
-NFL.prototype.writeScheduleToDOM2 = function() {
-	this.displayTemplate(this.$game_template, 'games', this.data.gms, this.$game_table.find('tbody'));
+NFL.prototype.writeToTemplate = function() {
+
+	this.displayTemplate(this.$game_template, 'games', this.data.gms, 
+		this.$game_table.find('tbody'));
 };
 
 
-Sports.prototype.cacheScheduleActions = function() {
+NFL.prototype.cacheScheduleActions = function() {
 
 	var games = {};
 	$('#NFL-schedule-games tr').each(function(){
@@ -105,9 +126,9 @@ NFL.prototype.formatScheduleGames = function() {
 };
 
 NFL.prototype.updateEachGame = function(newData) {
-	console.log('teasdfsdfst')
+	//console.log('teasdfsdfst')
 
-	var counter = 0;
+/*	var counter = 0;
 	var i,j;	// i for old, j for new
 	for (i=0, j=0; j < this.data.gms.length; i++) {
 
@@ -122,6 +143,6 @@ NFL.prototype.updateEachGame = function(newData) {
 	}
 	this.saveData();
 	this.writeScheduleToDOM();
-	console.log(counter);
+	console.log(counter);*/
 };
 

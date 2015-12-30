@@ -8,8 +8,6 @@ var Bookmarks = (function(){
 	
 	function addBookmark() {
 		var $bookmark_list = $('#bookmark-list');
-
-		console.log($bookmark_list);
 		
 		var bookmark = "<a href='" + $('#bookmark_url').val() + 
 		"' class='list-group-item'>" + $('#bookmark_name').val() + "</a>"
@@ -20,7 +18,6 @@ var Bookmarks = (function(){
 
 	function editBookmarks() {
 
-		console.log($('#bookmark-list a'));
 		if($(this).hasClass("btn-danger")){ // was in edit mode, remove
 			$('#bookmark-list a').unbind("click"); // will remove preventDefault and removeLink
 			$(this).toggleClass('btn-danger',false);

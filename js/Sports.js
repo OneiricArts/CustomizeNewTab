@@ -12,6 +12,8 @@ function Sports() {
 	this.$games_identifier;
 
 	this.$game_table;
+	this.$game_template;
+
 	this.$no_games_message = '<span class="glyphicon glyphicon-bell"></span> No Games Today';
 };
 
@@ -20,96 +22,43 @@ Sports.prototype.constructor = Sports;
 
 Sports.prototype.init = function() {
 	this.loadLocalSchedule();
-
-	this.specialInit();
 };
-
-Sports.prototype.specialInit = function() {};
 
 Sports.prototype.getJsonData = function(url, callback) {
-
 	console.log('getting from internet.');
 	$.getJSON(url, function(result) {
-
-		if(result) {
-			this.getScores.call(this, result, callback);
-			//callback.call(this, result);
-		}
-		else {
-			// TODO handle error
-		}
+		this.massageData.call(this, result, callback);
 	}.bind(this));
 	// TODO handle timeout, and network error
-
 };
 
-Sports.prototype.getScores = function(schedule, callback) {
-	console.log('--->>>>')
-	console.log(schedule)
-		var url = 'http://www.nfl.com/liveupdate/scores/scores.json'
-		$.getJSON(url, function(result) {
-
-		if(result) {
-			for (var i = 0; i < schedule.gms.length; i++) {
-				//console.log(result[schedule.gms[i].eid])
-				schedule.gms[i]['extrainfo'] = result[schedule.gms[i].eid];
-
-				if(schedule.gms[i].q == 'F' || schedule.gms[i].q == 'FO') {
-					schedule.gms[i]['done'] = true; 
-				}
-
-				if(schedule.gms[i]['extrainfo'].home.score['1'] == null) {
-					schedule.gms[i]['noscoretable'] = true;
-				}
-			}
-
-			console.log(schedule.gms);
-			callback.call(this,schedule);
-		}
-		else {
-			// TODO handle error
-		}
-	}.bind(this));
-};
-
-
-/*
-	Display the Schedule
-	- local data?
-		yes: write to dom -> get data and check if local data out of date?
-			yes: save, and write to dom
-			no: update each game
-		no: get data & write to dom
-*/
-
-
-
-
-/* only done on start */
-Sports.prototype.loadLocalSchedule = function() {
-	this.loadData(this.displayLocalData, this.getDataSchedule);
-};
-
-Sports.prototype.displayLocalData = function() {
-	this.writeScheduleToDOM()
-	this.getDataSchedule();
-};
+Sports.prototype.massageData = function(data, callback) {};
 
 Sports.prototype.getDataSchedule = function() {
 	this.getJsonData(this.schedule_url, this.displaySchedule);
 };
 
+/* Step 1: Check for local data 
+   display that first, and then try to get new data
+*/
+Sports.prototype.loadLocalSchedule = function() {
+	this.loadData( function(){
+		this.writeScheduleToDOM();
+		this.getDataSchedule();
+	}, 
+	this.getDataSchedule);
+};
+
+/* if not same time frame, overwrite */
 Sports.prototype.displaySchedule = function(newData) {
 
-	// display new data
-	if(true || this.dataOutOfDate(newData)) {
+	if(this.dataOutOfDate(newData)) {
 		this.data = newData;
 		this.saveData(this.writeScheduleToDOM());
 	} 
 
-	// display old data
 	else {
-		this.getJsonData(this.schedule_url, this.updateEachGame);
+		this.updateEachGame(newData);
 	}
 };
 
@@ -119,30 +68,22 @@ Sports.prototype.initWriteScheduleToDOM = function() {
 }
 
 Sports.prototype.writeScheduleToDOM = function() {
-	
-	if(this.data.gms.length == 0) {
-		this.$game_table.html(this.$no_games_message);
-		return;
-	}
-	this.writeScheduleToDOM2();
+
+	this.writeToTemplate();
 	this.cacheScheduleActions();
 	this.formatScheduleGames();
 };
 
+Sports.prototype.writeToTemplate = function() {};
+
+
 /* FUNCTIONS THAT NEED TO BE OVERWRITTEN */
 
 /* 
-	do a check to see if local data is up-to-date. do not
-	want to overwrite, since we edit local data to keep track
-	of removed games 
 	@return true if needs updating
 */
 Sports.prototype.dataOutOfDate = function(newData) {};
 
-/*
-	write the schedule to the dom 
-*/
-Sports.prototype.writeScheduleToDOM2 = function() {};
 
 Sports.prototype.cacheScheduleActions = function() {};
 

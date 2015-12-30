@@ -31,11 +31,11 @@ pageHandeler.prototype.init = function(){
 
 pageHandeler.prototype.loadWidgets = function(){
 
-	NBAschedule.handler();
-	//NFLschedule.handler();
-
 	var nfl = new NFL();
 	nfl.init();
+
+	var nba = new NBA();
+	nba.init();
 
 	if(this.data['NFL']) {
 	//NFLschedule.handler();
