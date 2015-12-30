@@ -43,13 +43,14 @@
 			data-target=#collapse-{{eid}}>
 
 				<td id="time"> {{d}}, {{t}}</td>
-				<td id="home-team">{{hnn}}</td>
-				<td id="visitor-team">{{vnn}}</td>
-				<td id="home-score" align="center">{{hs}} </td> 
-				<td id="visitor-score" align="center">{{vs}}</td>
+				<td id="home-team" style="text-align:left">{{hnn}}</td>
+				<td id="home-score" style="text-align:left">{{hs}}</td> 
+				<td id="visitor-score" style="text-align:right">{{vs}}</td>
+				<td id="visitor-team" style="text-align:right">{{vnn}}</td>
 
-				<td><button type="button" id="remove-game-btn" class="btn btn-default btn-xs">
-					<span class="glyphicon glyphicon-trash"></span></button></td>
+				<td style="text-align:right">
+				<button type="button" id="remove-game-btn" class="btn btn-default btn-xs">
+				<span class="glyphicon glyphicon-trash"></span></button></td>
 			</tr>
 
 			<tr id=c{{eid}}><td colspan="6" style="padding: 0" class="nfl-collapse">
@@ -108,12 +109,15 @@
 			data-target=#collapse-{{id}}>
 				<td id="time"> {{period_time.period_status }} 
 					{{period_time.game_clock}}</td>
-				<td id="home_team">{{home.nickname}}</td>
-				<td id="away_team">{{visitor.nickname}}</td>
-				<td id="h-score" align="center">{{home.score}} </td> 
-				<td id="v-score" align="center">{{visitor.score}}</td>
-				<td><button type="button" id="remove-game-btn" class="btn btn-default btn-xs">
-					<span class="glyphicon glyphicon-trash"></span></button></td>
+				
+				<td id="home_team" style="text-align:left">{{home.nickname}}</td>
+				<td id="h-score" style="text-align:left">{{home.score}} </td> 
+				<td id="v-score" style="text-align:right">{{visitor.score}}</td>
+				<td id="away_team" style="text-align:right">{{visitor.nickname}}</td>
+
+				<td style="text-align:right">
+				<button type="button" id="remove-game-btn" class="btn btn-default btn-xs">
+				<span class="glyphicon glyphicon-trash"></span></button></td>
 			</tr>
 			
 			<tr><td colspan="6" style="padding: 0" class="nba-collapse" id=c{{id}}>
@@ -259,11 +263,12 @@
 									<thead>
 										<tr>
 											<th><span class="glyphicon glyphicon-time"></span></th>
-											<th>Home</th>
-											<th>Visitor</th>
-											<th style="text-align:center">H</th>
-											<th style="text-align:center">V</th>
-											<th><span class="glyphicon glyphicon-edit"></span></th>
+											<th style="text-align:left">Home</th>
+											<th style="text-align:left">H</th>
+											<th style="text-align:right">V</th>
+											<th style="text-align:right">Visitor</th>
+											<th style="text-align:right">
+											<span class="glyphicon glyphicon-edit"></span></th>
 										</tr>
 									</thead>
 									<tbody id="NFL-schedule-games">
@@ -302,11 +307,12 @@
 										<tr>
 											<th><span class="glyphicon glyphicon-time">
 											</span></th>
-											<th>Home</th>
-											<th>Visitor</th>
-											<th style="text-align:center">H</th>
-											<th style="text-align:center">V</th>
-											<th><span class="glyphicon glyphicon-edit">
+											<th style="text-align:left">Home</th>
+											<th style="text-align:left">H</th>
+											<th style="text-align:right">V</th>
+											<th style="text-align:right">Visitor</th>
+											<th style="text-align:right">
+											<span class="glyphicon glyphicon-edit">
 											</span></th>
 										</tr>
 									</thead>
