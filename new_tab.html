@@ -50,12 +50,11 @@
 
 				<td id="home-team" {{#if home-winning}}class="winning"{{/if}}
 				style="text-align:left">{{hnn}}</td>
+				<td id="visitor-team" {{#if visitor-winning}}class="winning"{{/if}}
+				style="text-align:left">{{vnn}}</td>
 
 				<td id="home-score" style="text-align:left">{{hs}}</td> 
-				<td id="visitor-score" style="text-align:right">{{vs}}</td>
-
-				<td id="visitor-team" {{#if visitor-winning}}class="winning"{{/if}}
-				style="text-align:right">{{vnn}}</td>
+				<td id="visitor-score" style="text-align:left">{{vs}}</td>
 
 				<td style="text-align:right">
 				<button type="button" id="remove-game-btn" class="btn btn-default btn-xs">
@@ -122,11 +121,11 @@
 				<td id="home_team" {{#if home.winning}}class="winning"{{/if}}
 				style="text-align:left">{{home.nickname}}</td>
 
-				<td id="h-score" style="text-align:left">{{home.score}}</td> 
-				<td id="v-score" style="text-align:right">{{visitor.score}}</td>
-
 				<td id="away_team" {{#if visitor.winning}}class="winning"{{/if}}
-				style="text-align:right">{{visitor.nickname}}</td>
+				style="text-align:left">{{visitor.nickname}}</td>
+
+				<td id="h-score" style="text-align:left">{{home.score}}</td> 
+				<td id="v-score" style="text-align:left">{{visitor.score}}</td>
 
 				<td style="text-align:right">
 				<button type="button" id="remove-game-btn" class="btn btn-default btn-xs">
@@ -138,9 +137,8 @@
 			
 			<p>Channels:
 			{{#each broadcasters.tv.broadcaster}}
-			    {{display_name}}
-			    {{#unless @last}}|{{/unless}}
-			    {{/each}}</p>
+			    {{display_name}} {{#unless @last}}, {{/unless}}
+			{{/each}}</p>
 
 			<p> "stat.NBA.com box score doesn't work until game start"</p>
 			<a class="btn btn-default btn-xs" 
@@ -277,9 +275,9 @@
 										<tr>
 											<th><span class="glyphicon glyphicon-time"></span></th>
 											<th style="text-align:left">Home</th>
+											<th style="text-align:left">Visitor</th>
 											<th style="text-align:left">H</th>
-											<th style="text-align:right">V</th>
-											<th style="text-align:right">Visitor</th>
+											<th style="text-align:left">V</th>
 											<th style="text-align:right">
 											<span class="glyphicon glyphicon-edit"></span></th>
 										</tr>
@@ -321,9 +319,9 @@
 											<th><span class="glyphicon glyphicon-time">
 											</span></th>
 											<th style="text-align:left">Home</th>
+											<th style="text-align:left">Visitor</th>
 											<th style="text-align:left">H</th>
-											<th style="text-align:right">V</th>
-											<th style="text-align:right">Visitor</th>
+											<th style="text-align:left">V</th>
 											<th style="text-align:right">
 											<span class="glyphicon glyphicon-edit">
 											</span></th>
