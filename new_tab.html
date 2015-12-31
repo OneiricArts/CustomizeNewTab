@@ -42,11 +42,20 @@
 			<tr id={{eid}} data-toggle="collapse" 
 			data-target=#collapse-{{eid}}>
 
-				<td id="time"> {{d}}, {{t}}</td>
-				<td id="home-team" style="text-align:left">{{hnn}}</td>
+				{{#if playing}}
+					<td id="time"> {{extrainfo.qtr}}, {{extrainfo.clock}}</td>
+				{{else}}
+					<td id="time"> {{d}}, {{t}}</td>
+				{{/if}}
+
+				<td id="home-team" {{#if home-winning}}class="winning"{{/if}}
+				style="text-align:left">{{hnn}}</td>
+
 				<td id="home-score" style="text-align:left">{{hs}}</td> 
 				<td id="visitor-score" style="text-align:right">{{vs}}</td>
-				<td id="visitor-team" style="text-align:right">{{vnn}}</td>
+
+				<td id="visitor-team" {{#if visitor-winning}}class="winning"{{/if}}
+				style="text-align:right">{{vnn}}</td>
 
 				<td style="text-align:right">
 				<button type="button" id="remove-game-btn" class="btn btn-default btn-xs">
@@ -59,14 +68,14 @@
 
 					<p> Game on {{extrainfo.media.tv}} </p>
 					
-					{{#unless done}}
+					{{#if playing}}
 						<p>
 						{{extrainfo.posteam}} ball on the {{extrainfo.yl}}
 						{{extrainfo.down}} & {{extrainfo.togo}} 
 						</p>
-					{{/unless}}
+					{{/if}}
 
-					{{#unless noscoretable}}
+					{{#if extrainfo.home.score.[1]}}
 					<table class="table table-condensed">
 						<thead>
 							<tr><th></th><th>1</th><th>2</th><th>3</th><th>4</th>
@@ -94,7 +103,7 @@
 							</tr>
 						</tbody>
 					</table>
-					{{/unless}}
+					{{/if}}
 
 				</small>
 				</div>
@@ -110,10 +119,14 @@
 				<td id="time"> {{period_time.period_status }} 
 					{{period_time.game_clock}}</td>
 				
-				<td id="home_team" style="text-align:left">{{home.nickname}}</td>
-				<td id="h-score" style="text-align:left">{{home.score}} </td> 
+				<td id="home_team" {{#if home.winning}}class="winning"{{/if}}
+				style="text-align:left">{{home.nickname}}</td>
+
+				<td id="h-score" style="text-align:left">{{home.score}}</td> 
 				<td id="v-score" style="text-align:right">{{visitor.score}}</td>
-				<td id="away_team" style="text-align:right">{{visitor.nickname}}</td>
+
+				<td id="away_team" {{#if visitor.winning}}class="winning"{{/if}}
+				style="text-align:right">{{visitor.nickname}}</td>
 
 				<td style="text-align:right">
 				<button type="button" id="remove-game-btn" class="btn btn-default btn-xs">

@@ -70,6 +70,7 @@ Sports.prototype.initWriteScheduleToDOM = function() {
 Sports.prototype.writeScheduleToDOM = function() {
 
 	this.writeToTemplate();
+	this.cacheGames();
 	this.cacheScheduleActions();
 	this.formatScheduleGames();
 };
@@ -103,7 +104,14 @@ Sports.prototype.resetSchedule = function() {
 
 /* UNIVERSAL DOM MANIPULATION */
 Sports.prototype.cacheGames = function(callback) {
-	var games = {};
+
+	var games = [];
+	$('#NBA-schedul-games tr').each(function(){
+		games[$(this).attr('id')] = $(this);
+	});
+
+	this.$games = games;
+	/*var games = {};
 	var id = this.$games_identifier;
 
 	$(id).each(function(){
@@ -111,7 +119,7 @@ Sports.prototype.cacheGames = function(callback) {
 	});
 
 	this.$games = games;
-	console.log(this.$games);
+	console.log(this.$games);*/
 };
 
 

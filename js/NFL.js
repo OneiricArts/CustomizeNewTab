@@ -24,12 +24,16 @@ NFL.prototype.massageData = function(data, callback) {
 
 			data.gms[i]['extrainfo'] = result[data.gms[i].eid];
 
-			if(data.gms[i].q == 'F' || data.gms[i].q == 'FO') {
-				data.gms[i]['done'] = true; 
+			/*if(data.gms[i].q == 'P') {
+				data.gms[i]['hasntStarted'] = true; 
+			}*/
+
+			if(!isNaN(data.gms[i].q)) {
+				data.gms[i]['playing'] = true; 
 			}
 
-			if(data.gms[i]['extrainfo'].home.score['1'] == null) {
-				data.gms[i]['noscoretable'] = true;
+			if(data.gms[i].q == 'F' || data.gms[i].q == 'FO') {
+				data.gms[i]['done'] = true; 
 			}
 		}
 
