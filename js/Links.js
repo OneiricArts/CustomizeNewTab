@@ -73,6 +73,11 @@ Links.prototype.setDefaults = function() {
 Links.prototype.removeCustomLink = function($this) {
    console.log($this)
    this.data.splice(parseInt($this.attr('id')),1);
-   $this.remove();
+   if(this.data.length == 0) {
+      $('#custom-sites').remove();
+   }
+   else {
+      $this.remove();
+   }
    this.saveData();
 };
