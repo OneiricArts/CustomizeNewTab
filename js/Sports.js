@@ -76,8 +76,9 @@ Sports.prototype.writeScheduleToDOM = function() {
 
 	this.writeToTemplate();
 	this.cacheGames();
-	this.cacheScheduleActions();
-	this.formatScheduleGames();
+	//this.cacheScheduleActions();
+	//this.formatScheduleGames();
+	this.highlightGames();
 };
 
 Sports.prototype.writeToTemplate = function() {};
@@ -100,6 +101,7 @@ Sports.prototype.updateEachGame = function(newData) {};
 
 Sports.prototype.formatScheduleGames = function() {};
 
+Sports.prototype.highlightGames = function() {};
 
 Sports.prototype.resetSchedule = function() {
 	this.data = null;
@@ -109,27 +111,11 @@ Sports.prototype.resetSchedule = function() {
 
 /* UNIVERSAL DOM MANIPULATION */
 Sports.prototype.cacheGames = function(callback) {
-
-	var games = [];
-	$('#NBA-schedul-games tr').each(function(){
-		games[$(this).attr('id')] = $(this);
-	});
-
-	this.$games = games;
-	/*var games = {};
-	var id = this.$games_identifier;
-
-	$(id).each(function(){
-		games[$(this).attr('id')] = $(this);
-	});
-
-	this.$games = games;
-	console.log(this.$games);*/
 };
 
 
 
-Handlebars.registerHelper('lookup', function(obj, field, options) {
+/*Handlebars.registerHelper('lookup', function(obj, field, options) {
 	//return obj[field];
 	console.log(obj);
 
@@ -138,7 +124,7 @@ Handlebars.registerHelper('lookup', function(obj, field, options) {
 	else
 		return options.inverse(this);
 	//return obj.hasOwnProperty(field);
-});
+});*/
 
 
 

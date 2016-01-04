@@ -84,20 +84,32 @@ NBA.prototype.dataOutOfDate = function(newData) {
 };
 
 
-NBA.prototype.massageData = function(data, callback) {
+NBA.prototype.massageData = function(newData, callback) {
 
-	for (i=0; i < data.sports_content.games.game.length; i++) {
+	for (i=0; i < newData.sports_content.games.game.length; i++) {
 
-		var home_score = parseInt(data.sports_content.games.game[i].home.score);
-		var visitor_score = parseInt(data.sports_content.games.game[i].visitor.score);
+		var home_score = parseInt(newData.sports_content.games.game[i].home.score);
+		var visitor_score = parseInt(newData.sports_content.games.game[i].visitor.score);
 
-		data.sports_content.games.game[i].home['winning'] = (home_score > visitor_score);
-		data.sports_content.games.game[i].visitor['winning'] = (visitor_score > home_score);
+		newData.sports_content.games.game[i].home['winning'] = (home_score > visitor_score);
+		newData.sports_content.games.game[i].visitor['winning'] = (visitor_score > home_score);
+
+		/* check if scores or times have changed, and if so, put a flag to highlight row */
+
+		if(newData.sports_content.games.game[i].id == this.data.sports_content.games.game[i].id) {
+			var newGame = newData.sports_content.games.game[i];
+			var oldGame = this.data.sports_content.games.game[i];
+
+			var same = (newGame.home.score + newGame.visitor.score) == (newGame.home.score + newGame.visitor.score);
+
+			newData.sports_content.games.game[i]['highlight'] = !same;
+		}
+
 	}
 
-	//this.data = data;
-	//this.data['hiddenGames'] = {};
-	callback.call(this, data);
+	//this.newData = newData;
+	//this.newData['hiddenGames'] = {};
+	callback.call(this, newData);
 };
 
 Sports.prototype.writeToTemplate = function() {
@@ -113,13 +125,14 @@ Sports.prototype.writeToTemplate = function() {
 
 NBA.prototype.updateEachGame = function(newData) {
 	console.log('NBA updating');
-
-	//console.log(this.data);
-
 	/*newData['hiddenGames'] = this.data['hiddenGames'];*/
 	
 	for (i=0; i < this.data.sports_content.games.game.length; i++) {
-
+		if(this.data.sports_content.games.game[i].id !== 
+			newData.sports_content.games.game[i].id){
+			console.log('data not same -- error');
+			break;
+		}
 		if(this.data.sports_content.games.game[i]['hidden']) {
 			newData.sports_content.games.game[i]['hidden'] = true;
 		}
@@ -129,11 +142,16 @@ NBA.prototype.updateEachGame = function(newData) {
 	this.saveData(this.writeScheduleToDOM());
 };
 
-NBA.prototype.styleScores = function(game) {
-
-		/*var visitor_score = parseInt(game.visitor.score);
-		var home_score = parseInt(game.home.score);
-
-		this.$games[game.id].find('#away_team').toggleClass('winning', visitor_score > home_score);
-		this.$games[game.id].find('#home_team').toggleClass('winning', home_score > visitor_score);*/
-	}
+NBA.prototype.highlightGames = function() {
+	for (i=0; i < this.data.sports_content.games.game.length; i++) {
+		if(this.data.sports_content.games.game[i].highlight == true)
+		{
+			var rowId = '#'+this.data.sports_content.games.game[i].id;
+			/*takes too long: 
+			$(rowId).fadeIn(100).fadeOut(100).fadeIn(100).fadeOut(100).fadeIn(100)();
+			dom is being updated before it can finish lol
+			*/
+			$(rowId).effect("highlight", {color: '#FFFF99'}, 2000);		
+		}
+	};
+};

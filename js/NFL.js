@@ -64,7 +64,7 @@ NFL.prototype.cacheButtonActions = function() {
 	$('body').on('click', '#NFL_col #reset_games', this.resetSchedule.bind(this));
 };
 
-NFL.prototype.cacheScheduleActions = function() {
+NFL.prototype.cacheGames = function() {
 
 	var games = {};
 	$('#NFL-schedule-games tr').each(function(){
@@ -82,7 +82,9 @@ NFL.prototype.removeGame = function(event) {
 
 		if(that.data.gms[i].eid == targetId) 
 		{
-			that.data.gms.splice(i, 1);
+			//that.data.gms.splice(i, 1);
+			that.data.gms[i]['hidden'] = true;
+
 			that.$games[targetId].remove();
 			$('#c'+targetId).remove();
 			break;
@@ -133,23 +135,18 @@ NFL.prototype.formatScheduleGames = function() {
 NFL.prototype.updateEachGame = function(newData) {
 	//console.log('teasdfsdfst')
 
-/*	var counter = 0;
-	var i,j;	// i for old, j for new
-	for (i=0, j=0; j < this.data.gms.length; i++) {
-
-		var new_game = newData.gms[i];
-		var old_game = this.data.gms[j];
-
-		if(new_game.eid == old_game.eid) {
-			this.data.gms[j] = new_game;
-			j++;
-			counter++;
+		for (i=0; i < this.data.sports_content.games.game.length; i++) {
+		if(this.data.sports_content.games.game[i].id !== 
+			newData.sports_content.games.game[i].id){
+			console.log('data not same -- error');
+			break;
 		}
-	}
-	*/
-	//console.log(newData)
+		if(this.data.sports_content.games.game[i]['hidden']) {
+			newData.sports_content.games.game[i]['hidden'] = true;
+		}
+	};
+
 	this.data = newData;
 	this.saveData(this.writeScheduleToDOM());
-	console.log(counter);
 };
 

@@ -39,6 +39,8 @@
 
 		<script id="NFL-schedule-template" type="text/x-handlebars-template">
 		{{#each games}}
+		{{#unless hidden}}
+
 			<tr id={{eid}} data-toggle="collapse" 
 			data-target=#collapse-{{eid}}>
 
@@ -107,6 +109,8 @@
 				</small>
 				</div>
 			</td></tr>
+			
+		{{/unless}}
 		{{/each}}
 		</script>
 
