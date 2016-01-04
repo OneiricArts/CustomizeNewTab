@@ -39,8 +39,7 @@ NBA.prototype.cacheButtonActions = function() {
 	});
 
 	$('body').on('click', '#NBA_col #reset_games', this.resetSchedule.bind(this));
-
-	//$('#reset_games').click( that.resetSchedule.bind(this));
+	$('body').on('click', '#NBA_col #update-btn', this.updateSchedule.bind(this));
 };
 
 
@@ -96,15 +95,14 @@ NBA.prototype.massageData = function(newData, callback) {
 
 		/* check if scores or times have changed, and if so, put a flag to highlight row */
 
-		if(newData.sports_content.games.game[i].id == this.data.sports_content.games.game[i].id) {
+		if( this.data && this.data.sports_content && 
+			(newData.sports_content.games.game[i].id == this.data.sports_content.games.game[i].id) ) {
+
 			var newGame = newData.sports_content.games.game[i];
 			var oldGame = this.data.sports_content.games.game[i];
-
 			var same = (newGame.home.score + newGame.visitor.score) == (newGame.home.score + newGame.visitor.score);
-
 			newData.sports_content.games.game[i]['highlight'] = !same;
 		}
-
 	}
 
 	//this.newData = newData;

@@ -108,6 +108,10 @@ Sports.prototype.resetSchedule = function() {
 	this.saveData(this.getDataSchedule);
 };
 
+Sports.prototype.updateSchedule = function() {
+	this.getDataSchedule();
+};
+
 
 /* UNIVERSAL DOM MANIPULATION */
 Sports.prototype.cacheGames = function(callback) {
