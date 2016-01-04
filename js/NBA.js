@@ -31,6 +31,40 @@ NBA.prototype.yyyymmdd = function() {
 NBA.prototype.specialInit = function() {
 };
 
+NBA.prototype.cacheButtonActions = function() {
+	var that = this;
+	console.log(this)
+	$('body').on('click', '#NBA_game_table #remove-game-btn', function() {
+		that.removeGame($(this).closest('tr').attr('id'));
+	});
+
+	$('body').on('click', '#NBA_col #reset_games', this.resetSchedule.bind(this));
+
+	//$('#reset_games').click( that.resetSchedule.bind(this));
+};
+
+
+NBA.prototype.removeGame = function(id) {
+	console.log(id);
+	$('#'+id).remove();
+	$('#c'+id).remove();
+
+	/*
+	if(!this.data['hiddenGames']) {
+		this.data['hiddenGames'] = {};
+	}
+	this.data['hiddenGames'][id] = true;
+	*/
+
+	for (i=0; i < this.data.sports_content.games.game.length; i++) {
+		if(id == this.data.sports_content.games.game[i].id) {
+			this.data.sports_content.games.game[i]['hidden'] = true;
+		}
+	};
+
+	this.saveData();
+};
+
 NBA.prototype.dataOutOfDate = function(newData) {
 
 	//return true;
@@ -61,12 +95,17 @@ NBA.prototype.massageData = function(data, callback) {
 		data.sports_content.games.game[i].visitor['winning'] = (visitor_score > home_score);
 	}
 
-	this.data = data;
+	//this.data = data;
+	//this.data['hiddenGames'] = {};
 	callback.call(this, data);
 };
 
 Sports.prototype.writeToTemplate = function() {
-	console.log(this.data.sports_content.games.game)
+	//console.log(this.data.sports_content.games.game)
+	/*var templateData = {};
+	templateData['games'] = this.data.sports_content.games.game;
+	templateData['hiddenGames'] = this.data.hiddenGames;*/
+
 	this.displayTemplate(this.$game_template, 'games', this.data.sports_content.games.game, 
 		this.$game_table.find('tbody'));
 };
@@ -75,37 +114,19 @@ Sports.prototype.writeToTemplate = function() {
 NBA.prototype.updateEachGame = function(newData) {
 	console.log('NBA updating');
 
+	//console.log(this.data);
 
-	local_games = this.data.sports_content.games.game;
-	all_games = newData.sports_content.games.game;
+	/*newData['hiddenGames'] = this.data['hiddenGames'];*/
+	
+	for (i=0; i < this.data.sports_content.games.game.length; i++) {
 
-	var i,j;
-	for (i=0, j=0; i < all_games.length; i++) {
-
-		// same game?
-		if(all_games[i].id == local_games[j].id) {
-			
-			var game_time = (all_games[i].period_time.period_status +  
-							  all_games[i].period_time.game_clock) ==
-							  (local_games[j].period_time.period_status +  
-							  local_games[j].period_time.game_clock);
-
-			var visitor_scores = all_games[i].visitor.score == local_games[j].visitor.score;
-			var home_scores = all_games[i].home.score == local_games[j].home.score;
-							  				  
-			if( (!game_time) || (!visitor_scores) || (!home_scores) ) {
-				
-				console.log('new!');
-				//writeGameDetails($games[all_games[i].id], all_games[i], true);
-				local_games[j] = all_games[i];
-				//saveLocalData();
-				this.saveData();
-				//this.saveData(this.writeToTemplate);
-			}
-			this.styleScores(local_games[j]);
-			j++;
+		if(this.data.sports_content.games.game[i]['hidden']) {
+			newData.sports_content.games.game[i]['hidden'] = true;
 		}
-	}
+	};
+
+	this.data = newData;
+	this.saveData(this.writeScheduleToDOM());
 };
 
 NBA.prototype.styleScores = function(game) {

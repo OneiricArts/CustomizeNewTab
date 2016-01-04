@@ -7,8 +7,10 @@ function Sports() {
 
 	this.localData = {};
 	this.schedule_url;
-	this.$games = {};
 
+	this.hiddenGames = {};
+
+	this.$games = {};
 	this.$games_identifier;
 
 	this.$game_table;
@@ -22,7 +24,10 @@ Sports.prototype.constructor = Sports;
 
 Sports.prototype.init = function() {
 	this.loadLocalSchedule();
+	this.cacheButtonActions();
 };
+
+Sports.prototype.cacheButtonActions = function() {};
 
 Sports.prototype.getJsonData = function(url, callback) {
 	console.log('getting from internet.');
@@ -123,6 +128,17 @@ Sports.prototype.cacheGames = function(callback) {
 };
 
 
+
+Handlebars.registerHelper('lookup', function(obj, field, options) {
+	//return obj[field];
+	console.log(obj);
+
+	if (true)
+		return options.fn(this);
+	else
+		return options.inverse(this);
+	//return obj.hasOwnProperty(field);
+});
 
 
 

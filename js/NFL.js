@@ -28,16 +28,18 @@ NFL.prototype.massageData = function(data, callback) {
 				data.gms[i]['hasntStarted'] = true; 
 			}*/
 
+			if(data.gms[i]['extrainfo'].home.score[1] !== null) {
+				data.gms[i]['scoreTable'] = true; 
+			}
+
 			if(!isNaN(data.gms[i].q)) {
 				data.gms[i]['playing'] = true; 
 			}
 
-			if(data.gms[i].q == 'F' || data.gms[i].q == 'FO') {
+			if(data.gms[i].q === 'F' || data.gms[i].q === 'FO') {
 				data.gms[i]['done'] = true; 
 			}
 		}
-
-		//console.log(data.gms);
 		callback.call(this,data);		
 	}.bind(this));
 };
@@ -55,6 +57,12 @@ NFL.prototype.writeToTemplate = function() {
 		this.$game_table.find('tbody'));
 };
 
+NFL.prototype.cacheButtonActions = function() {
+	var that = this;
+	console.log(this)
+	$('body').on('click', '#NFL-schedule-games button', {that: that}, this.removeGame);
+	$('body').on('click', '#NFL_col #reset_games', this.resetSchedule.bind(this));
+};
 
 NFL.prototype.cacheScheduleActions = function() {
 
@@ -63,13 +71,6 @@ NFL.prototype.cacheScheduleActions = function() {
 		games[$(this).attr('id')] = $(this);
 	});
 	this.$games = games;
-
-	var that = this;
-	$('#NFL-schedule-games button').unbind();
-	$('#NFL-schedule-games button').click({that: that}, this.removeGame);
-
-	$('#reset_games').unbind(); 
-	$('#reset_games').click( that.resetSchedule.bind(this));
 };
 
 
@@ -145,8 +146,10 @@ NFL.prototype.updateEachGame = function(newData) {
 			counter++;
 		}
 	}
-	this.saveData();
-	this.writeScheduleToDOM();
-	console.log(counter);*/
+	*/
+	//console.log(newData)
+	this.data = newData;
+	this.saveData(this.writeScheduleToDOM());
+	console.log(counter);
 };
 
