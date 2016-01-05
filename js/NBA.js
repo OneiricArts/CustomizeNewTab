@@ -28,17 +28,14 @@ NBA.prototype.yyyymmdd = function() {
 	twoDigits(today.getMonth()+1)+twoDigits(today.getDate()) );
 }
 
-NBA.prototype.specialInit = function() {
-};
-
 NBA.prototype.cacheButtonActions = function() {
 	var that = this;
 	$('body').on('click', '#NBA_game_table #remove-game-btn', {that: that}, this.removeGame);
 	$('body').on('click', '#NBA_col #reset_games', this.resetSchedule.bind(this));
 	$('body').on('click', '#NBA_col #update-btn', this.updateSchedule.bind(this));
+	$('body').on('click', '#NBA_col #autoupdate-btn', this.autoupdateSchedule);
 	$('body').on('click', '#NBA_col #standings-btn', this.standings.bind(this));
 };
-
 
 NBA.prototype.removeGame = function(event) {
 
@@ -83,8 +80,16 @@ NBA.prototype.massageData = function(newData, callback) {
 			var newGame = newData.sports_content.games.game[i];
 			var oldGame = this.data.sports_content.games.game[i];
 
-			var same = (parseInt(newGame.home.score) + parseInt(newGame.visitor.score)) == 
-			(parseInt(oldGame.home.score) + parseInt(oldGame.visitor.score));
+			//console.log(newGame.home.score === '');
+
+			if( newGame.home.score === '' ) {
+				same = true;
+			}
+
+			else {
+				var same = (parseInt(newGame.home.score) + parseInt(newGame.visitor.score)) ==
+					(parseInt(oldGame.home.score) + parseInt(oldGame.visitor.score));
+			}
 
 			newData.sports_content.games.game[i]['highlight'] = !same;
 		}
@@ -115,6 +120,17 @@ NBA.prototype.updateEachGame = function(newData) {
 
 	this.data = newData;
 	this.saveData(this.writeScheduleToDOM());
+};
+
+NBA.prototype.autoupdateSchedule = function() {
+	console.log($(this))
+	$(this).find('span').toggleClass('glyphicon-ok').toggleClass('glyphicon-remove');
+	$(this).toggleClass('btn-default').toggleClass('btn-success');
+
+	window.setInterval(function(){
+		console.log(this.NBA);
+	}, 2000);
+
 };
 
 NBA.prototype.highlightGames = function() {
