@@ -123,14 +123,20 @@ NBA.prototype.updateEachGame = function(newData) {
 };
 
 NBA.prototype.autoupdateSchedule = function() {
-	console.log($(this))
+	//console.log($(this))
 	$(this).find('span').toggleClass('glyphicon-ok').toggleClass('glyphicon-remove');
 	$(this).toggleClass('btn-default').toggleClass('btn-success');
 
-	window.setInterval(function(){
-		console.log(this.NBA);
-	}, 2000);
-
+	if($(this).hasClass('btn-success')) {
+		var test = 'a'
+		window.setInterval(function(test){
+			//console.log(this.NBA);
+			console.log(test);
+		}, 2000);
+	}
+	else {
+		//window.clear
+	}
 };
 
 NBA.prototype.highlightGames = function() {
