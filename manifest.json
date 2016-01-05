@@ -8,7 +8,7 @@
 	"permissions": [
 		"storage",
 		"http://www.nfl.com/",
-		"<all_urls>",
+		"http://*.nba.com/*",
 		"topSites"
 	],
 	"icons": { "16": "icon16.png",
