@@ -33,35 +33,29 @@ NBA.prototype.specialInit = function() {
 
 NBA.prototype.cacheButtonActions = function() {
 	var that = this;
-	console.log(this)
-	$('body').on('click', '#NBA_game_table #remove-game-btn', function() {
-		that.removeGame($(this).closest('tr').attr('id'));
-	});
-
+	$('body').on('click', '#NBA_game_table #remove-game-btn', {that: that}, this.removeGame);
 	$('body').on('click', '#NBA_col #reset_games', this.resetSchedule.bind(this));
 	$('body').on('click', '#NBA_col #update-btn', this.updateSchedule.bind(this));
+	$('body').on('click', '#NBA_col #standings-btn', this.standings.bind(this));
 };
 
 
-NBA.prototype.removeGame = function(id) {
-	console.log(id);
+NBA.prototype.removeGame = function(event) {
+
+	var that = event.data.that;
+	var id = $(this).closest('tr').attr('id');
+
 	$('#'+id).remove();
 	$('#c'+id).remove();
 
-	/*
-	if(!this.data['hiddenGames']) {
-		this.data['hiddenGames'] = {};
-	}
-	this.data['hiddenGames'][id] = true;
-	*/
-
-	for (i=0; i < this.data.sports_content.games.game.length; i++) {
-		if(id == this.data.sports_content.games.game[i].id) {
-			this.data.sports_content.games.game[i]['hidden'] = true;
+	for (i=0; i < that.data.sports_content.games.game.length; i++) {
+		if(id == that.data.sports_content.games.game[i].id) {
+			that.data.sports_content.games.game[i]['hidden'] = true;
+			break;
 		}
 	};
 
-	this.saveData();
+	that.saveData();
 };
 
 NBA.prototype.dataOutOfDate = function(newData) {
@@ -152,4 +146,26 @@ NBA.prototype.highlightGames = function() {
 			$(rowId).effect("highlight", {color: '#FFFF99'}, 2000);		
 		}
 	};
+};
+
+NBA.prototype.standings = function() {
+	var url = 'http://data.nba.com/json/cms/2015/standings/conference.json';
+	this.getData(url, this.showStandings);
+};
+
+NBA.prototype.showStandings = function(data) {
+	
+	var templ = $('#NBA-standings-template').html();
+	
+	this.displayTemplate(templ, 'teams', 
+		data.sports_content.standings.conferences.West.team, 
+		$('#NBA-standings #West') );
+	this.displayTemplate(templ, 'teams', 
+		data.sports_content.standings.conferences.East.team, 
+		$('#NBA-standings #East') );
+
+	// Mark Playoff teams with grey line
+	var border="border-bottom:3pt solid grey;";
+	$($('#NBA-standings .modal-body #West tr')[8]).attr("style",border);
+	$($('#NBA-standings .modal-body #East tr')[8]).attr("style",border);
 };

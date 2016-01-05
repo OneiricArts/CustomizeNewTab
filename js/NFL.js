@@ -59,7 +59,6 @@ NFL.prototype.writeToTemplate = function() {
 
 NFL.prototype.cacheButtonActions = function() {
 	var that = this;
-	console.log(this)
 	$('body').on('click', '#NFL-schedule-games button', {that: that}, this.removeGame);
 	$('body').on('click', '#NFL_col #reset_games', this.resetSchedule.bind(this));
 };

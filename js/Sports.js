@@ -29,6 +29,13 @@ Sports.prototype.init = function() {
 
 Sports.prototype.cacheButtonActions = function() {};
 
+Sports.prototype.getData = function(url, callback) {
+	$.getJSON(url, function(result) {
+		callback.call(this, result);
+	}.bind(this));
+	// TODO handle timeout, and network error
+};
+
 Sports.prototype.getJsonData = function(url, callback) {
 	console.log('getting from internet.');
 	$.getJSON(url, function(result) {
@@ -66,11 +73,6 @@ Sports.prototype.displaySchedule = function(newData) {
 		this.updateEachGame(newData);
 	}
 };
-
-Sports.prototype.initWriteScheduleToDOM = function() {
-	this.writeScheduleToDOM();
-	
-}
 
 Sports.prototype.writeScheduleToDOM = function() {
 
