@@ -59,21 +59,10 @@ NBA.prototype.removeGame = function(event) {
 };
 
 NBA.prototype.dataOutOfDate = function(newData) {
-
-	//return true;
-	if(this.data == null) {
-		console.log('true')
+	if(this.data == null || this.data.sports_content == null) {
 		return true;
 	}
-	if(this.data.sports_content == null) {
-		console.log('true')
-		return true;
-	}
-	//console.log(newData.sports_content.games.game[0].date + ' === ' + this.yyyymmdd() );
-	//console.log( !( newData.sports_content.games.game[0].date === this.yyyymmdd() ) );
 	return !( newData.sports_content.games.game[0].date === this.yyyymmdd() );
-	//return !( newData.sports_content.sports_meta.season_meta.calendar_date === this.yyyymmdd() );
-	//return false;
 };
 
 
@@ -88,28 +77,22 @@ NBA.prototype.massageData = function(newData, callback) {
 		newData.sports_content.games.game[i].visitor['winning'] = (visitor_score > home_score);
 
 		/* check if scores or times have changed, and if so, put a flag to highlight row */
-
 		if( this.data && this.data.sports_content && 
 			(newData.sports_content.games.game[i].id == this.data.sports_content.games.game[i].id) ) {
 
 			var newGame = newData.sports_content.games.game[i];
 			var oldGame = this.data.sports_content.games.game[i];
-			var same = (newGame.home.score + newGame.visitor.score) == (newGame.home.score + newGame.visitor.score);
+
+			var same = (parseInt(newGame.home.score) + parseInt(newGame.visitor.score)) == 
+			(parseInt(oldGame.home.score) + parseInt(oldGame.visitor.score));
+
 			newData.sports_content.games.game[i]['highlight'] = !same;
 		}
 	}
-
-	//this.newData = newData;
-	//this.newData['hiddenGames'] = {};
 	callback.call(this, newData);
 };
 
 Sports.prototype.writeToTemplate = function() {
-	//console.log(this.data.sports_content.games.game)
-	/*var templateData = {};
-	templateData['games'] = this.data.sports_content.games.game;
-	templateData['hiddenGames'] = this.data.hiddenGames;*/
-
 	this.displayTemplate(this.$game_template, 'games', this.data.sports_content.games.game, 
 		this.$game_table.find('tbody'));
 };
@@ -136,13 +119,8 @@ NBA.prototype.updateEachGame = function(newData) {
 
 NBA.prototype.highlightGames = function() {
 	for (i=0; i < this.data.sports_content.games.game.length; i++) {
-		if(this.data.sports_content.games.game[i].highlight == true)
-		{
+		if(this.data.sports_content.games.game[i].highlight == true) {
 			var rowId = '#'+this.data.sports_content.games.game[i].id;
-			/*takes too long: 
-			$(rowId).fadeIn(100).fadeOut(100).fadeIn(100).fadeOut(100).fadeIn(100)();
-			dom is being updated before it can finish lol
-			*/
 			$(rowId).effect("highlight", {color: '#FFFF99'}, 2000);		
 		}
 	};
@@ -166,6 +144,6 @@ NBA.prototype.showStandings = function(data) {
 
 	// Mark Playoff teams with grey line
 	var border="border-bottom:3pt solid grey;";
-	$($('#NBA-standings .modal-body #West tr')[8]).attr("style",border);
-	$($('#NBA-standings .modal-body #East tr')[8]).attr("style",border);
+	$($('#NBA-standings #West tr')[8]).attr("style",border);
+	$($('#NBA-standings #East tr')[8]).attr("style",border);
 };
