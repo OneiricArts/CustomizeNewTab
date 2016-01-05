@@ -2,6 +2,8 @@
 <html>
   
 	<head>
+		<script src="js/googleAnalytics.js"></script>
+
 		<script src="libs/jquery-2.1.4.min.js"></script>
 		<script src="libs/jquery-ui.min.js"></script>
 
@@ -12,10 +14,12 @@
 
 		<script src="libs/handlebars-v4.0.4.js"></script>
 
+		<script src="libs/jquery.xml2json.js"></script>
+
 		<script src="/js/Base.js"></script>
 		<script src="/js/pageHandler.js"></script>
 		<script src="/js/Sports.js"></script>
-		<script src="/js/NFL.js"></script>
+		<script src="/js/NFLpost.js"></script>
 		<script src="/js/NBA.js"></script>
 		<script src="/js/Links.js"></script>
 
@@ -27,10 +31,8 @@
 				font-weight: bold;
 			}
 			.redZone{
-
 			}
 			.possession{
-
 			}
      	</style>
 	</head>
@@ -67,8 +69,10 @@
 				<div id=collapse-{{eid}} class="collapse">
 				<small>
 
+					{{#if extrainfo.media.tv}}
 					<p> Game on {{extrainfo.media.tv}} </p>
-					
+					{{/if}}
+
 					{{#if playing}}
 						<p>
 						{{extrainfo.posteam}} ball on the {{extrainfo.yl}}
@@ -148,10 +152,12 @@
 			    {{display_name}} {{#unless @last}}, {{/unless}}
 			{{/each}}</p>
 
+			{{!--
 			<p> "stat.NBA.com box score doesn't work until game start"</p>
 			<a class="btn btn-default btn-xs" 
 			href="http://stats.nba.com/game/#!/{{id}}/" 
 			role="button">stats.NBA.com Box Score</a>
+			--}}
 
 			<a class="btn btn-default btn-xs" 
 			href="http://www.nba.com/games/{{game_url}}/gameinfo.html" 
@@ -247,8 +253,13 @@
 							<span class="glyphicon glyphicon-ok"></span>
 							Link
 						</button>
-					</p>
 
+						<span>
+						Update 0.5 (Click <a id="version_update" 
+						href="https://www.reddit.com/r/SportsNewTabPage/comments/3zlgo3/update_05_kinda_majoremergency_update/">
+						HERE</a> for info/report bugs)
+						</span>
+					</p>
 				</div>
 			</div>
 		</nav>
@@ -318,11 +329,11 @@
 	    						Scores
 	 						</button>
 
-	 						<button id="autoupdate-btn"
+	 						<!-- <button id="autoupdate-btn"
 							class="btn btn-xs btn-default pull-right">
 	    						<span class="glyphicon glyphicon-remove"></span> 
 	    						Auto Update
-	 						</button>
+	 						</button> -->
 
 	                    	<button id="reset_games"
 	 							class="btn btn-xs btn-default pull-right">
