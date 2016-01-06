@@ -34,6 +34,17 @@ NFL.prototype.getJsonData = function(url, callback) {
 				// capitalize the first char of team name 
 				jsonObj.gms.g[i].hnn = this.capitalizeFirstChar(jsonObj.gms.g[i].hnn);
 				jsonObj.gms.g[i].vnn = this.capitalizeFirstChar(jsonObj.gms.g[i].vnn);
+
+				// label whos winning
+				var home_score = parseInt(jsonObj.gms.g[i].hs);
+				var visitor_score = parseInt(jsonObj.gms.g[i].vs);
+
+				if(home_score > visitor_score) {
+					jsonObj.gms.g[i]['home_winning'] = true;
+				}
+				if(visitor_score > home_score) {
+					jsonObj.gms.g[i]['visitor_winning'] = true;
+				}
 			}
 
 			callback.call(this,jsonObj);

@@ -47,18 +47,22 @@
 			data-target=#collapse-{{eid}}>
 
 				{{#if playing}}
-					<td id="time"> {{extrainfo.qtr}}, {{extrainfo.clock}}</td>
+					<td> {{extrainfo.qtr}}, {{extrainfo.clock}}</td>
 				{{else}}
-					<td id="time"> {{d}}, {{t}}</td>
+					{{#if done}}
+						<td> {{d}}, {{q}}</td>
+					{{else}}
+						<td> {{d}}, {{t}}</td>
+					{{/if}}
 				{{/if}}
 
-				<td id="home-team" {{#if home-winning}}class="winning"{{/if}}
+				<td {{#if home_winning}}class="winning"{{/if}}
 				style="text-align:left">{{hnn}}</td>
-				<td id="visitor-team" {{#if visitor-winning}}class="winning"{{/if}}
+				<td {{#if visitor_winning}}class="winning"{{/if}}
 				style="text-align:left">{{vnn}}</td>
 
-				<td id="home-score" style="text-align:left">{{hs}}</td> 
-				<td id="visitor-score" style="text-align:left">{{vs}}</td>
+				<td style="text-align:left">{{hs}}</td> 
+				<td style="text-align:left">{{vs}}</td>
 
 				<td style="text-align:right">
 				<button type="button" id="remove-game-btn" class="btn btn-default btn-xs">
@@ -146,6 +150,7 @@
 			
 			<tr><td colspan="6" style="padding: 0" class="nba-collapse" id=c{{id}}>
 			<div id=collapse-{{id}} class="collapse">
+			<small>
 			
 			<p>Channels:
 			{{#each broadcasters.tv.broadcaster}}
@@ -168,7 +173,36 @@
 			href="http://www.nba.com/gametracker/#/{{game_url}}/lp/matchup/" 
 			role="button">NBA.com Preview</a>
 			--}}
-			
+
+			{{#if home.linescores}}
+				<table class="table table-condensed">
+					<thead><tr>
+						<th></th>
+						{{#each home.linescores.period}}
+							<th style="text-align:right">{{period_name}}</th>
+						{{/each}}
+						<th style="text-align:right">T</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr>
+							<th>{{home.nickname}}</th>
+							{{#each home.linescores.period}}
+								<td style="text-align:right">{{score}}</td>
+							{{/each}} 
+							<td style="text-align:right">{{home.score}}</td>
+						</tr>
+						<tr>
+							<th>{{visitor.nickname}}</th>
+							{{#each visitor.linescores.period}}
+								<td style="text-align:right">{{score}}</td>
+							{{/each}}
+							<td style="text-align:right">{{visitor.score}}</td>
+						</tr>
+					</tbody>
+				</table>
+			{{/if}}
+			</small>
 			</div>
 			</td></tr>
 
