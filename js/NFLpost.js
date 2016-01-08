@@ -47,7 +47,8 @@ NFL.prototype.getJsonData = function(url, callback) {
 				}
 			}
 
-			callback.call(this,jsonObj);
+			//callback.call(this,jsonObj);
+			this.massageData(jsonObj,callback);
 		}
 	}.bind(this);
 	xhr.send();
@@ -58,24 +59,27 @@ NFL.prototype.massageData = function(data, callback) {
 	var url = 'http://www.nfl.com/liveupdate/scores/scores.json'
 	$.getJSON(url, function(result) {
 
-		for (var i = 0; i < data.gms.length; i++) {
+		for (var i = 0; i < data.gms.g.length; i++) {
 
-			data.gms[i]['extrainfo'] = result[data.gms[i].eid];
+			if( (data.gms.g[i].eid in result)) {
 
-			/*if(data.gms[i].q == 'P') {
-				data.gms[i]['hasntStarted'] = true; 
-			}*/
+				data.gms.g[i]['extrainfo'] = result[data.gms.g[i].eid];
 
-			if(data.gms[i]['extrainfo'].home.score[1] !== null) {
-				data.gms[i]['scoreTable'] = true; 
-			}
+				/*if(data.gms[i].q == 'P') {
+					data.gms[i]['hasntStarted'] = true; 
+				}*/
 
-			if(!isNaN(data.gms[i].q)) {
-				data.gms[i]['playing'] = true; 
-			}
+				if(data.gms.g[i]['extrainfo'].home.score[1] !== null) {
+					data.gms.g[i]['scoreTable'] = true; 
+				}
 
-			if(data.gms[i].q === 'F' || data.gms[i].q === 'FO') {
-				data.gms[i]['done'] = true; 
+				if(!isNaN(data.gms.g[i].q)) {
+					data.gms.g[i]['playing'] = true; 
+				}
+
+				if(data.gms.g[i].q === 'F' || data.gms.g[i].q === 'FO') {
+					data.gms.g[i]['done'] = true; 
+				}
 			}
 		}
 		callback.call(this,data);		

@@ -74,20 +74,19 @@ NBA.prototype.massageData = function(newData, callback) {
 		newData.sports_content.games.game[i].visitor['winning'] = (visitor_score > home_score);
 
 		/* check if scores or times have changed, and if so, put a flag to highlight row */
-		if( this.data && this.data.sports_content && 
+		if( this.data && this.data.sports_content.games && 
 			(newData.sports_content.games.game[i].id == this.data.sports_content.games.game[i].id) ) {
 
 			var newGame = newData.sports_content.games.game[i];
 			var oldGame = this.data.sports_content.games.game[i];
-
-			//console.log(newGame.home.score === '');
+			var same;
 
 			if( newGame.home.score === '' ) {
 				same = true;
 			}
 
 			else {
-				var same = (parseInt(newGame.home.score) + parseInt(newGame.visitor.score)) ==
+				same = (parseInt(newGame.home.score) + parseInt(newGame.visitor.score)) ==
 					(parseInt(oldGame.home.score) + parseInt(oldGame.visitor.score));
 			}
 
