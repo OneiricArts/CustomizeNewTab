@@ -8,32 +8,35 @@ function Links() {
       //this.setDefaults,
       this.setDefaults
    );
-   
 };
 
 Links.prototype = Object.create(Base.prototype); // See note below
-
 Links.prototype.constructor = Links;
 
-Links.prototype.init = function(){
-   this.showTopSites();
-   
+Links.prototype.init = function(){   
    var that = this;
    
    $("#bookmark-panel").on('click', '#remove', function(evt) {
       evt.preventDefault(); 
-      console.log($(this).closest('a'));
       that.removeCustomLink($(this).closest('a'));
    });
 
-   $('#addBookmark').click(function(){
-      that.data.push({
+   //$("body").on('click', '#bookmark-panel #remove', {that:this}, this.removeCustomLink);
+   $("body").on('click', '#addBookmark', {that:this}, this.addBookmark);
+
+   /* clear values on close */
+   $('body').on('hidden.bs.modal', '#addCustomLinkModal', function () {
+      $('#addCustomLinkModal .modal-body').find('textarea,input').val('');
+   });
+};
+
+Links.prototype.addBookmark = function(event){
+   var that = event.data.that;
+   that.data.push({
          title: $('#bookmark_name').val(),
          url: $('#bookmark_url').val()
       });
-      that.saveData();
-      that.showTopSites();
-   });
+   that.saveData(that.showTopSites());
 };
 
 Links.prototype.showTopSites = function(){
@@ -70,14 +73,15 @@ Links.prototype.setDefaults = function() {
    this.showTopSites();
 };
 
-Links.prototype.removeCustomLink = function($this) {
-   console.log($this)
-   this.data.splice(parseInt($this.attr('id')),1);
+Links.prototype.removeCustomLink = function($el) {
+   
+   this.data.splice(parseInt($el.attr('id')),1);
+   
    if(this.data.length == 0) {
       $('#custom-sites').remove();
+      this.saveData();
    }
    else {
-      $this.remove();
+      this.saveData(this.showTopSites);
    }
-   this.saveData();
 };
