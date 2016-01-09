@@ -94,8 +94,15 @@ NFL.prototype.dataOutOfDate = function(newData) {
 };
 
 NFL.prototype.writeToTemplate = function() {
-	this.displayTemplate(this.$game_template, 'games', this.data.gms.g, 
-		this.$game_table.find('tbody'));
+	
+	if(this.data.gms.g.length > 0) {
+		$('#week_number').text(this.data.gms.w +' / '+ this.data.gms.g[0].gt);
+		this.displayTemplate(this.$game_template, 'games', this.data.gms.g, 
+			this.$game_table.find('tbody'));
+	}
+	else {
+		$('#NFL_col .panel-body').html(this.$no_games_message);
+	}
 };
 
 NFL.prototype.cacheButtonActions = function() {
