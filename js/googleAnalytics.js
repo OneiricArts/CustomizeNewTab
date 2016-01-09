@@ -47,3 +47,13 @@ document.addEventListener('DOMContentLoaded', function () {
     buttons[i].addEventListener('click', trackButtonClick);
   }
 });
+
+/*
+  so I know how many people actually follow the link to the reddit post
+*/
+document.addEventListener('DOMContentLoaded', function () {
+  var buttons = document.querySelectorAll('a');
+  for (var i = 0; i < buttons.length; i++) {
+    buttons[i].addEventListener('click', trackButtonClick);
+  }
+});
