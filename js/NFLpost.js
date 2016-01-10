@@ -73,13 +73,31 @@ NFL.prototype.massageData = function(data, callback) {
 					data.gms.g[i]['scoreTable'] = true; 
 				}
 
-				if(!isNaN(data.gms.g[i].q)) {
+				if( data.gms.g[i]['extrainfo'].qtr !== null &&
+					!isNaN(data.gms.g[i]['extrainfo'].qtr) ||
+					data.gms.g[i]['extrainfo'].qtr === "OT") { //TODO
+					
+					//console.log('playing == true');
 					data.gms.g[i]['playing'] = true; 
 				}
 
 				if(data.gms.g[i].q === 'F' || data.gms.g[i].q === 'FO') {
 					data.gms.g[i]['done'] = true; 
 				}
+
+				// label whos winning
+				if(data.gms.g[i].extrainfo.home.score.T !== null) {
+					var home_score = parseInt(data.gms.g[i].extrainfo.home.score.T);
+					var visitor_score = parseInt(data.gms.g[i].extrainfo.away.score.T);
+
+					if(home_score > visitor_score) {
+						data.gms.g[i]['home_winning'] = true;
+					}
+					if(visitor_score > home_score) {
+						data.gms.g[i]['visitor_winning'] = true;
+					}
+				}
+				//console.log(data.gms.g[i]);
 			}
 		}
 		callback.call(this,data);		

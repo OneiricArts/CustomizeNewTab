@@ -46,14 +46,14 @@
 			<tr id={{eid}} data-toggle="collapse" 
 			data-target=#collapse-{{eid}}>
 
-				{{#if playing}}
-					<td> {{extrainfo.qtr}}, {{extrainfo.clock}}</td>
-				{{else}}
-					{{#if done}}
-						<td> {{d}}, {{q}}</td>
+				{{#if extrainfo.qtr}}
+					{{#if playing}}
+						<td> {{extrainfo.qtr}}Q, {{extrainfo.clock}}</td>
 					{{else}}
-						<td> {{d}}, {{t}}</td>
+						<td> {{extrainfo.qtr}}</td>
 					{{/if}}
+				{{else}}
+					<td> {{d}}, {{t}}</td>
 				{{/if}}
 
 				<td {{#if home_winning}}class="winning"{{/if}}
@@ -61,8 +61,10 @@
 				<td {{#if visitor_winning}}class="winning"{{/if}}
 				style="text-align:left">{{vnn}}</td>
 
-				<td style="text-align:left">{{hs}}</td> 
-				<td style="text-align:left">{{vs}}</td>
+				{{!--<td style="text-align:left">{{hs}}</td> 
+				<td style="text-align:left">{{vs}}</td>--}}
+				<td style="text-align:left">{{extrainfo.home.score.T}}</td> 
+				<td style="text-align:left">{{extrainfo.away.score.T}}</td>
 
 				<td style="text-align:right">
 				<button type="button" id="remove-game-btn" class="btn btn-default btn-xs">
@@ -79,7 +81,7 @@
 
 					{{#if playing}}
 						<p>
-						{{extrainfo.posteam}} ball on the {{extrainfo.yl}}
+						{{extrainfo.posteam}} ball on the {{extrainfo.yl}} | 
 						{{extrainfo.down}} & {{extrainfo.togo}} 
 						</p>
 					{{/if}}
@@ -302,7 +304,6 @@
 		</nav>
 
 		<div class="container-fluid">
-	        
 	        <div class="row">
 
 	            <div id="NFL_col" class="col-sm-5">
