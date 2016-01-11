@@ -137,8 +137,12 @@
 
 			<tr id={{id}} data-toggle="collapse" 
 			data-target=#collapse-{{id}}>
-				<td id="time"> {{period_time.period_status }} 
-					{{period_time.game_clock}}</td>
+
+				<td> 
+					{{period_time.period_status}} 
+					{{period_time.game_clock}}
+					{{#if overtime}} , {{overtime}}OT {{/if}}
+				</td>
 				
 				<td id="home_team" {{#if home.winning}}class="winning"{{/if}}
 				style="text-align:left">{{home.nickname}}</td>

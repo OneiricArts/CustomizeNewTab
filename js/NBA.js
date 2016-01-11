@@ -75,24 +75,41 @@ NBA.prototype.massageData = function(newData, callback) {
 
 		/* check if scores or times have changed, and if so, put a flag to highlight row */
 		if( this.data && this.data.sports_content.games && 
-			(newData.sports_content.games.game[i].id == this.data.sports_content.games.game[i].id) ) {
+			(newData.sports_content.games.game[i].id == 
+				this.data.sports_content.games.game[i].id) ) {
 
 			var newGame = newData.sports_content.games.game[i];
 			var oldGame = this.data.sports_content.games.game[i];
+			
+			/* highlight */
 			var same;
-
 			if( newGame.home.score === '' ) {
 				same = true;
 			}
-
 			else {
 				same = (parseInt(newGame.home.score) + parseInt(newGame.visitor.score)) ==
 					(parseInt(oldGame.home.score) + parseInt(oldGame.visitor.score));
 			}
-
 			newData.sports_content.games.game[i]['highlight'] = !same;
 		}
-	}
+
+		/* quarter status */
+
+		/* clear game_clock if game is done or in half time, the API sometimes
+			still returns a value. 
+			TODO -- "Start of ... " "End of ..."
+		*/
+		if(newData.sports_content.games.game[i].period_time.period_status === "Final") {
+			newData.sports_content.games.game[i].period_time.game_clock = "";
+		}
+
+		// game is in overtime?
+		var overtime = parseInt(newData.sports_content.games.game[i].period_time.period_value);
+		if( overtime > 4) {
+			newData.sports_content.games.game[i]['overtime'] = (overtime - 4);
+		}
+
+	} // forloop
 	callback.call(this, newData);
 };
 
