@@ -11,6 +11,8 @@ function NBA() {
 
 	this.$game_table = $('#NBA-panel #NBA_game_table');
 	this.$game_template = $("#NBA-schedule-template").html();
+
+	this.updateGamesID;
 };
 
 NBA.prototype = Object.create(Sports.prototype); // See note below
@@ -33,7 +35,7 @@ NBA.prototype.cacheButtonActions = function() {
 	$('body').on('click', '#NBA_game_table #remove-game-btn', {that: that}, this.removeGame);
 	$('body').on('click', '#NBA_col #reset_games', this.resetSchedule.bind(this));
 	$('body').on('click', '#NBA_col #update-btn', this.updateSchedule.bind(this));
-	$('body').on('click', '#NBA_col #autoupdate-btn', this.autoupdateSchedule);
+	$('body').on('click', '#NBA_col #autoupdate-btn', {that: that}, this.autoupdateSchedule);
 	$('body').on('click', '#NBA_col #standings-btn', this.standings.bind(this));
 };
 
@@ -138,20 +140,20 @@ NBA.prototype.updateEachGame = function(newData) {
 	this.saveData(this.writeScheduleToDOM());
 };
 
-NBA.prototype.autoupdateSchedule = function() {
-	//console.log($(this))
+NBA.prototype.autoupdateSchedule = function(event) {
+
 	$(this).find('span').toggleClass('glyphicon-ok').toggleClass('glyphicon-remove');
 	$(this).toggleClass('btn-default').toggleClass('btn-success');
 
+	var self = event.data.that;
+
 	if($(this).hasClass('btn-success')) {
-		var test = 'a'
-		window.setInterval(function(test){
-			//console.log(this.NBA);
-			console.log(test);
-		}, 2000);
+		console.log('updating---');
+		self.updateGamesID = window.setInterval(self.getDataSchedule.bind(self), 10000);
 	}
 	else {
-		//window.clear
+		console.log('clearing---');
+		window.clearInterval(self.updateGamesID);
 	}
 };
 

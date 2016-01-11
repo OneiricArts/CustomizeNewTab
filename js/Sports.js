@@ -8,8 +8,6 @@ function Sports() {
 	this.localData = {};
 	this.schedule_url;
 
-	this.hiddenGames = {};
-
 	this.$games = {};
 	this.$games_identifier;
 
@@ -47,6 +45,7 @@ Sports.prototype.getJsonData = function(url, callback) {
 Sports.prototype.massageData = function(data, callback) {};
 
 Sports.prototype.getDataSchedule = function() {
+	//console.log(this)
 	this.getJsonData(this.schedule_url, this.displaySchedule);
 };
 
