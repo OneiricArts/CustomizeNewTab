@@ -21,7 +21,7 @@ NFL.prototype.capitalizeFirstChar = function(string) {
 
 NFL.prototype.getJsonData = function(url, callback) {
 	console.log('getting from internet');
-	var url = 'http://www.nfl.com/ajax/scorestrip?season=2015&seasonType=POST&week=18';	
+	var url = 'http://www.nfl.com/ajax/scorestrip?season=2015&seasonType=POST&week=19';	
 	var xhr = new XMLHttpRequest();
 	xhr.open("GET", url, true);		
 	xhr.onreadystatechange = function() {
@@ -73,9 +73,13 @@ NFL.prototype.massageData = function(data, callback) {
 					data.gms.g[i]['scoreTable'] = true; 
 				}
 
+				if(data.gms.g[i]['extrainfo'].qtr === 'Pregame') {
+					data.gms.g[i]['extrainfo'].qtr = false;
+				}
+
 				if( data.gms.g[i]['extrainfo'].qtr !== null &&
-					!isNaN(data.gms.g[i]['extrainfo'].qtr) ||
-					data.gms.g[i]['extrainfo'].qtr === "OT") { //TODO
+					(!isNaN(data.gms.g[i]['extrainfo'].qtr) ||
+					data.gms.g[i]['extrainfo'].qtr === "OT") ) { //TODO
 					
 					//console.log('playing == true');
 					data.gms.g[i]['playing'] = true; 

@@ -75,6 +75,10 @@
 				<div id=collapse-{{eid}} class="collapse">
 				<small>
 
+					{{#unless extrainfo}}
+						API doesn`t update until Tuesday Midnight.
+					{{/unless}}
+
 					{{#if extrainfo.media.tv}}
 					<p> Game on {{extrainfo.media.tv}} </p>
 					{{/if}}
