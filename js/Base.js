@@ -7,9 +7,20 @@ var Base = function() {
 	//console.log(this)
 };
 
-Base.prototype.init = function () {
-	this.initialized = true;
-}
+
+Base.prototype.on = function () {
+	if(this.initialized == false) {
+		this.initialized = true;
+		this.init();
+	}
+};
+
+Base.prototype.off = function () {
+	//window timeout
+	console.log('off');
+};
+
+Base.prototype.init = function () {}
 
 Base.prototype.loadData = function (callbackSuccess, callbackFail) {
 

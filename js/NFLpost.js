@@ -15,10 +15,6 @@ function NFL() {
 NFL.prototype = Object.create(Sports.prototype); // See note below
 NFL.prototype.constructor = NFL;
 
-NFL.prototype.capitalizeFirstChar = function(string) {
-    return string.charAt(0).toUpperCase() + string.slice(1);
-}
-
 NFL.prototype.getJsonData = function(url, callback) {
 	console.log('getting from internet');
 	var url = 'http://www.nfl.com/ajax/scorestrip?season=2015&seasonType=POST&week=19';	
@@ -30,10 +26,6 @@ NFL.prototype.getJsonData = function(url, callback) {
 			var jsonObj = $.xml2json(response);
 
 			for (var i = 0; i < jsonObj.gms.g.length; i++) {
-
-				// capitalize the first char of team name 
-				jsonObj.gms.g[i].hnn = this.capitalizeFirstChar(jsonObj.gms.g[i].hnn);
-				jsonObj.gms.g[i].vnn = this.capitalizeFirstChar(jsonObj.gms.g[i].vnn);
 
 				// label whos winning
 				var home_score = parseInt(jsonObj.gms.g[i].hs);

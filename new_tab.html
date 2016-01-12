@@ -2,7 +2,6 @@
 <html>
   
 	<head>
-		<script src="js/googleAnalytics.js"></script>
 
 		<script src="libs/jquery-2.1.4.min.js"></script>
 		<script src="libs/jquery-ui.min.js"></script>
@@ -56,9 +55,9 @@
 					<td> {{d}}, {{t}}</td>
 				{{/if}}
 
-				<td {{#if home_winning}}class="winning"{{/if}}
+				<td class=text-capitalize {{#if home_winning}} winning {{/if}}
 				style="text-align:left">{{hnn}}</td>
-				<td {{#if visitor_winning}}class="winning"{{/if}}
+				<td class=text-capitalize {{#if visitor_winning}} winning {{/if}}
 				style="text-align:left">{{vnn}}</td>
 
 				{{!--<td style="text-align:left">{{hs}}</td> 
@@ -515,8 +514,9 @@
 				</div>
 			</div>
 		</div>
-
-  </body>
+	
+	<script src="js/googleAnalytics.js"></script>
+	</body>
 	
 </html>
 

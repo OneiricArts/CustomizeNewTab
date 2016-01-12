@@ -3,6 +3,23 @@ Hi! I built this because most sports websites suck, it takes too many clicks for
 ### Dowload and Screenshots on Google Store
 https://chrome.google.com/webstore/detail/sports-new-tab-page-beta/cbdhcjkifbkbckpoejnakoekiheijpei
 
+### Code Overview
+So, part of the reason for doing this is to get better at JavaScript.
+
+#####Classes
+
+Base 
+Contains basic functionality and data elements; e.g. saving data to Chrome's local storage. I should move that to a different class, and call that Chrome Base, so I when I want to port to Firefox, I can just implement functions that involve those base APIs (save, load, topsites).
+
+Sports extends Base
+This contains all the logic of displaying and updating the schedules for the widgets.
+
+NBA & NFL extend Sports
+These contain implementations for the functions involved in Sports. They also contain some unique functions that are exclusive to that widget (e.g. NBA contains standings).
+
+PageHandler extends Base
+This handles which widgets to show, and how to resize the widgets.
+
 ### Firefox
 Just waiting on them to finish the WebExtensions :) and then will port over. Should only need to change Chrome local storage stuff to whatever Firefox uses. Oh, and top sites.
 

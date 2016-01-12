@@ -76,7 +76,7 @@ NBA.prototype.massageData = function(newData, callback) {
 		newData.sports_content.games.game[i].visitor['winning'] = (visitor_score > home_score);
 
 		/* check if scores or times have changed, and if so, put a flag to highlight row */
-		if( this.data && this.data.sports_content.games && 
+		if( this.data && this.data.sports_content.games.game[i] && 
 			(newData.sports_content.games.game[i].id == 
 				this.data.sports_content.games.game[i].id) ) {
 
@@ -101,7 +101,8 @@ NBA.prototype.massageData = function(newData, callback) {
 			still returns a value. 
 			TODO -- "Start of ... " "End of ..."
 		*/
-		if(newData.sports_content.games.game[i].period_time.period_status === "Final") {
+		if(newData.sports_content.games.game[i].period_time.period_status === "Final" ||
+			newData.sports_content.games.game[i].period_time.period_status === "Halftime") {
 			newData.sports_content.games.game[i].period_time.game_clock = "";
 		}
 
@@ -149,11 +150,28 @@ NBA.prototype.autoupdateSchedule = function(event) {
 
 	if($(this).hasClass('btn-success')) {
 		console.log('updating---');
-		self.updateGamesID = window.setInterval(self.getDataSchedule.bind(self), 10000);
+		self.updateGamesID = window.setInterval(self.triggerUpdate.bind(self), 10000);
 	}
 	else {
 		console.log('clearing---');
 		window.clearInterval(self.updateGamesID);
+	}
+};
+
+NBA.prototype.triggerUpdate = function() {
+	var all_games_done = true;
+	for (i=0; i < this.data.sports_content.games.game.length; i++) {
+		if(this.data.sports_content.games.game[i].period_time.period_status !== "Final") {
+			all_games_done = false;
+			break;
+		}
+	}
+	if(!all_games_done) {
+		this.getDataSchedule();
+	}
+	else {
+		console.log('clearing---');
+		window.clearInterval(this.updateGamesID);
 	}
 };
 
@@ -163,7 +181,7 @@ NBA.prototype.highlightGames = function() {
 			var rowId = '#'+this.data.sports_content.games.game[i].id;
 			$(rowId).effect("highlight", {color: '#FFFF99'}, 2000);		
 		}
-	};
+	}
 };
 
 NBA.prototype.standings = function() {
