@@ -13,10 +13,18 @@ function NBA() {
 	this.$game_template = $("#NBA-schedule-template").html();
 
 	this.updateGamesID;
+
+	this.rowId = '#NBA_col';
+	this.autoUpdateButtonId = this.rowId + ' #autoupdate-btn';
 };
 
 NBA.prototype = Object.create(Sports.prototype); // See note below
 NBA.prototype.constructor = NBA;
+
+NBA.prototype.off = function () {
+	console.log('nba off');
+	this.turnOffAutoUpdate();
+};
 
 NBA.prototype.yyyymmdd = function() {
 
@@ -28,7 +36,7 @@ NBA.prototype.yyyymmdd = function() {
 
 	return ( today.getFullYear()+
 	twoDigits(today.getMonth()+1)+twoDigits(today.getDate()) );
-}
+};
 
 NBA.prototype.cacheButtonActions = function() {
 	var that = this;
@@ -150,7 +158,7 @@ NBA.prototype.autoupdateSchedule = function(event) {
 
 	if($(this).hasClass('btn-success')) {
 		console.log('updating---');
-		self.updateGamesID = window.setInterval(self.triggerUpdate.bind(self), 10000);
+		self.updateGamesID = window.setInterval(self.continueAutoUpdate.bind(self), 10000);
 	}
 	else {
 		console.log('clearing---');
@@ -158,7 +166,7 @@ NBA.prototype.autoupdateSchedule = function(event) {
 	}
 };
 
-NBA.prototype.triggerUpdate = function() {
+NBA.prototype.continueAutoUpdate = function() {
 	var all_games_done = true;
 	for (i=0; i < this.data.sports_content.games.game.length; i++) {
 		if(this.data.sports_content.games.game[i].period_time.period_status !== "Final") {
@@ -170,8 +178,19 @@ NBA.prototype.triggerUpdate = function() {
 		this.getDataSchedule();
 	}
 	else {
-		console.log('clearing---');
-		window.clearInterval(this.updateGamesID);
+		this.turnOffAutoUpdate();		
+	}
+};
+
+NBA.prototype.turnOffAutoUpdate = function() {
+	console.log('clearing---');
+	window.clearInterval(this.updateGamesID);
+	if($(this.autoUpdateButtonId).hasClass('btn-success')) {
+		var btn = $(this.autoUpdateButtonId);
+		btn.find('span').toggleClass('glyphicon-remove', true);
+		btn.find('span').toggleClass('glyphicon-ok', false);
+		btn.toggleClass('btn-success', false);
+		btn.toggleClass('btn-default', true)		
 	}
 };
 
