@@ -49,15 +49,15 @@
 					{{#if playing}}
 						<td> {{extrainfo.qtr}}Q, {{extrainfo.clock}}</td>
 					{{else}}
-						<td> {{extrainfo.qtr}}</td>
+						<td class="text-capitalize"> {{extrainfo.qtr}}</td>
 					{{/if}}
 				{{else}}
 					<td> {{d}}, {{t}}</td>
 				{{/if}}
 
-				<td class=text-capitalize {{#if home_winning}} winning {{/if}}
+				<td class="text-capitalize {{#if home_winning}} winning {{/if}}"
 				style="text-align:left">{{hnn}}</td>
-				<td class=text-capitalize {{#if visitor_winning}} winning {{/if}}
+				<td class="text-capitalize {{#if visitor_winning}} winning {{/if}}"
 				style="text-align:left">{{vnn}}</td>
 
 				{{!--<td style="text-align:left">{{hs}}</td> 
@@ -298,12 +298,13 @@
 						</button>
 
 						<span>
-						Update 0.5.5 - NFL Postseason Fix (Click <a id="version_update" 
+						Update 0.5.6 (Click <a id="version_update" 
 						href="https://www.reddit.com/r/SportsNewTabPage/comments/3zlgo3/
 						update_05_kinda_majoremergency_update/">
-						HERE</a> for info/report bugs)<br> (Tip: click anywhere on a game row 
-						for more info on the game, changes when a game is in progress. let me know what 
-						else to include.)
+						HERE</a> for info/report bugs)<br> 
+						<small><span>(Tip: click on a game row for more info, 
+						changes when a game is in progress. NBA auto update is off by default.)
+						</span></small>
 						</span>
 					</p>
 				</div>
@@ -311,6 +312,15 @@
 		</nav>
 
 		<div class="container-fluid">
+
+			<!-- <div id="update-alert" class="alert alert-success" role="alert" style="display:none">
+				Update 0.5.6! (this message will show for 5 times each update)
+				<ul>
+					<li>click anywhere on a game row  more info on the game, 
+					changes when a game is in progress. let me know what else to include.</li>
+					<li>NBA AutoUpdate is off by default, press to turn on each time.)</li>
+				</ul>
+			</div> -->
 
 	        <div class="row">
 

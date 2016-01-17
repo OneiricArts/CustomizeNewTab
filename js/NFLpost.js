@@ -92,6 +92,8 @@ NFL.prototype.massageData = function(data, callback) {
 					if(visitor_score > home_score) {
 						data.gms.g[i]['visitor_winning'] = true;
 					}
+
+					console.log(data.gms.g[i])
 				}
 				//console.log(data.gms.g[i]);
 			}

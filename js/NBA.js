@@ -116,7 +116,8 @@ NBA.prototype.massageData = function(newData, callback) {
 
 		// game is in overtime?
 		var overtime = parseInt(newData.sports_content.games.game[i].period_time.period_value);
-		if( overtime > 4) {
+		var status = parseInt(newData.sports_content.games.game[i].period_time.game_status);
+		if( overtime > 4 && status == 3) {
 			newData.sports_content.games.game[i]['overtime'] = (overtime - 4);
 		}
 
