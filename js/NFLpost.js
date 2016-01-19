@@ -17,7 +17,7 @@ NFL.prototype.constructor = NFL;
 
 NFL.prototype.getJsonData = function(url, callback) {
 	console.log('getting from internet');
-	var url = 'http://www.nfl.com/ajax/scorestrip?season=2015&seasonType=POST&week=19';	
+	var url = 'http://www.nfl.com/ajax/scorestrip?season=2015&seasonType=POST&week=20';	
 	var xhr = new XMLHttpRequest();
 	xhr.open("GET", url, true);		
 	xhr.onreadystatechange = function() {
