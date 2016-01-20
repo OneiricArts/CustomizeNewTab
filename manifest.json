@@ -1,7 +1,7 @@
 {
 	"manifest_version": 2,
 	"name": "Sports New Tab Page (Beta)",
-	"version": "0.5.7",
+	"version": "0.5.8",
 	"chrome_url_overrides": {
 		"newtab": "new_tab.html"
 	},

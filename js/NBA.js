@@ -84,7 +84,7 @@ NBA.prototype.massageData = function(newData, callback) {
 		newData.sports_content.games.game[i].visitor['winning'] = (visitor_score > home_score);
 
 		/* check if scores or times have changed, and if so, put a flag to highlight row */
-		if( this.data && this.data.sports_content.games.game[i] && 
+		if( this.data && this.data.sports_content && this.data.sports_content.games.game[i] && 
 			(newData.sports_content.games.game[i].id == 
 				this.data.sports_content.games.game[i].id) ) {
 
