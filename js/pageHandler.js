@@ -1,10 +1,29 @@
-var debug = false;
-if(debug){console.log('myScript running ...');}
+//var debug = false;
+//if(debug){console.log('myScript running ...');}
 
 $( document ).ready(function() {
    var obj = new pageHandeler();
    obj.init();
+
+	if (!navigator.onLine) {
+		$('#no-internet-alert').show();
+	}
 });
+
+window.addEventListener("offline", function(e) { 
+	$('#no-internet-alert').show();
+});
+
+window.addEventListener("online", function(e) { 
+	$('#no-internet-alert').hide();
+});
+
+window.onerror = function(msg, url, line, col, error) {
+ 
+   var extra = !col ? '' : '\ncolumn: ' + col;
+   extra += !error ? '' : '\nerror: ' + error;
+   console.log("Error: " + msg + "\nurl: " + url + "\nline: " + line + extra);
+};
 
 
 /*

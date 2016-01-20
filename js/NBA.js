@@ -88,6 +88,8 @@ NBA.prototype.massageData = function(newData, callback) {
 			(newData.sports_content.games.game[i].id == 
 				this.data.sports_content.games.game[i].id) ) {
 
+			//this.data.sfsdfa[i];
+
 			var newGame = newData.sports_content.games.game[i];
 			var oldGame = this.data.sports_content.games.game[i];
 			
