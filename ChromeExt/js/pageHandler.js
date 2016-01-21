@@ -11,11 +11,11 @@ $( document ).ready(function() {
 });
 
 window.addEventListener("offline", function(e) { 
-	$('#no-internet-alert').show();
+	$('#no-internet-alert').fadeIn();
 });
 
 window.addEventListener("online", function(e) { 
-	$('#no-internet-alert').hide();
+	$('#no-internet-alert').fadeOut();
 });
 
 window.onerror = function(msg, url, line, col, error) {

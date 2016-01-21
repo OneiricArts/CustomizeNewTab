@@ -1,38 +1,56 @@
-Hi! I built this because most sports websites suck, it takes too many clicks for me to see scheduled games and which ones are close. Unfortunately, life is busy and I used this as a way to de-stress. Hence, the code is crap. I've started to fix that and actually use objects and design things (flow chart, etc.). I think it might be easier to do a clean re-write while I am still on vacation, especially since there is currently a critical bug on the distributed extension that will destroy the NBA widget on January 1st. No Pressure. Well actually, there is none, because I've already fixed that bug in dev and I could just push those 3 lines of code before January 1st, but I like that deadline to deliver a non-shitty code version so I can also extend it easily when life gets busy.
 
-### Dowload and Screenshots on Google Store
+[//]: # (NOTE TO SELF: update this more regularly)
+
+## What is it?
+![Screenshot](/screenshots/16.01.21_overview.png?raw=true)
+
+Chrome store link:
 https://chrome.google.com/webstore/detail/sports-new-tab-page-beta/cbdhcjkifbkbckpoejnakoekiheijpei
 
-### Code Overview
-So, part of the reason for doing this is to get better at JavaScript.
+This is a replacement for Chrome's New Tab Page with something more useful, and sports oriented (productivity widgets incoming).
 
-#####Classes
+I built this because Chrome's new tab page is lame (and the big Google logo + search bar I never use was probably the last straw). Additionally, sports websites suck, it takes too many clicks for me to see basic stuff. Lastly, it helps me work on my JavaScript skills.
 
-Base 
-Contains basic functionality and data elements; e.g. saving data to Chrome's local storage. I should move that to a different class, and call that Chrome Base, so I when I want to port to Firefox, I can just implement functions that involve those base APIs (save, load, topsites).
+## Current State
+Currently, I have three widgets: NFL, NBA, and Links. They show live scores and the current schedule (week for NFL, day for NBA). NBA also has the standings. The Links widget allows custom links, as well as shows the chrome top sites (from the default new tab page).
 
-Sports extends Base
-This contains all the logic of displaying and updating the schedules for the widgets.
+Basic Google Analytics support so I can see which functionality is used, and which is not (e.g. do people even really realize the feature is there?).
 
-NBA & NFL extend Sports
-These contain implementations for the functions involved in Sports. They also contain some unique functions that are exclusive to that widget (e.g. NBA contains standings).
+What I have now built is proof that my idea was practical, useful, and something that myself, and other people, enjoy. The code is at a great place to build off. 
 
-PageHandler extends Base
-This handles which widgets to show, and how to resize the widgets.
+## Future Plans
 
-### Firefox
-Just waiting on them to finish the WebExtensions :) and then will port over. Should only need to change Chrome local storage stuff to whatever Firefox uses. Oh, and top sites.
+* Widgets
+    - MLB
+    - Google Tasks/Calendar
+    - flickr pictures for background
+    
+* improvements
+    - Better design for schedule. I thought a table would be the easiest way to present a simple way, but its not responsive horizontally for my needs, and its not flexible in the information I can show.
+        + and need a way to easily show other time frames (last week, tomorrow, etc.)
+    - Better Widget handler (Bootstrap grid + cards + something), currently my implementation won't be able to handle lots of widgets
+    - change coding workflow so can pre-compile handlebars templates
+    - performance
+        + minify everything?
+        + react.js?
+        + profile
+    - native integration
+        + notifications apis are nice now
+        
+* more quanitified user interaction
+    - rely on subjective feedback right now (reddit)
+    - surveys + A/B testing + smarter Google Analytics?
 
-### ICON CREDIT
+* Firefox: just waiting on webextensions
+
+Basically, I will probably work on this forever, and have unlimited ideas. I like it much better than the default New Tab, and like where it is going :)
+        
+### Code/ Classes Structure
+
+* **Base**: Contains basic functionality and data elements; e.g. saving data to Chrome's local storage. I should move browser-specific (save, load, topsites) APIs to a different class, and call that ChromeBase, so I when I want to port to Firefox, I can just re-implement those.
+    - **Sports *extends* Base**: This contains all the logic flow of displaying and updating the schedules for the widgets. But a lot of the functions are empty.
+        + **NBA & NFL *extend* Sports**: These contain implementations for the functions involved in Sports. They also contain some unique functions that are exclusive to that widget (e.g. NBA contains standings).
+    - **PageHandler **extends** Base**: This handles which widgets to show, and how to resize the widgets. Also handles basic things (e.g. network error message).
+
+### Icon Credit
 Need to add footer and credit http://www.flaticon.com/free-icon/scoreboard-tied_79638#term=scores&page=1&position=13
-
-### Bugs
-* For NBA, the time sometimes reads something like Final 2:30. It should just read Final in those situations.
-	- Tip off has similar problem
-	- Seems to be an API problem, not my code, will look into after
-* For Links: Need to add link by the whole 'https//www' part also, or else won't work. 
-	- Easy fix, just low on list because I am going to add 'top sites' from Chrome as the default
-	- and then completely re-write the custom link widget (is it even necessary? just dupilcates bookmarsk -- ask users) 
-
-### Notes
-Bootstrap 4 got rid of panels ... I went back to panels. Change that to cards sometime before Bootstrap 4 is stable. But Bootstrap 4 didn't like my glyphs, and after a lot of frustration I decided to ditch it for now.
