@@ -7,6 +7,8 @@
 Chrome store link:
 https://chrome.google.com/webstore/detail/sports-new-tab-page-beta/cbdhcjkifbkbckpoejnakoekiheijpei
 
+Subreddit (forum to communicate easily with me): https://www.reddit.com/r/sportsnewtabpage
+
 This is a replacement for Chrome's New Tab Page with something more useful, and sports oriented (productivity widgets incoming).
 
 I built this because Chrome's new tab page is lame (and the big Google logo + search bar I never use was probably the last straw). Additionally, sports websites suck, it takes too many clicks for me to see basic stuff. Lastly, it helps me work on my JavaScript skills.
