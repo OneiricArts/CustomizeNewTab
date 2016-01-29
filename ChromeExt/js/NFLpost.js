@@ -17,7 +17,7 @@ NFL.prototype.constructor = NFL;
 
 NFL.prototype.getJsonData = function(url, callback) {
 	console.log('getting from internet');
-	var url = 'http://www.nfl.com/ajax/scorestrip?season=2015&seasonType=POST&week=20';	
+	var url = 'http://www.nfl.com/ajax/scorestrip?season=2015&seasonType=POST&week=22';	
 	var xhr = new XMLHttpRequest();
 	xhr.open("GET", url, true);		
 	xhr.onreadystatechange = function() {
@@ -50,6 +50,11 @@ NFL.prototype.massageData = function(data, callback) {
 
 	var url = 'http://www.nfl.com/liveupdate/scores/scores.json'
 	$.getJSON(url, function(result) {
+
+		// if only one game, comes as an object; put in an array
+		if(data.gms.g !== null && typeof data.gms.g === 'object') {
+			data.gms.g = [data.gms.g];
+		}
 
 		for (var i = 0; i < data.gms.g.length; i++) {
 
@@ -110,7 +115,7 @@ NFL.prototype.dataOutOfDate = function(newData) {
 };
 
 NFL.prototype.writeToTemplate = function() {
-	
+
 	if(this.data.gms.g.length > 0) {
 		$('#week_number').text(this.data.gms.w +' / '+ this.data.gms.g[0].gt);
 		this.displayTemplate(this.$game_template, 'games', this.data.gms.g, 
