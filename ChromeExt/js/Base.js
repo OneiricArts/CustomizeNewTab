@@ -48,12 +48,23 @@ Base.prototype.saveData = function(callback) {
 	}.bind(this));
 };
 
+/*
+	@$template -- the source template. needs HTML code, not ID or dom element
+	@dataKey   -- what the top level data structure in the template will be referenced with
+	@dataObj   -- the top level data structure being passed to template
+	@$element  -- dom element, not id, its html will be replaced with template
+*/
 Base.prototype.displayTemplate = function($template, dataKey, dataObj, $element) {
-
-	var source = $template;
-	var template = Handlebars.compile(source);
+	var template = Handlebars.compile($template);
 	var data = {};
 	data[dataKey] = dataObj;
 	var output = template(data);
 	$element.html(output);
+};
+
+Base.prototype.getData = function(url, callback) {
+	$.getJSON(url, function(result) {
+		callback.call(this, result);
+	}.bind(this));
+	// TODO handle timeout, and network error
 };

@@ -23,16 +23,15 @@ Sports.prototype.constructor = Sports;
 Sports.prototype.init = function() {
 	this.loadLocalSchedule();
 	this.cacheButtonActions();
+	this.specificInit();
 };
+
+/*
+	OVERWRITE in extending classes for unique functionality
+*/
+Sports.prototype.specificInit = function() {};
 
 Sports.prototype.cacheButtonActions = function() {};
-
-Sports.prototype.getData = function(url, callback) {
-	$.getJSON(url, function(result) {
-		callback.call(this, result);
-	}.bind(this));
-	// TODO handle timeout, and network error
-};
 
 Sports.prototype.getJsonData = function(url, callback) {
 	console.log('getting from internet.');

@@ -15,6 +15,11 @@ function NFL() {
 NFL.prototype = Object.create(Sports.prototype); // See note below
 NFL.prototype.constructor = NFL;
 
+NFL.prototype.specificInit = function() {
+	NFLnews = new NFLnews();
+	NFLnews.init();
+};
+
 NFL.prototype.getJsonData = function(url, callback) {
 	console.log('getting from internet');
 	var url = 'http://www.nfl.com/ajax/scorestrip?season=2015&seasonType=POST&week=22';	

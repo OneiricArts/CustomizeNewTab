@@ -19,6 +19,7 @@
 		<script src="/js/pageHandler.js"></script>
 		<script src="/js/Sports.js"></script>
 		<script src="/js/NFLpost.js"></script>
+		<script src="/js/NFLnews.js"></script>
 		<script src="/js/NBA.js"></script>
 		<script src="/js/Links.js"></script>
 
@@ -125,6 +126,32 @@
 			
 		{{/unless}}
 		{{/each}}
+		</script>
+
+		<script id="rNFL-template" type="text/x-handlebars-template">
+
+			<ul class="list-group">
+				{{#each posts}}
+
+					<li class="list-group-item row">
+
+					
+					
+					<a class="col-xs-9" href="{{data.url}}">
+
+					{{#if data.link_flair_text}}
+						[{{data.link_flair_text}}]
+					{{/if}}
+					{{data.title}}
+					<a>
+
+					<a class="col-xs-3" href="https://reddit.com{{data.permalink}}" class="pull-right">
+						<span class="label label-default label-pill pull-xs-right">{{data.num_comments}} comments</span>
+					</a>
+					</li>
+
+				{{/each}}
+			</ul>
 		</script>
 
 		<!-- HANDLEBARS TEMPLATE -->
@@ -376,6 +403,9 @@
 								Click to submit ideas for off-season content here!
 								</div>
 							</a>
+
+							<div id="rNFL">
+							</div>
 						</div>  
 	                </div>
 	            </div>
