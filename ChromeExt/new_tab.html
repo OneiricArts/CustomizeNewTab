@@ -166,7 +166,7 @@
 		<!-- NFL dates tempalte -->
 		<script id="NFL-dates-template" type="text/x-handlebars-template">
 			{{#each dates}}
-				<p>{{this}}</p>
+				<p>{{countdown}} {{message}} {{#if date}}<small>/ {{date}}</small>{{/if}}</p>
 			{{/each}}
 		</script>
 
