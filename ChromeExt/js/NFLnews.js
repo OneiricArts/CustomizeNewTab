@@ -37,8 +37,14 @@ NFLnews.prototype.displayrNFL = function(data) {
 
 NFLnews.prototype.dates = function() {
 	var draftDate = new Date(2016, 03, 03); // April 3
+	var superBowl = new Date(2016, 01, 07); // Sunday, February 7
+	superBowl.setUTCHours(12+6+5,30);
 
 	var dates = [];
+
+	dates.push(countdown(new Date(), superBowl, countdown.DAYS | countdown.HOURS | countdown.MINUTES, 4).toString() 
+		+ " to Super Bowl L");
+		//+ " to the SUPERBOWL! (" + superBowl.toDateString() + ", " + superBowl.toLocaleTimeString() + ")");
 
 	dates.push(countdown(new Date(), draftDate, countdown.MONTHS | countdown.DAYS, 2).toString() 
 		+ " to the NFL Draft! (" + draftDate.toDateString() + ")");

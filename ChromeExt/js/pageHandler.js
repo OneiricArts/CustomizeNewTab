@@ -104,7 +104,7 @@ function triggerWidget(event) {
 
 function resizeColumns() {
 
-	this.$myCols = $('.row');
+	this.$myCols = $('.widgets');
 	var visibleCols = this.$myCols.children(":visible");
 
 	if(visibleCols.length == 2 && 
