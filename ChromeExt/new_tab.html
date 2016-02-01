@@ -14,6 +14,7 @@
 		<script src="libs/handlebars-v4.0.4.js"></script>
 
 		<script src="libs/jquery.xml2json.js"></script>
+		<script src="libs/countdown.min.js"></script>
 
 		<script src="/js/Base.js"></script>
 		<script src="/js/pageHandler.js"></script>
@@ -34,11 +35,26 @@
 			}
 			.possession{
 			}
+
+			#NFL-dates a {
+				color: black;
+				text-decoration: none;
+			}
+
+			#NFL-dates a:hover {
+				color:#00A0C6; 
+				text-decoration:none; 
+			}
+
+			.flair {
+				color: grey;
+			}
      	</style>
 	</head>
 
 	<body>
 
+		<!-- NFL Schedule Template -->
 		<script id="NFL-schedule-template" type="text/x-handlebars-template">
 		{{#each games}}
 		{{#unless hidden}}
@@ -128,31 +144,43 @@
 		{{/each}}
 		</script>
 
+		<!-- rNFL headlines/news template --> 
 		<script id="rNFL-template" type="text/x-handlebars-template">
-
 			<ul class="list-group">
 				{{#each posts}}
-
-					<li class="list-group-item row">
-
-					
-					
-					<a class="col-xs-9" href="{{data.url}}">
-
-					{{#if data.link_flair_text}}
-						[{{data.link_flair_text}}]
-					{{/if}}
-					{{data.title}}
-					<a>
-
-					<a class="col-xs-3" href="https://reddit.com{{data.permalink}}" class="pull-right">
-						<span class="label label-default label-pill pull-xs-right">{{data.num_comments}} comments</span>
-					</a>
+					<li class="list-group-item clearfix">
+						<div class="row">
+							<a href="{{data.url}}" class="col-xs-9">
+								{{#if data.link_flair_text}}
+									<span class="glyphicon glyphicon-bullhorn flair"></span>
+									<span class="flair">{{data.link_flair_text}}</span>
+								{{/if}}
+								{{data.title}}
+							</a>
+							<a href="https://reddit.com{{data.permalink}}" class="col-xs-3 pull-right">
+								<span class="label label-default label-pill pull-right">
+								{{data.num_comments}} comments</span>
+							</a>
+						</div>
 					</li>
-
 				{{/each}}
+
+				<li class="list-group-item clearfix" style="text-align: center; background-color:#ECECEC"> 
+					<div class="row">
+        				<a href="https://reddit.com/r/nfl" class="col-xs-12"
+        				style="text-align: center;">Read more on /r/NFL</a>
+        			</div>
+				</li>
 			</ul>
 		</script>
+
+		<!-- NFL dates tempalte -->
+		<script id="NFL-dates-template" type="text/x-handlebars-template">
+			{{#each dates}}
+				<p>{{this}}</p>
+			{{/each}}
+		</script>
+
 
 		<!-- HANDLEBARS TEMPLATE -->
 		<script id="NBA-schedule-template" type="text/x-handlebars-template">
@@ -395,20 +423,20 @@
 									</tbody>
 							    </table>
 							</div>
+							
+						</div>  <!-- panel body -->
+	                </div> <!-- panel -->
+	                <div class="alert alert-info" role="alert" id="NFL-dates"></div>
+	                <div id="rNFL"></div>
 
-							<a id="off_season" 
-							href="https://www.reddit.com/r/SportsNewTabPage/comments/43b8sb/nfl_offseason_ideas/">
-								<div class="alert alert-info" role="alert">
-								<span class="glyphicon glyphicon-send" aria-hidden="true"></span>
-								Click to submit ideas for off-season content here!
-								</div>
-							</a>
-
-							<div id="rNFL">
-							</div>
-						</div>  
-	                </div>
-	            </div>
+					<a id="off_season" 
+					href="https://www.reddit.com/r/SportsNewTabPage/comments/43b8sb/nfl_offseason_ideas/">
+						<div class="alert alert-info" role="alert">
+							<span class="glyphicon glyphicon-send" aria-hidden="true"></span>
+							Click to submit ideas for off-season content here!
+						</div>
+					</a>	                
+	            </div> <!-- NFL row -->
 
 	            <div id="NBA_col" class="col-sm-5">
 	                

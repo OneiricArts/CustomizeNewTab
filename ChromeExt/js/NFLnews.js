@@ -16,33 +16,32 @@ NFLnews.prototype.constructor = NFL;
 
 NFLnews.prototype.init = function(url, callback) {
 	this.getData(this.rNFLURL, this.displayrNFL);
+	this.dates();
 };
 
 
 NFLnews.prototype.displayrNFL = function(data) {
 	
 	var posts = data.data.children;
-
-	for (var i = 0; (i < posts.length) && (i < 5); i++) {
-		console.log(i+1 + ' ... ' + posts[i].data.title);
-	}
-
 	var subPosts = posts.slice(0,5);
 
-	console.log('---')
-
 	for (var i = 5; i < posts.length; i++) {
-		
 		var flair = posts[i].data.link_flair_text;
 		if(flair && (this.importantFlairs.indexOf(flair) > -1)) {
-			console.log(flair);
-
 			subPosts.push(posts[i]);
 		}
 	}
-	console.log('---')
 
+	this.displayTemplate($('#rNFL-template').html(), 'posts', subPosts, $('#rNFL'));
+};
 
-	this.displayTemplate($('#rNFL-template').html(), 'posts', subPosts, 
-			$('#rNFL'));
+NFLnews.prototype.dates = function() {
+	var draftDate = new Date(2016, 03, 03); // April 3
+
+	var dates = [];
+
+	dates.push(countdown(new Date(), draftDate, countdown.MONTHS | countdown.DAYS, 2).toString() 
+		+ " to the NFL Draft! (" + draftDate.toDateString() + ")");
+
+	this.displayTemplate($('#NFL-dates-template').html(), 'dates', dates, $('#NFL-dates'));
 };
