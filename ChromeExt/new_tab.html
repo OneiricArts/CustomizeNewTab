@@ -146,32 +146,21 @@
 
 		<!-- rNFL headlines/news template --> 
 		<script id="rNFL-template" type="text/x-handlebars-template">
-			<ul class="list-group">
+			<div class="list-group">
 				{{#each posts}}
-					<li class="list-group-item clearfix">
-						<div class="row">
-							<a href="{{data.url}}" class="col-xs-9">
-								{{#if data.link_flair_text}}
-									<span class="glyphicon glyphicon-bullhorn flair"></span>
-									<span class="flair">{{data.link_flair_text}}</span>
-								{{/if}}
-								{{data.title}}
-							</a>
-							<a href="https://reddit.com{{data.permalink}}" class="col-xs-3 pull-right">
-								<span class="label label-default label-pill pull-right">
-								{{data.num_comments}} comments</span>
-							</a>
-						</div>
-					</li>
+					<a class="list-group-item clearfix" href="https://reddit.com{{data.permalink}}" >
+						{{#if data.link_flair_text}}
+							<span class="glyphicon glyphicon-bullhorn flair"></span>
+							<span class="flair">{{data.link_flair_text}}</span>
+						{{/if}}
+						{{data.title}}						
+					</a>
 				{{/each}}
 
-				<li class="list-group-item clearfix" style="text-align: center; background-color:#ECECEC"> 
-					<div class="row">
-        				<a href="https://reddit.com/r/nfl" class="col-xs-12"
-        				style="text-align: center;">Read more on /r/NFL</a>
-        			</div>
-				</li>
-			</ul>
+				<a class="list-group-item clearfix" style="text-align: center; background-color:#ECECEC"
+					href="https://reddit.com/r/nfl">Read more on /r/NFL
+        		</a>
+			</div>
 		</script>
 
 		<!-- NFL dates tempalte -->
