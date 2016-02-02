@@ -7,7 +7,8 @@ function NFLnews() {
 
 	//this.datakey = 'NFL_DATA';
 	this.rNFLURL = 'https://www.reddit.com/r/nfl.json';
-	this.importantFlairs = ['Breaking News', 'Injury Report']
+	this.importantFlairs = ['Breaking News', 'Injury Report', 'Look Here!', 'Retirement'];
+	this.ignoreFlairs = ['Rumor', 'Misleading'];
 
 };
 
@@ -22,9 +23,22 @@ NFLnews.prototype.init = function(url, callback) {
 
 NFLnews.prototype.displayrNFL = function(data) {
 	
-	var posts = data.data.children;
-	var subPosts = posts.slice(0,5);
+	var posts = data.data.children;  // all posts on rNFL front page
+	var subPosts = [];				 // posts that I will show
+	//var subPosts = posts.slice(0,5);
+	
+	/* get top 5 posts, minus any posts with "bad flair" (rumor) */
+	for (var i = 0; (i < 5) && (i < posts.length); i++) {
+		var flair = posts[i].data.link_flair_text;
+		if(!flair) {
+			subPosts.push(posts[i]);
+		}
+		else if(this.ignoreFlairs.indexOf(flair) < 0) {
+			subPosts.push(posts[i]);
+		}
+	}
 
+	/* get any important posts not in top 5 */
 	for (var i = 5; i < posts.length; i++) {
 		var flair = posts[i].data.link_flair_text;
 		if(flair && (this.importantFlairs.indexOf(flair) > -1)) {
