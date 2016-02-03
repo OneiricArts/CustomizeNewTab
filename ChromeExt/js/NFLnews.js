@@ -27,26 +27,38 @@ NFLnews.prototype.displayrNFL = function(data) {
 	var subPosts = [];				 // posts that I will show
 	//var subPosts = posts.slice(0,5);
 	
-	/* get top 5 posts, minus any posts with "bad flair" (rumor) */
-	for (var i = 0; (i < 5) && (i < posts.length); i++) {
+	var i = 0;		  // index of post in array
+	var counter = 0;  // count to 5 posts
+
+	/* 
+		get top 5 posts, minus any posts with "bad flair" (e.g. rumor)
+			- don't respect hidden because no one is logged in
+			- while v. for -- need to skip over indices but still get 5 
+	*/
+	while ( (counter < 5) && (i < posts.length) ) {
+
 		var flair = posts[i].data.link_flair_text;
-		if(!flair) {
+		
+		if( !flair ) {
 			subPosts.push(posts[i]);
-		}
-		else if(this.ignoreFlairs.indexOf(flair) < 0) {
+			counter++;
+		} else if( this.ignoreFlairs.indexOf(flair) < 0 ) { // not in ignoreFlairs array
 			subPosts.push(posts[i]);
+			counter++;
 		}
+		i++;
 	}
 
 	/* get any important posts not in top 5 */
-	for (var i = 5; i < posts.length; i++) {
+	while (i < posts.length) {
 		var flair = posts[i].data.link_flair_text;
-		if(flair && (this.importantFlairs.indexOf(flair) > -1)) {
+		if( flair && (this.importantFlairs.indexOf(flair) > -1) ) { // in importantFlairs array
 			subPosts.push(posts[i]);
 		}
+		i++;
 	}
 
-	this.displayTemplate($('#rNFL-template').html(), 'posts', subPosts, $('#rNFL'));
+	this.displayTemplate($('#rNFL-template').html(), 'posts', subPosts, $('#rNFL'), true);
 };
 
 NFLnews.prototype.dates = function() {

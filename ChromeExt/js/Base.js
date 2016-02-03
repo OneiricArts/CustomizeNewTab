@@ -49,17 +49,25 @@ Base.prototype.saveData = function(callback) {
 };
 
 /*
-	@$template -- the source template. needs HTML code, not ID or dom element
-	@dataKey   -- what the top level data structure in the template will be referenced with
-	@dataObj   -- the top level data structure being passed to template
-	@$element  -- dom element, not id, its html will be replaced with template
+	@$template  -- the source template. needs HTML code, not ID or dom element
+	@dataKey    -- what the top level data structure in the template will be referenced with
+	@dataObj    -- the top level data structure being passed to template
+	@$element   -- dom element, not id, its html will be replaced with template
+	@showAffect -- fade in affect, optional
 */
-Base.prototype.displayTemplate = function($template, dataKey, dataObj, $element) {
+Base.prototype.displayTemplate = function($template, dataKey, dataObj, $element, showAffect) {
 	var template = Handlebars.compile($template);
 	var data = {};
 	data[dataKey] = dataObj;
 	var output = template(data);
-	$element.html(output);
+	
+	if(showAffect) {
+		$element.hide();
+		$element.html(output);
+		$element.fadeIn(500);
+	} else {
+		$element.html(output);
+	}
 };
 
 Base.prototype.getData = function(url, callback) {
