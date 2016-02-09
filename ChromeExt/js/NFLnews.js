@@ -7,7 +7,7 @@ function NFLnews() {
 
 	//this.datakey = 'NFL_DATA';
 	this.rNFLURL = 'https://www.reddit.com/r/nfl.json';
-	this.importantFlairs = ['Breaking News', 'Injury Report', 'Look Here!', 'Retirement'];
+	this.importantFlairs = ['Breaking News', 'Injury Report', 'Look Here!', 'Retirement', 'Serious'];
 	this.ignoreFlairs = ['Rumor', 'Misleading'];
 
 };
@@ -15,7 +15,7 @@ function NFLnews() {
 NFLnews.prototype = Object.create(Base.prototype); 
 NFLnews.prototype.constructor = NFL;
 
-NFLnews.prototype.init = function(url, callback) {
+NFLnews.prototype.init = function() {
 	this.getData(this.rNFLURL, this.displayrNFL);
 	this.dates();
 };
@@ -58,21 +58,15 @@ NFLnews.prototype.displayrNFL = function(data) {
 		i++;
 	}
 
-	this.displayTemplate($('#rNFL-template').html(), 'posts', subPosts, $('#rNFL'), true);
+	this.displayTemplate($('#rNFL-template').html(), 'posts', subPosts, $('#rNFL'), false);
 };
 
 NFLnews.prototype.dates = function() {
 	var draftDate = new Date(2016, 03, 03); // April 3
 	var superBowl = new Date(2016, 01, 07); // Sunday, February 7
-	superBowl.setUTCHours(12+6+5,30);
+	//superBowl.setUTCHours(12+6+5,30);
 
 	var dates = [
-		{
-			"countdown": countdown(new Date(), superBowl, countdown.DAYS | countdown.HOURS | countdown.MINUTES, 4).toString(),
-			"message": 'to Super Bowl L',
-			"date": null
-		},
-
 		{
 			"countdown": countdown(new Date(), draftDate, countdown.MONTHS | countdown.DAYS, 2).toString(),
 			"message": 'to the NFL Draft!',
