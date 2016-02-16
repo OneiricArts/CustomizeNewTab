@@ -152,11 +152,13 @@ NBA.prototype.massageData = function(newData, callback) {
 	callback.call(this, newData);
 };
 
-Sports.prototype.writeToTemplate = function() {
+NBA.prototype.writeToTemplate = function() {
+
+	//this.data.sports_content.games.game.push({'home':'test'});
 
 	if(this.data.sports_content.games.game.length > 0) {
 		this.displayTemplate(this.$game_template, 'games', 
-			this.data.sports_content.games.game, this.$game_table.find('tbody'));
+			this.data.sports_content.games.game, $('#NBA_col .panel-body'));
 	}
 	else {
 		$('#NBA_col .panel-body').html(this.$no_games_message);
