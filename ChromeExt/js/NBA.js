@@ -69,8 +69,6 @@ NBA.prototype.dataOutOfDate = function(newData) {
 	if(this.data == null || this.data.sports_content == null) {
 		return true;
 	}
-
-	console.log(!newData.sports_content.games.game[0]);
 	if(!newData.sports_content.games.game[0]){
 		return true;
 	}
