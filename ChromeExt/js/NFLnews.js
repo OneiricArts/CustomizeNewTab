@@ -7,7 +7,17 @@ function NFLnews() {
 
 	//this.datakey = 'NFL_DATA';
 	this.rNFLURL = 'https://www.reddit.com/r/nfl.json';
-	this.importantFlairs = ['Breaking News', 'Injury Report', 'Look Here!', 'Retirement', 'Serious'];
+	this.importantFlairs = ['Breaking News', 'Injury Report', 'Look Here!', 'Retirement', 'Serious', 'Roster Move', 'Complaints'];
+
+	/*
+		for custom glyphs for each flair, and can just check if key exists
+		default glyphicon is bullhorn
+		
+		importantFlairs = {
+			'Breaking News': 'glyphicon-bullhorn'
+		};
+	*/
+
 	this.ignoreFlairs = ['Rumor', 'Misleading'];
 
 };

@@ -69,6 +69,11 @@ NBA.prototype.dataOutOfDate = function(newData) {
 	if(this.data == null || this.data.sports_content == null) {
 		return true;
 	}
+
+	console.log(!newData.sports_content.games.game[0]);
+	if(!newData.sports_content.games.game[0]){
+		return true;
+	}
 	return !( newData.sports_content.games.game[0].date === this.yyyymmdd() );
 };
 
@@ -105,6 +110,26 @@ NBA.prototype.massageData = function(newData, callback) {
 			newData.sports_content.games.game[i]['highlight'] = !same;
 		}
 
+
+		try {
+			if(newData.sports_content.games.game[i].period_time.game_status === "1") {
+				var hours = parseInt(newData.sports_content.games.game[i].time.substring(0,2));
+				var minutes = parseInt(newData.sports_content.games.game[i].time.substring(2,4));
+				var yyyy = parseInt(newData.sports_content.games.game[i].date.substring(0,4));
+				var mm = parseInt(newData.sports_content.games.game[i].date.substring(4,6));
+				var dd = parseInt(newData.sports_content.games.game[i].date.substring(6,8));
+
+				var date = new Date(yyyy, mm, dd);
+				date.setUTCHours((hours+5)%24, minutes);
+				var gametime = date.toLocaleTimeString([], {hour: '2-digit', minute: '2-digit'});
+
+				newData.sports_content.games.game[i].period_time.period_status = gametime;
+			}
+		}
+		catch (e) {
+			console.log(e); 
+		}
+
 		/* quarter status */
 
 		/* clear game_clock if game is done or in half time, the API sometimes
@@ -128,8 +153,14 @@ NBA.prototype.massageData = function(newData, callback) {
 };
 
 Sports.prototype.writeToTemplate = function() {
-	this.displayTemplate(this.$game_template, 'games', this.data.sports_content.games.game, 
-		this.$game_table.find('tbody'));
+
+	if(this.data.sports_content.games.game.length > 0) {
+		this.displayTemplate(this.$game_template, 'games', 
+			this.data.sports_content.games.game, this.$game_table.find('tbody'));
+	}
+	else {
+		$('#NBA_col .panel-body').html(this.$no_games_message);
+	}
 };
 
 
