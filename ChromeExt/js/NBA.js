@@ -133,13 +133,16 @@ NBA.prototype.massageData = function(newData, callback) {
 
 		/* quarter status */
 
-		/* clear game_clock if game is done or in half time, the API sometimes
-			still returns a value. 
-			TODO -- "Start of ... " "End of ..."
+		/* 
+			clear game_clock if game is done or in half-time, the API sometimes
+				still returns a value. 
+			Clear game_clock if 'Start/End of' (0.00 is redundant)
 		*/
-		if(newData.sports_content.games.game[i].period_time.period_status === "Final" ||
-			newData.sports_content.games.game[i].period_time.period_status === "Halftime") {
-			newData.sports_content.games.game[i].period_time.game_clock = "";
+		if( newData.sports_content.games.game[i].period_time.period_status === "Final" ||
+			newData.sports_content.games.game[i].period_time.period_status === "Halftime" ||
+			newData.sports_content.games.game[i].period_time.period_status.includes('Start') ||
+			newData.sports_content.games.game[i].period_time.period_status.includes('End') ) {
+				newData.sports_content.games.game[i].period_time.game_clock = "";
 		}
 
 		// game is in overtime?
