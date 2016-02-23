@@ -3,26 +3,8 @@
   
 	<head>
 
-		<script src="libs/jquery-2.1.4.min.js"></script>
-		<script src="libs/jquery-ui.min.js"></script>
-
-		<script src="libs/bootstrap-3.3.5-dist/js/bootstrap.min.js"></script>
-
 		<link rel="stylesheet" type="text/css" 
 		href="libs/bootstrap-3.3.5-dist/css/bootstrap.min.css">
-
-		<script src="libs/handlebars-v4.0.4.js"></script>
-
-		<script src="libs/jquery.xml2json.js"></script>
-		<script src="libs/countdown.min.js"></script>
-
-		<script src="/js/Base.js"></script>
-		<script src="/js/pageHandler.js"></script>
-		<script src="/js/Sports.js"></script>
-		<script src="/js/NFLoff.js"></script>
-		<script src="/js/NFLnews.js"></script>
-		<script src="/js/NBA.js"></script>
-		<script src="/js/Links.js"></script>
 
 		<!-- <link href="https://fonts.googleapis.com/icon?family=Material+Icons"
      	rel="stylesheet"> -->
@@ -44,288 +26,7 @@
 
 	<body>
 
-		<!-- NFL Schedule Template -->
-		<script id="NFL-schedule-template" type="text/x-handlebars-template">
-		{{#each games}}
-		{{#unless hidden}}
-
-			<tr id={{eid}} data-toggle="collapse" 
-			data-target=#collapse-{{eid}}>
-
-				{{#if extrainfo.qtr}}
-					{{#if playing}}
-						<td> {{extrainfo.qtr}}Q, {{extrainfo.clock}}</td>
-					{{else}}
-						<td class="text-capitalize"> {{extrainfo.qtr}}</td>
-					{{/if}}
-				{{else}}
-					<td> {{d}}, {{t}}</td>
-				{{/if}}
-
-				<td class="text-capitalize {{#if home_winning}} winning {{/if}}"
-				style="text-align:left">{{hnn}}</td>
-				<td class="text-capitalize {{#if visitor_winning}} winning {{/if}}"
-				style="text-align:left">{{vnn}}</td>
-
-				{{!--<td style="text-align:left">{{hs}}</td> 
-				<td style="text-align:left">{{vs}}</td>--}}
-				<td style="text-align:left">{{extrainfo.home.score.T}}</td> 
-				<td style="text-align:left">{{extrainfo.away.score.T}}</td>
-
-				<td style="text-align:right">
-				<button type="button" id="remove-game-btn" class="btn btn-default btn-xs">
-				<span class="glyphicon glyphicon-trash"></span></button></td>
-			</tr>
-
-			<tr id=c{{eid}}><td colspan="6" style="padding: 0" class="nfl-collapse">
-				<div id=collapse-{{eid}} class="collapse">
-				<small>
-
-					{{#unless extrainfo}}
-						API doesn`t update until Tuesday Midnight.
-					{{/unless}}
-
-					{{#if extrainfo.media.tv}}
-					<p> Game on {{extrainfo.media.tv}} </p>
-					{{/if}}
-
-					{{#if playing}}
-						<p>
-						{{extrainfo.posteam}} ball on the {{extrainfo.yl}} | 
-						{{extrainfo.down}} & {{extrainfo.togo}} 
-						</p>
-					{{/if}}
-
-					{{#if scoreTable}}
-					<table class="table table-condensed">
-						<thead>
-							<tr><th></th><th>1</th><th>2</th><th>3</th><th>4</th>
-							<th>OT</th><th>T</th></tr>
-						</thead>
-						<tbody>
-							<tr>
-								<td>{{hnn}}</td>
-								<td>{{extrainfo.home.score.[1]}}</td>
-								<td>{{extrainfo.home.score.[2]}}</td>
-								<td>{{extrainfo.home.score.[3]}}</td>
-								<td>{{extrainfo.home.score.[4]}}</td>
-								<td>{{extrainfo.home.score.[5]}}</td>
-								<td>{{extrainfo.home.score.[T]}}</td>
-							</tr>
-
-							<tr>
-								<td>{{vnn}}</td>
-								<td>{{extrainfo.away.score.[1]}}</td>
-								<td>{{extrainfo.away.score.[2]}}</td>
-								<td>{{extrainfo.away.score.[3]}}</td>
-								<td>{{extrainfo.away.score.[4]}}</td>
-								<td>{{extrainfo.away.score.[5]}}</td>
-								<td>{{extrainfo.away.score.[T]}}</td>
-							</tr>
-						</tbody>
-					</table>
-					{{/if}}
-
-				</small>
-				</div>
-			</td></tr>
-			
-		{{/unless}}
-		{{/each}}
-		</script>
-
-		<!-- rNFL headlines/news template --> 
-		<script id="rNFL-template" type="text/x-handlebars-template">
-			<div class="list-group">
-				{{#each posts}}
-					<a class="list-group-item clearfix" href="https://reddit.com{{data.permalink}}" >
-						{{#if data.link_flair_text}}
-							<span class="glyphicon glyphicon-bullhorn flair"></span>
-							<span class="flair">{{data.link_flair_text}}</span>
-						{{/if}}
-						{{data.title}}						
-					</a>
-				{{/each}}
-
-				<a class="list-group-item clearfix" style="text-align: center; background-color:#ECECEC"
-					href="https://reddit.com/r/nfl">Read more on /r/NFL
-        		</a>
-			</div>
-		</script>
-
-		<!-- NFL dates tempalte -->
-		<script id="NFL-dates-template" type="text/x-handlebars-template">
-			{{#each dates}}
-				<p>{{countdown}} {{message}} {{#if date}}<small>/ {{date}}</small>{{/if}}</p>
-			{{/each}}
-		</script>
-
-
-		<!-- HANDLEBARS TEMPLATE -->
-		<script id="NBA-schedule-template" type="text/x-handlebars-template">
-			
-			<div class="table-responsive">
-		    <table id="NBA_game_table" 
-		    class="table table-striped table-condensed">
-				<thead>
-					<tr>
-						<th><span class="glyphicon glyphicon-time">
-						</span></th>
-						<th style="text-align:left">Home</th>
-						<th style="text-align:left">Visitor</th>
-						<th style="text-align:left">H</th>
-						<th style="text-align:left">V</th>
-						<th style="text-align:right">
-						<span class="glyphicon glyphicon-edit">
-						</span></th>
-					</tr>
-				</thead>
-				<tbody id="NBA-schedul-games">
-
-			{{#each games}}
-			{{#unless hidden}}
-			
-			<tr id={{id}} data-toggle="collapse" 
-			data-target=#collapse-{{id}}>
-
-				<td> 
-					{{period_time.period_status}} 
-					{{period_time.game_clock}}
-					{{#if overtime}} , {{overtime}}OT {{/if}}
-				</td>
-				
-				<td id="home_team" {{#if home.winning}}class="winning"{{/if}}
-				style="text-align:left">{{home.nickname}}</td>
-
-				<td id="away_team" {{#if visitor.winning}}class="winning"{{/if}}
-				style="text-align:left">{{visitor.nickname}}</td>
-
-				<td id="h-score" style="text-align:left">{{home.score}}</td> 
-				<td id="v-score" style="text-align:left">{{visitor.score}}</td>
-
-				<td style="text-align:right">
-				<button type="button" id="remove-game-btn" class="btn btn-default btn-xs">
-				<span class="glyphicon glyphicon-trash"></span></button></td>
-			</tr>
-			
-			<tr><td colspan="6" style="padding: 0" class="nba-collapse" id=c{{id}}>
-			<div id=collapse-{{id}} class="collapse">
-			<small>
-			
-			<p>Channels:
-			{{#each broadcasters.tv.broadcaster}}
-			    {{display_name}} {{#unless @last}}, {{/unless}}
-			{{/each}}</p>
-
-			{{!--
-			<p> "stat.NBA.com box score doesn't work until game start"</p>
-			<a class="btn btn-default btn-xs" 
-			href="http://stats.nba.com/game/#!/{{id}}/" 
-			role="button">stats.NBA.com Box Score</a>
-			--}}
-
-			<a class="btn btn-default btn-xs" 
-			href="http://www.nba.com/games/{{game_url}}/gameinfo.html" 
-			role="button">NBA.com Game Info</a>
-
-			{{!-- 
-			<a class="btn btn-default btn-xs" 
-			href="http://www.nba.com/gametracker/#/{{game_url}}/lp/matchup/" 
-			role="button">NBA.com Preview</a>
-			--}}
-
-			{{#if home.linescores}}
-				<table class="table table-condensed">
-					<thead><tr>
-						<th></th>
-						{{#each home.linescores.period}}
-							<th style="text-align:right">{{period_name}}</th>
-						{{/each}}
-						<th style="text-align:right">T</th>
-						</tr>
-					</thead>
-					<tbody>
-						<tr>
-							<th>{{home.nickname}}</th>
-							{{#each home.linescores.period}}
-								<td style="text-align:right">{{score}}</td>
-							{{/each}} 
-							<td style="text-align:right">{{home.score}}</td>
-						</tr>
-						<tr>
-							<th>{{visitor.nickname}}</th>
-							{{#each visitor.linescores.period}}
-								<td style="text-align:right">{{score}}</td>
-							{{/each}}
-							<td style="text-align:right">{{visitor.score}}</td>
-						</tr>
-					</tbody>
-				</table>
-			{{/if}}
-			</small>
-			</div>
-			</td></tr>
-
-			{{/unless}}
-			{{/each}}
-
-			</tbody>
-			</table>
-			</div> <!--/table-responsive -->
-		</script>
-
-		<!-- NBA STANDINGS -->
-		<script id="NBA-standings-template" type="text/x-handlebars-template">
-			<table class="table table-striped table-condensed">
-			<thead><tr>
-				<th>#</th><th>Team</th><th>W</th><th>L</th><th>Pct</th>
-				<th>L10</th><th>Streak</th>
-			</tr>
-			</thead>
-			<tbody>
-				{{#teams}}
-				<tr>										
-					<td>{{team_stats.rank}}</td>
-					<td>{{name}}</td>
-					<td>{{team_stats.wins}}</td>
-					<td>{{team_stats.losses}}</td>
-					<td>{{team_stats.pct}}</td>
-					<td>{{team_stats.l10}}</td>
-					<td>{{team_stats.streak}}</td>
-				</tr>
-				{{/teams}}	
-			</tbody>
-			</table>
-		</script>
-
-		<!-- Links -->
-		<script id="Links-template" type="text/x-handlebars-template">
-			
-			{{#if links.customSites}}
-			<div id="custom-sites" class="list-group">
-				<a href="#" class="list-group-item disabled">
-   				Custom Links</a>
-				{{#each links.customSites}}
-					<a href="{{url}}" id="{{@index}}"
-					class="list-group-item">{{title}}
- 						<button id="remove"
- 							class="btn btn-xs btn-default pull-right">
-							<span class="glyphicon glyphicon-trash"></span> 
- 						</button>
- 					</a>
-				{{/each}}
-			</div>
-			{{/if}}
-
-			<div id="top-sites" class="list-group">
-				<a href="#" class="list-group-item disabled">
-   				Chrome Top Sites</a>
-				{{#each links.topSites}}
-					<a href="{{url}}"
-					class="list-group-item">{{title}}</a>
-				{{/each}}
-			</div>
-		</script>
+		
 
 		<nav class="navbar navbar-default">
 			<div class="container-fluid">
@@ -589,7 +290,28 @@
 			</div>
 		</div>
 	
-	<script src="js/googleAnalytics.js"></script>
+		<script src="libs/jquery-2.1.4.min.js"></script>
+		<script src="libs/jquery-ui.min.js"></script>
+		<script src="libs/bootstrap-3.3.5-dist/js/bootstrap.min.js"></script>
+		<!-- <script src="libs/handlebars-v4.0.4.js"></script> -->
+
+		<script src="libs/jquery.xml2json.js"></script>
+		<script src="libs/countdown.min.js"></script>
+
+		<script src="/libs/handlebars.runtime-v4.0.5.js"></script>
+		<script src="/templates/templates.js"></script>
+
+
+		<script src="/js/Base.js"></script>
+		<script src="/js/pageHandler.js"></script>
+		<script src="/js/Sports.js"></script>
+		<script src="/js/NFLoff.js"></script>
+		<script src="/js/NFLnews.js"></script>
+		<script src="/js/NBA.js"></script>
+		<script src="/js/Links.js"></script>
+
+		<script src="js/googleAnalytics.js"></script>
+
 	</body>
 	
 </html>

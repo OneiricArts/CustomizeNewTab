@@ -1,0 +1,26 @@
+<!-- Links -->
+			
+{{#if links.customSites}}
+<div id="custom-sites" class="list-group">
+	<a href="#" class="list-group-item disabled">
+		Custom Links</a>
+	{{#each links.customSites}}
+		<a href="{{url}}" id="{{@index}}"
+		class="list-group-item">{{title}}
+				<button id="remove"
+					class="btn btn-xs btn-default pull-right">
+				<span class="glyphicon glyphicon-trash"></span> 
+				</button>
+			</a>
+	{{/each}}
+</div>
+{{/if}}
+
+<div id="top-sites" class="list-group">
+	<a href="#" class="list-group-item disabled">
+		Chrome Top Sites</a>
+	{{#each links.topSites}}
+		<a href="{{url}}"
+		class="list-group-item">{{title}}</a>
+	{{/each}}
+</div>

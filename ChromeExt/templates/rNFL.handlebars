@@ -1,0 +1,16 @@
+<!-- rNFL headlines/news template --> 
+<div class="list-group">
+	{{#each posts}}
+		<a class="list-group-item clearfix" href="https://reddit.com{{data.permalink}}" >
+			{{#if data.link_flair_text}}
+				<span class="glyphicon glyphicon-bullhorn flair"></span>
+				<span class="flair">{{data.link_flair_text}}</span>
+			{{/if}}
+			{{data.title}}						
+		</a>
+	{{/each}}
+
+	<a class="list-group-item clearfix" style="text-align: center; background-color:#ECECEC"
+		href="https://reddit.com/r/nfl">Read more on /r/NFL
+	</a>
+</div>

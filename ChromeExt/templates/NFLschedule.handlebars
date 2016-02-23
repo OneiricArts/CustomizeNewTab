@@ -1,0 +1,87 @@
+
+{{#each games}}
+{{#unless hidden}}
+
+	<tr id={{eid}} data-toggle="collapse" 
+	data-target=#collapse-{{eid}}>
+
+		{{#if extrainfo.qtr}}
+			{{#if playing}}
+				<td> {{extrainfo.qtr}}Q, {{extrainfo.clock}}</td>
+			{{else}}
+				<td class="text-capitalize"> {{extrainfo.qtr}}</td>
+			{{/if}}
+		{{else}}
+			<td> {{d}}, {{t}}</td>
+		{{/if}}
+
+		<td class="text-capitalize {{#if home_winning}} winning {{/if}}"
+		style="text-align:left">{{hnn}}</td>
+		<td class="text-capitalize {{#if visitor_winning}} winning {{/if}}"
+		style="text-align:left">{{vnn}}</td>
+
+		{{!--<td style="text-align:left">{{hs}}</td> 
+		<td style="text-align:left">{{vs}}</td>--}}
+		<td style="text-align:left">{{extrainfo.home.score.T}}</td> 
+		<td style="text-align:left">{{extrainfo.away.score.T}}</td>
+
+		<td style="text-align:right">
+		<button type="button" id="remove-game-btn" class="btn btn-default btn-xs">
+		<span class="glyphicon glyphicon-trash"></span></button></td>
+	</tr>
+
+	<tr id=c{{eid}}><td colspan="6" style="padding: 0" class="nfl-collapse">
+		<div id=collapse-{{eid}} class="collapse">
+		<small>
+
+			{{#unless extrainfo}}
+				API doesn`t update until Tuesday Midnight.
+			{{/unless}}
+
+			{{#if extrainfo.media.tv}}
+			<p> Game on {{extrainfo.media.tv}} </p>
+			{{/if}}
+
+			{{#if playing}}
+				<p>
+				{{extrainfo.posteam}} ball on the {{extrainfo.yl}} | 
+				{{extrainfo.down}} & {{extrainfo.togo}} 
+				</p>
+			{{/if}}
+
+			{{#if scoreTable}}
+			<table class="table table-condensed">
+				<thead>
+					<tr><th></th><th>1</th><th>2</th><th>3</th><th>4</th>
+					<th>OT</th><th>T</th></tr>
+				</thead>
+				<tbody>
+					<tr>
+						<td>{{hnn}}</td>
+						<td>{{extrainfo.home.score.[1]}}</td>
+						<td>{{extrainfo.home.score.[2]}}</td>
+						<td>{{extrainfo.home.score.[3]}}</td>
+						<td>{{extrainfo.home.score.[4]}}</td>
+						<td>{{extrainfo.home.score.[5]}}</td>
+						<td>{{extrainfo.home.score.[T]}}</td>
+					</tr>
+
+					<tr>
+						<td>{{vnn}}</td>
+						<td>{{extrainfo.away.score.[1]}}</td>
+						<td>{{extrainfo.away.score.[2]}}</td>
+						<td>{{extrainfo.away.score.[3]}}</td>
+						<td>{{extrainfo.away.score.[4]}}</td>
+						<td>{{extrainfo.away.score.[5]}}</td>
+						<td>{{extrainfo.away.score.[T]}}</td>
+					</tr>
+				</tbody>
+			</table>
+			{{/if}}
+
+		</small>
+		</div>
+	</td></tr>
+	
+{{/unless}}
+{{/each}}
