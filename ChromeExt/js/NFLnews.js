@@ -68,7 +68,7 @@ NFLnews.prototype.displayrNFL = function(data) {
 		i++;
 	}
 
-	this.displayTemplate($('#rNFL-template').html(), 'posts', subPosts, $('#rNFL'), false);
+	this.displayTemplate('rNFL', 'posts', subPosts, $('#rNFL'), false);
 };
 
 NFLnews.prototype.dates = function() {
@@ -86,5 +86,5 @@ NFLnews.prototype.dates = function() {
 
 	//+ " to the SUPERBOWL! (" + superBowl.toDateString() + ", " + superBowl.toLocaleTimeString() + ")");
 
-	this.displayTemplate($('#NFL-dates-template').html(), 'dates', dates, $('#NFL-dates'));
+	this.displayTemplate('NFLdates', 'dates', dates, $('#NFL-dates'));
 };

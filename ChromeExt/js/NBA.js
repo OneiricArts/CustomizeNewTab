@@ -161,7 +161,7 @@ NBA.prototype.writeToTemplate = function() {
 	//this.data.sports_content.games.game.push({'home':'test'});
 
 	if(this.data.sports_content.games.game.length > 0) {
-		this.displayTemplate(this.$game_template, 'games', 
+		this.displayTemplate('NBAschedule', 'games', 
 			this.data.sports_content.games.game, $('#NBA_col .panel-body'));
 	}
 	else {

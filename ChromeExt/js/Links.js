@@ -42,7 +42,7 @@ Links.prototype.addBookmark = function(event){
 Links.prototype.showTopSites = function(){
    chrome.topSites.get(function(mostVisitedURLs){
      
-      var $template = $("#Links-template").html();
+      //var $template = $("#Links-template").html();
       var dataKey = "links";
       var dataObj = {};
 
@@ -53,7 +53,7 @@ Links.prototype.showTopSites = function(){
       }
 
       var $element = $("#bookmark-panel");
-      this.displayTemplate($template, dataKey, dataObj, $element);
+      this.displayTemplate('Links', dataKey, dataObj, $element);
       this.saveData();
    }.bind(this));
 };

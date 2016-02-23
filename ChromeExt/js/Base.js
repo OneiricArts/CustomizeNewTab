@@ -55,8 +55,11 @@ Base.prototype.saveData = function(callback) {
 	@$element   -- dom element, not id, its html will be replaced with template
 	@showAffect -- fade in affect, optional
 */
-Base.prototype.displayTemplate = function($template, dataKey, dataObj, $element, showAffect) {
-	var template = Handlebars.compile($template);
+Base.prototype.displayTemplate = function(tempalte_name, dataKey, dataObj, $element, showAffect) {
+	//var template = Handlebars.compile($template);
+	
+	var template = Handlebars.templates[tempalte_name];
+
 	var data = {};
 	data[dataKey] = dataObj;
 	var output = template(data);
