@@ -250,12 +250,12 @@ NBA.prototype.standings = function() {
 
 NBA.prototype.showStandings = function(data) {
 	
-	var templ = $('#NBA-standings-template').html();
-	
-	this.displayTemplate(templ, 'teams', 
+	//var templ = $('#NBA-standings-template').html();
+
+	this.displayTemplate('NBAstandings', 'teams', 
 		data.sports_content.standings.conferences.West.team, 
 		$('#NBA-standings #West') );
-	this.displayTemplate(templ, 'teams', 
+	this.displayTemplate('NBAstandings', 'teams', 
 		data.sports_content.standings.conferences.East.team, 
 		$('#NBA-standings #East') );
 
