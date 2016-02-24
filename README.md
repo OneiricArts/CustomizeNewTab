@@ -11,7 +11,7 @@ Subreddit (forum to communicate easily with me): https://www.reddit.com/r/sports
 
 This is a replacement for Chrome's New Tab Page with something more useful, and sports oriented (productivity widgets incoming).
 
-I built this because Chrome's new tab page is lame (and the big Google logo + search bar I never use was probably the last straw). Additionally, sports websites suck, it takes too many clicks for me to see basic stuff. Lastly, it helps me work on my JavaScript skills.
+I built this because Chrome's new tab page is lame (and the big Google logo + search bar I never use was probably the last straw). Additionally, sports websites suck, it takes too many clicks for me to see basic stuff. Lastly, it helps me work on my JavaScript/frontend skills.
 
 ## Current State
 Currently, I have three widgets: NFL, NBA, and Links. They show live scores and the current schedule (week for NFL, day for NBA). NBA also has the standings. The Links widget allows custom links, as well as shows the chrome top sites (from the default new tab page).
@@ -31,7 +31,7 @@ What I have now built is proof that my idea was practical, useful, and something
     - Better design for schedule. I thought a table would be the easiest way to present a simple way, but its not responsive horizontally for my needs, and its not flexible in the information I can show.
         + and need a way to easily show other time frames (last week, tomorrow, etc.)
     - Better Widget handler (Bootstrap grid + cards + something), currently my implementation won't be able to handle lots of widgets
-    - change coding workflow so can pre-compile handlebars templates
+    - ~~change coding workflow so can pre-compile handlebars templates~~ (Done!)
     - performance
         + minify everything?
         + react.js?
@@ -47,12 +47,22 @@ What I have now built is proof that my idea was practical, useful, and something
 
 Basically, I will probably work on this forever, and have unlimited ideas. I like it much better than the default New Tab, and like where it is going :)
         
-### Code/ Classes Structure
+### Code
+
+####Classes Structure
 
 * **Base**: Contains basic functionality and data elements; e.g. saving data to Chrome's local storage. I should move browser-specific (save, load, topsites) APIs to a different class, and call that ChromeBase, so I when I want to port to Firefox, I can just re-implement those.
     - **Sports *extends* Base**: This contains all the logic flow of displaying and updating the schedules for the widgets. But a lot of the functions are empty.
         + **NBA & NFL *extend* Sports**: These contain implementations for the functions involved in Sports. They also contain some unique functions that are exclusive to that widget (e.g. NBA contains standings).
     - **PageHandler **extends** Base**: This handles which widgets to show, and how to resize the widgets. Also handles basic things (e.g. network error message).
+    
+####Frontend
+* new_tab.html has the static html layout and design.
+    - rely on libraries instead of custom css (all custom css is in the head)
+    - bootstrap for basic layout, scalability, stlying (e.g. glyphicons)
+    - Material Design Lite (Google's design language) for nice-looking features (e.g. Floating Action Button)
+* /templates/ contains handlebar templates used to show data.
+    - pre-combiled into one js file
 
 ### Icon Credit
 Need to add footer and credit http://www.flaticon.com/free-icon/scoreboard-tied_79638#term=scores&page=1&position=13

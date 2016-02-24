@@ -152,6 +152,13 @@ NBA.prototype.massageData = function(newData, callback) {
 			newData.sports_content.games.game[i]['overtime'] = (overtime - 4);
 		}
 
+		var game = newData.sports_content.games.game[i];
+		
+		// favorite team
+		if(game.visitor.abbreviation === 'GSW' || game.home.abbreviation === 'GSW') {
+			newData.sports_content.games.game[i].fav_team = true;
+		}
+
 	} // forloop
 	callback.call(this, newData);
 };
