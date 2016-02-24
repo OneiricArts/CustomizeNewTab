@@ -1,8 +1,9 @@
 
-[//]: # (NOTE TO SELF: update this more regularly)
+[//]: #	"NOTE TO SELF: update this more regularly"
 
 ## What is it?
-![Screenshot](/screenshots/16.01.21_overview.png?raw=true)
+![Screenshot](./screenshots/2016.02.24_overview.png?raw=true)
+*(Current state, NFL is in offseason, so no games)*
 
 Chrome store link:
 https://chrome.google.com/webstore/detail/sports-new-tab-page-beta/cbdhcjkifbkbckpoejnakoekiheijpei
@@ -26,7 +27,6 @@ What I have now built is proof that my idea was practical, useful, and something
     - MLB
     - Google Tasks/Calendar
     - flickr pictures for background
-    
 * improvements
     - Better design for schedule. I thought a table would be the easiest way to present a simple way, but its not responsive horizontally for my needs, and its not flexible in the information I can show.
         + and need a way to easily show other time frames (last week, tomorrow, etc.)
@@ -38,16 +38,14 @@ What I have now built is proof that my idea was practical, useful, and something
         + profile
     - native integration
         + notifications apis are nice now
-        
 * more quanitified user interaction
     - rely on subjective feedback right now (reddit)
     - surveys + A/B testing + smarter Google Analytics?
-
 * Firefox: just waiting on webextensions
 
 Basically, I will probably work on this forever, and have unlimited ideas. I like it much better than the default New Tab, and like where it is going :)
-        
-### Code
+
+## Code
 
 ####Classes Structure
 
@@ -55,7 +53,7 @@ Basically, I will probably work on this forever, and have unlimited ideas. I lik
     - **Sports *extends* Base**: This contains all the logic flow of displaying and updating the schedules for the widgets. But a lot of the functions are empty.
         + **NBA & NFL *extend* Sports**: These contain implementations for the functions involved in Sports. They also contain some unique functions that are exclusive to that widget (e.g. NBA contains standings).
     - **PageHandler **extends** Base**: This handles which widgets to show, and how to resize the widgets. Also handles basic things (e.g. network error message).
-    
+
 ####Frontend
 * new_tab.html has the static html layout and design.
     - rely on libraries instead of custom css (all custom css is in the head)
