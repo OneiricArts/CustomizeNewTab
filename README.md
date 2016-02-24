@@ -5,10 +5,8 @@
 ![Screenshot](./screenshots/2016.02.24_overview.png?raw=true)
 *(Current state, NFL is in offseason, so no games)*
 
-Chrome store link:
-https://chrome.google.com/webstore/detail/sports-new-tab-page-beta/cbdhcjkifbkbckpoejnakoekiheijpei
-
-Subreddit (forum to communicate easily with me): https://www.reddit.com/r/sportsnewtabpage
+[​Chrome Store Link]: https://chrome.google.com/webstore/detail/sports-new-tab-page-beta/cbdhcjkifbkbckpoejnakoekiheijpei
+[​Subreddit (forum to communicate easily with me)]: https://www.reddit.com/r/sportsnewtabpage
 
 This is a replacement for Chrome's New Tab Page with something more useful, and sports oriented (productivity widgets incoming).
 
