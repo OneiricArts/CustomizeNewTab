@@ -5,11 +5,11 @@
 	<a href="#" class="list-group-item disabled">
 		Custom Links</a>
 	{{#each links.customSites}}
-		<a href="{{url}}" id="{{@index}}"
+		<a href="{{url}}" id="{{@index}}_customLink"
 		class="list-group-item">{{title}}
-				<button id="remove"
+				<button id="remove_customLink"
 					class="btn btn-xs btn-default pull-right">
-				<span class="glyphicon glyphicon-trash"></span> 
+					<span class="glyphicon glyphicon-trash"></span> 
 				</button>
 			</a>
 	{{/each}}

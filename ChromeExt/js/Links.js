@@ -16,7 +16,7 @@ Links.prototype.constructor = Links;
 Links.prototype.init = function(){   
    var that = this;
    
-   $("#bookmark-panel").on('click', '#remove', function(evt) {
+   $("#bookmark-panel").on('click', '#remove_customLink', function(evt) {
       evt.preventDefault(); 
       that.removeCustomLink($(this).closest('a'));
    });
@@ -75,7 +75,7 @@ Links.prototype.setDefaults = function() {
 
 Links.prototype.removeCustomLink = function($el) {
    
-   this.data.splice(parseInt($el.attr('id')),1);
+   this.data.splice(parseInt($el.attr('id').split('_')[0]),1);
    
    if(this.data.length == 0) {
       $('#custom-sites').remove();

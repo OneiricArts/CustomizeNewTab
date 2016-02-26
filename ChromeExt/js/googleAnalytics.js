@@ -1,59 +1,54 @@
-// Copyright (c) 2012 The Chromium Authors. All rights reserved.
-// Use of this source code is governed by a BSD-style license that can be
-// found in the LICENSE file.
-
-/**
- * Add your Analytics tracking ID here.
- */
-var _AnalyticsCode = 'UA-72036968-1';
-
-/**
- * Below is a modified version of the Google Analytics asynchronous tracking
- * code snippet.  It has been modified to pull the HTTPS version of ga.js
- * instead of the default HTTP version.  It is recommended that you use this
- * snippet instead of the standard tracking snippet provided when setting up
- * a Google Analytics account.
- */
-var _gaq = _gaq || [];
-_gaq.push(['_setAccount', _AnalyticsCode]);
-_gaq.push(['_trackPageview']);
-
-(function() {
-  var ga = document.createElement('script');
-  ga.type = 'text/javascript';
-  ga.async = true;
-  ga.src = 'https://ssl.google-analytics.com/ga.js';
-  var s = document.getElementsByTagName('script')[0];
-  s.parentNode.insertBefore(ga, s);
-})();
-
-/**
- * Track a click on a button using the asynchronous tracking API.
- *
- * See http://code.google.com/apis/analytics/docs/tracking/asyncTracking.html
- * for information on how to use the asynchronous tracking API.
- */
-function trackButtonClick(e) {
-  _gaq.push(['_trackEvent', e.target.id, 'clicked']);
-}
-
-/**
- * Now set up your event handlers for the popup's `button` elements once the
- * popup's DOM has loaded.
- */
-document.addEventListener('DOMContentLoaded', function () {
-  var buttons = document.querySelectorAll('button');
-  for (var i = 0; i < buttons.length; i++) {
-    buttons[i].addEventListener('click', trackButtonClick);
-  }
-});
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
 
 /*
-  so I know how many people actually follow the link to the reddit post
+  how to setup for extension:
+  https://davidsimpson.me/2014/05/27/add-googles-universal-analytics-tracking-chrome-extension/
+  didn't know i had to do the check, and specify /new_tab.html
 */
-document.addEventListener('DOMContentLoaded', function () {
-  var buttons = document.querySelectorAll('a');
-  for (var i = 0; i < buttons.length; i++) {
-    buttons[i].addEventListener('click', trackButtonClick);
+ga('create', 'UA-72036968-1', 'auto');
+ga('set', 'checkProtocolTask', function(){});
+ga('send', 'pageview', '/new_tab.html');
+
+$('html').on('click', 'a', function(e){
+  
+  var descrip = e.target.id;
+  if(descrip === "") {
+    descrip = e.target.className;
   }
+  if(descrip === "") {
+    descrip = 'link';
+  }
+
+  ga('send', 'event', descrip, 'click');
+});
+
+$('html').on('click', 'button', function(e){
+
+  var descrip = e.target.id;
+
+  if(descrip === "") {
+    descrip = e.target.className;
+  }
+  if(descrip === "") {
+    descrip = 'button';
+  }
+
+  ga("send", "event", descrip, 'click');
+});
+
+$('html').on('click', 'span', function(e){
+
+  var descrip = e.target.id;
+
+  if(descrip === "") {
+    descrip = e.target.className;
+  }
+  if(descrip === "") {
+    descrip = 'span';
+  }
+
+  ga("send", "event", descrip, 'click');
 });
