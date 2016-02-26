@@ -148,15 +148,31 @@ NBA.prototype.massageData = function(newData, callback) {
 		// game is in overtime?
 		var overtime = parseInt(newData.sports_content.games.game[i].period_time.period_value);
 		var status = parseInt(newData.sports_content.games.game[i].period_time.game_status);
+
 		if( overtime > 4 && status == 3) {
 			newData.sports_content.games.game[i]['overtime'] = (overtime - 4);
 		}
 
 		var game = newData.sports_content.games.game[i];
-		
+		var period_value = parseInt(game.period_time.period_value);
+		var game_clock = parseInt(game.period_time.game_clock);
+
 		// favorite team
 		if(game.visitor.abbreviation === 'GSW' || game.home.abbreviation === 'GSW') {
 			newData.sports_content.games.game[i].fav_team = true;
+		}
+
+		// close game: game in progress, 4th qtr or OT, within 5 points
+		if(status == 2 && period_value > 3 ) {
+
+			var game_clock_min = parseFloat(game_clock.split(':')[0]);
+
+			if(game_clock_min < 5) {
+				var difference = parseInt(newGame.home.score) - parseInt(newGame.visitor.score);
+				if( Math.abs(difference) < 6 ) {
+					newData.sports_content.games.game[i].close_game = true;
+				}
+			}
 		}
 
 	} // forloop
