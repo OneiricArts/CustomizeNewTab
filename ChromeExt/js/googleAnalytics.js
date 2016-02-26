@@ -52,3 +52,20 @@ $('html').on('click', 'span', function(e){
 
   ga("send", "event", descrip, 'click');
 });
+
+/* 
+  send uncaught exceptions to google analytics for now, will
+  look into post to server later
+*/
+window.onerror = function(msg, url, line, col, error) {
+ 
+   var extra = !col ? '' : '\ncolumn: ' + col;
+   extra += !error ? '' : '\nerror: ' + error;
+   error_msg = "Error: " + msg + "\nurl: " + url + "\nline: " + line + extra;
+
+  ga('send', 'exception', {
+    'exDescription': error_msg,
+  });
+
+  //ga("send", "event", msg, 'exception');
+};
