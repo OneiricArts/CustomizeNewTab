@@ -158,12 +158,12 @@ NBA.prototype.massageData = function(newData, callback) {
 		var game_clock = parseInt(game.period_time.game_clock);
 
 		// favorite team
-		if(game.visitor.abbreviation === 'GSW' || game.home.abbreviation === 'GSW') {
+		/*if(game.visitor.abbreviation === 'GSW' || game.home.abbreviation === 'GSW') {
 			newData.sports_content.games.game[i].fav_team = true;
-		}
+		}*/
 
 		// close game: game in progress, 4th qtr or OT, within 5 points
-		if(status == 2 && period_value > 3 ) {
+		/*if(status == 2 && period_value > 3 ) {
 
 			var game_clock_min = parseFloat(game_clock.split(':')[0]);
 
@@ -173,7 +173,7 @@ NBA.prototype.massageData = function(newData, callback) {
 					newData.sports_content.games.game[i].close_game = true;
 				}
 			}
-		}
+		}*/
 
 	} // forloop
 	callback.call(this, newData);
