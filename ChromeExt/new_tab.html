@@ -24,6 +24,11 @@
 
 			body {
 				padding-top: 20px;
+				/*padding-bottom: 20px*/; 
+			}
+
+			.container-fluid {
+				padding-bottom: 20px; /* so plus button isn't stuck at bottom */
 			}
      	</style>
 	</head>
@@ -39,41 +44,38 @@
 			<!-- Put navbar above container if I want to have it be 'header-like', here it
 			has padding to the right/left -->
 			<nav class="navbar navbar-default">
-				<div class="container-fluid">
-					<div class="navbar-header">	
+				
+				<p id="page_options" class="navbar-text">
+					<span>New Tab Page by OneiricArts</span>
 
-						<p id="page_options" class="navbar-text">
-							<span>New Tab Page by OneiricArts</span>
+					<button id="NFL-button"
+						class="btn btn-xs btn-default">
+						<span class="glyphicon glyphicon-ok"></span> 
+						NFL
+					</button>
 
-							<button id="NFL-button"
-								class="btn btn-xs btn-default">
-								<span class="glyphicon glyphicon-ok"></span> 
-								NFL
-							</button>
+					<button id="NBA-button"
+						class="btn btn-xs btn-default">
+						<span class="glyphicon glyphicon-ok"></span>
+						NBA 
+					</button>
 
-							<button id="NBA-button"
-								class="btn btn-xs btn-default">
-								<span class="glyphicon glyphicon-ok"></span>
-								NBA 
-							</button>
+					<button id="Links-button"
+						class="btn btn-xs btn-default">
+						<span class="glyphicon glyphicon-ok"></span>
+						Link
+					</button>
 
-							<button id="Links-button"
-								class="btn btn-xs btn-default">
-								<span class="glyphicon glyphicon-ok"></span>
-								Link
-							</button>
-
-							<span>
-							v 0.8.0<a id="version_update" 
-							href="https://www.reddit.com/r/SportsNewTabPage/">
-							r/SportsNewTabPage<br></a> 
-							<small><span>Tip: click on a game row for more info, 
-							changes when a game is in progress. NBA auto update is off by default.
-							</span></small>
-							</span>
-						</p>
-					</div>
-				</div>
+					<span>
+					v 0.8.0<a id="version_update" 
+					href="https://www.reddit.com/r/SportsNewTabPage/">
+					r/SportsNewTabPage</a> 
+					<br>
+					<small><span>Tip: click on a game row for more info, 
+					changes when a game is in progress. NBA auto update is off by default.
+					</span></small>
+					</span>
+				</p>
 			</nav>
 
 
@@ -223,8 +225,26 @@
 	            </div>
 	        
 
-	        </div> <!-- /container fluid-->
-		</div> <!-- /row widgets-->
+	        </div> <!-- /row widgets-->
+		</div> <!-- /container fluid-->
+
+		<!-- <footer class="mdl-mini-footer">
+			<div class="mdl-mini-footer__left-section">
+				<span>
+					New Tab Page by OneiricArts
+					&middot
+					v 0.8.0
+					&middot
+					<a id="version_update" 
+					href="https://www.reddit.com/r/SportsNewTabPage/">
+					r/SportsNewTabPage</a> 
+					&middot
+					<a id="version_update" 
+					href="https://www.reddit.com/r/SportsNewTabPage/">
+					Github</a> 
+				</span>
+			</div>
+		</footer> -->
 
 		<!-- Modals Go Here -->
 

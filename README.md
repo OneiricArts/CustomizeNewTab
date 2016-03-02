@@ -62,5 +62,15 @@ Basically, I will probably work on this forever, and have unlimited ideas. I lik
 * /templates/ contains handlebar templates used to show data.
     - pre-combiled into one js file
 
-### Icon Credit
+### Licenses & Acknowledgements  
+
+##### Image / Icon
+
 Need to add footer and credit http://www.flaticon.com/free-icon/scoreboard-tied_79638#term=scores&page=1&position=13
+
+##### Image / Emerald_Bay
+The background uses a part of the image found here:
+https://upload.wikimedia.org/wikipedia/commons/9/97/Emerald_Bay.jpg
+"This image, which was originally posted to Flickr.com, was uploaded to Commons using Flickr upload bot on 02:42, 16 January 2010 (UTC) by Pauk (talk)."
+
+It is licensed under Creative Commons Attribution 2.0 Generic (CC BY 2.0).
