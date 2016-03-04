@@ -155,7 +155,7 @@ NBA.prototype.massageData = function(newData, callback) {
 
 		var game = newData.sports_content.games.game[i];
 		var period_value = parseInt(game.period_time.period_value);
-		var game_clock = parseInt(game.period_time.game_clock);
+		var game_clock = game.period_time.game_clock;
 
 		// favorite team
 		/*if(game.visitor.abbreviation === 'GSW' || game.home.abbreviation === 'GSW') {
@@ -163,17 +163,19 @@ NBA.prototype.massageData = function(newData, callback) {
 		}*/
 
 		// close game: game in progress, 4th qtr or OT, within 5 points
-		/*if(status == 2 && period_value > 3 ) {
+		if(status == 2 && period_value > 3 ) {
 
+			console.log(game_clock)
 			var game_clock_min = parseFloat(game_clock.split(':')[0]);
 
-			if(game_clock_min < 5) {
+			// last 5 minutes of regulation, or all of OT (OT is only 5 mins)
+			if(game_clock_min < 6) {
 				var difference = parseInt(newGame.home.score) - parseInt(newGame.visitor.score);
 				if( Math.abs(difference) < 6 ) {
 					newData.sports_content.games.game[i].close_game = true;
 				}
 			}
-		}*/
+		}
 
 	} // forloop
 	callback.call(this, newData);
@@ -259,11 +261,21 @@ NBA.prototype.turnOffAutoUpdate = function() {
 
 NBA.prototype.highlightGames = function() {
 	for (i=0; i < this.data.sports_content.games.game.length; i++) {
-		if(this.data.sports_content.games.game[i].highlight == true) {
+		if(this.data.sports_content.games.game[i].highlight) {
 			var rowId = '#'+this.data.sports_content.games.game[i].id;
-			$(rowId).effect("highlight", {color: '#FFFF99'}, 2000);		
+			$(rowId).effect("highlight", {color: '#FFFF99'}, 2000);	
+			// clear after highlighted	
+			this.data.sports_content.games.game[i].highlight == false;
 		}
 	}
+	/* 
+		clear highlight values, so doesn't hihglight before newdata comes in
+		fixes bug where the same things highlight on new tab open
+			--> put it in loop above
+	*/
+	/*for (i=0; i < this.data.sports_content.games.game.length; i++) {
+		this.data.sports_content.games.game[i].highlight == false;
+	}*/
 };
 
 NBA.prototype.standings = function() {

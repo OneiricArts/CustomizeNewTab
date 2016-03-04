@@ -22,7 +22,7 @@
 			{{#unless hidden}}
 
 			<tr id={{id}} data-toggle="collapse" 
-			data-target=#collapse-{{id}} {{#if fav_team}}class="success"{{/if}}>
+			data-target=#collapse-{{id}} class="{{#if close_game}}danger{{/if}} {{#if fav_team}}success{{/if}}">
 
 				<td> 
 					{{period_time.period_status}} 
