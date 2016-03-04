@@ -2,7 +2,7 @@
 [//]: #	"NOTE TO SELF: update this more regularly"
 
 ## What is it?
-![Screenshot](./screenshots/2016.02.24_overview.png?raw=true)
+![Screenshot](./screenshots/2016.03.04_overview.png?raw=true)
 *(Current state, NFL is in offseason, so no games)*
 
 Chrome store link:
