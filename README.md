@@ -2,7 +2,7 @@
 [//]: #	"NOTE TO SELF: update this more regularly"
 
 ## What is it?
-![Screenshot](./screenshots/2016.03.04_overview.png?raw=true)
+![Screenshot](./screenshots/2016_03_04_overview.png?raw=true)
 *(Current state, NFL is in offseason, so no games)*
 
 Chrome store link:
@@ -20,6 +20,8 @@ Currently, I have three widgets: NFL, NBA, and Links. They show live scores and 
 Basic Google Analytics support so I can see which functionality is used, and which is not (e.g. do people even really realize the feature is there?).
 
 What I have now built is proof that my idea was practical, useful, and something that myself, and other people, enjoy. The code is at a great place to build off. 
+
+See changlog for recent additions: https://github.com/OneiricArts/CustomizeNewTab/wiki/Changelog
 
 ## Future Plans
 
