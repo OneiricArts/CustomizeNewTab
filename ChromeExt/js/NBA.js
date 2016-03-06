@@ -6,6 +6,9 @@ function NBA() {
 	Sports.call(this);
 
 	this.datakey = 'NBA_DATA';
+
+	this.today;
+
 	this.schedule_url = 'http://data.nba.com/json/cms/noseason/scoreboard/'+
 						this.yyyymmdd()+'/games.json';
 
@@ -26,16 +29,21 @@ NBA.prototype.off = function () {
 	this.turnOffAutoUpdate();
 };
 
-NBA.prototype.yyyymmdd = function() {
+NBA.prototype.yyyymmdd = function(changeDay) {
 
-	var today = new Date();
+	if(changeDay) {
+		this.today.setDate(this.today.getDate() + changeDay); 
+	}
+	else {
+		this.today = new Date();
+	}
 
 	function twoDigits(n) {
 		return n<10? '0'+n:''+n
 	}
 
-	return ( today.getFullYear()+
-	twoDigits(today.getMonth()+1)+twoDigits(today.getDate()) );
+	return ( this.today.getFullYear()+
+	twoDigits(this.today.getMonth()+1)+twoDigits(this.today.getDate()) );
 };
 
 NBA.prototype.cacheButtonActions = function() {
@@ -45,6 +53,9 @@ NBA.prototype.cacheButtonActions = function() {
 	$('body').on('click', '#NBA_col #update-btn', this.updateSchedule.bind(this));
 	$('body').on('click', '#NBA_col #autoupdate-btn', {that: that}, this.autoupdateSchedule);
 	$('body').on('click', '#NBA_col #standings-btn', this.standings.bind(this));
+	$('body').on('click', '#NBA_col #tomorrow-btn', this.tomorrowSchedule.bind(this));
+	$('body').on('click', '#NBA_col #yesterday-btn', this.yesterdaySchedule.bind(this));
+	$('body').on('click', '#NBA_col #today-btn', this.todaySchedule.bind(this));
 };
 
 NBA.prototype.removeGame = function(event) {
@@ -86,6 +97,8 @@ NBA.prototype.massageData = function(newData, callback) {
 		newData.sports_content.games.game[i].home['winning'] = (home_score > visitor_score);
 		newData.sports_content.games.game[i].visitor['winning'] = (visitor_score > home_score);
 
+		var newGame = newData.sports_content.games.game[i];
+
 		/* check if scores or times have changed, and if so, put a flag to highlight row */
 		if( this.data && this.data.sports_content && this.data.sports_content.games.game[i] && 
 			(newData.sports_content.games.game[i].id == 
@@ -93,7 +106,6 @@ NBA.prototype.massageData = function(newData, callback) {
 
 			//this.data.sfsdfa[i];
 
-			var newGame = newData.sports_content.games.game[i];
 			var oldGame = this.data.sports_content.games.game[i];
 			
 			/* highlight */
@@ -165,7 +177,6 @@ NBA.prototype.massageData = function(newData, callback) {
 		// close game: game in progress, 4th qtr or OT, within 5 points
 		if(status == 2 && period_value > 3 ) {
 
-			console.log(game_clock)
 			var game_clock_min = parseFloat(game_clock.split(':')[0]);
 
 			// last 5 minutes of regulation, or all of OT (OT is only 5 mins)
@@ -192,6 +203,19 @@ NBA.prototype.writeToTemplate = function() {
 	else {
 		$('#NBA_col .panel-body').html(this.$no_games_message);
 	}
+	/*var options = {
+		month: "short",
+		day: "numeric", 
+	};
+
+	$('#NBA_col #today').html(this.today.toLocaleTimeString([], options));*/
+
+	var months = ["January", "February", "March", "April", "May", "June",
+	"July", "August", "September", "October", "November", "December"
+	];
+
+	$('#NBA_col #today').html(this.today.getDate() + ' ' + months[this.today.getMonth()])
+
 };
 
 
@@ -298,4 +322,22 @@ NBA.prototype.showStandings = function(data) {
 	var border="border-bottom:3pt solid grey;";
 	$($('#NBA-standings #West tr')[8]).attr("style",border);
 	$($('#NBA-standings #East tr')[8]).attr("style",border);
+};
+
+NBA.prototype.tomorrowSchedule = function(event) {
+		this.schedule_url = 'http://data.nba.com/json/cms/noseason/scoreboard/'+
+						this.yyyymmdd(1)+'/games.json';
+	this.resetSchedule();
+};
+
+NBA.prototype.todaySchedule = function(event) {
+		this.schedule_url = 'http://data.nba.com/json/cms/noseason/scoreboard/'+
+						this.yyyymmdd(0)+'/games.json';
+	this.resetSchedule();
+};
+
+NBA.prototype.yesterdaySchedule = function(event) {
+		this.schedule_url = 'http://data.nba.com/json/cms/noseason/scoreboard/'+
+						this.yyyymmdd(-1)+'/games.json';
+	this.resetSchedule();
 };

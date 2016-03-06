@@ -68,7 +68,7 @@
 
 					<span>
 					&middot;
-					v 0.8.5
+					v 0.8.9
 					&middot;
 					<a id="version_update" 
 					href="https://www.reddit.com/r/SportsNewTabPage/">
@@ -170,38 +170,59 @@
 						</div>
 					</a> -->
 
+						
 	                <div id="NBA-panel" class="panel panel-default">
+	                    
 	                    <div class="panel-heading">
-	                    	<span>NBA / Today</span> 
+	                    	<span>NBA</span> 
+	                    	<div class="btn-group" role="group" aria-label="...">  
+								<button id="yesterday-btn"
+									class="btn btn-xs btn-default">
+									<span class="glyphicon glyphicon-chevron-left"></span> 
+								</button>
+								<button id="today-btn"
+									class="btn btn-xs btn-default">
+									Today
+								</button>
+								<button id="tomorrow-btn"
+									class="btn btn-xs btn-default">
+									<span class="glyphicon glyphicon-chevron-right"></span> 
+								</button>
+							</div>
+							<span id="today"></span>
+						</div>
 
-	                    	<button id="standings-btn"
-	 							class="btn btn-xs btn-default pull-right"
-	 							data-toggle="modal" data-target="#NBA-standings">
-	    						<span class="glyphicon glyphicon-th-list"></span> 
-	    						Standings
-	 						</button>
+						<div class="panel-heading">
+	                    	<div class="btn-group" role="group" aria-label="...">
+								<button id="standings-btn"
+		 							class="btn btn-xs btn-default"
+		 							data-toggle="modal" data-target="#NBA-standings">
+		    						<span class="glyphicon glyphicon-th-list"></span> 
+		    						Standings
+		 						</button>
 
-	 						<button id="update-btn"
-							class="btn btn-xs btn-default pull-right">
-	    						<span class="glyphicon glyphicon-refresh"></span> 
-	    						Scores
-	 						</button>
+		 						<button id="update-btn"
+									class="btn btn-xs btn-default">
+		    						<span class="glyphicon glyphicon-refresh"></span> 
+		    						Scores
+		 						</button>
 
-	 						<button id="autoupdate-btn"
-							class="btn btn-xs btn-default pull-right">
-	    						<span class="glyphicon glyphicon-remove"></span> 
-	    						Auto Update
-	 						</button> 
+		 						<button id="autoupdate-btn"
+									class="btn btn-xs btn-default">
+		    						<span class="glyphicon glyphicon-remove"></span> 
+		    						Auto Update
+		 						</button> 
 
-	                    	<button id="reset_games"
-	 							class="btn btn-xs btn-default pull-right">
-	    						<span class="glyphicon glyphicon-cloud-download"></span> 
-	    						Games
-	 						</button>
-	                    </div>
+		                    	<button id="reset_games"
+		 							class="btn btn-xs btn-default">
+		    						<span class="glyphicon glyphicon-cloud-download"></span> 
+		    						Games
+		 						</button>
+							</div>
+						</div>
+	                    <!-- </div> -->
 	                	
 	                	<div class="panel-body">
-							
 	                	</div>
 
 	                </div> <!-- / NBA panel -->
