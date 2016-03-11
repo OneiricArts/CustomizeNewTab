@@ -169,21 +169,25 @@ NBA.prototype.massageData = function(newData, callback) {
 		var period_value = parseInt(game.period_time.period_value);
 		var game_clock = game.period_time.game_clock;
 
-		// favorite team
-		/*if(game.visitor.abbreviation === 'GSW' || game.home.abbreviation === 'GSW') {
-			newData.sports_content.games.game[i].fav_team = true;
-		}*/
+		if(dev_env) {
+			// favorite team
+			if(game.visitor.abbreviation === 'GSW' || game.home.abbreviation === 'GSW') {
+				newData.sports_content.games.game[i].fav_team = true;
+			}
+		}
 
 		// close game: game in progress, 4th qtr or OT, within 5 points
 		if(status == 2 && period_value > 3 ) {
 
 			var game_clock_min = parseFloat(game_clock.split(':')[0]);
-
+			
 			// last 5 minutes of regulation, or all of OT (OT is only 5 mins)
-			if(game_clock_min < 6) {
+			if(game_clock_min < 6 || game_clock.split(':').length < 2) {
 				var difference = parseInt(newGame.home.score) - parseInt(newGame.visitor.score);
 				if( Math.abs(difference) < 6 ) {
+					// mark as close game, and if its hidden, show
 					newData.sports_content.games.game[i].close_game = true;
+					newData.sports_content.games.game[i].hidden = false; 
 				}
 			}
 		}
@@ -221,7 +225,6 @@ NBA.prototype.writeToTemplate = function() {
 
 NBA.prototype.updateEachGame = function(newData) {
 	console.log('NBA updating');
-	/*newData['hiddenGames'] = this.data['hiddenGames'];*/
 	
 	for (i=0; i < this.data.sports_content.games.game.length; i++) {
 		if(this.data.sports_content.games.game[i].id !== 

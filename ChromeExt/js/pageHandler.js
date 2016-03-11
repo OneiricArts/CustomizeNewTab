@@ -1,6 +1,23 @@
 //var debug = false;
 //if(debug){console.log('myScript running ...');}
 
+/*
+	detect if development environment by checking local extension id 
+	to chrome store extension id
+
+	features for development-only could be stuff ...
+		- i personally like that others wouldnt
+		- i am testing long-term before pushing to everyone
+		- i am too lazy to implement the correct way, 
+			but want to use the easy way for myself
+	could also move this to a 'alpha' flag in options (not implemented yet)
+
+*/
+var this_extensionId = chrome.i18n.getMessage('@@extension_id');
+var chrome_store_extension_id = 'cbdhcjkifbkbckpoejnakoekiheijpei';
+var dev_env = this_extensionId !== chrome_store_extension_id;
+//console.log(dev_env);
+
 $( document ).ready(function() {
    var obj = new pageHandeler();
    obj.init();
@@ -14,8 +31,13 @@ window.addEventListener("offline", function(e) {
 	$('#no-internet-alert').fadeIn();
 });
 
+/*
+	reload page when online so page can 'reset' correctly
+	this is cleaner than trying to init objects again that had problems
+*/
 window.addEventListener("online", function(e) { 
-	$('#no-internet-alert').fadeOut();
+	//$('#no-internet-alert').fadeOut();
+	document.location.reload();
 });
 
 /*
