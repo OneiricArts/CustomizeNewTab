@@ -181,13 +181,17 @@ NBA.prototype.massageData = function(newData, callback) {
 
 			var game_clock_min = parseFloat(game_clock.split(':')[0]);
 			
-			// last 5 minutes of regulation, or all of OT (OT is only 5 mins)
+			/* 
+				last 5 minutes of regulation, or all of OT (OT is only 5 mins)
+				if there is no :, it means there are only seconds left, which i currently
+				check by length of split
+			*/
 			if(game_clock_min < 6 || game_clock.split(':').length < 2) {
 				var difference = parseInt(newGame.home.score) - parseInt(newGame.visitor.score);
 				if( Math.abs(difference) < 6 ) {
 					// mark as close game, and if its hidden, show
 					newData.sports_content.games.game[i].close_game = true;
-					newData.sports_content.games.game[i].hidden = false; 
+					//newData.sports_content.games.game[i].hidden = false; 
 				}
 			}
 		}
@@ -232,7 +236,8 @@ NBA.prototype.updateEachGame = function(newData) {
 			console.log('data not same -- error');
 			break;
 		}
-		if(this.data.sports_content.games.game[i]['hidden']) {
+		if(this.data.sports_content.games.game[i]['hidden'] && 
+			!this.data.sports_content.games.game[i].close_game) {
 			newData.sports_content.games.game[i]['hidden'] = true;
 		}
 	};
@@ -250,6 +255,7 @@ NBA.prototype.autoupdateSchedule = function(event) {
 
 	if($(this).hasClass('btn-success')) {
 		console.log('updating---');
+		self.continueAutoUpdate.bind(self);
 		self.updateGamesID = window.setInterval(self.continueAutoUpdate.bind(self), 10000);
 	}
 	else {
