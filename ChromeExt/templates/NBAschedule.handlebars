@@ -1,5 +1,58 @@
 <!-- HANDLEBARS TEMPLATE -->
 		
+
+<div id="NBA-panel" class="panel panel-default">
+
+	<div class="panel-heading">
+		<span>NBA</span> 
+		<div class="btn-group" role="group" aria-label="...">  
+			<button id="yesterday-btn"
+				class="btn btn-xs btn-default">
+				<span class="glyphicon glyphicon-chevron-left"></span> 
+			</button>
+			<button id="today-btn"
+				class="btn btn-xs btn-default">
+				Today
+			</button>
+			<button id="tomorrow-btn"
+				class="btn btn-xs btn-default">
+				<span class="glyphicon glyphicon-chevron-right"></span> 
+			</button>
+		</div>
+		<span id="today"></span>
+	</div>
+
+	<div class="panel-heading">
+		<div class="btn-group" role="group" aria-label="...">
+			<button id="standings-btn"
+					class="btn btn-xs btn-default"
+					data-toggle="modal" data-target="#NBA-standings">
+				<span class="glyphicon glyphicon-th-list"></span> 
+				Standings
+				</button>
+
+				<button id="update-btn"
+				class="btn btn-xs btn-default">
+				<span class="glyphicon glyphicon-refresh"></span> 
+				Scores
+				</button>
+
+				<button id="autoupdate-btn"
+				class="btn btn-xs btn-default">
+				<span class="glyphicon glyphicon-remove"></span> 
+				Auto Update
+				</button> 
+
+	    	<button id="reset_games"
+					class="btn btn-xs btn-default">
+				<span class="glyphicon glyphicon-cloud-download"></span> 
+				Games
+				</button>
+		</div>
+	</div>		
+
+	<div class="panel-body">
+
 <div class="table-responsive">
 	<table id="NBA_game_table" 
 	class="table table-striped table-condensed">
@@ -108,3 +161,7 @@
 		</tbody>
 	</table>
 </div> <!--/table-responsive -->
+
+
+	</div>	
+</div> <!-- / NBA panel -->

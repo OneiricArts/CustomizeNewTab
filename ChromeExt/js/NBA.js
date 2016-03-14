@@ -206,10 +206,10 @@ NBA.prototype.writeToTemplate = function() {
 
 	if(this.data.sports_content.games.game.length > 0) {
 		this.displayTemplate('NBAschedule', 'games', 
-			this.data.sports_content.games.game, $('#NBA_col .panel-body'));
+			this.data.sports_content.games.game, $('#NBA_col'));
 	}
 	else {
-		$('#NBA_col .panel-body').html(this.$no_games_message);
+		$('#NBA_col').html(this.$no_games_message);
 	}
 	/*var options = {
 		month: "short",

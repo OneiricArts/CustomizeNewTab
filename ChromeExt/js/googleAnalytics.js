@@ -12,6 +12,14 @@ ga('create', 'UA-72036968-1', 'auto');
 ga('set', 'checkProtocolTask', function(){});
 ga('send', 'pageview', '/new_tab.html');
 
+/* send browser dimensions */
+//var dimensions = window.innerHeight + "x" + window.innerWidth;
+//ga('send', 'Browser Dimensions', 'plixels', dimensions);
+
+/* load time */
+ga('send', 'timing', 'JS Dependencies', 'load', timeSincePageLoad);
+
+
 $('html').on('click', 'a', function(e){
 	
 	var descrip = e.target.id;
