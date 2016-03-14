@@ -17,8 +17,10 @@ ga('send', 'pageview', '/new_tab.html');
 //ga('send', 'Browser Dimensions', 'plixels', dimensions);
 
 /* load time */
-ga('send', 'timing', 'JS Dependencies', 'load', timeSincePageLoad);
-
+if (window.performance) {
+	var timeSincePageLoad = Math.round(performance.now());
+	ga('send', 'timing', 'JS Dependencies', 'load', timeSincePageLoad);
+}
 
 $('html').on('click', 'a', function(e){
 	
