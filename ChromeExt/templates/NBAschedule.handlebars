@@ -165,3 +165,41 @@
 
 	</div>	
 </div> <!-- / NBA panel -->
+
+
+
+<!-- NBA standings modal-->
+<div class="modal fade" id="NBA-standings" 
+tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+	<div class="modal-dialog" role="document">
+		<div class="modal-content">
+
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" 
+				aria-label="Close"><span aria-hidden="true">&times;</span>
+				</button>
+
+				<h4 class="modal-title" id="myModalLabel">Conference Standings</h4>
+			</div>
+
+			<div class="modal-body">
+				<div class="tabbable">
+					<ul class="nav nav-pills">
+						<li class="active"><a href="#West" 
+						data-toggle="tab">West</a></li>
+						<li><a href="#East" data-toggle="tab">East</a>
+						</li>
+					</ul>
+
+					<div class="tab-content" id="tabs">
+						<div class="tab-pane fade active in" 
+						id="West">Loading... </div>
+						<div class="tab-pane" 
+						id="East">Loading...</div>
+					</div>
+				</div>  
+
+			</div>
+		</div>
+	</div>
+</div>

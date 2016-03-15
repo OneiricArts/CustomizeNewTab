@@ -118,27 +118,4 @@ function triggerWidget(event) {
 
 function resizeColumns() {
 
-	this.$myCols = $('.widgets');
-	var visibleCols = this.$myCols.children(":visible");
-
-	if(visibleCols.length == 2 && 
-		$(visibleCols[1]).attr('id') === 'Links_col') {
-
-		this.$myCols.children().removeClass()
-		$(visibleCols[0]).addClass('col-sm-9');
-		$(visibleCols[1]).addClass('col-sm-3');
-
-	}
-	else if(visibleCols.length == 3) {
-
-		$(visibleCols[0]).addClass('col-sm-5');
-		$(visibleCols[1]).addClass('col-sm-5');
-		$(visibleCols[2]).addClass('col-sm-2');
-	}
-	else {
-		var div = Math.floor(12 / visibleCols.length);
-		var rem = 12 % visibleCols.length;
-		var colSize = (rem === 0) ? div : 2;
-		this.$myCols.children().removeClass().addClass('col-sm-'+colSize);
-	}
 };

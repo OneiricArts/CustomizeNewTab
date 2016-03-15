@@ -36,7 +36,7 @@ See changlog for recent additions: https://github.com/OneiricArts/CustomizeNewTa
     - ~~change coding workflow so can pre-compile handlebars templates~~ (Done!)
     - performance
         + minify everything?
-        + react.js?
+        + require.js?
         + profile
     - native integration
         + notifications apis are nice now
@@ -44,6 +44,7 @@ See changlog for recent additions: https://github.com/OneiricArts/CustomizeNewTa
     - rely on subjective feedback right now (reddit)
     - surveys + A/B testing + smarter Google Analytics?
 * Firefox: just waiting on webextensions
+* Safari: Lol. $$$ needed for free extension
 
 Basically, I will probably work on this forever, and have unlimited ideas. I like it much better than the default New Tab, and like where it is going :)
 
