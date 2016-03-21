@@ -218,11 +218,13 @@ NBA.prototype.writeToTemplate = function() {
 
 	$('#NBA_col #today').html(this.today.toLocaleTimeString([], options));*/
 
+	var days = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
 	var months = ["January", "February", "March", "April", "May", "June",
 	"July", "August", "September", "October", "November", "December"
 	];
 
-	$('#NBA_col #today').html(this.today.getDate() + ' ' + months[this.today.getMonth()])
+	$('#NBA_col #today').html(days[this.today.getDay()] + ' ' +
+		this.today.getDate() + ', ' + months[this.today.getMonth()])
 
 };
 

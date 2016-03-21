@@ -22,45 +22,31 @@ if (window.performance) {
 	ga('send', 'timing', 'JS Dependencies', 'load', timeSincePageLoad);
 }
 
-$('html').on('click', 'a', function(e){
-	
+function description(e, default_val) {
 	var descrip = e.target.id;
 	if(descrip === "") {
 		descrip = e.target.className;
 	}
 	if(descrip === "") {
-		descrip = 'link';
-	}
+		descrip = default_val;
+	}	
+	return descrip;
+}
 
-	ga('send', 'event', descrip, 'click');
+$('html').on('click', 'a', function(e){
+	ga('send', 'event', description(e,'link'), 'click');
 });
 
 $('html').on('click', 'button', function(e){
-
-	var descrip = e.target.id;
-
-	if(descrip === "") {
-		descrip = e.target.className;
-	}
-	if(descrip === "") {
-		descrip = 'button';
-	}
-
-	ga("send", "event", descrip, 'click');
+	ga("send", "event", description(e,'button'), 'click');
 });
 
 $('html').on('click', 'span', function(e){
+	ga("send", "event", description(e,'span'), 'click');
+});
 
-	var descrip = e.target.id;
-
-	if(descrip === "") {
-		descrip = e.target.className;
-	}
-	if(descrip === "") {
-		descrip = 'span';
-	}
-
-	ga("send", "event", descrip, 'click');
+$('html').on('click', 'tr', function(e){
+	ga("send", "event", 'game_row', 'click');
 });
 
 /* 
