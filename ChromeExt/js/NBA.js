@@ -200,17 +200,20 @@ NBA.prototype.massageData = function(newData, callback) {
 	callback.call(this, newData);
 };
 
+/*
+	case: no games
+		- for now: handle in template, still want functionality of being able to 
+		cycle through games. 
+
+		- later: good place to put other informatoin (standings)
+*/
 NBA.prototype.writeToTemplate = function() {
 
 	//this.data.sports_content.games.game.push({'home':'test'});
 
-	if(this.data.sports_content.games.game.length > 0) {
-		this.displayTemplate('NBAschedule', 'games', 
-			this.data.sports_content.games.game, $('#NBA_col'));
-	}
-	else {
-		$('#NBA_col').html(this.$no_games_message);
-	}
+	this.displayTemplate('NBAschedule', 'games', 
+		this.data.sports_content.games.game, $('#NBA_col'));
+
 	/*var options = {
 		month: "short",
 		day: "numeric", 
