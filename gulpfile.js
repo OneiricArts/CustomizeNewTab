@@ -10,7 +10,7 @@ var rename = require('gulp-rename');
 
 gulp.task('default', function(cb) {
 	// place code for your default task here
-	exec('handlebars -m ./source/templates/> ./ChromeExt/templates.js', 
+	exec('handlebars -m ./source/templates/> ./Chrome/templates.js', 
 		function (err, stdout, stderr) {
 			console.log(stdout);
 			console.log(stderr);
@@ -25,7 +25,7 @@ gulp.task('minify', function() {
 			removeComments: true,
 			minifyCSS: true
 		}))
-	.pipe(gulp.dest('ChromeExt/'))
+	.pipe(gulp.dest('Chrome/'))
 });
 
 gulp.task('compress', function() {
@@ -42,15 +42,33 @@ gulp.task('compress', function() {
 		'source/js/googleAnalytics.js'
 	];
 
+	var libs = [
+		'source/libs/jquery-2.1.4.min.js',
+		//'source/libs/jquery-ui.min.js',
+		'source/libs/bootstrap-3.3.5-dist/js/bootstrap.min.js',
+
+		'source/libs/mdl/material.min.js',
+
+		//'source/libs/jquery.xml2json.js',
+		'source/libs/countdown.min.js',
+
+		'source/libs/handlebars.runtime-v4.0.5.js',
+		'Chrome/templates.js'
+	];
+
+	gulp.src(libs)
+		.pipe(concat('libs.min.js'))
+		.pipe(gulp.dest('Chrome/'));
+
 	gulp.src(files)
 		.pipe(concat('app'))
 		.pipe(uglify())
 		.pipe(rename({
 			extname: ".min.js"
 		}))
-		.pipe(gulp.dest('ChromeExt/'));
+		.pipe(gulp.dest('Chrome/'));
 });
 
 gulp.task('watch', function() {
-	gulp.watch(['./ChromeExt/templates/*.handlebars'], ['default']);
+	gulp.watch(['./source/templates/*.handlebars'], ['default']);
 });
