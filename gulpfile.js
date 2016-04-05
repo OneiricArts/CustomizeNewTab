@@ -3,8 +3,6 @@ var exec = require('child_process').exec;
 var htmlmin = require('gulp-htmlmin');
 var uglify = require("gulp-uglify");
 var concat = require('gulp-concat');
-var rename = require('gulp-rename');
-
 
 /* 
 	used in 'compress' and 'watch'
@@ -45,7 +43,6 @@ gulp.task('handlebars', function(cb) {
 });
 
 gulp.task('compress', function() {
-
 	gulp.src(jsfiles)
 		.pipe(concat('app.min.js'))
 		.pipe(uglify())
@@ -63,7 +60,7 @@ gulp.task('concatLibs', function() {
 		//'source/libs/jquery.xml2json.js',
 		'source/libs/countdown.min.js',
 
-		'source/libs/handlebars.runtime-v4.0.5.js',
+		'source/libs/handlebars.runtimev4.0.5.min.js',
 	];
 
 	gulp.src(libs)
