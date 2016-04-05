@@ -3,7 +3,7 @@
 	"name": "Sports New Tab Page (Beta)",
 	"version": "0.9.1",
 	"chrome_url_overrides": {
-		"newtab": "new_tab.html"
+		"newtab": "src/new_tab.html"
 	},
 	"permissions": [
 		"storage",
