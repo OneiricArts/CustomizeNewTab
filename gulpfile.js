@@ -3,6 +3,8 @@ var exec = require('child_process').exec;
 var htmlmin = require('gulp-htmlmin');
 var uglify = require("gulp-uglify");
 var concat = require('gulp-concat');
+var fs = require('fs');
+const zip = require('gulp-zip');
 
 /* 
 	used in 'compress' and 'watch'
@@ -72,4 +74,19 @@ gulp.task('watch', function() {
 	gulp.watch(['./source/templates/*.handlebars'], ['handlebars']);
 	gulp.watch(jsfiles, ['compress']);
 	gulp.watch(['./source/*.html'], ['minify']);
+});
+
+/*
+	zips the extension with the name from the current version # from 
+	the manifest 
+*/
+gulp.task('build', function() {
+	var json = JSON.parse(fs.readFileSync('./Chrome/manifest.json'));
+	var file_name = json.version.split('.').join('_');
+
+	console.log(file_name);
+
+	return gulp.src('Chrome/**')
+		.pipe(zip(file_name+'.zip'))
+		.pipe(gulp.dest('.'));
 });
