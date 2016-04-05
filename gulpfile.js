@@ -5,11 +5,9 @@ var uglify = require("gulp-uglify");
 var concat = require('gulp-concat');
 var rename = require('gulp-rename');
 
+gulp.task('default', ['minify', 'compress', 'handlebars']);
 
-
-
-gulp.task('default', function(cb) {
-	// place code for your default task here
+gulp.task('handlebars', function(cb) {
 	exec('handlebars -m ./source/templates/> ./Chrome/templates.js', 
 		function (err, stdout, stderr) {
 			console.log(stdout);
@@ -53,7 +51,6 @@ gulp.task('compress', function() {
 		'source/libs/countdown.min.js',
 
 		'source/libs/handlebars.runtime-v4.0.5.js',
-		'Chrome/templates.js'
 	];
 
 	gulp.src(libs)
@@ -70,5 +67,7 @@ gulp.task('compress', function() {
 });
 
 gulp.task('watch', function() {
-	gulp.watch(['./source/templates/*.handlebars'], ['default']);
+	gulp.watch(['./source/templates/*.handlebars'], ['handlebars']);
+	gulp.watch(['./source/js/*.js'], ['compress']);
+	gulp.watch(['./source/*.html'], ['minify']);
 });
