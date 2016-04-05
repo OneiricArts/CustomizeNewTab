@@ -1,0 +1,1 @@
+function NFL(){Base.call(this)}NFL.prototype=Object.create(Base.prototype),NFL.prototype.constructor=NFL,NFL.prototype.init=function(){NFLnews=new NFLnews,NFLnews.init()};
