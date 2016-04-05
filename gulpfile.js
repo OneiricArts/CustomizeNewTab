@@ -32,11 +32,11 @@ gulp.task('minify', function() {
 			removeComments: true,
 			minifyCSS: true
 		}))
-	.pipe(gulp.dest('Chrome/'))
+	.pipe(gulp.dest('Chrome/src/'))
 });
 
 gulp.task('handlebars', function(cb) {
-	exec('handlebars -m ./source/templates/> ./Chrome/templates.js', 
+	exec('handlebars -m ./source/templates/> ./Chrome/src/templates.js', 
 		function (err, stdout, stderr) {
 			console.log(stdout);
 			console.log(stderr);
@@ -48,29 +48,28 @@ gulp.task('compress', function() {
 	gulp.src(jsfiles)
 		.pipe(concat('app.min.js'))
 		.pipe(uglify())
-		.pipe(gulp.dest('Chrome/'));
+		.pipe(gulp.dest('Chrome/src/'));
 });
 
+/*
+	libraries are already minified, so just combine
+*/
 gulp.task('concatLibs', function() {
 	var libs = [
 		'source/libs/jquery-2.1.4.min.js',
 		//'source/libs/jquery-ui.min.js',
 		'source/libs/bootstrap-3.3.5-dist/js/bootstrap.min.js',
-
 		'source/libs/mdl/material.min.js',
-
 		//'source/libs/jquery.xml2json.js',
 		'source/libs/countdown.min.js',
-
 		'source/libs/handlebars.runtimev4.0.5.min.js',
 	];
-
-	gulp.src(libs)
+	return gulp.src(libs)
 		.pipe(concat('libs.min.js'))
-		.pipe(gulp.dest('Chrome/'));
+		.pipe(gulp.dest('Chrome/src/'));
 });
 
-gulp.task('watch', function() {
+gulp.task('watch', ['default'], function() {
 	gulp.watch(['./source/templates/*.handlebars'], ['handlebars']);
 	gulp.watch(jsfiles, ['compress']);
 	gulp.watch(['./source/*.html'], ['minify']);
