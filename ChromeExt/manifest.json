@@ -9,7 +9,9 @@
 		"storage",
 		"http://www.nfl.com/",
 		"http://*.nba.com/*",
-		"topSites"
+		"topSites",
+		"bookmarks",
+		"chrome://favicon/"
 	],
 	"icons": { "16": "icon16.png",
           "128": "icon128.png" },
