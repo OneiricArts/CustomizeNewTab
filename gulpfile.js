@@ -5,6 +5,7 @@ var uglify = require("gulp-uglify");
 var concat = require('gulp-concat');
 var fs = require('fs');
 const zip = require('gulp-zip');
+var babel = require('gulp-babel');
 
 /* 
 	used in 'compress' and 'watch'
@@ -18,10 +19,14 @@ var jsfiles = [
 	'source/js/NFLoff.js',
 	'source/js/NFLnews.js', 
 	'source/js/Links.js', 
-	//'source/js/bookmarksBar.js', 
 	'source/js/pageHandler.js',
+	'source/js/bookmarksBar.js', 
 	'source/js/googleAnalytics.js'
 ];
+
+var jsfilesES6 = [
+	'source/js/bookmarksBar.js',
+]
 
 gulp.task('default', ['minify', 'handlebars', 'compress', 'concatLibs']);
 
@@ -46,6 +51,14 @@ gulp.task('handlebars', function(cb) {
 
 gulp.task('compress', function() {
 	gulp.src(jsfiles)
+		.pipe(babel({
+			// ignore: filter out files from jsfiles that aren't in jfilesES6
+			ignore: jsfiles.filter ( 
+						function( el ) {
+							return jsfilesES6.indexOf(el) < 0;
+						}),
+			presets: ['es2015']
+		}))
 		.pipe(concat('app.min.js'))
 		.pipe(uglify())
 		.pipe(gulp.dest('Chrome/src/'));
