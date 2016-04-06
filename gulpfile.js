@@ -57,7 +57,7 @@ gulp.task('compress', function() {
 gulp.task('concatLibs', function() {
 	var libs = [
 		'source/libs/jquery-2.1.4.min.js',
-		//'source/libs/jquery-ui.min.js',
+		'source/libs/jquery-ui.min.js', // needed for $.highlight
 		'source/libs/bootstrap-3.3.5-dist/js/bootstrap.min.js',
 		'source/libs/mdl/material.min.js',
 		//'source/libs/jquery.xml2json.js',
