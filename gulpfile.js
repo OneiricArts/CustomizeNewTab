@@ -52,11 +52,7 @@ gulp.task('handlebars', function(cb) {
 gulp.task('compress', function() {
 	gulp.src(jsfiles)
 		.pipe(babel({
-			// ignore: filter out files from jsfiles that aren't in jfilesES6
-			ignore: jsfiles.filter ( 
-						function( el ) {
-							return jsfilesES6.indexOf(el) < 0;
-						}),
+			only: jsfilesES6,
 			presets: ['es2015']
 		}))
 		.pipe(concat('app.min.js'))
