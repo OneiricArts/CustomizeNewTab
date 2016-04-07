@@ -5,8 +5,9 @@
 ![Screenshot](./screenshots/2016_03_04_overview.png?raw=true)
 *(Current state, NFL is in offseason, so no games)*
 
-Chrome store link:
-https://chrome.google.com/webstore/detail/sports-new-tab-page-beta/cbdhcjkifbkbckpoejnakoekiheijpei
+[![Get it in the Chrome Web Store](https://developer.chrome.com/webstore/images/ChromeWebStore_BadgeWBorder_v2_206x58.png)](https://chrome.google.com/webstore/detail/sports-new-tab-page-beta/cbdhcjkifbkbckpoejnakoekiheijpei)
+
+[Get it on the Chrome Store](https://chrome.google.com/webstore/detail/sports-new-tab-page-beta/cbdhcjkifbkbckpoejnakoekiheijpei)
 
 Subreddit (forum to communicate easily with me): https://www.reddit.com/r/sportsnewtabpage
 
