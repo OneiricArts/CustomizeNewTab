@@ -59,6 +59,10 @@ window.onerror = function(msg, url, line, col, error) {
 	extra += !error ? '' : '\nerror: ' + error;
 	error_msg = "Error: " + msg + "\nurl: " + url + "\nline: " + line + extra;
 
+	if(dev_env) {
+		alert(error_msg);
+	}
+	
 	ga('send', 'exception', {
 		'exDescription': error_msg,
 	});

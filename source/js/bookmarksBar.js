@@ -1,4 +1,8 @@
-
+/**
+	permissions need to be in manifest.json:
+		"bookmarks",
+		"chrome://favicon/"
+*/
 "use strict";
 class Widget {
 	constructor(){}

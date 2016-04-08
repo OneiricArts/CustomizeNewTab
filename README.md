@@ -56,7 +56,7 @@ Basically, I will probably work on this forever, and have unlimited ideas. I lik
 * **Base**: Contains basic functionality and data elements; e.g. saving data to Chrome's local storage. I should move browser-specific (save, load, topsites) APIs to a different class, and call that ChromeBase, so I when I want to port to Firefox, I can just re-implement those.
     - **Sports *extends* Base**: This contains all the logic flow of displaying and updating the schedules for the widgets. But a lot of the functions are empty.
         + **NBA & NFL *extend* Sports**: These contain implementations for the functions involved in Sports. They also contain some unique functions that are exclusive to that widget (e.g. NBA contains standings).
-    - **PageHandler **extends** Base**: This handles which widgets to show, and how to resize the widgets. Also handles basic things (e.g. network error message).
+    - **PageHandler *extends* Base**: This handles which widgets to show, and how to resize the widgets. Also handles basic things (e.g. network error message).
 
 ####Frontend
 * new_tab.html has the static html layout and design.
