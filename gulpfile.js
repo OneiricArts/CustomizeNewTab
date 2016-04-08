@@ -6,6 +6,7 @@ var concat = require('gulp-concat');
 var fs = require('fs');
 const zip = require('gulp-zip');
 var babel = require('gulp-babel');
+var util = require('gulp-util');
 
 /* 
 	used in 'compress' and 'watch'
@@ -56,7 +57,7 @@ gulp.task('compress', function() {
 			presets: ['es2015']
 		}))
 		.pipe(concat('app.min.js'))
-		.pipe(uglify())
+		.pipe(uglify().on('error', util.log))
 		.pipe(gulp.dest('Chrome/src/'));
 });
 
@@ -66,7 +67,7 @@ gulp.task('compress', function() {
 gulp.task('concatLibs', function() {
 	var libs = [
 		'source/libs/jquery-2.1.4.min.js',
-		'source/libs/jquery-ui.min.js', // needed for $.highlight
+		//'source/libs/jquery-ui.min.js', // used to be needed because of $.highlight
 		'source/libs/bootstrap-3.3.5-dist/js/bootstrap.min.js',
 		'source/libs/mdl/material.min.js',
 		//'source/libs/jquery.xml2json.js',

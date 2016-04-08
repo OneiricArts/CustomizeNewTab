@@ -301,7 +301,14 @@ NBA.prototype.highlightGames = function() {
 	for (i=0; i < this.data.sports_content.games.game.length; i++) {
 		if(this.data.sports_content.games.game[i].highlight) {
 			var rowId = '#'+this.data.sports_content.games.game[i].id;
-			$(rowId).effect("highlight", {color: '#FFFF99'}, 2000);	
+			//$(rowId).effect("highlight", {color: '#FFFF99'}, 2000);
+			//$(rowId).fadeIn(100).fadeOut(100).fadeIn(100).fadeOut(100).fadeIn(100).fadeIn(100).fadeOut(100).fadeIn(100);	
+			
+			// doing it this way to remove jQueryUI dependency for now
+			$(rowId).addClass("flash");
+			setTimeout( removeHighlight, 2000);
+			function removeHighlight(){ $(rowId).removeClass("flash"); }
+			
 			// clear after highlighted	
 			this.data.sports_content.games.game[i].highlight == false;
 		}
