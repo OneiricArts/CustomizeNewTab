@@ -19,6 +19,44 @@ var dev_env = this_extensionId !== chrome_store_extension_id;
 //console.log(dev_env);
 
 $( document ).ready(function() {
+
+	/*  example-- 
+		'background': 'linear-gradient(to left, #525252, #3d72b4)'
+		gradients from && inspired from http://uigradients.com/#	
+	*/	
+	var styles = [
+		//'linear-gradient(to left, #525252, #3d72b4)',
+		//'linear-gradient(to left, #0099F7 , #F11712)',
+		//'linear-gradient(to left, #4776E6 , #8E54E9)',
+		'linear-gradient(to left, #4B79A1 , #283E51)',  // dark skys
+		//'linear-gradient(to left, #457fca , #5691c8)',
+		'linear-gradient(to left, #457fca , #5691c8)',  // inbox -- fav
+		//'linear-gradient(to left, #8E0E00 , #1F1C18)',	// netflix
+		//'linear-gradient(to left, #76b852 , #8DC26F)',	// little leaf
+		'linear-gradient(to left, #1e3c72 , #2a5298)',	// joomla -- nice, dark blue -- fav
+		'linear-gradient(to left, #C04848 , #480048)',  // influenza - purple, pink
+		'linear-gradient(to left, #4CA1AF , #C4E0E5)',  // decent - light blue
+		'linear-gradient(to left, #136a8a , #267871)',  // turquoise flow -- fav
+		'linear-gradient(to left, #360033 , #0b8793)',	// purple bliss -- fav
+		'linear-gradient(to left, #00c6ff , #0072ff)', 	// facebook messenger
+		'linear-gradient(to left, #fe8c00 , #f83600)', 	// soundcloud
+		'linear-gradient(to left, #C02425 , #F0CB35)', 	// back to the future
+		//'linear-gradient(to left, #00bf8f , #001510)',	// vine // green	
+		//'linear-gradient(to left, #6441A5 , #2a0845)', 	// twitch
+	];
+
+	var randomIndex = Math.floor(Math.random() * styles.length);
+
+	/* 
+		use animate to fade background in to take the sting out of the 
+		white flash at the beginning ( can’t seem to get rid of it )
+	*/ 
+   	$('body').animate({opacity: 0}, 0).css({
+   		'background': styles[randomIndex]
+   	}).animate({opacity: 1}, 400); //old -- 250 / 450 is kinda smooth, but slow
+    
+	//$('body').animate({opacity: 0}, 0).css({'background-image': 'url(http://vaughnroyko.com/jsfiddle/back.png)'}).animate({opacity: 1}, 250);
+
    var obj = new pageHandeler();
    obj.init();
 
