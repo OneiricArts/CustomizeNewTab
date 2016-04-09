@@ -69,7 +69,7 @@ gulp.task('concatLibs', function() {
 		'source/libs/jquery-2.1.4.min.js',
 		//'source/libs/jquery-ui.min.js', // used to be needed because of $.highlight
 		'source/libs/bootstrap-3.3.5-dist/js/bootstrap.min.js',
-		'source/libs/mdl/material.min.js',
+		//'source/libs/mdl/material.min.js',
 		//'source/libs/jquery.xml2json.js',
 		'source/libs/countdown.min.js',
 		'source/libs/handlebars.runtimev4.0.5.min.js',
