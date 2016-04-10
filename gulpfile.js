@@ -21,12 +21,12 @@ var jsfiles = [
 	'source/js/NFLnews.js', 
 	'source/js/Links.js', 
 	'source/js/pageHandler.js',
-	'source/js/bookmarksBar.js', 
+	//'source/js/bookmarksBar.js', 
 	'source/js/googleAnalytics.js'
 ];
 
 var jsfilesES6 = [
-	'source/js/bookmarksBar.js',
+	//'source/js/bookmarksBar.js',
 ]
 
 gulp.task('default', ['minify', 'handlebars', 'compress', 'concatLibs']);
@@ -38,6 +38,13 @@ gulp.task('minify', function() {
 			removeComments: true,
 			minifyCSS: true
 		}))
+	.pipe(gulp.dest('Chrome/src/'))
+
+	var cssFiles = [
+		'source/libs/bootstrap-3.3.5-dist/css/bootstrap.min.css',
+		//'source/libs/mdl/material.min.css',
+	];
+	gulp.src(cssFiles)
 	.pipe(gulp.dest('Chrome/src/'))
 });
 
@@ -98,4 +105,18 @@ gulp.task('build', function() {
 	return gulp.src('Chrome/**')
 		.pipe(zip(file_name+'.zip'))
 		.pipe(gulp.dest('.'));
+});
+
+/*
+	everything built goes into /src/
+*/
+gulp.task('clean', function(cb) {
+	exec('rm -r Chrome/src/', 
+		function (err, stdout, stderr) {
+			console.log(stdout);
+			console.log(stderr);
+			cb(err);
+	});
+
+	console.log('cleaned Chrome/src/');
 });

@@ -60,5 +60,5 @@ Handlebars.registerHelper("log", function(something) {
 
 var a = new BookmarksBar()
 if(dev_env) {
-	//a.init();
+	a.init();
 }
