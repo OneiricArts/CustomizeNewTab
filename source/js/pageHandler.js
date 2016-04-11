@@ -25,7 +25,7 @@ $( document ).ready(function() {
 		'background': 'linear-gradient(to left, #525252, #3d72b4)'
 		gradients from && inspired from http://uigradients.com/#	
 	*/	
-	var styles = [
+	/*var styles = [
 		//'linear-gradient(to left, #525252, #3d72b4)',
 		//'linear-gradient(to left, #0099F7 , #F11712)',
 		//'linear-gradient(to left, #4776E6 , #8E54E9)',
@@ -44,19 +44,20 @@ $( document ).ready(function() {
 		'linear-gradient(to left, #C02425 , #F0CB35)', 	// back to the future
 		//'linear-gradient(to left, #00bf8f , #001510)',	// vine // green	
 		//'linear-gradient(to left, #6441A5 , #2a0845)', 	// twitch
-	];
+	];*/
 
-	var randomIndex = Math.floor(Math.random() * styles.length);
+	//var randomIndex = Math.floor(Math.random() * styles.length);
 
 	/* 
 		use animate to fade background in to take the sting out of the 
 		white flash at the beginning ( can’t seem to get rid of it )
 	*/ 
-   	$('body').animate({opacity: 0}, 0).css({
-   		'background': styles[randomIndex]
-   	}).animate({opacity: 1}, 400); //old -- 250 / 450 is kinda smooth, but slow
+	$('body').animate({opacity: 0}, 0).css({
+		/*'background': styles[randomIndex]*/
+		background: 'linear-gradient(to left, #136a8a , #267871)'
+	}).animate({opacity: 1}, 400); //old -- 250 / 450 is kinda smooth, but slow
 
-   	$('#background_color').html(' >> Current background: ' + styles[randomIndex]);
+	/*$('#background_color').html(' >> Current background: ' + styles[randomIndex]);*/
     
 	//$('body').animate({opacity: 0}, 0).css({'background-image': 'url(http://vaughnroyko.com/jsfiddle/back.png)'}).animate({opacity: 1}, 250);
 
@@ -115,7 +116,7 @@ pageHandeler.prototype.loadFunctionality = function(){
 	if(dev_env) {
 		this.loadDev();
 	}
-	this.loadMessage();
+	//this.loadMessage();
 	this.loadWidgets();
 };
 
