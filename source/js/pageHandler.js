@@ -175,7 +175,7 @@ function triggerWidget(event) {
 
 	$(this).find('span').toggleClass('glyphicon-ok').toggleClass('glyphicon-remove');
 	var id = "#" + key + "_col";
-	$(id).toggle();
+	$(id).toggle('fast');
 
 	if($(this).find('span').hasClass('glyphicon-ok')) {
 		that.data[key] = true;
