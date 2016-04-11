@@ -55,6 +55,8 @@ $( document ).ready(function() {
    	$('body').animate({opacity: 0}, 0).css({
    		'background': styles[randomIndex]
    	}).animate({opacity: 1}, 400); //old -- 250 / 450 is kinda smooth, but slow
+
+   	$('#background_color').html(' >> Current background: ' + styles[randomIndex]);
     
 	//$('body').animate({opacity: 0}, 0).css({'background-image': 'url(http://vaughnroyko.com/jsfiddle/back.png)'}).animate({opacity: 1}, 250);
 
@@ -85,13 +87,14 @@ window.addEventListener("online", function(e) {
 function pageHandeler() {
 	Base.call(this);
 	this.datakey = 'pageHndler_widgets';
-	this.$myCols;
 
 	this.NFL = new NFL();
 	this.NBA = new NBA();
 	this.Links = new Links();
 
 	this.widgetKeys = ['NFL', 'NBA', 'Links'];
+
+	/* this.data.<stuff> is set in this.setDefaults */
 };
 
 pageHandeler.prototype = Object.create(Base.prototype); // See note below
@@ -99,12 +102,44 @@ pageHandeler.prototype.constructor = pageHandeler;
 
 pageHandeler.prototype.init = function(){
 
-	this.loadData(this.loadWidgets, this.setDefaults);
-
-	//this.$myCols = $('.row');
 	var that = this;
 	$('#page_options button').on('click', {that: that}, triggerWidget);
 	//$('body').on('click', $('#page_options button'), triggerWidget);
+	$('#custom-message-btn').on('click', {that: that}, this.triggerMessage);
+	//$('body').on('click', $('#custom-message-btn'), {self: that}, this.triggerMessage);
+
+	this.loadData(this.loadFunctionality, this.setDefaults);
+};
+
+pageHandeler.prototype.loadFunctionality = function(){
+	if(dev_env) {
+		this.loadDev();
+	}
+	this.loadMessage();
+	this.loadWidgets();
+};
+
+pageHandeler.prototype.loadMessage = function(){
+
+	if(this.data.version !== chrome.app.getDetails().version) {
+		this.data.message = true;
+		this.data.version = chrome.app.getDetails().version;
+		this.saveData();
+	}
+	if(this.data.message) {
+		$('#custom-message').show();
+	}
+};
+
+pageHandeler.prototype.loadDev = function(){
+	$('#_dev_btn').show();
+	$('#_dev_btn').on('click', {self: this}, function(event) {
+		var self = event.data.self;
+		self.data.message = true;
+		self.data = null;
+		self.saveData();
+		location.reload();
+	});
 };
 
 pageHandeler.prototype.loadWidgets = function(){
@@ -127,7 +162,10 @@ pageHandeler.prototype.setDefaults = function(){
 	for(var i = 0; i < this.widgetKeys.length; i++) {
 		this.data[this.widgetKeys[i]] = true;
 	}
-	this.loadWidgets();
+
+	this.data.message = true;
+	this.data.version = chrome.app.getDetails().version;
+	this.loadFunctionality();
 };
 
 function triggerWidget(event) {
@@ -138,7 +176,6 @@ function triggerWidget(event) {
 	$(this).find('span').toggleClass('glyphicon-ok').toggleClass('glyphicon-remove');
 	var id = "#" + key + "_col";
 	$(id).toggle();
-	resizeColumns();
 
 	if($(this).find('span').hasClass('glyphicon-ok')) {
 		that.data[key] = true;
@@ -155,6 +192,8 @@ function triggerWidget(event) {
 	that.saveData();
 };
 
-function resizeColumns() {
-
+pageHandeler.prototype.triggerMessage = function(event){
+	var self = event.data.that;
+	self.data.message = false;
+	self.saveData();
 };
