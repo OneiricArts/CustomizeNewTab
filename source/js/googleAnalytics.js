@@ -63,9 +63,11 @@ window.onerror = function(msg, url, line, col, error) {
 		alert(error_msg);
 	}
 	
-	ga('send', 'exception', {
-		'exDescription': error_msg,
-	});
+	else {
+		ga('send', 'exception', {
+			'exDescription': error_msg,
+		});		
+	}
 
 	//ga("send", "event", msg, 'exception');
 };
