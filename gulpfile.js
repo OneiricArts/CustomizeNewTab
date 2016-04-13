@@ -7,6 +7,9 @@ var fs = require('fs');
 const zip = require('gulp-zip');
 var babel = require('gulp-babel');
 var util = require('gulp-util');
+var inlinesource = require('gulp-inline-source');
+var inject = require('gulp-inject');
+
 
 /* 
 	used in 'compress' and 'watch'
@@ -31,12 +34,22 @@ var jsfilesES6 = [
 
 gulp.task('default', ['minify', 'handlebars', 'compress', 'concatLibs']);
 
+gulp.task('test', function() {
+
+	gulp.src('source/new_tab.html')
+	.pipe(inject(gulp.src(jsfiles, {read: false},{relative: true})))
+	.pipe(gulp.dest('test'));
+});
+
 gulp.task('minify', function() {
 	gulp.src('source/new_tab.html')
+		.pipe(inlinesource())
 		.pipe(htmlmin({
 			collapseWhitespace: true, 
 			removeComments: true,
-			minifyCSS: true
+			minifyCSS: true,
+			//removeStyleLinkTypeAttributes: true,
+			//removeScriptTypeAttributes: true
 		}))
 	.pipe(gulp.dest('Chrome/src/'))
 
@@ -44,8 +57,8 @@ gulp.task('minify', function() {
 		'source/libs/bootstrap-3.3.5-dist/css/bootstrap.min.css',
 		//'source/libs/mdl/material.min.css',
 	];
-	gulp.src(cssFiles)
-	.pipe(gulp.dest('Chrome/src/'))
+	//gulp.src(cssFiles)
+	//.pipe(gulp.dest('Chrome/src/'))
 });
 
 gulp.task('handlebars', function(cb) {
@@ -76,6 +89,7 @@ gulp.task('concatLibs', function() {
 		'source/libs/jquery-2.1.4.min.js',
 		//'source/libs/jquery-ui.min.js', // used to be needed because of $.highlight
 		'source/libs/bootstrap-3.3.5-dist/js/bootstrap.min.js',
+		//'source/libs/bootstrap_custom/js/bootstrap.min.js',
 		//'source/libs/mdl/material.min.js',
 		//'source/libs/jquery.xml2json.js',
 		'source/libs/countdown.min.js',

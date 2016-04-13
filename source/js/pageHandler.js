@@ -52,10 +52,10 @@ $( document ).ready(function() {
 		use animate to fade background in to take the sting out of the 
 		white flash at the beginning ( can’t seem to get rid of it )
 	*/ 
-	$('body').animate({opacity: 0}, 0).css({
-		/*'background': styles[randomIndex]*/
+	/*$('body').animate({opacity: 0}, 0).css({
+		//'background': styles[randomIndex]
 		background: 'linear-gradient(to left, #136a8a , #267871)'
-	}).animate({opacity: 1}, 400); //old -- 250 / 450 is kinda smooth, but slow
+	}).animate({opacity: 1}, 400); //old -- 250 / 450 is kinda smooth, but slow*/
 
 	/*$('#background_color').html(' >> Current background: ' + styles[randomIndex]);*/
     
@@ -176,7 +176,7 @@ function triggerWidget(event) {
 
 	$(this).find('span').toggleClass('glyphicon-ok').toggleClass('glyphicon-remove');
 	var id = "#" + key + "_col";
-	$(id).toggle('fast');
+	$(id).toggle();
 
 	if($(this).find('span').hasClass('glyphicon-ok')) {
 		that.data[key] = true;
