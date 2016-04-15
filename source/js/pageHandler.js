@@ -161,8 +161,10 @@ pageHandeler.prototype.loadWidgets = function(){
 pageHandeler.prototype.setDefaults = function(){
 
 	for(var i = 0; i < this.widgetKeys.length; i++) {
-		this.data[this.widgetKeys[i]] = true;
+		this.data[this.widgetKeys[i]] = false;
 	}
+
+	this.data['NBA'] = true;
 
 	this.data.message = true;
 	this.data.version = chrome.app.getDetails().version;
