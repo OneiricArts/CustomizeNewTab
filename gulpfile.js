@@ -43,6 +43,7 @@ var libs = [
 ];
 
 var jsfilesES6 = [
+	'source/js/NHL.js',
 	//'source/js/bookmarksBar.js',
 ]
 
