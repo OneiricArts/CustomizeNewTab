@@ -1,7 +1,7 @@
 {
 	"manifest_version": 2,
-	"name": "Sports New Tab Page (Beta)",
-	"version": "0.9.3",
+	"name": "Sports New Tab Page (Alpha)",
+	"version": "0.9.3.1",
 	"chrome_url_overrides": {
 		"newtab": "src/new_tab.html"
 	},
@@ -10,6 +10,7 @@
 		"http://www.nfl.com/",
 		"http://*.nba.com/*",
 		"http://*.nhle.com/*",
+		"http://*.mlb.com/*",
 		"topSites"
 	],
 	"icons": { "16": "icon16.png",

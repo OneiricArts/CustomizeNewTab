@@ -1,10 +1,10 @@
 <!-- HANDLEBARS TEMPLATE -->
 		
 
-<div id="NHL-panel" class="panel panel-default">
+<div class="panel panel-default">
 
 	<div class="panel-heading">
-		<span>NHL_test</span> 
+		<span>MLB_Test</span> 
 		<div class="btn-group" role="group" aria-label="...">  
 			<button id="yesterday-btn"
 				class="btn btn-xs btn-default">
@@ -25,9 +25,9 @@
 
 	<div class="panel-body">
 
-		{{#if schedule.games.length}}	
+		{{#if schedule.game.length}}	
 			<div class="table-responsive">
-				<table id="NHL_game_table" 
+				<table 
 				class="table table-striped table-condensed">
 					<thead>
 						<tr>
@@ -44,21 +44,21 @@
 					</thead>
 					<tbody>
 
-						{{#each schedule.games}}
+						{{#each schedule.game}}
 						{{#unless hidden}}
 
 						<tr id={{id}} class="{{#if close_game}}danger{{/if}} {{#if fav_team}}success{{/if}}">
 
-							<td>{{bs}}</td>
+							<td>{{time}} {{time_zone}}</td>
 
 							<td id="away_team" {{#if atwinning}}class="winning"{{/if}}
-							style="text-align:left; text-transform: capitalize;">{{atcommon}}</td>
+							style="text-align:left; text-transform: capitalize;">{{away_team_name}}</td>
 
 							<td id="home_team" {{#if htwinning}}class="winning"{{/if}}
-							style="text-align:left; text-transform: capitalize;">{{htcommon}}</td>
+							style="text-align:left; text-transform: capitalize;">{{home_team_name}}</td>
 				
-							<td style="text-align:left">{{ats}}</td>
-							<td style="text-align:left">{{hts}}</td> 
+							<td style="text-align:left">{{linescore.r.away}}</td>
+							<td style="text-align:left">{{linescore.r.home}}</td> 
 
 							<td style="text-align:right">
 							<button type="button" id="remove-game-btn" class="btn btn-default btn-xs">

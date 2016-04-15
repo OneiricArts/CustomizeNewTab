@@ -116,7 +116,10 @@ class Sport extends Widget {
 
 	constructor() {
 		super();
+		this.schedule_url_start;
+		this.schedule_url_end;
 		this.schedule_url;
+
 		this.today = new Date();
 	}
 
@@ -159,6 +162,11 @@ class Sport extends Widget {
 		return string;
 	}
 
+	changeDay(n) {
+		this.schedule_url = this.schedule_url_start + this.yyyymmdd(n) + this.schedule_url_end;
+		this.resetSchedule();
+	}
+
 	getJsonData(url, callback) {
 		$.getJSON(url, function(result) {
 			this.massageData.call(this, result, callback);
@@ -167,7 +175,6 @@ class Sport extends Widget {
 		}.bind(this));
 		// TODO handle timeout
 	}
-
 
 	getDataSchedule () {
 		this.getJsonData(this.schedule_url, this.displaySchedule);
@@ -219,12 +226,12 @@ class NHL extends Sport {
 		super();
 		this.dataKey = 'NHL';
 		//this.schedule_url = 'http://live.nhle.com/GameData/GCScoreboard/2016-04-14.jsonp';
-		this.schedule_url = 'http://live.nhle.com/GameData/GCScoreboard/' + this.yyyymmdd() + '.jsonp';
+		this.schedule_url_start = 'http://live.nhle.com/GameData/GCScoreboard/';
+		this.schedule_url_end = '.jsonp';
+		this.schedule_url =  this.schedule_url_start + this.yyyymmdd() + this.schedule_url_end;
 	}
 
-	formatDate(yyyy, mm, dd) {
-		return yyyy + '-' + mm + '-' + dd;
-	}
+	formatDate(yyyy, mm, dd) { return yyyy + '-' + mm + '-' + dd;}
 
 	writeToTemplate(error) {
 		console.log('>>>>>>>>>>>>>');
@@ -282,16 +289,48 @@ class NHL extends Sport {
 		$('body').on('click', '#NHL_widget #yesterday-btn', this.changeDay.bind(this,-1));
 		$('body').on('click', '#NHL_widget #today-btn', this.changeDay.bind(this,0));
 	}
-
-	changeDay(n) {
-		this.schedule_url = 'http://live.nhle.com/GameData/GCScoreboard/'+
-		this.yyyymmdd(n)+'.jsonp';
-		this.resetSchedule();
-	}
 }
 
+class MLB extends Sport {
+
+	constructor() {
+		super();
+		this.dataKey = 'MLB';
+		//this.schedule_url = 'http://gd2.mlb.com/components/game/mlb/year_2016/month_04/day_15/master_scoreboard.json';
+		this.schedule_url_start = 'http://gd2.mlb.com/components/game/mlb/';
+		this.schedule_url_end = '/master_scoreboard.json';
+		this.schedule_url = this.schedule_url_start + this.yyyymmdd() + this.schedule_url_end;
+	}
+
+	formatDate(yyyy, mm, dd) {
+		return 'year_' + yyyy + '/month_' + mm + '/day_' + dd;
+	}
+
+	writeToTemplate(error) {
+		console.log('>>>>>>>>>>>>>');
+		//console.log(this.data);
+		console.log(this.data.data.games.game);
+
+
+		this.displayTemplate('MLB', 'schedule', 
+			this.data.data.games, $('#MLB_widget'));
+	}
+
+	cacheButtonActions() {
+		//var that = this;
+		//$('body').on('click', '#NBA_game_table #remove-game-btn', {that: that}, this.removeGame);
+		$('body').on('click', '#MLB_widget #reset_games', this.resetSchedule.bind(this));
+		$('body').on('click', '#MLB_widget #tomorrow-btn', this.changeDay.bind(this, 1));
+		$('body').on('click', '#MLB_widget #yesterday-btn', this.changeDay.bind(this,-1));
+		$('body').on('click', '#MLB_widget #today-btn', this.changeDay.bind(this,0));
+	}
+
+}
 
 const _NHL = new NHL();
 _NHL.init();
 
+
+const _MLB = new MLB();
+_MLB.init();
 
