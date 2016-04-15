@@ -66,7 +66,7 @@ NBA.prototype.removeGame = function(event) {
 	$('#'+id).remove();
 	$('#c'+id).remove();
 
-	for (i=0; i < that.data.sports_content.games.game.length; i++) {
+	for (var i = 0; i < that.data.sports_content.games.game.length; i++) {
 		if(id == that.data.sports_content.games.game[i].id) {
 			that.data.sports_content.games.game[i]['hidden'] = true;
 			break;
@@ -89,7 +89,7 @@ NBA.prototype.dataOutOfDate = function(newData) {
 
 NBA.prototype.massageData = function(newData, callback) {
 
-	for (i=0; i < newData.sports_content.games.game.length; i++) {
+	for (var i = 0; i < newData.sports_content.games.game.length; i++) {
 
 		var home_score = parseInt(newData.sports_content.games.game[i].home.score);
 		var visitor_score = parseInt(newData.sports_content.games.game[i].visitor.score);
@@ -235,7 +235,7 @@ NBA.prototype.writeToTemplate = function() {
 NBA.prototype.updateEachGame = function(newData) {
 	console.log('NBA updating');
 	
-	for (i=0; i < this.data.sports_content.games.game.length; i++) {
+	for (var i=0; i < this.data.sports_content.games.game.length; i++) {
 		if(this.data.sports_content.games.game[i].id !== 
 			newData.sports_content.games.game[i].id){
 			console.log('data not same -- error');
@@ -271,7 +271,7 @@ NBA.prototype.autoupdateSchedule = function(event) {
 
 NBA.prototype.continueAutoUpdate = function() {
 	var all_games_done = true;
-	for (i=0; i < this.data.sports_content.games.game.length; i++) {
+	for (var i=0; i < this.data.sports_content.games.game.length; i++) {
 		if(this.data.sports_content.games.game[i].period_time.period_status !== "Final") {
 			all_games_done = false;
 			break;
@@ -298,7 +298,7 @@ NBA.prototype.turnOffAutoUpdate = function() {
 };
 
 NBA.prototype.highlightGames = function() {
-	for (i=0; i < this.data.sports_content.games.game.length; i++) {
+	for (var i=0; i < this.data.sports_content.games.game.length; i++) {
 		if(this.data.sports_content.games.game[i].highlight) {
 			var rowId = '#'+this.data.sports_content.games.game[i].id;
 			//$(rowId).effect("highlight", {color: '#FFFF99'}, 2000);
