@@ -87,7 +87,7 @@ gulp.task('dev', ['handlebars', 'predev'], function() {
 			{
 				read: false, 
 				'cwd': __dirname + '/Chrome/src'
-			}).pipe(print())
+			})//.pipe(print())
 			, {addRootSlash: false}))
 	.pipe(gulp.dest('Chrome/src/'));
 });

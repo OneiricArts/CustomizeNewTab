@@ -1,5 +1,3 @@
-console.log('hellow world');
-
 /*
 	_ ECMAScript 6 _ bitches _ 
 	https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Strict_mode
@@ -10,6 +8,7 @@ console.log('hellow world');
 /*
 	Widget class
 		- needs jQuery
+		- handlebars runtime
 */
 class Widget {
 
@@ -27,17 +26,13 @@ class Widget {
 		}
 	}
 
-	/**
-	* ============================================================================
-	*  			each widget is responsible for overriding   
-	* ============================================================================
-	*/
+	/*
+	 * 	each widget is responsible for overriding   
+	 */
 	
-	// called when user has turned off widget, handle any clearouts, etc.
-	off() {}
-
-	// called from on(). handle initializing the widget
-	init() {}
+	off() {}  // called when user has turned off widget, handle clearouts, etc.
+	init() {} // called from on(). handle initializing the widget
+	
 
 	/**
 	* ============================================================================
@@ -69,10 +64,6 @@ class Widget {
 		}
 	}
 
-	/* 
-		using jQuery -- fight me
-		needs url and callback
-	*/
 	getData(url, callback) {
 		$.getJSON(url, function(result) {
 			callback.call(this, result);
@@ -88,9 +79,10 @@ class Widget {
 
 	loadData(callbackSuccess, callbackFail) {
 
-		chrome.storage.local.get(this.key, function(result) {
-			if(result[this.datakey]) {
-				this.data = result[this.datakey];
+		chrome.storage.local.get(this.dataKey, function(result) {
+
+			if(result[this.dataKey]) {
+				this.data = result[this.dataKey];
 				callbackSuccess.call(this);
 			}
 			else{
@@ -102,14 +94,12 @@ class Widget {
 	saveData(callback) {
 
 		var obj = {};
-		obj[this.datakey] = this.data;
+		obj[this.dataKey] = this.data;
 
 		chrome.storage.local.set( obj, function() {
 			if(callback){callback.call(this);}
 		}.bind(this));
 	}
-
-	get area() {return 2}
 }
 
 class Sport extends Widget {
@@ -119,7 +109,6 @@ class Sport extends Widget {
 		this.schedule_url_start;
 		this.schedule_url_end;
 		this.schedule_url;
-
 		this.today = new Date();
 	}
 
