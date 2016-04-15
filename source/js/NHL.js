@@ -231,6 +231,7 @@ class NHL extends Sport {
 		console.log(this.data);
 
 		if(error) {
+			if(!this.data) {this.data = {};}
 			this.data['error'] = true;
 			this.data.games = null;
 		}
@@ -277,29 +278,16 @@ class NHL extends Sport {
 		//var that = this;
 		//$('body').on('click', '#NBA_game_table #remove-game-btn', {that: that}, this.removeGame);
 		$('body').on('click', '#NHL_widget #reset_games', this.resetSchedule.bind(this));
-		$('body').on('click', '#NHL_widget #tomorrow-btn', this.tomorrowSchedule.bind(this));
-		$('body').on('click', '#NHL_widget #yesterday-btn', this.yesterdaySchedule.bind(this));
-		$('body').on('click', '#NHL_widget #today-btn', this.todaySchedule.bind(this));
+		$('body').on('click', '#NHL_widget #tomorrow-btn', this.changeDay.bind(this, 1));
+		$('body').on('click', '#NHL_widget #yesterday-btn', this.changeDay.bind(this,-1));
+		$('body').on('click', '#NHL_widget #today-btn', this.changeDay.bind(this,0));
 	}
 
-	tomorrowSchedule() {
+	changeDay(n) {
 		this.schedule_url = 'http://live.nhle.com/GameData/GCScoreboard/'+
-		this.yyyymmdd(1)+'.jsonp';
+		this.yyyymmdd(n)+'.jsonp';
 		this.resetSchedule();
 	}
-
-	todaySchedule() {
-		this.schedule_url = 'http://live.nhle.com/GameData/GCScoreboard/'+
-		this.yyyymmdd(0)+'.jsonp';
-		this.resetSchedule();
-	}
-
-	yesterdaySchedule() {
-		this.schedule_url = 'http://live.nhle.com/GameData/GCScoreboard/'+
-		this.yyyymmdd(-1)+'.jsonp';
-		this.resetSchedule();
-	}
-
 }
 
 

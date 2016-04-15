@@ -10,6 +10,7 @@ var util = require('gulp-util');
 var inlinesource = require('gulp-inline-source');
 var inject = require('gulp-inject');
 var series = require('stream-series');
+var print = require('gulp-print');
 
 
 /* 
@@ -48,6 +49,12 @@ var jsfilesES6 = [
 gulp.task('default', ['minify', 'handlebars', 'compress', 'concatLibs']);
 
 
+/********************************************************************
+	DOING DEV WORK
+	- need js files included individually
+	- no js minification
+		- CSS/HTML minification doesn't really matter
+********************************************************************/
 gulp.task('predev', ['handlebars'], function() {
 	gulp.src(libs)
 	.pipe(concat('libs.min.js'))
@@ -63,34 +70,33 @@ gulp.task('predev', ['handlebars'], function() {
 
 gulp.task('dev', ['handlebars', 'predev'], function() {
 
-	var dsfsdf = [
-		'libs.min.js',
-		'templates.js',
-		'Base.js',  
-		'Sports.js', 
-		'NBA.js', 
-		'NFLoff.js',
-		'NFLnews.js', 
-		'Links.js', 
-		'pageHandler.js',
+	var myJsFiles = [
+		'libs.min.js', 'templates.js',
+		'Base.js',  'Sports.js', 
+		'NBA.js', 'NFLoff.js', 'NFLnews.js', 'Links.js', 
 		'NHL.js',
-		'googleAnalytics.js'
+		'pageHandler.js', 'googleAnalytics.js'
 	];
 
-	for(var i=0;i<dsfsdf.length;i++){
-    	dsfsdf[i] = 'Chrome/src/' + dsfsdf[i];
-	}
-
-	var injectOptions = {
-		ignorePath: '/source/js/'
-	};
-
-	var target = gulp.src('./Chrome/src/new_tab.html');
 	// inject (  src([], {read: false})   , optionsForInject    )
-	target.pipe(inject(gulp.src(dsfsdf, {read: false}), {relative: true}))
+	gulp.src('./Chrome/src/new_tab.html')
+	.pipe(
+		inject(
+			gulp.src(myJsFiles, 
+			{
+				read: false, 
+				'cwd': __dirname + '/Chrome/src'
+			}).pipe(print())
+			, {addRootSlash: false}))
 	.pipe(gulp.dest('Chrome/src/'));
 });
 
+
+
+/*********************************************
+	FINAL BUILD
+	- Test what I will ship
+**********************************************/
 gulp.task('minify', function() {
 	gulp.src('source/new_tab.html')
 		.pipe(inlinesource())
