@@ -259,25 +259,24 @@ class NHL extends Sport {
 				var result = JSON.parse(json);
 				this.massageData.call(this, result, callback);
 			}
-
 			catch(e) {
 				this.writeErrorMessage(true);
 			}
-			
 		}.bind(this));
 		// TODO handle timeout
 	}
 
 	massageData(result, callback) {
+		console.log(result);
 		try {
-			for (i=0; i < result.games.length; i++) {
+			for (var i = 0; i < result.games.length; i++) {
 				result.games[i].atcommon = result.games[i].atcommon.toLowerCase();
 				result.games[i].htcommon = result.games[i].htcommon.toLowerCase();
 			}
 			callback.call(this, result);
 		}
 		catch(e) {
-			console.log('fudge cakes -- massageData');
+			console.log('fudge cakes -- massageData' + e);
 		}
 	}
 
@@ -296,7 +295,7 @@ class MLB extends Sport {
 	constructor() {
 		super();
 		this.dataKey = 'MLB';
-		//this.schedule_url = 'http://gd2.mlb.com/components/game/mlb/year_2016/month_04/day_15/master_scoreboard.json';
+		//'http://gd2.mlb.com/components/game/mlb/year_2016/month_04/day_15/master_scoreboard.json';
 		this.schedule_url_start = 'http://gd2.mlb.com/components/game/mlb/';
 		this.schedule_url_end = '/master_scoreboard.json';
 		this.schedule_url = this.schedule_url_start + this.yyyymmdd() + this.schedule_url_end;
@@ -307,11 +306,7 @@ class MLB extends Sport {
 	}
 
 	writeToTemplate(error) {
-		console.log('>>>>>>>>>>>>>');
-		//console.log(this.data);
-		console.log(this.data.data.games.game);
-
-
+		//console.log(this.data.games);
 		this.displayTemplate('MLB', 'schedule', 
 			this.data.data.games, $('#MLB_widget'));
 	}
@@ -324,12 +319,10 @@ class MLB extends Sport {
 		$('body').on('click', '#MLB_widget #yesterday-btn', this.changeDay.bind(this,-1));
 		$('body').on('click', '#MLB_widget #today-btn', this.changeDay.bind(this,0));
 	}
-
 }
 
 const _NHL = new NHL();
 _NHL.init();
-
 
 const _MLB = new MLB();
 _MLB.init();
