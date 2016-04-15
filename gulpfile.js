@@ -9,6 +9,7 @@ var babel = require('gulp-babel');
 var util = require('gulp-util');
 var inlinesource = require('gulp-inline-source');
 var inject = require('gulp-inject');
+var series = require('stream-series');
 
 
 /* 
@@ -25,7 +26,19 @@ var jsfiles = [
 	'source/js/Links.js', 
 	'source/js/pageHandler.js',
 	//'source/js/bookmarksBar.js', 
-	'source/js/googleAnalytics.js'
+	'source/js/googleAnalytics.js',
+	'source/js/NHL.js'
+];
+
+var libs = [
+	'source/libs/jquery-2.1.4.min.js',
+	//'source/libs/jquery-ui.min.js', // used to be needed because of $.highlight
+	'source/libs/bootstrap-3.3.5-dist/js/bootstrap.min.js',
+	//'source/libs/bootstrap_custom/js/bootstrap.min.js',
+	//'source/libs/mdl/material.min.js',
+	//'source/libs/jquery.xml2json.js',
+	'source/libs/countdown.min.js',
+	'source/libs/handlebars.runtimev4.0.5.min.js',
 ];
 
 var jsfilesES6 = [
@@ -34,11 +47,48 @@ var jsfilesES6 = [
 
 gulp.task('default', ['minify', 'handlebars', 'compress', 'concatLibs']);
 
-gulp.task('test', function() {
 
-	gulp.src('source/new_tab.html')
-	.pipe(inject(gulp.src(jsfiles, {read: false},{relative: true})))
-	.pipe(gulp.dest('test'));
+gulp.task('predev', ['handlebars'], function() {
+	gulp.src(libs)
+	.pipe(concat('libs.min.js'))
+	.pipe(gulp.dest('Chrome/src/'));
+
+	gulp.src(jsfiles)
+	.pipe(gulp.dest('Chrome/src/'));
+
+	return gulp.src('source/new_tab.html')
+	.pipe(inlinesource())
+	.pipe(gulp.dest('Chrome/src/'));
+});
+
+gulp.task('dev', ['handlebars', 'predev'], function() {
+
+	var dsfsdf = [
+		'libs.min.js',
+		'templates.js',
+		'Base.js',  
+		'Sports.js', 
+		'NBA.js', 
+		'NFLoff.js',
+		'NFLnews.js', 
+		'Links.js', 
+		'pageHandler.js',
+		'NHL.js',
+		'googleAnalytics.js'
+	];
+
+	for(var i=0;i<dsfsdf.length;i++){
+    	dsfsdf[i] = 'Chrome/src/' + dsfsdf[i];
+	}
+
+	var injectOptions = {
+		ignorePath: '/source/js/'
+	};
+
+	var target = gulp.src('./Chrome/src/new_tab.html');
+	// inject (  src([], {read: false})   , optionsForInject    )
+	target.pipe(inject(gulp.src(dsfsdf, {read: false}), {relative: true}))
+	.pipe(gulp.dest('Chrome/src/'));
 });
 
 gulp.task('minify', function() {
@@ -85,16 +135,7 @@ gulp.task('compress', function() {
 	libraries are already minified, so just combine
 */
 gulp.task('concatLibs', function() {
-	var libs = [
-		'source/libs/jquery-2.1.4.min.js',
-		//'source/libs/jquery-ui.min.js', // used to be needed because of $.highlight
-		'source/libs/bootstrap-3.3.5-dist/js/bootstrap.min.js',
-		//'source/libs/bootstrap_custom/js/bootstrap.min.js',
-		//'source/libs/mdl/material.min.js',
-		//'source/libs/jquery.xml2json.js',
-		'source/libs/countdown.min.js',
-		'source/libs/handlebars.runtimev4.0.5.min.js',
-	];
+
 	return gulp.src(libs)
 		.pipe(concat('libs.min.js'))
 		.pipe(gulp.dest('Chrome/src/'));

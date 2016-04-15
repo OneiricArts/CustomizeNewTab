@@ -1,0 +1,95 @@
+<!-- HANDLEBARS TEMPLATE -->
+		
+
+<div id="NHL-panel" class="panel panel-default">
+
+	<div class="panel-heading">
+		<span>NHL_test</span> 
+		<div class="btn-group" role="group" aria-label="...">  
+			<button id="yesterday-btn"
+				class="btn btn-xs btn-default">
+				<span class="glyphicon glyphicon-chevron-left"></span> 
+			</button>
+			<button id="today-btn"
+				class="btn btn-xs btn-default">
+				Today
+			</button>
+			<button id="tomorrow-btn"
+				class="btn btn-xs btn-default">
+				<span class="glyphicon glyphicon-chevron-right"></span> 
+			</button>
+		</div>
+		<span id="today"></span>
+	</div>
+	
+
+	<div class="panel-body">
+
+		{{#if schedule.games.length}}	
+			<div class="table-responsive">
+				<table id="NBA_game_table" 
+				class="table table-striped table-condensed">
+					<thead>
+						<tr>
+							<th><span class="glyphicon glyphicon-time">
+							</span></th>
+							<th style="text-align:left">Visitor</th>
+							<th style="text-align:left">@Home</th>
+							<th style="text-align:left">V</th>
+							<th style="text-align:left">H</th>	
+							<th style="text-align:right">
+								<span class="glyphicon glyphicon-edit">
+							</span></th>
+						</tr>
+					</thead>
+					<tbody id="NBA-schedul-games">
+
+						{{#each schedule.games}}
+						{{#unless hidden}}
+
+						<tr id={{id}} class="{{#if close_game}}danger{{/if}} {{#if fav_team}}success{{/if}}">
+
+							<td>{{bs}}</td>
+
+							<td id="away_team" {{#if atwinning}}class="winning"{{/if}}
+							style="text-align:left; text-transform: capitalize;">{{atcommon}}</td>
+
+							<td id="home_team" {{#if htwinning}}class="winning"{{/if}}
+							style="text-align:left; text-transform: capitalize;">{{htcommon}}</td>
+				
+							<td style="text-align:left">{{ats}}</td>
+							<td style="text-align:left">{{hts}}</td> 
+
+							<td style="text-align:right">
+							<button type="button" id="remove-game-btn" class="btn btn-default btn-xs">
+							<span class="glyphicon glyphicon-trash"></span></button></td>
+						</tr>
+
+						{{/unless}}
+						{{/each}}
+
+					</tbody>
+				</table>
+			</div> <!--/table-responsive -->
+		
+		{{else}}
+			{{#if schedule.error}}
+				<div class="alert alert-danger" style="margin-bottom:0">
+					<span class="glyphicon glyphicon-bell"></span>
+					Potential Error -- if there are games today, then definately error.
+					Could be my code, the NHL API, or something random. Please do let me know.
+				</div>
+			{{else}}
+				<div class="alert alert-danger" style="margin-bottom:0">
+					<span class="glyphicon glyphicon-bell"></span>
+					No Games today &#9785; &#9785; &#9785;<br>
+					GET HYPED FOR PLAYOFFS!!
+				</div>
+			{{/if}}
+
+		{{/if}}
+
+	</div>	
+</div> <!-- / NBA panel -->
+
+

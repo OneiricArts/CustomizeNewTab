@@ -9,6 +9,7 @@
 		"storage",
 		"http://www.nfl.com/",
 		"http://*.nba.com/*",
+		"http://*.nhle.com/*",
 		"topSites"
 	],
 	"icons": { "16": "icon16.png",
