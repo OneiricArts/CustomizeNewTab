@@ -331,6 +331,8 @@ class MLB extends Sport {
 			for (var i = 0; i < result.data.games.game.length; i++) {
 				var game = result.data.games.game[i];
 
+				/* time status 
+				*********************************************************************************************/
 				var time_to_show;
 				if(game.status.status == "Final" || game.status.status === "Postponed") {
 					time_to_show = game.status.status;
@@ -369,6 +371,15 @@ class MLB extends Sport {
 					}
 				}
 				result.data.games.game[i]['time_to_show'] = time_to_show;
+
+				/* winning 
+				********************************************************************************************/
+				if(game.linescore) {
+					var at_score = parseInt(game.linescore.r.away);
+					var ht_score = parseInt(game.linescore.r.home);
+					result.data.games.game[i]['atwinning'] = at_score > ht_score;
+					result.data.games.game[i]['htwinning'] = ht_score > at_score;
+				}
 			}
 			callback.call(this, result);
 		}
