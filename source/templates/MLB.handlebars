@@ -49,7 +49,13 @@
 
 						<tr id={{game_pk}} class="{{#if close_game}}danger{{/if}} {{#if fav_team}}success{{/if}}">
 
-							<td>{{time}} {{time_zone}}</td>
+							<td>
+								{{#if time_to_show}}
+									{{time_to_show}}
+								{{else}}
+									{{time}} {{time_to_show}}
+								{{/if}}
+							</td>
 
 							<td id="away_team" {{#if atwinning}}class="winning"{{/if}}
 							style="text-align:left; text-transform: capitalize;">{{away_team_name}}</td>

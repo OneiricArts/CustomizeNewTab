@@ -325,6 +325,59 @@ class MLB extends Sport {
 
 		that.saveData();
 	}
+
+	massageData(result, callback) {
+		try {
+			for (var i = 0; i < result.data.games.game.length; i++) {
+				var game = result.data.games.game[i];
+
+				var time_to_show;
+				if(game.status.status == "Final" || game.status.status === "Postponed") {
+					time_to_show = game.status.status;
+				}
+				else if (game.status.status === "In Progress") {
+					time_to_show = game.status.inning_state + ' of ' + game.status.inning;
+				}
+				else if (game.status.status === "Preview") {
+
+					try {
+						var timeArr = game.time.split(':');
+						var dateArr = game.original_date.split('/');
+						// check time.Arr.length
+						var yyyy 	= parseInt(dateArr[0]);
+						var mm 		= parseInt(dateArr[1]);
+						var dd 		= parseInt(dateArr[2]);
+						var hours 	= parseInt(timeArr[0]);
+						var minutes = parseInt(timeArr[1]);
+
+						var date = new Date(yyyy, mm, dd);
+						hours = hours - 1;      // setUTCHours is 0-23, NBA API is 1 - 24 for hours
+						if(game.ampm === "PM") {
+							hours += 12;
+						}
+						else { //AM
+							hours -= 12;
+						}
+
+						var EST_UTC_OFFSET = 5; // EST + 5 = UTC
+						date.setUTCHours( (hours+EST_UTC_OFFSET)%24, minutes);
+						time_to_show = date.toLocaleTimeString([], {hour: '2-digit', minute: '2-digit'});
+					}
+
+					catch(e) {
+						time_to_show = game.time + " " + game.time_zone;
+					}
+				}
+				result.data.games.game[i]['time_to_show'] = time_to_show;
+			}
+			callback.call(this, result);
+		}
+		catch(e) {
+			console.log('fudge cakes -- massageData' + e);
+		}
+
+		callback.call(this, result);
+	}
 }
 
 const _NHL = new NHL();
