@@ -211,8 +211,14 @@ NBA.prototype.writeToTemplate = function() {
 
 	//this.data.sports_content.games.game.push({'home':'test'});
 
-	this.displayTemplate('NBAschedule', 'games', 
-		this.data.sports_content.games.game, $('#NBA_col'));
+	if(this.updateGamesID) {
+		this.data.sports_content.games['autoUpdating'] = true;
+	} else {
+		this.data.sports_content.games['autoUpdating'] = false;
+	}
+
+	this.displayTemplate('NBAschedule', 'schedule', 
+		this.data.sports_content.games, $('#NBA_col'));
 
 	/*var options = {
 		month: "short",
@@ -264,8 +270,9 @@ NBA.prototype.autoupdateSchedule = function(event) {
 		self.updateGamesID = window.setInterval(self.continueAutoUpdate.bind(self), 10000);
 	}
 	else {
-		console.log('clearing---');
-		window.clearInterval(self.updateGamesID);
+		//console.log('clearing---');
+		//window.clearInterval(self.updateGamesID);
+		self.turnOffAutoUpdate();
 	}
 };
 
