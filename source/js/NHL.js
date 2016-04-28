@@ -160,7 +160,7 @@ class Sport extends Widget {
 		$.getJSON(url, function(result) {
 			this.massageData.call(this, result, callback);
 		}.bind(this)).fail(function(result){
-			this.massageData.call(this, result, callback);
+			//this.massageData.call(this, result, callback);
 		}.bind(this));
 		// TODO handle timeout
 	}
@@ -296,6 +296,9 @@ class MLB extends Sport {
 
 	writeToTemplate(error) {
 		//console.log(this.data.games);
+
+		console.log(this.data);
+
 		this.displayTemplate('MLB', 'schedule', 
 			this.data.data.games, $('#MLB_widget'));
 	}
@@ -334,13 +337,17 @@ class MLB extends Sport {
 				/* time status 
 				*********************************************************************************************/
 				var time_to_show;
+
+				//console.log('>>>>>> ===== ' + game.status.status);
+
 				if(game.status.status == "Final" || game.status.status === "Postponed") {
 					time_to_show = game.status.status;
 				}
 				else if (game.status.status === "In Progress") {
 					time_to_show = game.status.inning_state + ' of ' + game.status.inning;
 				}
-				else if (game.status.status === "Preview") {
+				else if (game.status.status === "Preview" || game.status.status === "Pre-Game" 
+						|| game.status.status === "Warmup") {
 
 					try {
 						var timeArr = game.time.split(':');
@@ -351,6 +358,23 @@ class MLB extends Sport {
 						var dd 		= parseInt(dateArr[2]);
 						var hours 	= parseInt(timeArr[0]);
 						var minutes = parseInt(timeArr[1]);
+
+
+						/*if( i == 0 || i == 2 ) {
+							console.log('{{{{{{{{{{{{{ ' + i);
+							console.log(hours);
+							console.log(hours-1);
+							console.log(game.ampm);
+							//hours += 12;
+							console.log(hours);
+							var EST_UTC_OFFSET = 5;
+							console.log( (hours-1+12+EST_UTC_OFFSET)%24 );
+							var a = new Date();
+							a.setUTCHours( (hours-1+12+EST_UTC_OFFSET)%24 , minutes);
+							console.log( a.toLocaleTimeString([], {hour: '2-digit', minute: '2-digit'}) );
+							console.log('}}}}}}}}}}}}}');
+						}*/
+
 
 						var date = new Date(yyyy, mm, dd);
 						hours = hours - 1;      // setUTCHours is 0-23, NBA API is 1 - 24 for hours
@@ -368,6 +392,7 @@ class MLB extends Sport {
 
 					catch(e) {
 						time_to_show = game.time + " " + game.time_zone;
+						console.log('>> time_to_show excption');
 					}
 				}
 				result.data.games.game[i]['time_to_show'] = time_to_show;
