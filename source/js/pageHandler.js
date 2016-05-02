@@ -91,9 +91,11 @@ function pageHandeler() {
 
 	this.NFL = new NFL();
 	this.NBA = new NBA();
+	this.NHL = new NHL();
+	this.MLB = new MLB();
 	this.Links = new Links();
 
-	this.widgetKeys = ['NFL', 'NBA', 'Links'];
+	this.widgetKeys = ['NFL', 'NBA', 'NHL', 'MLB', 'Links'];
 
 	/* this.data.<stuff> is set in this.setDefaults */
 };
@@ -178,6 +180,9 @@ function triggerWidget(event) {
 
 	$(this).find('span').toggleClass('glyphicon-ok').toggleClass('glyphicon-remove');
 	var id = "#" + key + "_col";
+	if( $(id).length == 0 ) {
+		id = '#' + key + '_widget';
+	}
 	$(id).toggle();
 
 	if($(this).find('span').hasClass('glyphicon-ok')) {

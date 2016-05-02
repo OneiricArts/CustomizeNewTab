@@ -416,9 +416,9 @@ class MLB extends Sport {
 	}
 }
 
-const _NHL = new NHL();
+/*const _NHL = new NHL();
 _NHL.init();
 
 const _MLB = new MLB();
-_MLB.init();
+_MLB.init();*/
 

@@ -25,10 +25,10 @@ var jsfiles = [
 	'source/js/NFLoff.js',
 	'source/js/NFLnews.js', 
 	'source/js/Links.js', 
+	//'source/js/bookmarksBar.js',
+	'source/js/NHL.js',
 	'source/js/pageHandler.js',
-	//'source/js/bookmarksBar.js', 
-	'source/js/googleAnalytics.js',
-	'source/js/NHL.js'
+	'source/js/googleAnalytics.js'
 ];
 
 var libs = [
