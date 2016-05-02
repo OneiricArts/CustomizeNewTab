@@ -97,10 +97,14 @@
 								</td>
 								
 								<td id="home_team" {{#if home.winning}}class="winning"{{/if}}
-								style="text-align:left">{{home.nickname}}</td>
+								style="text-align:left">{{home.nickname}}
+								{{#if playoffs.home_wins}}({{playoffs.home_wins}}){{/if}}
+								</td>
 
 								<td id="away_team" {{#if visitor.winning}}class="winning"{{/if}}
-								style="text-align:left">{{visitor.nickname}}</td>
+								style="text-align:left">{{visitor.nickname}}
+								{{#if playoffs.visitor_wins}}({{playoffs.visitor_wins}}){{/if}}
+								</td>
 
 								<td id="h-score" style="text-align:left">{{home.score}}</td> 
 								<td id="v-score" style="text-align:left">{{visitor.score}}</td>
