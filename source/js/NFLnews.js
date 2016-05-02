@@ -72,6 +72,7 @@ NFLnews.prototype.displayrNFL = function(data) {
 };
 
 NFLnews.prototype.dates = function() {
+	return;
 	var draftDate = new Date(2016, 03, 28); // April 3
 	//var superBowl = new Date(2016, 01, 07); // Sunday, February 7
 	//superBowl.setUTCHours(12+6+5,30);
