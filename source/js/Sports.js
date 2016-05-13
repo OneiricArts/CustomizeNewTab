@@ -37,13 +37,20 @@ Sports.prototype.getJsonData = function(url, callback) {
 	console.log('getting from internet.');
 	$.getJSON(url, function(result) {
 		this.massageData.call(this, result, callback);
-	}.bind(this)).fail(function(){
-		console.log('>>>>');
-		result = {};
-		result['sports_content'] = {};
-		result['sports_content']['games'] = {};
-		result['sports_content']['games']['game'] = [];
-		this.massageData.call(this, result, callback);
+	}.bind(this))
+	.fail(function(jqXHR, exception){
+		//console.log(jqXHR.status + ' | ' + exception);
+		if(jqXHR.status === 0) {
+			// network error, do nothing
+		} else if (exception === 'parsererror') {
+			// NBA error
+			console.log('>>>>');
+			result = {};
+			result['sports_content'] = {};
+			result['sports_content']['games'] = {};
+			result['sports_content']['games']['game'] = [];
+			this.massageData.call(this, result, callback);
+		}
 	}.bind(this));
 	// TODO handle timeout
 };

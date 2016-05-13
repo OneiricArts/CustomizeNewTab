@@ -159,7 +159,8 @@ class Sport extends Widget {
 	getJsonData(url, callback) {
 		$.getJSON(url, function(result) {
 			this.massageData.call(this, result, callback);
-		}.bind(this)).fail(function(result){
+		}.bind(this))
+		.fail(function(result){
 			//this.massageData.call(this, result, callback);
 		}.bind(this));
 		// TODO handle timeout

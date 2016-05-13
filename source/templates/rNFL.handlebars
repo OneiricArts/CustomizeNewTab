@@ -1,5 +1,10 @@
 <!-- rNFL headlines/news template --> 
 <div class="list-group">
+
+	<a id="rNFL" class="list-group-item clearfix" style="text-align: center; background-color:#ECECEC;"
+		href="https://reddit.com/r/nfl"><span style="color:#ff4081">/r/NFL</span> feed
+	</a>
+	
 	{{#each posts}}
 		<a class="list-group-item clearfix" href="https://reddit.com{{data.permalink}}" >
 			{{#if data.link_flair_text}}
@@ -9,8 +14,4 @@
 			{{data.title}}						
 		</a>
 	{{/each}}
-
-	<a id="rNFL" class="list-group-item clearfix" style="text-align: center; background-color:#ECECEC"
-		href="https://reddit.com/r/nfl">Read more on /r/NFL
-	</a>
 </div>

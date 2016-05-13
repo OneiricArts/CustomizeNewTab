@@ -1,3 +1,9 @@
+/******************************************************************************
+*******************************************************************************
+	REQUIREMENTS (no package file, install these yourself for now)
+*******************************************************************************
+******************************************************************************/
+
 var gulp = require('gulp');
 var exec = require('child_process').exec;
 var htmlmin = require('gulp-htmlmin');
@@ -12,6 +18,12 @@ var inject = require('gulp-inject');
 var series = require('stream-series');
 var print = require('gulp-print');
 
+
+/******************************************************************************
+*******************************************************************************
+	Centralized lists of files used in multiple places
+*******************************************************************************
+******************************************************************************/
 
 /* 
 	used in 'compress' and 'watch'
@@ -38,7 +50,7 @@ var libs = [
 	//'source/libs/bootstrap_custom/js/bootstrap.min.js',
 	//'source/libs/mdl/material.min.js',
 	//'source/libs/jquery.xml2json.js',
-	'source/libs/countdown.min.js',
+	//'source/libs/countdown.min.js',
 	'source/libs/handlebars.runtimev4.0.5.min.js',
 ];
 
@@ -47,60 +59,105 @@ var jsfilesES6 = [
 	//'source/js/bookmarksBar.js',
 ]
 
-gulp.task('default', ['minify', 'handlebars', 'compress', 'concatLibs']);
+var cssFiles = [
+	'source/libs/bootstrap-3.3.5-dist/css/bootstrap.min.css',
+	//'source/libs/mdl/material.min.css',
+];
 
 
-/********************************************************************
-	DOING DEV WORK
-	- need js files included individually
-	- no js minification
-		- CSS/HTML minification doesn't really matter
-********************************************************************/
-gulp.task('predev', ['handlebars'], function() {
+//gulp.task('default', ['minify', 'handlebars', 'compress', 'concatLibs']);
+
+gulp.task('handlebars', function(cb) {
+	return exec('handlebars -m ./source/templates/> ./Chrome/src/templates.js', 
+		function (err, stdout, stderr) {
+			console.log(stdout);
+			console.log(stderr);
+			cb(err);
+	});
+});
+
+/******************************************************************************
+*******************************************************************************
+	DEV MODE
+		- no uglify/minification/etc.
+*******************************************************************************
+******************************************************************************/
+
+gulp.task('moveLibs', function() {
 	gulp.src(libs)
 	.pipe(concat('libs.min.js'))
 	.pipe(gulp.dest('Chrome/src/'));
+});
 
+gulp.task('moveJS', function() {
 	gulp.src(jsfiles)
 	.pipe(gulp.dest('Chrome/src/'));
+});
 
-	return gulp.src('source/new_tab.html')
-	.pipe(inlinesource())
+gulp.task('moveCSS', function() {
+	gulp.src(cssFiles)
 	.pipe(gulp.dest('Chrome/src/'));
 });
 
-gulp.task('dev', ['handlebars', 'predev'], function() {
-
-	var myJsFiles = [
-		'libs.min.js', 'templates.js',
-		'Base.js',  'Sports.js', 
-		'NBA.js', 'NFLoff.js', 'NFLnews.js', 'Links.js', 
-		'NHL.js',
-		'pageHandler.js', 'googleAnalytics.js'
-	];
+gulp.task('moveHTML', function() {
+	var myJsFiles = ['Chrome/src/libs.min.js', 'Chrome/src/templates.js'];
 
 	// inject (  src([], {read: false})   , optionsForInject    )
-	gulp.src('./Chrome/src/new_tab.html')
-	.pipe(
-		inject(
-			gulp.src(myJsFiles, 
+	gulp.src('source/new_tab.html')
+		.pipe(inject(
+			gulp.src( myJsFiles.concat(jsfiles), 
 			{
 				read: false, 
-				'cwd': __dirname + '/Chrome/src'
 			})//.pipe(print())
-			, {addRootSlash: false}))
-	.pipe(gulp.dest('Chrome/src/'));
+			, {
+				ignorePath: ['source/js/', 'source/libs/', 'source/libs/bootstrap-3.3.5-dist/js/',
+				'Chrome/src/'], 
+				addRootSlash: false
+			}
+		))
+		.pipe(inject(
+			gulp.src(cssFiles, 
+			{
+				read: false, 
+				//'cwd': __dirname + '/Chrome/src'
+			}), 
+			{
+				ignorePath: 'source/libs/bootstrap-3.3.5-dist/css/', 
+				addRootSlash: false
+			}
+		))
+		.pipe(gulp.dest('Chrome/src/'));
+});
+
+gulp.task('dev', ['handlebars', 'moveJS', 'moveJS', 'moveCSS', 'moveHTML'], function() {
+	gulp.watch(['./source/templates/*.handlebars'], ['handlebars']);
+	gulp.watch(jsfiles, ['moveJS']);
+	gulp.watch(['./source/*.html'], ['moveHTML']);
 });
 
 
+/******************************************************************************
+*******************************************************************************
+	MINIFIED BUILD. 
+		This is what is actually shipped. 
+		Useful in testing performance.
+*******************************************************************************
+******************************************************************************/
 
-/*********************************************
-	FINAL BUILD
-	- Test what I will ship
-**********************************************/
-gulp.task('minify', function() {
-	gulp.src('source/new_tab.html')
+gulp.task('minifyHTML', function() {
+
+	var libsToInclude = ['Chrome/src/libs.min.js', 'Chrome/src/templates.js', 'Chrome/src/app.min.js'];
+
+	return gulp.src('source/new_tab.html')
 		.pipe(inlinesource())
+		.pipe(inject(
+			gulp.src(libsToInclude, 
+				{read: false})//.pipe(print())
+				,{
+					ignorePath: 'Chrome/src/', 
+					addRootSlash: false
+				})
+		)
 		.pipe(htmlmin({
 			collapseWhitespace: true, 
 			removeComments: true,
@@ -109,26 +166,10 @@ gulp.task('minify', function() {
 			//removeScriptTypeAttributes: true
 		}))
 	.pipe(gulp.dest('Chrome/src/'))
-
-	var cssFiles = [
-		'source/libs/bootstrap-3.3.5-dist/css/bootstrap.min.css',
-		//'source/libs/mdl/material.min.css',
-	];
-	//gulp.src(cssFiles)
-	//.pipe(gulp.dest('Chrome/src/'))
 });
 
-gulp.task('handlebars', function(cb) {
-	exec('handlebars -m ./source/templates/> ./Chrome/src/templates.js', 
-		function (err, stdout, stderr) {
-			console.log(stdout);
-			console.log(stderr);
-			cb(err);
-	});
-});
-
-gulp.task('compress', function() {
-	gulp.src(jsfiles)
+gulp.task('minifyJs', function() {
+	return gulp.src(jsfiles)
 		.pipe(babel({
 			only: jsfilesES6,
 			presets: ['es2015']
@@ -138,25 +179,30 @@ gulp.task('compress', function() {
 		.pipe(gulp.dest('Chrome/src/'));
 });
 
-/*
-	libraries are already minified, so just combine
-*/
+// libraries are already minified, so just combine
 gulp.task('concatLibs', function() {
-
 	return gulp.src(libs)
 		.pipe(concat('libs.min.js'))
 		.pipe(gulp.dest('Chrome/src/'));
 });
 
-gulp.task('watch', ['default'], function() {
+gulp.task('compress', ['handlebars', 'concatLibs', 'minifyJs', 'minifyHTML'], function() {
 	gulp.watch(['./source/templates/*.handlebars'], ['handlebars']);
-	gulp.watch(jsfiles, ['compress']);
-	gulp.watch(['./source/*.html'], ['minify']);
+	gulp.watch(jsfiles, ['minifyJs']);
+	gulp.watch(['./source/*.html'], ['minifyHTML']);
 });
 
+/******************************************************************************
+*******************************************************************************
+	 PACKAGING
+	 	Build 
+	 	Clean
+*******************************************************************************
+******************************************************************************/
+
 /*
-	zips the extension with the name from the current version # from 
-	the manifest 
+	zips the extension with the name of current version # from 
+	the manifest file
 */
 gulp.task('build', function() {
 	var json = JSON.parse(fs.readFileSync('./Chrome/manifest.json'));
@@ -173,7 +219,7 @@ gulp.task('build', function() {
 	everything built goes into /src/
 */
 gulp.task('clean', function(cb) {
-	exec('rm -r Chrome/src/', 
+	exec('rm Chrome/src/*', 
 		function (err, stdout, stderr) {
 			console.log(stdout);
 			console.log(stderr);

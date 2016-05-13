@@ -2,13 +2,14 @@
 <html>
   
 	<head>
-
 		<!-- <link rel="stylesheet" type="text/css" href="bootstrap.min.css"> -->
 		<link inline href="libs/bootstrap-3.3.5-dist/css/bootstrap.min.css">
 		<!-- <link inline href="libs/bootstrap_custom/css/bootstrap.min.css"> -->
 
 		<!-- <link rel="stylesheet" href="/material.min.css"> -->
 		<!-- <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons"> -->
+		<!-- inject:css -->
+		<!-- endinject -->
 
 		<style type="text/css">
 
@@ -32,9 +33,14 @@
 			}
 
 			.panel-body {
-				padding: 5px;
+				padding: 0px;
 			}
 
+			.list-group-item {
+				/*padding-left: 10px;
+				padding-right: 10px;*/
+			}
+			
 			.table {
 				margin-bottom: 0;
 			}
@@ -44,12 +50,12 @@
 				padding-bottom: 20px; /* so plus button isn't stuck at bottom */
 			}
 
-			.widgets {
+			.widgets { /* container for widgets */
 				padding-right: 10px;
 				padding-left: 10px; 
 			}
 
-			.widget {
+			.widget { /* a widget */
 				padding-right: 5px;
 				padding-left: 5px;
 			}
@@ -66,7 +72,7 @@
 
 			/* material design replacement*/
 			a {
-				color: #ff4081;
+				color: #ff4081; /* bright pink */
 			}
 
 			.list-group {
@@ -89,7 +95,7 @@
 	<!-- <body background="https://upload.wikimedia.org/wikipedia/commons/9/97/Emerald_Bay.jpg"> -->
 	<!-- <body background="/imgs/gsw.jpg"> -->
 	<!-- <body background="/imgs/Emerald_Bay2.jpeg"> -->
-	<body style="background: linear-gradient(to left, #136a8a , #267871);">
+	<body style="background: linear-gradient(to left, #457fca , #5691c8);">
 	<!-- <body style="background-color: #F2F2F2"> -->
 		
 		<div id="bookmarks_bar"></div>
@@ -131,7 +137,7 @@
 					<button id="Links-button"
 						class="btn btn-xs btn-default">
 						<span class="glyphicon glyphicon-ok"></span>
-						Link
+						Links
 					</button>
 
 					<button id="_dev_btn" class="btn btn-xs btn-default" 
@@ -142,7 +148,7 @@
 					<span class="pull-right">
 					New Tab Page by OneiricArts
 					&middot;
-					_&alpha;_
+					0.9.4
 					&middot;
 					<a id="version_update" 
 					href="https://www.reddit.com/r/SportsNewTabPage/">
@@ -168,6 +174,11 @@
 					<li>NBA AutoUpdate is off by default, press to turn on each time.)</li>
 				</ul>
 			</div> -->
+			<div id="update-alert" class="alert alert-info" role="alert" style="padding: 5px 15px 5px 15px">
+					Major update: MLB + NHL included (but rough)!
+					Grid layout with some combinations of widgets might look funky. Its being worked on, 
+					but feedback is welcome.
+			</div>
 
 			<div id="no-internet-alert" class="alert alert-danger" role="alert" style="display:none">
 				<span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
