@@ -260,8 +260,22 @@ class NHL extends Sport {
 		console.log(result);
 		try {
 			for (var i = 0; i < result.games.length; i++) {
+
+				/*
+					Names are all uppercase initially. Transform them to lower case, 
+					so can capitalize only the first litter via CSS
+				*/
 				result.games[i].atcommon = result.games[i].atcommon.toLowerCase();
 				result.games[i].htcommon = result.games[i].htcommon.toLowerCase();
+
+				var game = result.games[i];
+
+				/* mark who's winning 
+				********************************************************************************************/
+				var ats = parseInt(game.ats);
+				var hts = parseInt(game.hts);
+				result.games[i]['atswinning'] = ats > hts;
+				result.games[i]['htswinning'] = hts > ats;
 			}
 			callback.call(this, result);
 		}
