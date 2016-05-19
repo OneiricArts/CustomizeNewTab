@@ -276,6 +276,37 @@ class NHL extends Sport {
 				var hts = parseInt(game.hts);
 				result.games[i]['atswinning'] = ats > hts;
 				result.games[i]['htswinning'] = hts > ats;
+
+				/* time to local 
+				*********************************************************************************************/
+				var time_to_show;
+
+				if ( game.bs.includes('PM') || game.bs.includes('AM') ) {
+					try {
+						var timeArr = game.bs.split(':');
+						var hours 	= parseInt(timeArr[0]);
+						var minutes = parseInt(timeArr[1].split(' ')[0]);
+						var date = this.today;
+
+						hours = hours - 1;      // setUTCHours is 0-23, NBA API is 1 - 24 for hours
+						if(game.ampm === "PM") {
+							hours += 12;
+						}
+						else { //AM
+							hours -= 12;
+						}
+
+						var EST_UTC_OFFSET = 5; // EST + 5 = UTC
+						date.setUTCHours( (hours+EST_UTC_OFFSET)%24, minutes);
+						result.games[i].bs = date.toLocaleTimeString([], {hour: '2-digit', minute: '2-digit'});
+					}
+
+					catch(e) {
+						//time_to_show = game.bs;
+						console.log('>> time_to_show excption' + e);
+					}
+				}
+				//result.data.games.game[i]['time_to_show'] = time_to_show;
 			}
 			callback.call(this, result);
 		}
@@ -373,23 +404,6 @@ class MLB extends Sport {
 						var dd 		= parseInt(dateArr[2]);
 						var hours 	= parseInt(timeArr[0]);
 						var minutes = parseInt(timeArr[1]);
-
-
-						/*if( i == 0 || i == 2 ) {
-							console.log('{{{{{{{{{{{{{ ' + i);
-							console.log(hours);
-							console.log(hours-1);
-							console.log(game.ampm);
-							//hours += 12;
-							console.log(hours);
-							var EST_UTC_OFFSET = 5;
-							console.log( (hours-1+12+EST_UTC_OFFSET)%24 );
-							var a = new Date();
-							a.setUTCHours( (hours-1+12+EST_UTC_OFFSET)%24 , minutes);
-							console.log( a.toLocaleTimeString([], {hour: '2-digit', minute: '2-digit'}) );
-							console.log('}}}}}}}}}}}}}');
-						}*/
-
 
 						var date = new Date(yyyy, mm, dd);
 						hours = hours - 1;      // setUTCHours is 0-23, NBA API is 1 - 24 for hours
