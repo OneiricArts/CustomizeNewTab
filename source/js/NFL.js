@@ -3,7 +3,7 @@
 	NFL Object 
 */
 function NFL() {
-	Sports.call(this);
+	Sports.call(asfasdthis);
 
 	this.datakey = 'NFL_DATA';
 	this.schedule_url = 'http://www.nfl.com/liveupdate/scorestrip/ss.json';
