@@ -34,11 +34,14 @@ var jsfiles = [
 	'source/js/Base.js',  
 	'source/js/Sports.js', 
 	'source/js/NBA.js', 
-	'source/js/NFLoff.js',
-	'source/js/NFLnews.js', 
+	//'source/js/NFLoff.js',
+	//'source/js/NFLnews.js', 
 	'source/js/Links.js', 
 	//'source/js/bookmarksBar.js',
+	'source/js/widget.js',
+	'source/js/sport.js',
 	'source/js/NHL.js',
+	'source/js/NFL_new.js',
 	'source/js/pageHandler.js',
 	'source/js/googleAnalytics.js'
 ];
@@ -55,7 +58,10 @@ var libs = [
 ];
 
 var jsfilesES6 = [
+	'source/js/widget.js',
+	'source/js/sport.js',
 	'source/js/NHL.js',
+	'source/js/NFL_new.js',
 	//'source/js/bookmarksBar.js',
 ]
 
@@ -129,7 +135,7 @@ gulp.task('moveHTML', function() {
 		.pipe(gulp.dest('Chrome/src/'));
 });
 
-gulp.task('dev', ['handlebars', 'moveJS', 'moveJS', 'moveCSS', 'moveHTML'], function() {
+gulp.task('dev', ['handlebars', 'moveLibs', 'moveJS', 'moveCSS', 'moveHTML'], function() {
 	gulp.watch(['./source/templates/*.handlebars'], ['handlebars']);
 	gulp.watch(jsfiles, ['moveJS']);
 	gulp.watch(['./source/*.html'], ['moveHTML']);
