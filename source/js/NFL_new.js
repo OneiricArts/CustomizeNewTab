@@ -81,7 +81,6 @@ class NFL extends Sport {
                 }
                 callback.call(this,data);		
             }.bind(this));
-			callback.call(this, data);
 		}
 		catch(e) {
 			console.log('fudge cakes -- massageData' + e);
@@ -92,7 +91,7 @@ class NFL extends Sport {
 		var self = this;
 		$('body').on('click', '#NFL-schedule-table #remove-game-btn', {self: self}, this.removeGame);
 		$('body').on('click', '#NFL_widget #reset_games', this.resetSchedule.bind(this));
-		$('body').on('click', '#NFL_widget #update-btn', this.updateSchedule.bind(this));
+		$('body').on('click', '#NFL_widget #refresh_scores', this.updateSchedule.bind(this));
 	}
 
 	removeGame(event) {
