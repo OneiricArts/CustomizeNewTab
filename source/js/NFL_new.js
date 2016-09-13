@@ -9,7 +9,7 @@ class NFL extends Sport {
 		this.schedule_url =  'http://www.nfl.com/liveupdate/scorestrip/ss.json';
     }
 
-	writeToTemplate(error) {
+	writeToTemplate(error=false) {
 
 		if(error) {
 			if(!this.data) {this.data = {};}
@@ -92,6 +92,7 @@ class NFL extends Sport {
 		var self = this;
 		$('body').on('click', '#NFL-schedule-table #remove-game-btn', {self: self}, this.removeGame);
 		$('body').on('click', '#NFL_widget #reset_games', this.resetSchedule.bind(this));
+		$('body').on('click', '#NFL_widget #update-btn', this.updateSchedule.bind(this));
 	}
 
 	removeGame(event) {
