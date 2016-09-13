@@ -79,7 +79,7 @@
 				margin-bottom: 15px;
 			}
 
-			@media (min-width: 991px) {
+			/*@media (min-width: 991px) {
 				#MLB_widget, #NFL_col{
 					float: right;
 				}
@@ -88,7 +88,7 @@
 				#MLB_widget{
 					float: right;
 				}
-			}
+			}*/
 		</style>
 	</head>
 
@@ -174,11 +174,11 @@
 					<li>NBA AutoUpdate is off by default, press to turn on each time.)</li>
 				</ul>
 			</div> -->
-			<div id="update-alert" class="alert alert-info" role="alert" style="padding: 5px 15px 5px 15px">
+			<!--<div id="update-alert" class="alert alert-info" role="alert" style="padding: 5px 15px 5px 15px">
 					Major update: MLB + NHL included (but rough)!
 					Grid layout with some combinations of widgets might look funky. Its being worked on, 
 					but feedback is welcome.
-			</div>
+			</div>-->
 
 			<div id="no-internet-alert" class="alert alert-danger" role="alert" style="display:none">
 				<span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
@@ -201,20 +201,15 @@
 
 				<!-- pull-right col-lg-push-2 -->	
 			
-				<div id="NHL_widget"  class="widget col-lg-4 col-md-4 col-sm-6"></div> 
-				<div id="MLB_widget"  class="widget col-lg-4 col-md-4 col-sm-6"></div> 
-				
-				<div id="NFL_widget"  class=" widget col-lg-4 col-md-4 col-sm-6">
-				</div> 
+				<div id="MLB_widget" class="widget col-lg-5 col-md-5 col-sm-6"></div>
+				<div id="NFL_widget" class=" widget col-lg-5 col-md-5 col-sm-6"></div>
 
-				<div id="NBA_col"   class="widget col-lg-4 col-md-4 col-sm-6"></div> 
-
-
-				<div id="Links_col" class="widget col-lg-4 col-md-4 col-sm-6">
+				<div id="Links_col" class="widget col-lg-2 col-md-2 col-sm-6" style="float:right">
 					<div id="bookmark-panel"></div>
 				</div>
 
-
+				<div id="NBA_col" class="widget col-lg-4 col-md-4 col-sm-6"></div>
+				<div id="NHL_widget" class="widget col-lg-4 col-md-4 col-sm-6"></div>
 				
 			</div> <!-- /row widgets-->
 		</div> <!-- /container fluid-->
