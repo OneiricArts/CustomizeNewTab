@@ -41,6 +41,7 @@ var jsfiles = [
 	'source/js/widget.js',
 	'source/js/sport.js',
 	'source/js/NHL.js',
+	'source/js/MLB.js',
 	'source/js/NFL_new.js',
 	'source/js/pageHandler.js',
 	'source/js/googleAnalytics.js'
