@@ -62,6 +62,7 @@ var jsfilesES6 = [
 	'source/js/widget.js',
 	'source/js/sport.js',
 	'source/js/NHL.js',
+	'source/js/MLB.js',
 	'source/js/NFL_new.js',
 	//'source/js/bookmarksBar.js',
 ]
