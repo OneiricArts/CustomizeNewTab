@@ -2,9 +2,7 @@
 <div id="NFL-panel" class="panel panel-default">
 
 	<div class="panel-heading">
-		<span> NFL /</span>
-		<span id="week_number"> ## </span>
-		<span>/</span>
+		<span> NFL // Week {{schedule.w}} </span>
 
 		<button id="refresh_scores" class="btn btn-xs btn-default pull-right">
 			<span class="glyphicon glyphicon-refresh"></span> 
@@ -32,11 +30,10 @@
 					</tr>
 				</thead>
 				<tbody id="NFL-schedule-games">
-					{{#each games}}
-					{{#unless hidden}}
+					{{#each schedule.gms}}{{#unless hidden}}
 
-						<tr id={{eid}} data-toggle="collapse" 
-						data-target=#collapse-{{eid}}>
+						<tr id={{eid}} data-toggle="collapse" data-target=#collapse-{{eid}}
+						class="{{#if extrainfo.redzone}}danger{{/if}} {{#if fav_team}}success{{/if}}">
 
 							{{#if extrainfo.qtr}}
 								{{#if playing}}
@@ -49,12 +46,10 @@
 							{{/if}}
 
 							<td class="text-capitalize {{#if home_winning}} winning {{/if}}"
-							style="text-align:left">{{hnn}}</td>
+								style="text-align:left">{{hnn}}</td>
 							<td class="text-capitalize {{#if visitor_winning}} winning {{/if}}"
-							style="text-align:left">{{vnn}}</td>
+								style="text-align:left">{{vnn}}</td>
 
-							{{!--<td style="text-align:left">{{hs}}</td> 
-							<td style="text-align:left">{{vs}}</td>--}}
 							<td style="text-align:left">{{extrainfo.home.score.T}}</td> 
 							<td style="text-align:left">{{extrainfo.away.score.T}}</td>
 
@@ -65,59 +60,55 @@
 
 						<tr id=c{{eid}}><td colspan="6" style="padding: 0" class="nfl-collapse">
 							<div id=collapse-{{eid}} class="collapse">
-							<small>
+								<small>
+									{{#unless extrainfo}}
+										API doesn`t update until Tuesday Midnight.
+									{{/unless}}
 
-								{{#unless extrainfo}}
-									API doesn`t update until Tuesday Midnight.
-								{{/unless}}
+									{{#if extrainfo.media.tv}}
+										<p> Game on {{extrainfo.media.tv}} </p>
+									{{/if}}
 
-								{{#if extrainfo.media.tv}}
-								<p> Game on {{extrainfo.media.tv}} </p>
-								{{/if}}
+									{{#if playing}}
+										<p>
+										{{extrainfo.posteam}} ball on the {{extrainfo.yl}} | 
+										{{extrainfo.down}} & {{extrainfo.togo}} 
+										</p>
+									{{/if}}
 
-								{{#if playing}}
-									<p>
-									{{extrainfo.posteam}} ball on the {{extrainfo.yl}} | 
-									{{extrainfo.down}} & {{extrainfo.togo}} 
-									</p>
-								{{/if}}
+									{{#if scoreTable}}
+										<table class="table table-condensed">
+											<thead>
+												<tr><th></th><th>1</th><th>2</th><th>3</th><th>4</th>
+												<th>OT</th><th>T</th></tr>
+											</thead>
+											<tbody>
+												<tr>
+													<td>{{hnn}}</td>
+													<td>{{extrainfo.home.score.[1]}}</td>
+													<td>{{extrainfo.home.score.[2]}}</td>
+													<td>{{extrainfo.home.score.[3]}}</td>
+													<td>{{extrainfo.home.score.[4]}}</td>
+													<td>{{extrainfo.home.score.[5]}}</td>
+													<td>{{extrainfo.home.score.[T]}}</td>
+												</tr>
 
-								{{#if scoreTable}}
-								<table class="table table-condensed">
-									<thead>
-										<tr><th></th><th>1</th><th>2</th><th>3</th><th>4</th>
-										<th>OT</th><th>T</th></tr>
-									</thead>
-									<tbody>
-										<tr>
-											<td>{{hnn}}</td>
-											<td>{{extrainfo.home.score.[1]}}</td>
-											<td>{{extrainfo.home.score.[2]}}</td>
-											<td>{{extrainfo.home.score.[3]}}</td>
-											<td>{{extrainfo.home.score.[4]}}</td>
-											<td>{{extrainfo.home.score.[5]}}</td>
-											<td>{{extrainfo.home.score.[T]}}</td>
-										</tr>
-
-										<tr>
-											<td>{{vnn}}</td>
-											<td>{{extrainfo.away.score.[1]}}</td>
-											<td>{{extrainfo.away.score.[2]}}</td>
-											<td>{{extrainfo.away.score.[3]}}</td>
-											<td>{{extrainfo.away.score.[4]}}</td>
-											<td>{{extrainfo.away.score.[5]}}</td>
-											<td>{{extrainfo.away.score.[T]}}</td>
-										</tr>
-									</tbody>
-								</table>
-								{{/if}}
-
-							</small>
+												<tr>
+													<td>{{vnn}}</td>
+													<td>{{extrainfo.away.score.[1]}}</td>
+													<td>{{extrainfo.away.score.[2]}}</td>
+													<td>{{extrainfo.away.score.[3]}}</td>
+													<td>{{extrainfo.away.score.[4]}}</td>
+													<td>{{extrainfo.away.score.[5]}}</td>
+													<td>{{extrainfo.away.score.[T]}}</td>
+												</tr>
+											</tbody>
+										</table>
+									{{/if}}
+								</small>
 							</div>
 						</td></tr>
-						
-					{{/unless}}
-					{{/each}}
+					{{/unless}}{{/each}}
 				</tbody>
 			</table>
 		</div>

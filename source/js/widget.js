@@ -67,6 +67,36 @@ class Widget {
 		// TODO handle timeout, and network error
 	}
 
+
+	toLocalTime(hours, minutes, years, months, days) {
+		try {
+			hours = parseInt(hours);
+			minutes = parseInt(minutes);
+
+			var date;
+
+			if (years == null) {
+				date = new Date();
+			} else {
+				years = parseInt(years);
+				months = parseInt(months);
+				days = parseInt(days);
+				date = new Date(yyyy, mm, dd);
+			}
+
+			hours = hours - 1;      // setUTCHours is 0-23, NBA API is 1 - 24 for hours
+			var EST_UTC_OFFSET = 5; // EST + 5 = UTC
+
+			date.setUTCHours((hours + EST_UTC_OFFSET) % 24, minutes);
+
+			return date.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+		}
+		catch (e) {
+			console.log(e);
+			return null;
+		}
+	}
+
 	/**
 	* ============================================================================
 	*  			Chrome specific widget functionality   
