@@ -59,7 +59,7 @@ class MLB extends Sport {
 		var id = $(this).closest('tr').attr('id');
 
 		$('#'+id).remove();
-		//$('#c'+id).remove();
+		$('#c'+id).remove();
 
 		for (var i = 0; i < that.data.data.games.game.length; i++) {
 			if(id == that.data.data.games.game[i].game_pk) {
@@ -87,6 +87,7 @@ class MLB extends Sport {
 				}
 				else if (game.status.status === "In Progress") {
 					time_to_show = game.status.inning_state + ' of ' + game.status.inning;
+					//time_to_show = game.status.inning + " / " + game.status.inning_state;
 				}
 				else if (game.status.status === "Preview" || game.status.status === "Pre-Game" 
 						|| game.status.status === "Warmup") {

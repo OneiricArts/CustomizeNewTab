@@ -4,8 +4,8 @@
 <div class="panel panel-default">
 
 	<div class="panel-heading">
-		<span>MLB_Test</span> 
-		<div class="btn-group" role="group" aria-label="...">  
+		<span>MLB // {{schedule.month}}.{{schedule.day}}</span> 
+		<div class="btn-group" role="group">  
 			<button id="yesterday-btn"
 				class="btn btn-xs btn-default">
 				<span class="glyphicon glyphicon-chevron-left"></span> 
@@ -29,8 +29,6 @@
 			<span class="glyphicon glyphicon-cloud-download"></span> 
 			Reset
 		</button>
-
-		<span id="today"></span>
 	</div>
 	
 
@@ -58,7 +56,8 @@
 						{{#each schedule.game}}
 						{{#unless hidden}}
 
-						<tr id={{game_pk}} class="{{#if close_game}}danger{{/if}} {{#if fav_team}}success{{/if}}">
+						<tr id={{game_pk}} data-toggle="collapse" data-target=#collapse-{{game_pk}}
+						class="{{#if close_game}}danger{{/if}} {{#if fav_team}}success{{/if}}">
 
 							<td>
 								{{#if time_to_show}}
@@ -81,6 +80,97 @@
 							<button type="button" id="remove-game-btn" class="btn btn-default btn-xs">
 							<span class="glyphicon glyphicon-trash"></span></button></td>
 						</tr>
+
+						<tr id=c{{game_pk}}><td colspan="6" style="padding: 0" class="nfl-collapse">
+							<div id=collapse-{{game_pk}} class="collapse">
+								<div style="padding: 5px">
+									<center> <h4>
+										{{away_team_name}} ({{away_win}}-{{away_loss}}) @ 
+										{{home_team_name}} ({{home_win}}-{{home_loss}}) 
+									</h4></center>
+									<small>
+									{{#if linescore}}
+										<table class="table table-condensed">
+											<thead>
+												<tr><th></th>
+												{{#each linescore.inning}}
+													<th>{{addOne @index}}</th>
+												{{/each}}
+												<th>R</th><th>H</th><th>E</th></tr>
+											</thead>
+											<tbody>
+												<tr>
+													<td>{{away_team_name}}</td>
+
+													{{#each linescore.inning}}
+														<td>{{away}}</td>
+													{{/each}}
+
+													<td>{{linescore.r.away}}</td>
+													<td>{{linescore.hr.away}}</td>
+													<td>{{linescore.e.away}}</td>
+												</tr>
+												<tr>
+													<td>{{home_team_name}}</td>
+
+													{{#each linescore.inning}}
+														<td>{{home}}</td>
+													{{/each}}
+
+													<td>{{linescore.r.home}}</td>
+													<td>{{linescore.hr.home}}</td>
+													<td>{{linescore.e.home}}</td>
+												</tr>
+											</tbody>
+										</table>
+									{{/if}}
+									
+									{{#if home_runs}}
+										<h6>Home Runs</h6>
+										{{#if home_runs.player.length}}
+											<p> 
+												{{#each home_runs.player}}
+													{{name_display_roster}} {{#unless @last}} ; {{/unless}}
+												{{/each}}
+											{{else}}
+												{{home_runs.player.name_display_roster}}
+											</p>
+										{{/if}}
+									{{/if}}
+
+									{{#if pitcher}}
+										<h6>Home pitcher</h6>
+										<p> {{pitcher.name_display_roster}} ({{pitcher.wins}} - {{pitcher.losses}}, era: {{pitcher.era}}) </p>
+									{{else}}
+										{{#if home_probable_pitcher}}
+										<h6>Home Probable Pitcher</h6>
+										<p> {{home_probable_pitcher.name_display_roster}} ({{home_probable_pitcher.wins}} - {{home_probable_pitcher.losses}}, era: {{home_probable_pitcher.era}}) </p>
+										{{/if}}
+									{{/if}}
+
+									{{#if opposing_pitcher}}
+										<h6>Visitor pitcher</h6>
+										<p> {{opposing_pitcher.name_display_roster}} ({{opposing_pitcher.wins}} - {{opposing_pitcher.losses}}, era: {{opposing_pitcher.era}}) </p>
+									{{else}}
+										{{#if away_probable_pitcher}}
+										<h6>Visitor Probable Pitcher</h6>
+										<p> {{away_probable_pitcher.name_display_roster}} ({{away_probable_pitcher.wins}} - {{away_probable_pitcher.losses}}, era: {{away_probable_pitcher.era}}) </p>
+										{{/if}}
+									{{/if}}
+
+									{{#if losing_pitcher}}
+										<h6>Losing pitcher</h6>
+										<p> {{losing_pitcher.name_display_roster}} ({{losing_pitcher.wins}} - {{losing_pitcher.losses}}, era: {{losing_pitcher.era}}) </p>
+									{{/if}}
+
+									{{#if winning_pitcher}}
+										<h6>Winning pitcher</h6>
+										<p> {{winning_pitcher.name_display_roster}} ({{winning_pitcher.wins}} - {{winning_pitcher.losses}}, era: {{winning_pitcher.era}}) </p>
+									{{/if}}
+									</small>
+								</div>
+							</div>
+						</td></tr>
 
 						{{/unless}}
 						{{/each}}
