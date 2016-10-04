@@ -18,7 +18,14 @@ class MLB extends Sport {
 
     displaySchedule(newData) {
 
-        try {
+		// case where only one game: data provides object instead of array, so create array
+		try {
+			if(!Array.isArray(newData.data.games.game)) {
+				newData.data.games.game = [newData.data.games.game];
+			}
+		} catch(e) {}
+		        
+		try {
             // if data is for the same week, carry over any data that I need to
             if (this.data && this.data.subject && this.data.subject === newData.subject) {
                 for (var i = 0; i < this.data.data.games.game.length
@@ -38,8 +45,7 @@ class MLB extends Sport {
 	}
 
 	writeToTemplate(error) {
-		this.displayTemplate('MLB', 'schedule', 
-			this.data.data.games, $('#MLB_widget'));
+		this.displayTemplate('MLB', 'schedule', this.data.data.games, $('#MLB_widget'));
 	}
 
 	cacheButtonActions() {
