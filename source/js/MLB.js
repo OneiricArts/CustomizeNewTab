@@ -99,8 +99,16 @@ class MLB extends Sport {
 					time_to_show = game.status.status;
 				}
 				else if (game.status.status === "In Progress") {
-					time_to_show = game.status.inning_state + ' of ' + game.status.inning;
-					//time_to_show = game.status.inning + " / " + game.status.inning_state;
+					
+					time_to_show = game.status.inning;
+					
+					if(game.status.inning_state === 'Top') {
+						result.data.games.game[i]['topofinning'] = true;
+					}
+
+					if(game.status.inning_state === 'Bottom') {
+						result.data.games.game[i]['bottomofinning'] = true;
+					}
 				}
 				else if (game.status.status === "Preview" || game.status.status === "Pre-Game" 
 						|| game.status.status === "Warmup") {

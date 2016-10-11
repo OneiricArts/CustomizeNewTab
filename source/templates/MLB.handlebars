@@ -62,6 +62,14 @@
 							<td>
 								{{#if time_to_show}}
 									{{time_to_show}}
+
+									{{#if topofinning}}
+										<span class="glyphicon glyphicon-triangle-top"></span> 
+									{{else}}
+										{{#if bottomofinning}}
+											<span class="glyphicon glyphicon-triangle-bottom"></span> 
+										{{/if}}
+									{{/if}}
 								{{else}}
 									{{time}} {{time_zone}}
 								{{/if}}
