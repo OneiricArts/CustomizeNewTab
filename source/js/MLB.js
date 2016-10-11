@@ -109,11 +109,10 @@ class MLB extends Sport {
 						var minutes = parseInt(timeArr[1]);
 
 						var date = new Date(yyyy, mm, dd);
-						hours = hours - 1;      // setUTCHours is 0-23, NBA API is 1 - 24 for hours
+
 						if(game.ampm === "PM") {
 							hours += 12;
-						}
-						else { //AM
+						} else { //AM
 							hours -= 12;
 						}
 
