@@ -79,6 +79,13 @@ class MLB extends Sport {
 
 	massageData(result, callback) {
 		try {
+
+			try {
+				if(!Array.isArray(result.data.games.game)) {
+					result.data.games.game = [result.data.games.game];
+				}
+			} catch(e) {}
+
 			for (var i = 0; i < result.data.games.game.length; i++) {
 				var game = result.data.games.game[i];
 
