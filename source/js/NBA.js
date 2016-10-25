@@ -131,7 +131,6 @@ NBA.prototype.massageData = function(newData, callback) {
 
 				var date = new Date(yyyy, mm, dd);
 
-				hours = hours - 1;      // setUTCHours is 0-23, NBA API is 1 - 24 for hours
 				var EST_UTC_OFFSET = 5; // EST + 5 = UTC
 
 				date.setUTCHours( (hours+EST_UTC_OFFSET)%24, minutes);
@@ -331,7 +330,7 @@ NBA.prototype.highlightGames = function() {
 };
 
 NBA.prototype.standings = function() {
-	var url = 'http://data.nba.com/json/cms/2015/standings/conference.json';
+	var url = 'http://data.nba.com/json/cms/2016/standings/conference.json';
 	this.getData(url, this.showStandings);
 };
 
