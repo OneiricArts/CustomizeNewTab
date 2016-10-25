@@ -33,9 +33,7 @@ class MLB extends Sport {
                     if (this.data.data.games.game[i].game_pk == newData.data.games.game[i].game_pk
                         && this.data.data.games.game[i].hidden) {
                         newData.data.games.game[i]['hidden'] = true;
-                    } else {
-                        break;
-                    }
+                    } 
                 }
             }
         } catch(excption) {}

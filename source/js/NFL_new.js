@@ -37,9 +37,6 @@ class NFL extends Sport {
 				if(newData.gms[i].eid == this.data.gms[i].eid && this.data.gms[i].hidden) {
 					newData.gms[i]['hidden'] = true;
 				}
-				else {
-					break;
-				}
 			}
 		}
 
