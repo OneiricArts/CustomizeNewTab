@@ -61,7 +61,8 @@ class NFL extends Sport {
                     }
 
 					// local time 
-					data.gms[i].t = this.toLocalTime(data.gms[i].t.split(':')[0], data.gms[i].t.split(':')[1]).split(' ')[0];
+					data.gms[i].t = this.toLocalTime(data.gms[i].t.split(':')[0], 
+						data.gms[i].t.split(':')[1]).split(' ')[0];
 
 					// label whos winning
 					if (data.gms[i].extrainfo.home.score.T !== null) {
@@ -74,6 +75,15 @@ class NFL extends Sport {
 						if (visitor_score > home_score) {
 							data.gms[i]['visitor_winning'] = true;
 						}
+					}
+
+					// who has possession
+					if(data.gms[i].playing &&
+						data.gms[i].extrainfo.posteam == data.gms[i].extrainfo.home.abbr) {
+						data.gms[i]['home_pos'] = true;
+					} else if( data.gms[i].playing &&
+						data.gms[i].extrainfo.posteam == data.gms[i].extrainfo.away.abbr) {
+						data.gms[i]['visitor_pos'] = true;
 					}
                 }
                 callback.call(this,data);		

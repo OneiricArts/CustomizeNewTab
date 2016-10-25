@@ -46,9 +46,13 @@
 							{{/if}}
 
 							<td class="text-capitalize {{#if visitor_winning}} winning {{/if}}"
-								style="text-align:left">{{vnn}}</td>
+								style="text-align:left">
+								{{vnn}} {{#if visitor_pos}} &#127944;{{/if}}
+							</td>
 							<td class="text-capitalize {{#if home_winning}} winning {{/if}}"
-								style="text-align:left">{{hnn}}</td>
+								style="text-align:left">
+								{{hnn}} {{#if home_pos}} &#127944;{{/if}}
+							</td>
  
 							<td style="text-align:left">{{extrainfo.away.score.T}}</td>
 							<td style="text-align:left">{{extrainfo.home.score.T}}</td>
