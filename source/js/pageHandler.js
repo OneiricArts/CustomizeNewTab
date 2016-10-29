@@ -166,7 +166,7 @@ pageHandeler.prototype.setDefaults = function(){
 		this.data[this.widgetKeys[i]] = false;
 	}
 
-	this.data['NBA'] = false;
+	this.data['NBA'] = true;
 	this.data['NFL'] = true;
 	this.data['MLB'] = true;
 	this.data['NHL'] = false;
