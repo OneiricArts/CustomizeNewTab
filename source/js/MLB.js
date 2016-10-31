@@ -79,7 +79,10 @@ class MLB extends Sport {
 		try {
 
 			try {
-				if(!Array.isArray(result.data.games.game)) {
+				if(!result.data.games.game) {
+					result.data.games.game = [];
+				}
+				else if(!Array.isArray(result.data.games.game)) {
 					result.data.games.game = [result.data.games.game];
 				}
 			} catch(e) {}
