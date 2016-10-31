@@ -216,24 +216,11 @@ NBA.prototype.writeToTemplate = function() {
 		this.data.sports_content.games['autoUpdating'] = false;
 	}
 
+	this.data.sports_content.games.day = this.today.getDate();
+	this.data.sports_content.games.month = this.today.getMonth()+1;
+
 	this.displayTemplate('NBAschedule', 'schedule', 
 		this.data.sports_content.games, $('#NBA_col'));
-
-	/*var options = {
-		month: "short",
-		day: "numeric", 
-	};
-
-	$('#NBA_col #today').html(this.today.toLocaleTimeString([], options));*/
-
-	var days = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
-	var months = ["January", "February", "March", "April", "May", "June",
-	"July", "August", "September", "October", "November", "December"
-	];
-
-	$('#NBA_col #today').html(days[this.today.getDay()] + ' ' +
-		this.today.getDate() + ', ' + months[this.today.getMonth()])
-
 };
 
 
