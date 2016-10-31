@@ -62,13 +62,18 @@ Links.prototype.setDefaults = function() {
 
    this.data = [
       {
-         title: 'r/NBA',
-         url: 'https://www.reddit.com/r/nba'
+         title: 'NPR',
+         url: 'http://www.npr.org/'
       },
       {
-         title: 'r/NFL',
-         url: 'https://www.reddit.com/r/nfl'
+         title: 'UNICEF',
+         url: 'http://www.unicef.org/'
+      },
+      {
+         title: 'Hints',
+         url: 'https://github.com/OneiricArts/CustomizeNewTab/wiki/Hints'
       }
+      
    ];
    this.showTopSites();
 };
