@@ -53,7 +53,9 @@ var jsfilesES6 = [
 var libs = [
 	'source/libs/jquery-2.1.4.min.js',
 	//'source/libs/jquery-ui.min.js', // used to be needed because of $.highlight
-	'source/libs/bootstrap-3.3.5-dist/js/bootstrap.min.js',
+	//'source/libs/bootstrap-3.3.5-dist/js/bootstrap.min.js',
+	'source/libs/tether.min.js',
+	'source/libs/bootstrap-4.0.0-dist/js/bootstrap.min.js',
 	//'source/libs/bootstrap_custom/js/bootstrap.min.js',
 	//'source/libs/mdl/material.min.js',
 	//'source/libs/jquery.xml2json.js',
@@ -63,7 +65,8 @@ var libs = [
 
 // css files, will be inlined
 var cssFiles = [
-	'source/libs/bootstrap-3.3.5-dist/css/bootstrap.min.css',
+	//'source/libs/bootstrap-3.3.5-dist/css/bootstrap.min.css',
+	'source/libs/bootstrap-4.0.0-dist/css/bootstrap.min.css',
 	//'source/libs/mdl/material.min.css',
 ];
 
@@ -100,7 +103,7 @@ function moveHTML() {
 				read: false, 
 			})//.pipe(print())
 			, {
-				ignorePath: ['source/js/', 'source/libs/', 'source/libs/bootstrap-3.3.5-dist/js/',
+				ignorePath: ['source/js/', 'source/libs/', 'source/libs/bootstrap-4.0.0-dist/js/',
 				'Chrome/src/'], 
 				addRootSlash: false
 			}
@@ -112,7 +115,7 @@ function moveHTML() {
 				//'cwd': __dirname + '/Chrome/src'
 			}), 
 			{
-				ignorePath: 'source/libs/bootstrap-3.3.5-dist/css/', 
+				ignorePath: 'source/libs/bootstrap-4.0.0-dist/css/', 
 				addRootSlash: false
 			}
 		))

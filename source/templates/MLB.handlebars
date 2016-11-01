@@ -1,191 +1,195 @@
 <!-- HANDLEBARS TEMPLATE -->
 		
 
-<div class="panel panel-default">
+<div class="card">
 
-	<div class="panel-heading">
+	<div class="card-header">
 		<span>MLB // {{schedule.month}}.{{schedule.day}}</span> 
 		<div class="btn-group" role="group">  
 			<button id="yesterday-btn"
-				class="btn btn-xs btn-default">
-				<span class="glyphicon glyphicon-chevron-left"></span> 
+				class="btn btn-sm btn-secondary">
+				<!--<span class="glyphicon glyphicon-chevron-left"></span> -->
+				&#9664;
 			</button>
 			<button id="today-btn"
-				class="btn btn-xs btn-default">
+				class="btn btn-sm btn-secondary">
 				Today
 			</button>
 			<button id="tomorrow-btn"
-				class="btn btn-xs btn-default">
-				<span class="glyphicon glyphicon-chevron-right"></span> 
+				class="btn btn-sm btn-secondary">
+				<!--<span class="glyphicon glyphicon-chevron-right"></span> -->
+				&#9658;
 			</button>
 		</div>
 
-		<button id="refresh_scores" class="btn btn-xs btn-default pull-right">
-			<span class="glyphicon glyphicon-refresh"></span> 
+		<button id="refresh_scores" 
+			class="btn btn-sm float-xs-right btn-outline-secondary">
+			<!--<span class="glyphicon glyphicon-refresh"></span> -->
 			Refresh
 		</button>
 
-		<button id="reset_games" class="btn btn-xs btn-default pull-right">
-			<span class="glyphicon glyphicon-cloud-download"></span> 
+		<button id="reset_games" 
+			class="btn btn-sm float-xs-right btn-outline-secondary">
+			<!--<span class="glyphicon glyphicon-cloud-download"></span> -->
 			Reset
 		</button>
 	</div>
 	
 
-	<div class="panel-body">
+	<div class="card-block">
 
 		{{#if schedule.game.length}}	
-			<div class="table-responsive">
-				<table 
-				class="table table-striped table-condensed">
-					<thead>
-						<tr>
-							<th><span class="glyphicon glyphicon-time">
-							</span></th>
-							<th style="text-align:left">Visitor</th>
-							<th style="text-align:left">@Home</th>
-							<th style="text-align:left">V</th>
-							<th style="text-align:left">H</th>	
-							<th style="text-align:right">
-								<span class="glyphicon glyphicon-edit">
-							</span></th>
-						</tr>
-					</thead>
-					<tbody>
+			<table class="table table-sm">
+				<thead>
+					<tr>
+						<th><span class="glyphicon glyphicon-time">
+						</span></th>
+						<th style="text-align:left">Visitor</th>
+						<th style="text-align:left">@Home</th>
+						<th style="text-align:left">V</th>
+						<th style="text-align:left">H</th>	
+						<th style="text-align:right">
+							<span class="glyphicon glyphicon-edit">
+						</span></th>
+					</tr>
+				</thead>
+				<tbody>
 
-						{{#each schedule.game}}
-						{{#unless hidden}}
+					{{#each schedule.game}}
+					{{#unless hidden}}
 
-						<tr id={{game_pk}} data-toggle="collapse" data-target=#collapse-{{game_pk}}
-						class="{{#if close_game}}danger{{/if}} {{#if fav_team}}success{{/if}}">
+					<tr id={{game_pk}} data-toggle="collapse" data-target=#collapse-{{game_pk}}
+					class="{{#if close_game}}danger{{/if}} {{#if fav_team}}success{{/if}}">
 
-							<td>
-								{{#if time_to_show}}
-									{{time_to_show}}
+						<td>
+							{{#if time_to_show}}
+								{{time_to_show}}
 
-									{{#if topofinning}}
-										<span class="glyphicon glyphicon-triangle-top"></span> 
-									{{else}}
-										{{#if bottomofinning}}
-											<span class="glyphicon glyphicon-triangle-bottom"></span> 
-										{{/if}}
-									{{/if}}
+								{{#if topofinning}}
+									<span class="glyphicon glyphicon-triangle-top"></span> 
 								{{else}}
-									{{time}} {{time_zone}}
+									{{#if bottomofinning}}
+										<span class="glyphicon glyphicon-triangle-bottom"></span> 
+									{{/if}}
 								{{/if}}
-							</td>
+							{{else}}
+								{{time}} {{time_zone}}
+							{{/if}}
+						</td>
 
-							<td id="away_team" {{#if atwinning}}class="winning"{{/if}}
-							style="text-align:left; text-transform: capitalize;">{{away_team_name}}</td>
+						<td id="away_team" {{#if atwinning}}class="winning"{{/if}}
+						style="text-align:left; text-transform: capitalize;">{{away_team_name}}</td>
 
-							<td id="home_team" {{#if htwinning}}class="winning"{{/if}}
-							style="text-align:left; text-transform: capitalize;">{{home_team_name}}</td>
-				
-							<td style="text-align:left">{{linescore.r.away}}</td>
-							<td style="text-align:left">{{linescore.r.home}}</td> 
+						<td id="home_team" {{#if htwinning}}class="winning"{{/if}}
+						style="text-align:left; text-transform: capitalize;">{{home_team_name}}</td>
+			
+						<td style="text-align:left">{{linescore.r.away}}</td>
+						<td style="text-align:left">{{linescore.r.home}}</td> 
 
-							<td style="text-align:right">
-							<button type="button" id="remove-game-btn" class="btn btn-default btn-xs">
-							<span class="glyphicon glyphicon-trash"></span></button></td>
-						</tr>
+						<td style="text-align:right">
+						<button type="button" id="remove-game-btn" 
+						class="btn btn-sm float-xs-right btn-outline-secondary">
+						<!--<span class="glyphicon glyphicon-trash"></span>-->
+						&#9587;
+						</button></td>
+					</tr>
 
-						<tr id=c{{game_pk}}><td colspan="6" style="padding: 0" class="nfl-collapse">
-							<div id=collapse-{{game_pk}} class="collapse">
-								<div style="padding: 5px">
-									<center> <h4>
-										{{away_team_name}} ({{away_win}}-{{away_loss}}) @ 
-										{{home_team_name}} ({{home_win}}-{{home_loss}}) 
-									</h4></center>
-									<small>
-									{{#if linescore}}
-										<table class="table table-condensed">
-											<thead>
-												<tr><th></th>
+					<tr id=c{{game_pk}}><td colspan="6" style="padding: 0" class="">
+						<div id=collapse-{{game_pk}} class="collapse">
+							<div style="padding: 5px">
+								<center> <h4>
+									{{away_team_name}} ({{away_win}}-{{away_loss}}) @ 
+									{{home_team_name}} ({{home_win}}-{{home_loss}}) 
+								</h4></center>
+								<small>
+								{{#if linescore}}
+									<table class="table table-sm">
+										<thead>
+											<tr><th></th>
+											{{#each linescore.inning}}
+												<th>{{addOne @index}}</th>
+											{{/each}}
+											<th>R</th><th>H</th><th>E</th></tr>
+										</thead>
+										<tbody>
+											<tr>
+												<td>{{away_team_name}}</td>
+
 												{{#each linescore.inning}}
-													<th>{{addOne @index}}</th>
+													<td>{{away}}</td>
 												{{/each}}
-												<th>R</th><th>H</th><th>E</th></tr>
-											</thead>
-											<tbody>
-												<tr>
-													<td>{{away_team_name}}</td>
 
-													{{#each linescore.inning}}
-														<td>{{away}}</td>
-													{{/each}}
+												<td>{{linescore.r.away}}</td>
+												<td>{{linescore.h.away}}</td>
+												<td>{{linescore.e.away}}</td>
+											</tr>
+											<tr>
+												<td>{{home_team_name}}</td>
 
-													<td>{{linescore.r.away}}</td>
-													<td>{{linescore.h.away}}</td>
-													<td>{{linescore.e.away}}</td>
-												</tr>
-												<tr>
-													<td>{{home_team_name}}</td>
-
-													{{#each linescore.inning}}
-														<td>{{home}}</td>
-													{{/each}}
-
-													<td>{{linescore.r.home}}</td>
-													<td>{{linescore.h.home}}</td>
-													<td>{{linescore.e.home}}</td>
-												</tr>
-											</tbody>
-										</table>
-									{{/if}}
-									
-									{{#if home_runs}}
-										<h6>Home Runs</h6>
-										{{#if home_runs.player.length}}
-											<p> 
-												{{#each home_runs.player}}
-													{{name_display_roster}} {{#unless @last}} ; {{/unless}}
+												{{#each linescore.inning}}
+													<td>{{home}}</td>
 												{{/each}}
-											{{else}}
-												{{home_runs.player.name_display_roster}}
-											</p>
-										{{/if}}
-									{{/if}}
 
-									{{#if pitcher}}
-										<h6>Home pitcher</h6>
-										<p> {{pitcher.name_display_roster}} ({{pitcher.wins}} - {{pitcher.losses}}, era: {{pitcher.era}}) </p>
-									{{else}}
-										{{#if home_probable_pitcher}}
-										<h6>Home Probable Pitcher</h6>
-										<p> {{home_probable_pitcher.name_display_roster}} ({{home_probable_pitcher.wins}} - {{home_probable_pitcher.losses}}, era: {{home_probable_pitcher.era}}) </p>
-										{{/if}}
+												<td>{{linescore.r.home}}</td>
+												<td>{{linescore.h.home}}</td>
+												<td>{{linescore.e.home}}</td>
+											</tr>
+										</tbody>
+									</table>
+								{{/if}}
+								
+								{{#if home_runs}}
+									<h6>Home Runs</h6>
+									{{#if home_runs.player.length}}
+										<p> 
+											{{#each home_runs.player}}
+												{{name_display_roster}} {{#unless @last}} ; {{/unless}}
+											{{/each}}
+										{{else}}
+											{{home_runs.player.name_display_roster}}
+										</p>
 									{{/if}}
+								{{/if}}
 
-									{{#if opposing_pitcher}}
-										<h6>Visitor pitcher</h6>
-										<p> {{opposing_pitcher.name_display_roster}} ({{opposing_pitcher.wins}} - {{opposing_pitcher.losses}}, era: {{opposing_pitcher.era}}) </p>
-									{{else}}
-										{{#if away_probable_pitcher}}
-										<h6>Visitor Probable Pitcher</h6>
-										<p> {{away_probable_pitcher.name_display_roster}} ({{away_probable_pitcher.wins}} - {{away_probable_pitcher.losses}}, era: {{away_probable_pitcher.era}}) </p>
-										{{/if}}
+								{{#if pitcher}}
+									<h6>Home pitcher</h6>
+									<p> {{pitcher.name_display_roster}} ({{pitcher.wins}} - {{pitcher.losses}}, era: {{pitcher.era}}) </p>
+								{{else}}
+									{{#if home_probable_pitcher}}
+									<h6>Home Probable Pitcher</h6>
+									<p> {{home_probable_pitcher.name_display_roster}} ({{home_probable_pitcher.wins}} - {{home_probable_pitcher.losses}}, era: {{home_probable_pitcher.era}}) </p>
 									{{/if}}
+								{{/if}}
 
-									{{#if losing_pitcher}}
-										<h6>Losing pitcher</h6>
-										<p> {{losing_pitcher.name_display_roster}} ({{losing_pitcher.wins}} - {{losing_pitcher.losses}}, era: {{losing_pitcher.era}}) </p>
+								{{#if opposing_pitcher}}
+									<h6>Visitor pitcher</h6>
+									<p> {{opposing_pitcher.name_display_roster}} ({{opposing_pitcher.wins}} - {{opposing_pitcher.losses}}, era: {{opposing_pitcher.era}}) </p>
+								{{else}}
+									{{#if away_probable_pitcher}}
+									<h6>Visitor Probable Pitcher</h6>
+									<p> {{away_probable_pitcher.name_display_roster}} ({{away_probable_pitcher.wins}} - {{away_probable_pitcher.losses}}, era: {{away_probable_pitcher.era}}) </p>
 									{{/if}}
+								{{/if}}
 
-									{{#if winning_pitcher}}
-										<h6>Winning pitcher</h6>
-										<p> {{winning_pitcher.name_display_roster}} ({{winning_pitcher.wins}} - {{winning_pitcher.losses}}, era: {{winning_pitcher.era}}) </p>
-									{{/if}}
-									</small>
-								</div>
+								{{#if losing_pitcher}}
+									<h6>Losing pitcher</h6>
+									<p> {{losing_pitcher.name_display_roster}} ({{losing_pitcher.wins}} - {{losing_pitcher.losses}}, era: {{losing_pitcher.era}}) </p>
+								{{/if}}
+
+								{{#if winning_pitcher}}
+									<h6>Winning pitcher</h6>
+									<p> {{winning_pitcher.name_display_roster}} ({{winning_pitcher.wins}} - {{winning_pitcher.losses}}, era: {{winning_pitcher.era}}) </p>
+								{{/if}}
+								</small>
 							</div>
-						</td></tr>
+						</div>
+					</td></tr>
 
-						{{/unless}}
-						{{/each}}
+					{{/unless}}
+					{{/each}}
 
-					</tbody>
-				</table>
-			</div> <!--/table-responsive -->
+				</tbody>
+			</table>
 		{{else}}
 			{{#if schedule.error}}
 				<div class="alert alert-danger" style="margin-bottom:0">
@@ -195,12 +199,12 @@
 				</div>
 			{{else}}
 				<div class="alert" style="margin-bottom:0">
-					<span class="glyphicon glyphicon-bell"></span>
+					<!--<span class="glyphicon glyphicon-bell"></span>-->
 					No Games today &#x1f622;<br>
 					<div class="btn-group btn-group-sm" role="group" aria-label="MLB Links">
-						<a href="http://mlb.mlb.com/home" class="btn btn-default">MLB</a>
-						<a href="http://www.espn.com/mlb/" class="btn btn-default">ESPN</a>
-						<a href="http://www.reddit.com/r/mlb" class="btn btn-default">r/MLB</a>
+						<a href="http://mlb.mlb.com/home" class="btn btn-sm btn-outline-primary">MLB</a>
+						<a href="http://www.espn.com/mlb/" class="btn btn-sm btn-outline-primary">ESPN</a>
+						<a href="http://www.reddit.com/r/mlb" class="btn btn-sm btn-outline-primary">r/MLB</a>
 					</div>
 				</div>
 			{{/if}}

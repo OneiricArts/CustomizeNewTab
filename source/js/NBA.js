@@ -245,8 +245,7 @@ NBA.prototype.updateEachGame = function(newData) {
 
 NBA.prototype.autoupdateSchedule = function(event) {
 
-	$(this).find('span').toggleClass('glyphicon-ok').toggleClass('glyphicon-remove');
-	$(this).toggleClass('btn-default').toggleClass('btn-success');
+	$(this).toggleClass('btn-secondary').toggleClass('btn-success');
 
 	var self = event.data.that;
 

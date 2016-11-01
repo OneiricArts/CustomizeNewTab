@@ -182,14 +182,16 @@ function triggerWidget(event) {
 	var that = event.data.that;
 	var key = $(this).attr('id').split('-')[0];
 
-	$(this).find('span').toggleClass('glyphicon-ok').toggleClass('glyphicon-remove');
+	//console.log($(this));
+
+	$(this).toggleClass('btn-outline-success').toggleClass('btn-outline-secondary');
 	var id = "#" + key + "_col";
 	if( $(id).length == 0 ) {
 		id = '#' + key + '_widget';
 	}
 	$(id).toggle();
 
-	if($(this).find('span').hasClass('glyphicon-ok')) {
+	if($(this).hasClass('btn-outline-success')) {
 		that.data[key] = true;
 		if(key in that) {
 			that[key].on();	

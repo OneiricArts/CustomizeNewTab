@@ -2,8 +2,9 @@
 <html>
   
 	<head>
+		<link rel="stylesheet" type="text/css" href="bootstrap.min.css">
 		<!-- <link rel="stylesheet" type="text/css" href="bootstrap.min.css"> -->
-		<link inline href="libs/bootstrap-3.3.5-dist/css/bootstrap.min.css">
+		<link inline href="../css/fontello.css">
 		<!-- <link inline href="libs/bootstrap_custom/css/bootstrap.min.css"> -->
 
 		<!-- <link rel="stylesheet" href="/material.min.css"> -->
@@ -32,7 +33,7 @@
 				color: #aaaaaa;
 			}
 
-			.panel-body {
+			.card-block {
 				padding: 0px;
 			}
 
@@ -75,10 +76,6 @@
 				color: #ff4081; /* bright pink */
 			}
 
-			.list-group {
-				margin-bottom: 15px;
-			}
-
 			/*@media (min-width: 991px) {
 				#MLB_widget, #NFL_col{
 					float: right;
@@ -89,6 +86,40 @@
 					float: right;
 				}
 			}*/
+
+			html {
+				font-size: 14px;
+			}
+
+			@media (min-width: 20em) {
+				.card-columns {
+					column-count: 1;
+				}
+			}
+
+			@media (min-width: 40em) {
+				.card-columns {
+					column-count: 2;
+				}
+			}
+
+			@media (min-width: 48em) {
+				.card-columns {
+					column-count: 2;
+				}
+			}
+
+			@media (min-width: 70em) {
+				.card-columns {
+					column-count: 3;
+				}
+			}
+
+			@media (min-width: 95em) {
+				.card-columns {
+					column-count: 4;
+				}
+			}
 		</style>
 	</head>
 
@@ -100,71 +131,33 @@
 		
 		<div id="bookmarks_bar"></div>
 
-		<div class="container-fluid">
-
-
-			<!-- Put navbar above container if I want to have it be 'header-like', here it
-			has padding to the right/left -->
-			<nav class="navbar navbar-default">
+		<!--<nav class="navbar navbar-light bg-faded">-->
+		<nav id="page_options" class="navbar navbar-dark bg-inverse">
+			<form class="form-inline float-xs-left">
+				<button id="NFL-button" class="btn btn-sm btn-outline-success" type="button">NFL</button>
+				<button id="NBA-button" class="btn btn-sm btn-outline-success" type="button">NBA</button>
+				<button id="NHL-button" class="btn btn-sm btn-outline-success" type="button">NHL</button>
+				<button id="MLB-button" class="btn btn-sm btn-outline-success" type="button">MLB</button>
+				<button id="Links-button" class="btn btn-sm btn-outline-success" type="button">Links</button>
+				<button id="_dev_btn" class="btn btn-sm btn-outline-success" type="button">Dev</button>
+			</form>
+			<form class="form-inline float-xs-right text-muted hidden-md-down">
+				Sports New Tab Page by OneiricArts &middot; 0.9.7 &middot;
+				<a id="subreddit" 
+				href="https://www.reddit.com/r/SportsNewTabPage/">
+				r/SportsNewTabPage</a> &middot;
 				
-				<p id="page_options" class="navbar-text" 
-				style="width: 100%; padding-right: 30px">
-					
-					<button id="NFL-button"
-						class="btn btn-xs btn-default">
-						<span class="glyphicon glyphicon-ok"></span> 
-						NFL
-					</button>
-
-					<button id="NBA-button"
-						class="btn btn-xs btn-default">
-						<span class="glyphicon glyphicon-ok"></span>
-						NBA 
-					</button>
-
-					<button id="NHL-button"
-						class="btn btn-xs btn-default">
-						<span class="glyphicon glyphicon-ok"></span>
-						NHL 
-					</button>
-
-					<button id="MLB-button"
-						class="btn btn-xs btn-default">
-						<span class="glyphicon glyphicon-ok"></span>
-						MLB 
-					</button>
-
-					<button id="Links-button"
-						class="btn btn-xs btn-default">
-						<span class="glyphicon glyphicon-ok"></span>
-						Links
-					</button>
-
-					<button id="_dev_btn" class="btn btn-xs btn-default" 
-						style="display: none">
-						Resest
-					</button>
-
-					<span class="pull-right">
-					New Tab Page by OneiricArts
-					&middot;
-					0.9.6
-					&middot;
-					<a id="subreddit" 
-					href="https://www.reddit.com/r/SportsNewTabPage/">
-					r/SportsNewTabPage</a> 
-					&middot;
-					<a id="changelog" 
-					href="https://github.com/OneiricArts/CustomizeNewTab/wiki/Changelog">
-					Changelog</a> 
-					&middot;
-					<a id="hints" 
-					href="https://github.com/OneiricArts/CustomizeNewTab/wiki/Hints">
-					Hints</a> 
-					</span>
-				</p>
-			</nav>
-
+				<a id="changelog" 
+				href="https://github.com/OneiricArts/CustomizeNewTab/wiki/Changelog">
+				Changelog</a> &middot;
+				
+				<a id="hints" 
+				href="https://github.com/OneiricArts/CustomizeNewTab/wiki/Hints">
+				Hints</a> 
+			</form>
+		</nav>
+		
+		<div class="container-fluid">
 
 			<!-- <div id="update-alert" class="alert alert-success" role="alert" style="display:none">
 				Update 0.5.6! (this message will show for 5 times each update)
@@ -197,22 +190,24 @@
 			</div>
 			</a> -->
 
-			<div class="row widgets">
+
+			<div class="card-columns">
 
 				<!-- pull-right col-lg-push-2 -->	
 			
-				<div id="MLB_widget" class="widget col-lg-4 col-md-4 col-sm-6 pull-right"></div>
-				<div id="NFL_widget" class=" widget col-lg-4 col-md-4 col-sm-6"></div>
-				<div id="NBA_col" class="widget col-lg-4 col-md-4 col-sm-6"></div>
+				<div id="MLB_widget"></div>
+				<div id="NFL_widget"></div>
+				<div id="NBA_col"></div>
 
-				<div id="Links_col" class="widget col-lg-4 col-md-4 col-sm-6" style="float:right">
+				<div id="NHL_widget"></div>
+
+				<div id="Links_col">
 					<div id="bookmark-panel"></div>
 				</div>
 
-				<div id="NHL_widget" class="widget col-lg-4 col-md-4 col-sm-6"></div>
 				
 			</div> <!-- /row widgets-->
-		</div> <!-- /container fluid-->
+			</div>
 	
 		<!-- Links Modal-->
 		<div class="modal fade" id="addCustomLinkModal" tabindex="-1" role="dialog" 
@@ -247,7 +242,7 @@
 					</div>
 
 					<div class="modal-footer">
-						<button type="button" class="btn btn-default" 
+						<button type="button" class="btn btn-danger" 
 						data-dismiss="modal">Cancel</button>
 
 						<button type="button" id="addBookmark" class="btn btn-primary" 

@@ -1,38 +1,47 @@
 <!-- Links -->
-			
+
+
+<div class="card">
 {{#if links.customSites}}
-<div id="custom-sites" class="list-group">
-	<a href="#" class="list-group-item disabled">
-		Custom Links</a>
+
+<div class="card-header">Custom Links
+	<button id="NFL-button" class="btn btn-sm float-xs-right btn-outline-secondary" 
+	data-toggle="modal" data-target="#addCustomLinkModal"
+	type="button">Add Link</button>
+</div>
+
+<div id="custom-sites" class="list-group list-group-flush">
 	{{#each links.customSites}}
 		<a href="{{url}}" id="{{@index}}_customLink"
-		class="list-group-item">{{title}}
+		class="list-group-item list-group-item-action">{{title}}
 				<button id="remove_customLink"
-					class="btn btn-xs btn-default pull-right">
-					<span class="glyphicon glyphicon-trash"></span> 
+					class="btn btn-sm float-xs-right btn-outline-secondary">
+					<!--<span class="glyphicon glyphicon-trash"></span> -->
+					&#9587;
 				</button>
 			</a>
 	{{/each}}
 </div>
 {{/if}}
 
-<div id="top-sites" class="list-group">
-	<a href="#" class="list-group-item disabled">
-		Chrome Top Sites</a>
+<div class="card-header">Chrome Top Sites</div>
+
+<div id="top-sites" class="list-group list-group-flush">
 	{{#each links.topSites}}
 		<a href="{{url}}"
-		class="list-group-item">{{title}}</a>
+		class="list-group-item list-group-item-action">{{title}}</a>
 	{{/each}}
 </div>
 
+</div>
 
-<span data-toggle="modal" data-target="#addCustomLinkModal">
+{{!--<span data-toggle="modal" data-target="#addCustomLinkModal">
 <button type="button" class="btn btn-default pull-right" 
 data-toggle="tooltip" data-placement="left" title="Add Custom Link"
 style="height: 40px; width:40px; line-height: 22px; vertical-align:middle; border-radius:50%; padding:0; opacity: 0.5;">
-{{!-- style="height: 34px; line-height: 16px; vertical-align:middle; border-radius:15%;"> --}}
+<!-- style="height: 34px; line-height: 16px; vertical-align:middle; border-radius:15%;"> -->
 <span style="font-size:25px;">&#43;</span></button> 
-</span>
+</span>--}}
 
  <!-- FAB to add custom Links requires material css + js -->	
 {{!-- <button id="tt3" class="mdl-button mdl-js-button mdl-button--fab mdl-button--mini-fab 
