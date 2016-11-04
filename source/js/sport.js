@@ -1,3 +1,5 @@
+/* eslint-disable */
+
 "use strict";
 
 class Sport extends Widget {
@@ -23,7 +25,7 @@ class Sport extends Widget {
 	cacheButtonActions() {}
 	writeToTemplate() {}
 	dataOutOfDate(newData) {return true;}
-	updateEachGame(newData) {}
+	updateNewData(newData) {}
 	massageData(data, callback) {callback.call(this, data);}
 	highlightGames() {}
 	formatDate() {}
@@ -77,15 +79,9 @@ class Sport extends Widget {
 	}
 
 	displaySchedule(newData) {
-
-		if(this.dataOutOfDate(newData)) {
-			this.data = newData;
-			this.saveData(this.writeScheduleToDOM());
-		} 
-
-		else {
-			this.updateEachGame(newData);
-		}
+		this.updateNewData(newData);
+		this.data = newData;
+		this.saveData(this.writeScheduleToDOM());
 	}
 
 	writeScheduleToDOM() {

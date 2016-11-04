@@ -1,3 +1,4 @@
+/* eslint-disable */
 
 "use strict";
 
@@ -14,23 +15,39 @@ class NHL extends Sport {
 
 	formatDate(yyyy, mm, dd) { return yyyy + '-' + mm + '-' + dd;}
 
-	writeToTemplate(error) {
-		console.log('>>>>>>>>>>>>>');
-		console.log(this.data);
+	updateNewData(newData) {
+		try {
+			
+            // if data is for the same week, carry over any data that I need to
+            if (this.data.currentDate === newData.currentDate) {
+                for (var i = 0; i < this.data.games.length && newData.games.length; i++) {
+                    if (this.data.games[i].id == newData.games[i].id
+                        && this.data.games[i].hidden) {
+                        newData.games[i]['hidden'] = true;
+						
+                    } 
+                }
+            }
+        } catch(e) {
+			log('MLB : updateNewData : ' + e);
+		}
+	}
 
+	writeToTemplate(error) {
 		if(error) {
 			if(!this.data) {this.data = {};}
 			this.data['error'] = true;
 			this.data.games = null;
 		}
 
+		this.data.day = this.today.getDate();
+		this.data.month = this.today.getMonth()+1;
+
 		this.displayTemplate('NHL', 'schedule', 
 			this.data, $('#NHL_widget'));
 	}
 
 	getJsonData(url, callback) {
-		console.log('getting from internet.');
-		console.log(url);
 		$.getJSON(url, function(result) {
 			this.massageData.call(this, result, callback);
 		}.bind(this)).fail(function(result){
@@ -48,7 +65,6 @@ class NHL extends Sport {
 	}
 
 	massageData(result, callback) {
-		console.log(result);
 		try {
 			for (var i = 0; i < result.games.length; i++) {
 
@@ -107,12 +123,29 @@ class NHL extends Sport {
 	}
 
 	cacheButtonActions() {
-		//var that = this;
-		//$('body').on('click', '#NBA_game_table #remove-game-btn', {that: that}, this.removeGame);
+		var self = this;
+		$('body').on('click', '#NHL_game_table #remove-game-btn', {self: self}, this.removeGame);
 		$('body').on('click', '#NHL_widget #reset_games', this.resetSchedule.bind(this));
 		$('body').on('click', '#NHL_widget #tomorrow-btn', this.changeDay.bind(this, 1));
 		$('body').on('click', '#NHL_widget #yesterday-btn', this.changeDay.bind(this,-1));
 		$('body').on('click', '#NHL_widget #today-btn', this.changeDay.bind(this,0));
+	}
+
+		removeGame(event) {
+		var self = event.data.self;
+		var id = $(this).closest('tr').attr('id');
+
+		$('#'+id).remove();
+		$('#c'+id).remove();
+
+		for (var i = 0; i < self.data.games.length; i++) {
+			if(id == self.data.games[i].id) {
+				self.data.games[i]['hidden'] = true;
+				break;
+			}
+		}
+
+		self.saveData();
 	}
 }
 
