@@ -36,7 +36,7 @@
 				<button id="update-btn"
 				class="btn btn-sm btn-secondary">
 				<!--<span class="glyphicon glyphicon-refresh"></span> -->
-				Scores
+				Update
 				</button>
 
 				<button id="autoupdate-btn"
@@ -91,12 +91,12 @@
 
 							<tr id={{id}} data-toggle="collapse" 
 							data-target=#collapse-{{id}} 
-							class="{{#if close_game}}danger{{/if}} {{#if fav_team}}success{{/if}}">
+							class="{{#if close_game}}table-danger{{/if}} {{#if fav_team}}table-success{{/if}}">
 
 								<td> 
 									{{period_time.period_status}} 
 									{{period_time.game_clock}}
-									{{#if overtime}} , {{overtime}}OT {{/if}}
+									{{#if overtime}} OT{{overtime}}{{/if}}
 								</td>
 								
 								<td id="home_team" {{#if home.winning}}class="winning"{{/if}}
@@ -120,7 +120,7 @@
 							</tr>
 
 							<tr><td colspan="6" style="padding: 0" class="nba-collapse" id=c{{id}}>
-							<div id=collapse-{{id}} class="collapse">
+							<div id=collapse-{{id}} class="collapse" style="padding:5px">
 							<small>
 
 							<p>Channels:
@@ -136,7 +136,7 @@
 							--}}
 
 							<a class="btn btn-sm btn-outline-primary" 
-							href="http://www.nba.com/games/{{game_url}}/gameinfo.html" 
+							href="http://www.nba.com/games/{{game_url}}" 
 							role="button">NBA.com Game Info</a>
 
 							<a class="btn btn-sm btn-outline-primary" 
@@ -216,22 +216,19 @@ tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
 			</div>
 
 			<div class="modal-body">
-				<div class="tabbable">
-					<ul class="nav nav-pills">
-						<li class="active"><a href="#West" 
-						data-toggle="tab">West</a></li>
-						<li><a href="#East" data-toggle="tab">East</a>
-						</li>
-					</ul>
+				<ul class="nav nav-tabs" role="tablist">
+					<li class="nav-item">
+						<a class="nav-link active" data-toggle="tab" href="#West">West</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link" data-toggle="tab" href="#East">East</a>
+					</li>
+				</ul>
 
-					<div class="tab-content" id="tabs">
-						<div class="tab-pane fade active in" 
-						id="West">Loading... </div>
-						<div class="tab-pane" 
-						id="East">Loading...</div>
-					</div>
-				</div>  
-
+				<div class="tab-content">
+					<div class="tab-pane active" id="West" role="tabpanel">Loading... </div>
+					<div class="tab-pane" id="East" role="tabpanel">Loading...</div>
+				</div>
 			</div>
 		</div>
 	</div>

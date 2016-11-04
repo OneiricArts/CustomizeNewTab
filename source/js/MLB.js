@@ -1,4 +1,4 @@
-
+/* eslint-disable */
 "use strict";
 
 class MLB extends Sport {
@@ -110,7 +110,12 @@ class MLB extends Sport {
 					if(game.status.inning_state === 'Bottom') {
 						result.data.games.game[i]['bottomofinning'] = true;
 					}
+				} 
+
+				else if (game.status.status === "Delayed") {
+					time_to_show = "Delayed";
 				}
+
 				else if (game.status.status === "Preview" || game.status.status === "Pre-Game" 
 						|| game.status.status === "Warmup") {
 

@@ -83,6 +83,14 @@ class NFL extends Sport {
             combinedData.gms[i].extrainfo.posteam === combinedData.gms[i].extrainfo.away.abbr) {
             combinedData.gms[i].visitor_pos = true;
           }
+
+          if (dev_env) {
+            // favorite team
+            if (combinedData.gms[i].h === 'SF' || combinedData.gms[i].v === 'SF' ||
+                combinedData.gms[i].h === 'NE' || combinedData.gms[i].v === 'NE') {
+              combinedData.gms[i].fav_team = true;
+            }
+          }
         }
         callback.call(this, combinedData);
       });

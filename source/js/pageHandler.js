@@ -1,3 +1,5 @@
+/* eslint-disable */
+
 //var debug = false;
 //if(debug){console.log('myScript running ...');}
 
@@ -18,8 +20,14 @@ var chrome_store_extension_id = 'cbdhcjkifbkbckpoejnakoekiheijpei';
 var dev_env = this_extensionId !== chrome_store_extension_id;
 //console.log(dev_env);
 
+function log(message) {
+	if(dev_env) {
+		console.log(message);
+	}
+}
+
 $( document ).ready(function() {
-	$("body").tooltip({ selector: '[data-toggle=tooltip]' });
+	// $("body").tooltip({ selector: '[data-toggle=tooltip]' });
 
 	/*  example-- 
 		'background': 'linear-gradient(to left, #525252, #3d72b4)'

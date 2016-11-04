@@ -218,6 +218,7 @@ NBA.prototype.writeToTemplate = function() {
 
 	this.data.sports_content.games.day = this.today.getDate();
 	this.data.sports_content.games.month = this.today.getMonth()+1;
+	this.data.sports_content.games.date = this.data.sports_content.sports_meta.season_meta.calendar_date;
 
 	this.displayTemplate('NBAschedule', 'schedule', 
 		this.data.sports_content.games, $('#NBA_col'));
@@ -316,7 +317,9 @@ NBA.prototype.highlightGames = function() {
 };
 
 NBA.prototype.standings = function() {
-	var url = 'http://data.nba.com/json/cms/2016/standings/conference.json';
+	var url = 'http://data.nba.com/json/cms/'
+		+this.data.sports_content.sports_meta.season_meta.standings_season_year
+		+'/standings/conference.json';
 	this.getData(url, this.showStandings);
 };
 

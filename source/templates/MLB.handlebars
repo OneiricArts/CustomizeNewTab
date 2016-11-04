@@ -66,10 +66,12 @@
 								{{time_to_show}}
 
 								{{#if topofinning}}
-									<span class="glyphicon glyphicon-triangle-top"></span> 
+									<!--<span class="glyphicon glyphicon-triangle-top"></span> -->
+									&#9650;
 								{{else}}
 									{{#if bottomofinning}}
-										<span class="glyphicon glyphicon-triangle-bottom"></span> 
+										<!--<span class="glyphicon glyphicon-triangle-bottom"></span> -->
+										&#9660;
 									{{/if}}
 								{{/if}}
 							{{else}}
@@ -94,9 +96,13 @@
 						</button></td>
 					</tr>
 
-					<tr id=c{{game_pk}}><td colspan="6" style="padding: 0" class="">
+					<tr id=c{{game_pk}}><td colspan="6" style="padding: 0" class="table-info">
 						<div id=collapse-{{game_pk}} class="collapse">
 							<div style="padding: 5px">
+
+								<h6>Alert</h6>
+								<p>{{alerts.brief_text}}</p>
+									
 								<center> <h4>
 									{{away_team_name}} ({{away_win}}-{{away_loss}}) @ 
 									{{home_team_name}} ({{home_win}}-{{home_loss}}) 
