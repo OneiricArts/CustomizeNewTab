@@ -77,7 +77,7 @@ class NHL extends Sport {
 						var timeArr = game.bs.split(':');
 						var hours 	= parseInt(timeArr[0]);
 						var minutes = parseInt(timeArr[1].split(' ')[0]);
-						var date = this.today;
+						var date = new Date(this.today);
 
 						hours = hours - 1;      // setUTCHours is 0-23, NBA API is 1 - 24 for hours
 						if(game.ampm === "PM") {
