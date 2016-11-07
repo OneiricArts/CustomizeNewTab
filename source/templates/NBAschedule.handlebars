@@ -119,68 +119,36 @@
 								</button></td>
 							</tr>
 
-							<tr><td colspan="6" style="padding: 0" class="nba-collapse" id=c{{id}}>
-							<div id=collapse-{{id}} class="collapse" style="padding:5px">
-							<small>
+							<tr>
+								<td colspan="6" style="padding: 0" class="nba-collapse" id=c{{id}}>
+									<div id=collapse-{{id}} class="collapse" style="padding:5px">
+										<center>
 
-							<p>Channels:
-							{{#each broadcasters.tv.broadcaster}}
-							    {{display_name}} {{#unless @last}}, {{/unless}}
-							{{/each}}</p>
+											<p>Channels:
+											{{#each broadcasters.tv.broadcaster}}
+												{{display_name}}{{#unless @last}}, {{/unless}}
+											{{/each}}</p>
 
-							{{!--
-							<p> "stat.NBA.com box score doesn't work until game start"</p>
-							<a class="btn btn-default btn-xs" 
-							href="http://stats.nba.com/game/#!/{{id}}/" 
-							role="button">stats.NBA.com Box Score</a>
-							--}}
+											{{!--
+											<p> "stat.NBA.com box score doesn't work until game start"</p>
+											<a class="btn btn-default btn-xs" 
+											href="http://stats.nba.com/game/#!/{{id}}/" 
+											role="button">stats.NBA.com Box Score</a>
+											--}}
 
-							<a class="btn btn-sm btn-outline-primary" 
-							href="http://www.nba.com/games/{{game_url}}" 
-							role="button">NBA.com Game Info</a>
+											<a class="btn btn-sm btn-outline-primary" 
+											href="http://www.nba.com/games/{{game_url}}" 
+											role="button">NBA.com Game Info</a>
 
-							<a class="btn btn-sm btn-outline-primary" 
-							href="http://data.nba.com/json/cms/noseason/game/{{@root.schedule.date}}/{{id}}/boxscore.json" 
-							role="button">BoxScore</a>
-
-							{{!-- 
-							<a class="btn btn-default btn-xs" 
-							href="http://www.nba.com/gametracker/#/{{game_url}}/lp/matchup/" 
-							role="button">NBA.com Preview</a>
-							--}}
-
-							{{#if home.linescores}}
-								<table class="table table-condensed">
-									<thead><tr>
-										<th></th>
-										{{#each home.linescores.period}}
-											<th style="text-align:right">{{period_name}}</th>
-										{{/each}}
-										<th style="text-align:right">T</th>
-										</tr>
-									</thead>
-									<tbody>
-										<tr>
-											<th>{{home.nickname}}</th>
-											{{#each home.linescores.period}}
-												<td style="text-align:right">{{score}}</td>
-											{{/each}} 
-											<td style="text-align:right">{{home.score}}</td>
-										</tr>
-										<tr>
-											<th>{{visitor.nickname}}</th>
-											{{#each visitor.linescores.period}}
-												<td style="text-align:right">{{score}}</td>
-											{{/each}}
-											<td style="text-align:right">{{visitor.score}}</td>
-										</tr>
-									</tbody>
-								</table>
-							{{/if}}
-							</small>
-							</div>
-							</td></tr>
-
+											<button id="boxscore-btn"
+												class="btn btn-sm btn-outline-primary" value="{{id}}"
+												data-toggle="modal" data-target="#NBA-boxscore">
+												Box Score
+											</button>
+										</center>
+									</div>
+								</td>
+							</tr>
 						{{/unless}}
 						{{/each}}
 
@@ -233,3 +201,20 @@ tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
 		</div>
 	</div>
 </div>
+
+<!--NBA boxscore modal-->
+<div class="modal fade" id="NBA-boxscore">
+	<div class="modal-dialog" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+				<span aria-hidden="true">&times;</span>
+				</button>
+				<h4 class="modal-title">Box Score</h4>
+			</div>
+				<div class="modal-body">
+				<p>Loading...</p>
+			</div>
+		</div><!-- /.modal-content -->
+	</div><!-- /.modal-dialog -->
+</div><!-- /.modal -->

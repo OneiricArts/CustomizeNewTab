@@ -1,3 +1,4 @@
+/* eslint-disable */
 
 /*
 	NFL Object 
@@ -53,6 +54,7 @@ NBA.prototype.cacheButtonActions = function() {
 	$('body').on('click', '#NBA_col #update-btn', this.updateSchedule.bind(this));
 	$('body').on('click', '#NBA_col #autoupdate-btn', {that: that}, this.autoupdateSchedule);
 	$('body').on('click', '#NBA_col #standings-btn', this.standings.bind(this));
+	$('body').on('click', '#NBA_col #boxscore-btn', {that: that}, this.boxscore);
 	$('body').on('click', '#NBA_col #tomorrow-btn', this.tomorrowSchedule.bind(this));
 	$('body').on('click', '#NBA_col #yesterday-btn', this.yesterdaySchedule.bind(this));
 	$('body').on('click', '#NBA_col #today-btn', this.todaySchedule.bind(this));
@@ -338,6 +340,51 @@ NBA.prototype.showStandings = function(data) {
 	var border="border-bottom:3pt solid grey;";
 	$($('#NBA-standings #West tr')[8]).attr("style",border);
 	$($('#NBA-standings #East tr')[8]).attr("style",border);
+};
+
+NBA.prototype.boxscore = function(event) {
+	var self = event.data.that;
+
+	//href="http://data.nba.com/json/cms/noseason/game/{{@root.schedule.date}}/{{id}}/boxscore.json" 
+
+	function twoDigits(n) {
+		return n<10? '0'+n:''+n
+	}
+
+	var date = 
+		twoDigits(self.today.getFullYear()) +
+		twoDigits(self.today.getMonth()+1) +
+		twoDigits(self.today.getDate());
+
+	var url = 'http://data.nba.com/json/cms/noseason/game/' 
+		+ date
+		//+ self.yyyymmdd()
+		+ '/'
+		+ $(this).val()
+		+ '/boxscore.json';
+
+	self.getData(url, self.showBoxscore);
+};
+
+NBA.prototype.showBoxscore = function(data) {
+	
+	console.log(data);
+	try {
+		var players = data.sports_content.game.home.players.player;
+		data.sports_content.game.home.players.starters = players.splice(0,5);
+		data.sports_content.game.home.players.bench = players;
+		// players = data.sports_content.game.home.players.player;
+		// data.sports_content.game.home.players.bench = players.splice(5,8);
+		
+
+		var players = data.sports_content.game.visitor.players.player;
+		data.sports_content.game.visitor.players.starters = players.splice(0,5);
+		data.sports_content.game.visitor.players.bench = players;
+
+		this.displayTemplate('NBAboxscore', 'game', 
+			data.sports_content.game, 
+			$('#NBA-boxscore .modal-content') );
+	} catch(e) {console.log(e);}
 };
 
 NBA.prototype.tomorrowSchedule = function(event) {
