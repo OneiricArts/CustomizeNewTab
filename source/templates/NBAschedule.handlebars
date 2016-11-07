@@ -73,12 +73,12 @@
 						<tr>
 							<th>
 								<!--<span class="glyphicon glyphicon-time"></span>-->
-								&#128348;
+								<!--&#128348;-->
 							</th>
-							<th style="text-align:left">Home</th>
 							<th style="text-align:left">Visitor</th>
-							<th style="text-align:left">H</th>
+							<th style="text-align:left">@Home</th>
 							<th style="text-align:left">V</th>
+							<th style="text-align:left">H</th>
 							<th style="text-align:right">
 								<!--<span class="glyphicon glyphicon-edit"></span>-->
 							</th>
@@ -98,19 +98,19 @@
 									{{period_time.game_clock}}
 									{{#if overtime}} OT{{overtime}}{{/if}}
 								</td>
-								
-								<td id="home_team" {{#if home.winning}}class="winning"{{/if}}
-								style="text-align:left">{{home.nickname}}
-								{{#if playoffs.home_wins}}({{playoffs.home_wins}}){{/if}}
-								</td>
 
 								<td id="away_team" {{#if visitor.winning}}class="winning"{{/if}}
 								style="text-align:left">{{visitor.nickname}}
 								{{#if playoffs.visitor_wins}}({{playoffs.visitor_wins}}){{/if}}
 								</td>
 
-								<td id="h-score" style="text-align:left">{{home.score}}</td> 
+								<td id="home_team" {{#if home.winning}}class="winning"{{/if}}
+								style="text-align:left">{{home.nickname}}
+								{{#if playoffs.home_wins}}({{playoffs.home_wins}}){{/if}}
+								</td>
+
 								<td id="v-score" style="text-align:left">{{visitor.score}}</td>
+								<td id="h-score" style="text-align:left">{{home.score}}</td> 
 
 								<td style="text-align:right">
 								<button type="button" id="remove-game-btn" class="btn btn-sm btn-outline-secondary">
