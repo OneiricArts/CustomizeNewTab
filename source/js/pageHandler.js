@@ -176,8 +176,8 @@ pageHandeler.prototype.setDefaults = function(){
 
 	this.data['NBA'] = true;
 	this.data['NFL'] = true;
-	this.data['MLB'] = true;
-	this.data['NHL'] = false;
+	this.data['MLB'] = false;
+	this.data['NHL'] = true;
 	this.data['Links'] = true;
 
 	this.data.message = true;
