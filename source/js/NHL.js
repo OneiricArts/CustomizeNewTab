@@ -125,7 +125,10 @@ class NHL extends Sport {
 	cacheButtonActions() {
 		var self = this;
 		$('body').on('click', '#NHL_game_table #remove-game-btn', {self: self}, this.removeGame);
+
 		$('body').on('click', '#NHL_widget #reset_games', this.resetSchedule.bind(this));
+		$('body').on('click', '#NHL_widget #refresh_scores', this.updateSchedule.bind(this));
+
 		$('body').on('click', '#NHL_widget #tomorrow-btn', this.changeDay.bind(this, 1));
 		$('body').on('click', '#NHL_widget #yesterday-btn', this.changeDay.bind(this,-1));
 		$('body').on('click', '#NHL_widget #today-btn', this.changeDay.bind(this,0));
