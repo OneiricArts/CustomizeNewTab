@@ -2,7 +2,7 @@
 [//]: #	"NOTE TO SELF: update this more regularly"
 
 ## What is it?
-![Screenshot](./screenshots/2016_09_15_overview.png?raw=true)
+![Screenshot](./screenshots/README.png?raw=true)
 
 [![Get it in the Chrome Web Store](https://developer.chrome.com/webstore/images/ChromeWebStore_BadgeWBorder_v2_206x58.png)](https://chrome.google.com/webstore/detail/sports-new-tab-page-beta/cbdhcjkifbkbckpoejnakoekiheijpei)
 
