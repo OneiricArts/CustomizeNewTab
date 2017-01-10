@@ -22,12 +22,12 @@ class NHL extends Sport {
                     if (this.data.games[i].id == newData.games[i].id
                         && this.data.games[i].hidden) {
                         newData.games[i]['hidden'] = true;
-						
                     } 
                 }
             }
         } catch(e) {
-			log('MLB : updateNewData : ' + e);
+			// this.data is set to null on reset / change date, triggering this
+			log('NHL : updateNewData : ' + e); 
 		}
 	}
 
@@ -49,13 +49,19 @@ class NHL extends Sport {
 		$.getJSON(url, function(result) {
 			this.massageData.call(this, result, callback);
 		}.bind(this)).fail(function(result){
+			/*
+				responseText:
+					loadScoreboard({_valid_json_})
+				need to get text inside the () and parse that
+			*/
 			try {
-				var json = result.responseText.split('(')[1];
-				json = json.split(')')[0];
+				var json = result.responseText.substring(result.responseText.indexOf('(')+1, 
+						    							 result.responseText.lastIndexOf(')'));
 				var result = JSON.parse(json);
 				this.massageData.call(this, result, callback);
 			}
 			catch(e) {
+				console.log(result.responseText);
 				this.writeErrorMessage(true);
 			}
 		}.bind(this));
@@ -132,7 +138,7 @@ class NHL extends Sport {
 		$('body').on('click', '#NHL_widget #today-btn', this.changeDay.bind(this,0));
 	}
 
-		removeGame(event) {
+	removeGame(event) {
 		var self = event.data.self;
 		var id = $(this).closest('tr').attr('id');
 
