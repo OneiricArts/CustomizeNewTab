@@ -25,14 +25,13 @@
 	</div>
 
 	<div class="card-header">
-		<div class="btn-group" role="group" aria-label="...">
-			<button id="standings-btn"
-					class="btn btn-sm btn-secondary"
-					data-toggle="modal" data-target="#NBA-standings">
-				<!--<span class="glyphicon glyphicon-th-list"></span> -->
-				Standings
-				</button>
 
+		<button id="standings-btn" data-toggle="modal" data-target="#NBA-standings"
+		class="btn btn-sm float-xs-left btn-outline-primary">
+			Standings
+		</button>
+		
+		<div class="btn-group float-xs-right" role="group" aria-label="...">
 				<button id="update-btn"
 				class="btn btn-sm btn-secondary">
 				<!--<span class="glyphicon glyphicon-refresh"></span> -->
@@ -121,8 +120,8 @@
 
 							<tr>
 								<td colspan="6" style="padding: 0" class="nba-collapse" id=c{{id}}>
-									<div id=collapse-{{id}} class="collapse" style="padding:5px">
-										<center>
+									<div id=collapse-{{id}} class="collapse">
+										<center style="padding:5px">
 
 											<p>Channels:
 											{{#each broadcasters.tv.broadcaster}}
