@@ -15,11 +15,11 @@
 */
 var this_extensionId = chrome.i18n.getMessage('@@extension_id');
 var chrome_store_extension_id = 'cbdhcjkifbkbckpoejnakoekiheijpei';
-var dev_env = this_extensionId !== chrome_store_extension_id;
+var devEnv = this_extensionId !== chrome_store_extension_id;
 //console.log(dev_env);
 
 function log(message) {
-	if(dev_env) {
+	if(devEnv) {
 		console.log(message);
 	}
 }
@@ -121,7 +121,7 @@ pageHandeler.prototype.init = function(){
 };
 
 pageHandeler.prototype.loadFunctionality = function(){
-	if(dev_env) {
+	if(devEnv) {
 		this.loadDev();
 	}
 	//this.loadMessage();

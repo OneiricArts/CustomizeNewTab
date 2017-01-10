@@ -101,7 +101,7 @@ class NFL extends Sport {
             combinedData.gms[i].visitor_pos = true;
           }
 
-          if (dev_env) {
+          if (devEnv) {
             // favorite team
             if (combinedData.gms[i].h === 'SF' || combinedData.gms[i].v === 'SF' ||
                 combinedData.gms[i].h === 'NE' || combinedData.gms[i].v === 'NE') {

@@ -165,7 +165,7 @@ NBA.prototype.massageData = function(newData, callback) {
 		var period_value = parseInt(game.period_time.period_value);
 		var game_clock = game.period_time.game_clock;
 
-		if(dev_env) {
+		if(devEnv) {
 			// favorite team
 			if(game.visitor.abbreviation === 'GSW' || game.home.abbreviation === 'GSW') {
 				newData.sports_content.games.game[i].fav_team = true;

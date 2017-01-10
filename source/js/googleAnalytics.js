@@ -59,7 +59,7 @@ window.onerror = function(msg, url, line, col, error) {
 	extra += !error ? '' : '\nerror: ' + error;
 	error_msg = "Error: " + msg + "\nurl: " + url + "\nline: " + line + extra;
 
-	if(dev_env) {
+	if(devEnv) {
 		alert(error_msg);
 	}
 	
