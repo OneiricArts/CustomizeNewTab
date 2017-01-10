@@ -59,12 +59,12 @@ class NFL extends Sport {
           }
 
           // tweaking looks, overtime is too long
-          if ("final overtime" === combinedData.gms[i].extrainfo.qtr) {
-            combinedData.gms[i].extrainfo.qtr = "final OT"; 
+          if (combinedData.gms[i].extrainfo.qtr === 'final overtime') {
+            combinedData.gms[i].extrainfo.qtr = 'final OT';
           }
-          
+
           // only show first letter of day?
-          //combinedData.gms[i].d = combinedData.gms[i].d.substring(0,1);
+          // combinedData.gms[i].d = combinedData.gms[i].d.substring(0,1);
 
           // local time
           const options = {};
