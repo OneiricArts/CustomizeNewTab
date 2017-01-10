@@ -67,8 +67,17 @@ class NFL extends Sport {
           //combinedData.gms[i].d = combinedData.gms[i].d.substring(0,1);
 
           // local time
+          const options = {};
+          const hours = parseInt(combinedData.gms[i].t.split(':')[0], 10);
+
+          if (hours >= 0 && hours <= 10) {
+            options.ampm = 'PM';
+          } else {
+            options.ampm = 'AM';
+          }
+
           combinedData.gms[i].t = this.toLocalTime(combinedData.gms[i].t.split(':')[0],
-            combinedData.gms[i].t.split(':')[1]).split(' ')[0];
+            combinedData.gms[i].t.split(':')[1], options).split(' ')[0];
 
           // label whos winning
           if (combinedData.gms[i].extrainfo.home.score.T !== null) {

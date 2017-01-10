@@ -73,28 +73,32 @@ class Widget {
 	}
 
 
-	toLocalTime(hours, minutes, years, months, days) {
+	toLocalTime(hours, minutes, options) {
+		if(!options) {
+			options = {};
+		}
+
 		try {
-			hours = parseInt(hours);
-			minutes = parseInt(minutes);
+			var hours = parseInt(hours);
+			var minutes = parseInt(minutes);
 
-			var date;
-
-			if (years == null) {
-				date = new Date();
-			} else {
-				years = parseInt(years);
-				months = parseInt(months);
-				days = parseInt(days);
-				date = new Date(yyyy, mm, dd);
+			// convert to 24 hours if need to (and provide AM/PM)
+			if(options.ampm === 'PM' && hours < 12) {
+				hours += 12;
+			} else if(options.ampm === 'AM' && hours == 12) { 
+				hours = 0;
 			}
 
-			hours = hours - 1;      // setUTCHours is 0-23, NBA API is 1 - 24 for hours
-			var EST_UTC_OFFSET = 5; // EST + 5 = UTC
+			// EST + 5 = UTC
+			var EST_UTC_OFFSET = 5;
 
-			date.setUTCHours((hours + EST_UTC_OFFSET) % 24, minutes);
+			var date = new Date();
+			date.setUTCHours((hours + EST_UTC_OFFSET) % 24, minutes, 0);
 
-			return date.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+			if(!options.format) {
+				options.format = {'hour': '2-digit', 'minute': '2-digit'};
+			}
+			return date.toLocaleTimeString([], options.format);
 		}
 		catch (e) {
 			console.log(e);

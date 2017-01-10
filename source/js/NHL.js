@@ -95,21 +95,9 @@ class NHL extends Sport {
 				if ( game.bs.includes('PM') || game.bs.includes('AM') ) {
 					try {
 						var timeArr = game.bs.split(':');
-						var hours 	= parseInt(timeArr[0]);
-						var minutes = parseInt(timeArr[1].split(' ')[0]);
-						var date = new Date(this.today);
-
-						hours = hours - 1;      // setUTCHours is 0-23, NBA API is 1 - 24 for hours
-						if(game.ampm === "PM") {
-							hours += 12;
-						}
-						else { //AM
-							hours -= 12;
-						}
-
-						var EST_UTC_OFFSET = 5; // EST + 5 = UTC
-						date.setUTCHours( (hours+EST_UTC_OFFSET)%24, minutes);
-						result.games[i].bs = date.toLocaleTimeString([], {hour: '2-digit', minute: '2-digit'});
+						result.games[i].bs = this.toLocalTime(timeArr[0], timeArr[1].split(' ')[0], 
+							{'date':this.today, 
+							'ampm': timeArr[1].split(' ')[1]});
 					}
 
 					catch(e) {
