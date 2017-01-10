@@ -230,7 +230,8 @@ NBA.prototype.writeToTemplate = function() {
 NBA.prototype.updateEachGame = function(newData) {
 	console.log('NBA updating');
 	
-	for (var i=0; i < this.data.sports_content.games.game.length; i++) {
+	for (var i=0; i < this.data.sports_content.games.game.length &&
+	i < newData.sports_content.games.game.length; i++) {
 		if(this.data.sports_content.games.game[i].id !== 
 			newData.sports_content.games.game[i].id){
 			console.log('data not same -- error');
