@@ -1,315 +1,168 @@
+{{!-- Helper Inline Templates used in other Inline Tempaltes --}}
+{{#* inline "listNames"}}
+  {{#if @last}}
+    {{FirstName}} {{LastName}}
+  {{else}}
+    {{FirstName}} {{LastName}},
+  {{/if}}
+{{/inline}}
 
+{{#* inline "baseStatsTableHeader"}}  {{!-- To keep the order consistent everywhere --}}
+  <th style="text-align:right">Pts</th>
+  <th style="text-align:right">FGs</th>
+  <th style="text-align:right">3PT</th>
+  <th style="text-align:right">FT</th>
+  <th style="text-align:right">Ast</th>
+  <th style="text-align:right">D/O Reb</th>
+  <th style="text-align:right">TO</th>
+  <th style="text-align:right">Stl</th>
+{{/inline}}
 
+{{!-- Modal start --}}
 <div class="modal-header">
-	<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-	<span aria-hidden="true">&times;</span>
-	</button>
-	<center>
-		<h4 class="modal-title">{{game.visitor.nickname}} @ {{game.home.nickname}}</h4>
-	</center>
+  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+    <span aria-hidden="true">&times;</span>
+  </button>
+  <center>
+    <h4 class="modal-title">{{game.visitor.nickname}} @ {{game.home.nickname}}</h4>
+  </center>
 </div>
+
 <div class="modal-body container-fluid">
 
-	<!--LINE SCORES-->
-	{{#if game.home.linescores.period}}
-		<table class="table table-sm">
-			<thead class="thead-default"><tr>
-				<th></th>
-				{{#each game.home.linescores.period}}
-					<th style="text-align:right">{{period_name}}</th>
-				{{/each}}
-				<th style="text-align:right">T</th>
-				</tr>
-			</thead>
-			<tbody>
-				<tr>
-					<th>{{game.visitor.nickname}}</th>
-					{{#each game.visitor.linescores.period}}
-						<td style="text-align:right">{{score}}</td>
-					{{/each}} 
-					<td style="text-align:right">{{game.visitor.score}}</td>
-				</tr>
-				<tr>
-					<th>{{game.home.nickname}}</th>
-					{{#each game.home.linescores.period}}
-						<td style="text-align:right">{{score}}</td>
-					{{/each}} 
-					<td style="text-align:right">{{game.home.score}}</td>
-				</tr>
-			</tbody>
-		</table>
-	{{/if}}
+  {{!-- ===== LINE SCORES ===== --}}
+  {{#* inline "linescores"}}
+    <tr>
+      <th>{{nickname}}</th>
+      {{#each linescores.period}}
+        <td style="text-align:right">{{score}}</td>
+      {{/each}} 
+      <td style="text-align:right">{{score}}</td>
+    </tr>
+  {{/inline}}
 
-	<hr>
+  {{#if game.home.linescores.period}}
+    <table class="table table-sm">
+      <thead class="thead-default">
+        <tr>
+          <th></th>
+          {{#each game.home.linescores.period}}
+            <th style="text-align:right">{{period_name}}</th>
+          {{/each}}
+          <th style="text-align:right">T</th>
+        </tr>
+      </thead>
+      <tbody>
+        {{> linescores game.visitor}}
+        {{> linescores game.home}}
+      </tbody>
+    </table>
+  {{/if}}
 
-	<!--TEAM STATS-->
-	<table class="table table-sm">
-		<thead class="thead-default">
-			<tr>
-				<th style="text-align:right"></th>
-				<th style="text-align:right">Pts</th>
-				<th style="text-align:right">FGs</th>
-				<th style="text-align:right">3PT</th>
-				<th style="text-align:right">FT</th>
-				<th style="text-align:right">Ast</th>
-				<th style="text-align:right">D/O Reb</th>
-				<th style="text-align:right">TO</th>
-				<th style="text-align:right">Stl</th>
-			</tr>
-		</thead>
-		<tbody>
-			<tr>
-				<th>{{game.visitor.nickname}}</th>
-				<td style="text-align:right">{{game.visitor.stats.points}}</td>
-				<td style="text-align:right">
-					{{game.visitor.stats.field_goals_made}}-{{game.visitor.stats.field_goals_attempted}}
-				</td>
-				<td style="text-align:right">
-					{{game.visitor.stats.three_pointers_made}}-{{game.visitor.stats.three_pointers_attempted}}
-				</td>
-				<td style="text-align:right">
-					{{game.visitor.stats.free_throws_made}}-{{game.visitor.stats.free_throws_attempted}}
-				</td>
-				<td style="text-align:right">{{game.visitor.stats.assists}}</td>
-				<td style="text-align:right">
-					{{game.visitor.stats.rebounds_defensive}}/{{game.visitor.stats.rebounds_offensive}}
-				</td>
-				<td style="text-align:right">{{game.visitor.stats.turnovers}}</td>
-				<td style="text-align:right">{{game.visitor.stats.steals}}</td>
-			</tr>
-			<tr>
-				<th>{{game.home.nickname}}</th>
-				<td style="text-align:right">{{game.home.stats.points}}</td>
-				<td style="text-align:right">
-					{{game.home.stats.field_goals_made}}-{{game.home.stats.field_goals_attempted}}
-				</td>
-				<td style="text-align:right">
-					{{game.home.stats.three_pointers_made}}-{{game.home.stats.three_pointers_attempted}}
-				</td>
-				<td style="text-align:right">
-					{{game.home.stats.free_throws_made}}-{{game.home.stats.free_throws_attempted}}
-				</td>
-				<td style="text-align:right">{{game.home.stats.assists}}</td>
-				<td style="text-align:right">
-					{{game.home.stats.rebounds_defensive}}/{{game.home.stats.rebounds_offensive}}
-				</td>
-				<td style="text-align:right">{{game.home.stats.turnovers}}</td>
-				<td style="text-align:right">{{game.home.stats.steals}}</td>
-			</tr>
-		</tbody>
-	</table>
+  <hr>
 
-	<hr>
+  {{!-- ===== TEAM STATS ===== --}}
+  {{#* inline "teamStatsTableHeader"}}
+    <tr>
+      <th></th>
+      {{> baseStatsTableHeader}}
+    </tr>
+  {{/inline}}
 
-	<!--LEADERS-->
-	<div class="row">
-		<!--VISITOR-->
-		<div class="col-md-6 pull-xs-left">
-			<h5>{{game.visitor.nickname}}</h5>
-			<p>
-				{{#each game.visitor.Leaders.Points.leader}}
-					{{#if @last}}
-						{{FirstName}} {{LastName}}
-					{{else}}
-						{{FirstName}} {{LastName}},
-					{{/if}}
-				{{/each}}
-				{{game.visitor.Leaders.Points.StatValue}} pts
-			<br>
-				{{#each game.visitor.Leaders.Assists.leader}}
-					{{#if @last}}
-						{{FirstName}} {{LastName}}
-					{{else}}
-						{{FirstName}} {{LastName}},
-					{{/if}}
-				{{/each}}
-				{{game.visitor.Leaders.Assists.StatValue}} ast
-			
-			<br>
-				{{#each game.visitor.Leaders.Rebounds.leader}}
-					{{#if @last}}
-						{{FirstName}} {{LastName}}
-					{{else}}
-						{{FirstName}} {{LastName}},
-					{{/if}}
-				{{/each}}
-				{{game.visitor.Leaders.Rebounds.StatValue}} reb
-			</p>
-		</div>
-		<!--HOME-->
-		<div class="col-md-6 pull-xs-right" style="text-align:right">
-			<h5>{{game.home.nickname}}</h5>
-			<p>
-				{{#each game.home.Leaders.Points.leader}}
-					{{#if @last}}
-						{{FirstName}} {{LastName}}
-					{{else}}
-						{{FirstName}} {{LastName}},
-					{{/if}}
-				{{/each}}
-				{{game.home.Leaders.Points.StatValue}} pts
-			<br>
-				{{#each game.home.Leaders.Assists.leader}}
-					{{#if @last}}
-						{{FirstName}} {{LastName}}
-					{{else}}
-						{{FirstName}} {{LastName}},
-					{{/if}}
-				{{/each}}
-				{{game.home.Leaders.Assists.StatValue}} ast
-			
-			<br>
-				{{#each game.home.Leaders.Rebounds.leader}}
-					{{#if @last}}
-						{{FirstName}} {{LastName}}
-					{{else}}
-						{{FirstName}} {{LastName}},
-					{{/if}}
-				{{/each}}
-				{{game.home.Leaders.Rebounds.StatValue}} reb
-			</p>
-		</div>
-	</div>
+  {{#* inline "teamStatsData"}}
+    <tr>
+      <th>{{nickname}}</th>
+      <td style="text-align:right">{{stats.points}}</td>
+      <td style="text-align:right">
+        {{stats.field_goals_made}}-{{stats.field_goals_attempted}}
+      </td>
+      <td style="text-align:right">
+        {{stats.three_pointers_made}}-{{stats.three_pointers_attempted}}
+      </td>
+      <td style="text-align:right">
+        {{stats.free_throws_made}}-{{stats.free_throws_attempted}}
+      </td>
+      <td style="text-align:right">{{stats.assists}}</td>
+      <td style="text-align:right">
+        {{stats.rebounds_defensive}}/{{stats.rebounds_offensive}}
+      </td>
+      <td style="text-align:right">{{stats.turnovers}}</td>
+      <td style="text-align:right">{{stats.steals}}</td>
+    </tr>
+  {{/inline}}
+  
+  <table class="table table-sm">
+    <thead class="thead-default">
+      {{> teamStatsTableHeader}}
+    </thead>
+    <tbody>
+      {{> teamStatsData game.visitor}}
+      {{> teamStatsData game.home}}
+    </tbody>
+  </table>
 
-	<!--STARTERS-->
-	<h4>Starters</h4>
-	<table class="table table-sm">
-		<thead class="thead-default">
-			<tr>
-				<th>{{game.visitor.nickname}}</th>
-				<th style="text-align:right">Pts</th>
-				<th style="text-align:right">FG</th>
-				<th style="text-align:right">3PT</th>
-				<th style="text-align:right">D/O Reb</th>
-				<th style="text-align:right">Ast</th>
-				<th style="text-align:right">TO</th>
-				<th style="text-align:right">Stl</th>
-				<th style="text-align:right">FT</th>
-				<th style="text-align:right">Mins</th>
-			</tr>
-		</thead>
-		<tbody>
-			{{#each game.visitor.players.starters}}
-				<tr>	
-					<td>{{first_name}} {{last_name}}</td>
-					<td style="text-align:right">{{points}}</td>
-					<td style="text-align:right">{{field_goals_made}}-{{field_goals_attempted}}</td>
-					<td style="text-align:right">{{three_pointers_made}}-{{three_pointers_attempted}}</td>
-					<td style="text-align:right">{{rebounds_defensive}}/{{rebounds_offensive}}</td>
-					<td style="text-align:right">{{assists}}</td>
-					<td style="text-align:right">{{turnovers}}</td>
-					<td style="text-align:right">{{steals}}</td>
-					<td style="text-align:right">{{free_throws_made}}-{{free_throws_attempted}}</td>
-					<td style="text-align:right">{{minutes}}</td>
-				</tr>
-			{{/each}}
-		</tbody>
-			
-		<thead class="thead-default">
-			<tr>
-				<th>{{game.home.nickname}}</th>
-				<th style="text-align:right">Pts</th>
-				<th style="text-align:right">FG</th>
-				<th style="text-align:right">3PT</th>
-				<th style="text-align:right">D/O Reb</th>
-				<th style="text-align:right">Ast</th>
-				<th style="text-align:right">TO</th>
-				<th style="text-align:right">Stl</th>
-				<th style="text-align:right">FT</th>
-				<th style="text-align:right">Mins</th>
-			</tr>
-		</thead>
+  <hr>
 
-		<tbody>
-			{{#each game.home.players.starters}}
-				<tr>	
-					<td>{{first_name}} {{last_name}}</td>
-					<td style="text-align:right">{{points}}</td>
-					<td style="text-align:right">{{field_goals_made}}-{{field_goals_attempted}}</td>
-					<td style="text-align:right">{{three_pointers_made}}-{{three_pointers_attempted}}</td>
-					<td style="text-align:right">{{rebounds_defensive}}/{{rebounds_offensive}}</td>
-					<td style="text-align:right">{{assists}}</td>
-					<td style="text-align:right">{{turnovers}}</td>
-					<td style="text-align:right">{{steals}}</td>
-					<td style="text-align:right">{{free_throws_made}}-{{free_throws_attempted}}</td>
-					<td style="text-align:right">{{minutes}}</td>
-				</tr>
-			{{/each}}
-		</tbody>
+  {{!-- ===== LEADERS ===== --}}
+  {{#* inline "leaders"}}
+    <h5>{{nickname}}</h5>
+      <p>
+        {{#each Leaders.Points.leader}}{{> listNames}}{{/each}}
+        {{Leaders.Points.StatValue}} pts
+      <br>
+        {{#each Leaders.Assists.leader}}{{> listNames}}{{/each}}
+        {{Leaders.Assists.StatValue}} ast
+      
+      <br>
+        {{#each Leaders.Rebounds.leader}}{{> listNames}}{{/each}}
+        {{Leaders.Rebounds.StatValue}} reb
+      </p>
+    {{/inline}}
 
-		
-	</table>
+  <div class="row">
+    <div class="col-md-6 pull-xs-left">{{> leaders game.visitor}}</div>
+    <div class="col-md-6 pull-xs-right" style="text-align:right">{{> leaders game.home}}</div>
+  </div>
 
-	<hr>
+  {{!-- ===== PLAYER STATS ===== --}}
+  {{#* inline "playerStatsTableHeader"}}
+    <tr>
+      <th>{{nickname}}</th>
+      {{> baseStatsTableHeader}}
+      <th style="text-align:right">Mins</th>
+    </tr>
+  {{/inline}}
 
-	<!--BENCH-->
-	<h4>Bench</h4>
-	<table class="table table-sm">
-		<thead class="thead-default">
-			<tr>
-				<th>{{game.visitor.nickname}}</th>
-				<th style="text-align:right">Pts</th>
-				<th style="text-align:right">FG</th>
-				<th style="text-align:right">3PT</th>
-				<th style="text-align:right">D/O Reb</th>
-				<th style="text-align:right">Ast</th>
-				<th style="text-align:right">TO</th>
-				<th style="text-align:right">Stl</th>
-				<th style="text-align:right">FT</th>
-				<th style="text-align:right">Mins</th>
-			</tr>
-		</thead>
-		<tbody>
-			{{#each game.visitor.players.bench}}
-				<tr>	
-					<td>{{first_name}} {{last_name}}</td>
-					<td style="text-align:right">{{points}}</td>
-					<td style="text-align:right">{{field_goals_made}}-{{field_goals_attempted}}</td>
-					<td style="text-align:right">{{three_pointers_made}}-{{three_pointers_attempted}}</td>
-					<td style="text-align:right">{{rebounds_defensive}}/{{rebounds_offensive}}</td>
-					<td style="text-align:right">{{assists}}</td>
-					<td style="text-align:right">{{turnovers}}</td>
-					<td style="text-align:right">{{steals}}</td>
-					<td style="text-align:right">{{free_throws_made}}-{{free_throws_attempted}}</td>
-					<td style="text-align:right">{{minutes}}</td>
-				</tr>
-			{{/each}}
-		</tbody>
-			
-		<thead class="thead-default">
-			<tr>
-				<th>{{game.home.nickname}}</th>
-				<th style="text-align:right">Pts</th>
-				<th style="text-align:right">FG</th>
-				<th style="text-align:right">3PT</th>
-				<th style="text-align:right">Reb</th>
-				<th style="text-align:right">Ast</th>
-				<th style="text-align:right">TO</th>
-				<th style="text-align:right">Stl</th>
-				<th style="text-align:right">FT</th>
-				<th style="text-align:right">Mins</th>
-			</tr>
-		</thead>
+  {{#* inline "playerStats"}}
+    <tr>	
+      <td>{{first_name}} {{last_name}}</td>
+      <td style="text-align:right">{{points}}</td>
+      <td style="text-align:right">{{field_goals_made}}-{{field_goals_attempted}}</td>
+      <td style="text-align:right">{{three_pointers_made}}-{{three_pointers_attempted}}</td>
+      <td style="text-align:right">{{free_throws_made}}-{{free_throws_attempted}}</td>
+      <td style="text-align:right">{{assists}}</td>
+      <td style="text-align:right">{{rebounds_defensive}}/{{rebounds_offensive}}</td>
+      <td style="text-align:right">{{turnovers}}</td>
+      <td style="text-align:right">{{steals}}</td>
+      <td style="text-align:right">{{minutes}}</td>
+    </tr>
+  {{/inline}}
 
-		<tbody>
-			{{#each game.home.players.bench}}
-				<tr>	
-					<td>{{first_name}} {{last_name}}</td>
-					<td style="text-align:right">{{points}}</td>
-					<td style="text-align:right">{{field_goals_made}}-{{field_goals_attempted}}</td>
-					<td style="text-align:right">{{three_pointers_made}}-{{three_pointers_attempted}}</td>
-					<td style="text-align:right">{{rebounds_defensive}}/{{rebounds_offensive}}</td>
-					<td style="text-align:right">{{assists}}</td>
-					<td style="text-align:right">{{turnovers}}</td>
-					<td style="text-align:right">{{steals}}</td>
-					<td style="text-align:right">{{free_throws_made}}-{{free_throws_attempted}}</td>
-					<td style="text-align:right">{{minutes}}</td>
-				</tr>
-			{{/each}}
-		</tbody>
+  <h4>Starters</h4>
+  <table class="table table-sm">
+    <thead class="thead-default">{{> playerStatsTableHeader game.visitor}}</thead>
+    <tbody>{{#each game.visitor.players.starters}} {{> playerStats}} {{/each}}</tbody>
+    <thead class="thead-default">{{> playerStatsTableHeader game.home}}</thead>
+    <tbody>{{#each game.home.players.starters}}{{> playerStats}}{{/each}}</tbody>
+  </table>
 
-		
-	</table>
+  <hr>
 
-
+  <h4>Bench</h4>
+  <table class="table table-sm">
+    <thead class="thead-default">{{> playerStatsTableHeader game.visitor}}</thead>
+    <tbody>{{#each game.visitor.players.bench}} {{> playerStats}} {{/each}}</tbody>
+    <thead class="thead-default">{{> playerStatsTableHeader game.home}}</thead>
+    <tbody>{{#each game.home.players.bench}}{{> playerStats}}{{/each}}</tbody>
+  </table>
 </div>
