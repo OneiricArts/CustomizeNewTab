@@ -1,8 +1,3 @@
-/* eslint-disable */
-
-/*
-	NFL Object 
-*/
 function NBA() {
 	Sports.call(this);
 

@@ -1,0 +1,11 @@
+# JS files not meant for ESLint:
+gulpfile.js
+# JS files not yet ready for linting:
+pageHandler.js
+Links.js
+NHL.js
+NBA.js
+MLB.js
+sport.js
+Sports.js
+widget.js

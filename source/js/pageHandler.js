@@ -1,5 +1,3 @@
-/* eslint-disable */
-
 //var debug = false;
 //if(debug){console.log('myScript running ...');}
 
