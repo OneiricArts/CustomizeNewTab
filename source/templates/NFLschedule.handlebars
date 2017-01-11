@@ -35,29 +35,29 @@
 				{{#each schedule.gms}}{{#unless hidden}}
 
 					<tr id={{eid}} data-toggle="collapse" data-target=#collapse-{{eid}}
-					class="{{#if extrainfo.redzone}}table-danger{{/if}} {{#if fav_team}}table-success{{/if}}">
+					class="{{#if redzone}}table-danger{{/if}} {{#if fav_team}}table-success{{/if}}">
 
-						{{#if extrainfo.qtr}}
+						{{#if qtr}}
 							{{#if playing}}
-								<td> {{extrainfo.qtr}}Q, {{extrainfo.clock}}</td>
+								<td> {{qtr}}Q, {{clock}}</td>
 							{{else}}
-								<td class="text-capitalize"> {{extrainfo.qtr}}</td>
+								<td class="text-capitalize"> {{qtr}}</td>
 							{{/if}}
 						{{else}}
-							<td> {{d}} {{t}}</td>
+							<td> {{extrainfo.d}} {{extrainfo.t}}</td>
 						{{/if}}
 
 						<td class="text-capitalize {{#if visitor_winning}} winning {{/if}}"
 							style="text-align:left">
-							{{vnn}} {{#if visitor_pos}} &#127944;{{/if}}
+							{{extrainfo.vnn}} {{#if visitor_pos}} &#127944;{{/if}}
 						</td>
 						<td class="text-capitalize {{#if home_winning}} winning {{/if}}"
 							style="text-align:left">
-							{{hnn}} {{#if home_pos}} &#127944;{{/if}}
+							{{extrainfo.hnn}} {{#if home_pos}} &#127944;{{/if}}
 						</td>
 
-						<td style="text-align:left">{{extrainfo.away.score.T}}</td>
-						<td style="text-align:left">{{extrainfo.home.score.T}}</td>
+						<td style="text-align:left">{{away.score.T}}</td>
+						<td style="text-align:left">{{home.score.T}}</td>
 
 						<td style="text-align:right">
 						<button type="button" id="remove-game-btn" 
@@ -69,19 +69,16 @@
 
 					<tr id=c{{eid}}><td colspan="6" style="padding: 0" class="nfl-collapse">
 						<div id=collapse-{{eid}} class="collapse">
-							<small>
-								{{#unless extrainfo}}
-									API doesn`t update until Tuesday Midnight.
-								{{/unless}}
+							<small style="padding: 5px">
 
-								{{#if extrainfo.media.tv}}
-									<p> Game on {{extrainfo.media.tv}} </p>
+								{{#if media.tv}}
+									<p> Game on {{media.tv}} </p>
 								{{/if}}
 
 								{{#if playing}}
 									<p>
-									{{extrainfo.posteam}} ball on the {{extrainfo.yl}} | 
-									{{extrainfo.down}} & {{extrainfo.togo}} 
+									{{posteam}} ball on the {{yl}} | 
+									{{down}} & {{togo}} 
 									</p>
 								{{/if}}
 
@@ -100,22 +97,22 @@
 										</thead>
 										<tbody>
 											<tr>
-												<td class="text-left col-md-6">{{vnn}}</td>
-												<td class="text-right col-md-1">{{extrainfo.away.score.[1]}}</td>
-												<td class="text-right col-md-1">{{extrainfo.away.score.[2]}}</td>
-												<td class="text-right col-md-1">{{extrainfo.away.score.[3]}}</td>
-												<td class="text-right col-md-1">{{extrainfo.away.score.[4]}}</td>
-												<td class="text-right col-md-1">{{extrainfo.away.score.[5]}}</td>
-												<td class="text-right col-md-1">{{extrainfo.away.score.[T]}}</td>
+												<td class="text-left col-md-6">{{extrainfo.vnn}}</td>
+												<td class="text-right col-md-1">{{away.score.[1]}}</td>
+												<td class="text-right col-md-1">{{away.score.[2]}}</td>
+												<td class="text-right col-md-1">{{away.score.[3]}}</td>
+												<td class="text-right col-md-1">{{away.score.[4]}}</td>
+												<td class="text-right col-md-1">{{away.score.[5]}}</td>
+												<td class="text-right col-md-1">{{away.score.[T]}}</td>
 											</tr>
 											<tr>
-												<td class="text-left col-md-6">{{hnn}}</td>
-												<td class="text-right col-md-1">{{extrainfo.home.score.[1]}}</td>
-												<td class="text-right col-md-1">{{extrainfo.home.score.[2]}}</td>
-												<td class="text-right col-md-1">{{extrainfo.home.score.[3]}}</td>
-												<td class="text-right col-md-1">{{extrainfo.home.score.[4]}}</td>
-												<td class="text-right col-md-1">{{extrainfo.home.score.[5]}}</td>
-												<td class="text-right col-md-1">{{extrainfo.home.score.[T]}}</td>
+												<td class="text-left col-md-6">{{extrainfo.hnn}}</td>
+												<td class="text-right col-md-1">{{home.score.[1]}}</td>
+												<td class="text-right col-md-1">{{home.score.[2]}}</td>
+												<td class="text-right col-md-1">{{home.score.[3]}}</td>
+												<td class="text-right col-md-1">{{home.score.[4]}}</td>
+												<td class="text-right col-md-1">{{home.score.[5]}}</td>
+												<td class="text-right col-md-1">{{home.score.[T]}}</td>
 											</tr>
 										</tbody>
 									</table>

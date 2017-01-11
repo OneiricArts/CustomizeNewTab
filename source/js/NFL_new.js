@@ -4,7 +4,7 @@ class NFL extends Sport {
   constructor() {
     super();
     this.dataKey = 'NFL';
-    this.schedule_url = 'http://www.nfl.com/liveupdate/scorestrip/ss.json';
+    this.schedule_url = 'http://www.nfl.com/liveupdate/scores/scores.json';
   }
 
   writeToTemplate(error = false) {
@@ -21,6 +21,7 @@ class NFL extends Sport {
     $.getJSON(url, (result) => {
       this.massageData.call(this, result, callback);
     }).fail((result) => {
+      console.log(`NFL getJson fail: ${JSON.stringify(result)}`);
     });
     // TODO handle timeout
   }
@@ -43,76 +44,194 @@ class NFL extends Sport {
 
   massageData(data, callback) {
     try {
-      const url = 'http://www.nfl.com/liveupdate/scores/scores.json';
-      $.getJSON(url, (result) => {
-        const combinedData = data;
+      let specificUrl;
+      const today = new Date();
+      const playOffStartDate = new Date(2017, 0, 7);
 
-        for (let i = 0; i < combinedData.gms.length; i += 1) {
-          combinedData.gms[i].extrainfo = result[combinedData.gms[i].eid];
+      if (today > playOffStartDate) {
+        const firstKey = Object.keys(data)[0];
+        const gameDate = new Date(firstKey.substring(0, 4),
+          (parseInt(firstKey.substring(4, 6), 2) - 1), firstKey.substring(6, 8));
 
-          if (combinedData.gms[i].extrainfo.home.score[1] !== null) {
-            combinedData.gms[i].scoreTable = true;
-          }
 
-          if (!isNaN(combinedData.gms[i].q)) {
-            combinedData.gms[i].playing = true;
-          }
+        // console.log(gameDate);
+        // console.log(playOffStartDate);
 
-          // tweaking looks, overtime is too long
-          if (combinedData.gms[i].extrainfo.qtr === 'final overtime') {
-            combinedData.gms[i].extrainfo.qtr = 'final OT';
-          }
+        const playoffWeekNum = Math.round((gameDate - playOffStartDate) / 604800000) + 18;
+        console.log(playoffWeekNum);
 
-          // only show first letter of day?
-          // combinedData.gms[i].d = combinedData.gms[i].d.substring(0,1);
+        specificUrl = `http://www.nfl.com/ajax/scorestrip?season=2016&seasonType=POST&week=${playoffWeekNum}`;
 
-          // local time
-          const options = {};
-          const hours = parseInt(combinedData.gms[i].t.split(':')[0], 10);
+        const self = this;
 
-          if (hours >= 0 && hours <= 10) {
-            options.ampm = 'PM';
-          } else {
-            options.ampm = 'AM';
-          }
+        fetch(specificUrl).then(response => response.text())
+          .then((text) => {
+            let jsonObj = $.xml2json(text);
+            const combinedData = {};
+            combinedData.gms = [];
 
-          combinedData.gms[i].t = this.toLocalTime(combinedData.gms[i].t.split(':')[0],
-            combinedData.gms[i].t.split(':')[1], options).split(' ')[0];
+            // for (const key of Object.keys(data)) {
+            //   combinedData.gms.push(data[key]);
+            //   combinedData.gms[combinedData.gms.length - 1].eid = key;
+            // }
 
-          // label whos winning
-          if (combinedData.gms[i].extrainfo.home.score.T !== null) {
-            const homeScore = parseInt(combinedData.gms[i].extrainfo.home.score.T, 10);
-            const visitorScore = parseInt(combinedData.gms[i].extrainfo.away.score.T, 10);
+            Object.keys(data).sort().forEach(function (key) {
+              combinedData.gms.push(data[key]);
+              combinedData.gms[combinedData.gms.length - 1].eid = key;
+            });
 
-            if (homeScore > visitorScore) {
-              combinedData.gms[i].home_winning = true;
+            combinedData.w = 18;
+
+            for (let i = 0; i < combinedData.gms.length; i += 1) {
+              if (jsonObj.gms.g[i] && (combinedData.gms[i].eid === jsonObj.gms.g[i].eid)) {
+                combinedData.gms[i].extrainfo = jsonObj.gms.g[i];
+              }
             }
-            if (visitorScore > homeScore) {
-              combinedData.gms[i].visitor_winning = true;
+
+            self.labelScheduleData(combinedData);
+
+            console.log(combinedData.gms[1]);
+
+            callback.call(self, combinedData);
+          });
+      } else {
+        specificUrl = 'http://www.nfl.com/liveupdate/scorestrip/ss.json';
+        $.getJSON(specificUrl, (result) => {
+          const combinedData = data;
+
+          for (let i = 0; i < combinedData.gms.length; i += 1) {
+            combinedData.gms[i].extrainfo = result[combinedData.gms[i].eid];
+
+            if (combinedData.gms[i].extrainfo.home.score[1] !== null) {
+              combinedData.gms[i].scoreTable = true;
             }
-          }
 
-          // who has possession
-          if (combinedData.gms[i].playing &&
-            combinedData.gms[i].extrainfo.posteam === combinedData.gms[i].extrainfo.home.abbr) {
-            combinedData.gms[i].home_pos = true;
-          } else if (combinedData.gms[i].playing &&
-            combinedData.gms[i].extrainfo.posteam === combinedData.gms[i].extrainfo.away.abbr) {
-            combinedData.gms[i].visitor_pos = true;
-          }
+            if (!isNaN(combinedData.gms[i].q)) {
+              combinedData.gms[i].playing = true;
+            }
 
-          if (devEnv) {
-            // favorite team
-            if (combinedData.gms[i].h === 'SF' || combinedData.gms[i].v === 'SF' ||
+            // tweaking looks, overtime is too long
+            if (combinedData.gms[i].extrainfo.qtr === 'final overtime') {
+              combinedData.gms[i].extrainfo.qtr = 'final OT';
+            }
+
+            // only show first letter of day?
+            // combinedData.gms[i].d = combinedData.gms[i].d.substring(0,1);
+
+            // local time
+            const options = {};
+            const hours = parseInt(combinedData.gms[i].t.split(':')[0], 10);
+
+            if (hours >= 0 && hours <= 10) {
+              options.ampm = 'PM';
+            } else {
+              options.ampm = 'AM';
+            }
+
+            combinedData.gms[i].t = this.toLocalTime(combinedData.gms[i].t.split(':')[0],
+              combinedData.gms[i].t.split(':')[1], options).split(' ')[0];
+
+            // label whos winning
+            if (combinedData.gms[i].extrainfo.home.score.T !== null) {
+              const homeScore = parseInt(combinedData.gms[i].extrainfo.home.score.T, 10);
+              const visitorScore = parseInt(combinedData.gms[i].extrainfo.away.score.T, 10);
+
+              if (homeScore > visitorScore) {
+                combinedData.gms[i].home_winning = true;
+              }
+              if (visitorScore > homeScore) {
+                combinedData.gms[i].visitor_winning = true;
+              }
+            }
+
+            // who has possession
+            if (combinedData.gms[i].playing &&
+              combinedData.gms[i].extrainfo.posteam === combinedData.gms[i].extrainfo.home.abbr) {
+              combinedData.gms[i].home_pos = true;
+            } else if (combinedData.gms[i].playing &&
+              combinedData.gms[i].extrainfo.posteam === combinedData.gms[i].extrainfo.away.abbr) {
+              combinedData.gms[i].visitor_pos = true;
+            }
+
+            if (devEnv) {
+              // favorite team
+              if (combinedData.gms[i].h === 'SF' || combinedData.gms[i].v === 'SF' ||
                 combinedData.gms[i].h === 'NE' || combinedData.gms[i].v === 'NE') {
-              combinedData.gms[i].fav_team = true;
+                combinedData.gms[i].fav_team = true;
+              }
             }
           }
-        }
-        callback.call(this, combinedData);
-      });
+          callback.call(this, combinedData);
+        }).fail((result) => {
+          console.log(`failed with: ${specificUrl}`);
+        });
+      }
     } catch (e) {
       console.log(`fudge cakes -- massageData${e}`);
+    }
+  }
+
+  labelScheduleData(schedule) {
+    for (let i = 0; i < schedule.gms.length; i += 1) {
+
+      if (schedule.gms[i].home.score[1] !== null) {
+        schedule.gms[i].scoreTable = true;
+      }
+
+      if (!isNaN(schedule.gms[i].q)) {
+        schedule.gms[i].playing = true;
+      }
+
+      // tweaking looks, overtime is too long
+      if (schedule.gms[i].extrainfo.qtr === 'final overtime') {
+        schedule.gms[i].extrainfo.qtr = 'final OT';
+      }
+
+      // only show first letter of day?
+      // schedule.gms[i].d = schedule.gms[i].d.substring(0,1);
+
+      // local time
+      const options = {};
+      const hours = parseInt(schedule.gms[i].extrainfo.t.split(':')[0], 10);
+
+      if (hours >= 0 && hours <= 10) {
+        options.ampm = 'PM';
+      } else {
+        options.ampm = 'AM';
+      }
+
+      schedule.gms[i].t = this.toLocalTime(schedule.gms[i].extrainfo.t.split(':')[0],
+        schedule.gms[i].extrainfo.t.split(':')[1], options).split(' ')[0];
+
+      // label whos winning
+      if (schedule.gms[i].home.score.T !== null) {
+        const homeScore = parseInt(schedule.gms[i].home.score.T, 10);
+        const visitorScore = parseInt(schedule.gms[i].away.score.T, 10);
+
+        if (homeScore > visitorScore) {
+          schedule.gms[i].home_winning = true;
+        }
+        if (visitorScore > homeScore) {
+          schedule.gms[i].visitor_winning = true;
+        }
+      }
+
+      // who has possession
+      if (schedule.gms[i].playing &&
+        schedule.gms[i].posteam === schedule.gms[i].home.abbr) {
+        schedule.gms[i].home_pos = true;
+      } else if (schedule.gms[i].playing &&
+        schedule.gms[i].posteam === schedule.gms[i].away.abbr) {
+        schedule.gms[i].visitor_pos = true;
+      }
+
+      if (devEnv) {
+        // favorite team
+        if (schedule.gms[i].home.abbr === 'SF' || schedule.gms[i].away.abbr === 'SF' ||
+          schedule.gms[i].home.abbr === 'NE' || schedule.gms[i].away.abbr === 'NE') {
+          schedule.gms[i].fav_team = true;
+        }
+      }
     }
   }
 
