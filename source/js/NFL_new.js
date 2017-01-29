@@ -66,31 +66,45 @@ class NFL extends Sport {
 
         fetch(specificUrl).then(response => response.text())
           .then((text) => {
-            let jsonObj = $.xml2json(text);
+            const jsonObj = $.xml2json(text);
             const combinedData = {};
             combinedData.gms = [];
 
-            // for (const key of Object.keys(data)) {
+            console.log(jsonObj);
+
+            if (jsonObj.gms) {
+              for (let i = 0; i < jsonObj.gms.g.length; i += 1) {
+                combinedData.gms.push(data[jsonObj.gms.g[i].eid]);
+                combinedData.gms[i].extrainfo = jsonObj.gms.g[i];
+                combinedData.gms[i].eid = jsonObj.gms.g[i].eid;
+              }
+            } else {
+              for (const key of Object.keys(data).sort()) {
+                combinedData.gms.push(data[key]);
+                combinedData.gms[combinedData.gms.length - 1].eid = key;
+              }
+            }
+
+
+            // for (const key of Object.keys(data).sort()) {
             //   combinedData.gms.push(data[key]);
             //   combinedData.gms[combinedData.gms.length - 1].eid = key;
             // }
 
-            Object.keys(data).sort().forEach(function (key) {
-              combinedData.gms.push(data[key]);
-              combinedData.gms[combinedData.gms.length - 1].eid = key;
-            });
+            combinedData.w = playoffWeekNum;
 
-            combinedData.w = 18;
-
-            for (let i = 0; i < combinedData.gms.length; i += 1) {
-              if (jsonObj.gms.g[i] && (combinedData.gms[i].eid === jsonObj.gms.g[i].eid)) {
-                combinedData.gms[i].extrainfo = jsonObj.gms.g[i];
-              }
-            }
+            // for (let i = 0; i < combinedData.gms.length; i += 1) {
+            //   if (jsonObj.gms.g[i] && (combinedData.gms[i].eid === jsonObj.gms.g[i].eid)) {
+            //     combinedData.gms[i].extrainfo = jsonObj.gms.g[i];
+            //   }
+            //   else {
+            //     console.log('===> ' + combinedData.gms[i].eid + ' ' + jsonObj.gms.g[i].eid);
+            //   }
+            // }
 
             self.labelScheduleData(combinedData);
 
-            console.log(combinedData.gms[1]);
+            console.log(combinedData.gms[0]);
 
             callback.call(self, combinedData);
           });
@@ -164,6 +178,7 @@ class NFL extends Sport {
           callback.call(this, combinedData);
         }).fail((result) => {
           console.log(`failed with: ${specificUrl}`);
+          console.log(result);
         });
       }
     } catch (e) {
@@ -171,6 +186,8 @@ class NFL extends Sport {
     }
   }
 
+  /* eslint no-param-reassign: ["error", { "props": false }] */
+  // this function alters passed object
   labelScheduleData(schedule) {
     for (let i = 0; i < schedule.gms.length; i += 1) {
 
@@ -178,13 +195,14 @@ class NFL extends Sport {
         schedule.gms[i].scoreTable = true;
       }
 
-      if (!isNaN(schedule.gms[i].q)) {
+      // if (!isNaN(schedule.gms[i].extrainfo.q) || schedule.gms[i].extrainfo.q === 'P') {
+      if (schedule.gms[i].qtr && !schedule.gms[i].qtr.includes('Final')) {
         schedule.gms[i].playing = true;
       }
 
       // tweaking looks, overtime is too long
-      if (schedule.gms[i].extrainfo.qtr === 'final overtime') {
-        schedule.gms[i].extrainfo.qtr = 'final OT';
+      if (schedule.gms[i].qtr === 'final overtime') {
+        schedule.gms[i].qtr = 'final OT';
       }
 
       // only show first letter of day?
@@ -192,16 +210,20 @@ class NFL extends Sport {
 
       // local time
       const options = {};
-      const hours = parseInt(schedule.gms[i].extrainfo.t.split(':')[0], 10);
+      if (schedule.gms[i].extrainfo) {
+        const hours = parseInt(schedule.gms[i].extrainfo.t.split(':')[0], 10);
 
-      if (hours >= 0 && hours <= 10) {
-        options.ampm = 'PM';
+        if (hours >= 0 && hours <= 10) {
+          options.ampm = 'PM';
+        } else {
+          options.ampm = 'AM';
+        }
+
+        schedule.gms[i].t = this.toLocalTime(schedule.gms[i].extrainfo.t.split(':')[0],
+          schedule.gms[i].extrainfo.t.split(':')[1], options).split(' ')[0];
       } else {
-        options.ampm = 'AM';
+        schedule.gms[i].t = `${schedule.gms[i].eid.substring(4, 6)}.${schedule.gms[i].eid.substring(6, 8)}`;
       }
-
-      schedule.gms[i].t = this.toLocalTime(schedule.gms[i].extrainfo.t.split(':')[0],
-        schedule.gms[i].extrainfo.t.split(':')[1], options).split(' ')[0];
 
       // label whos winning
       if (schedule.gms[i].home.score.T !== null) {
@@ -250,7 +272,7 @@ class NFL extends Sport {
     $(`#c${id}`).remove();
 
     for (let i = 0; i < self.data.gms.length; i += 1) {
-      if (self.data.gms[i].eid == id) { // === results in bug
+      if (self.data.gms[i].eid === id) { // === results in bug ... used to?!!!!!!
         self.data.gms[i].hidden = true;
         break;
       }

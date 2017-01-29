@@ -44,16 +44,32 @@
 								<td class="text-capitalize"> {{qtr}}</td>
 							{{/if}}
 						{{else}}
-							<td> {{extrainfo.d}} {{extrainfo.t}}</td>
+							{{#if extrainfo}}
+								<td> {{extrainfo.d}} {{extrainfo.t}}</td>
+							{{else}}
+								<td>{{t}}</td>
+							{{/if}}
 						{{/if}}
 
 						<td class="text-capitalize {{#if visitor_winning}} winning {{/if}}"
 							style="text-align:left">
-							{{extrainfo.vnn}} {{#if visitor_pos}} &#127944;{{/if}}
+							{{#if extrainfo}}
+								{{extrainfo.vnn}} 
+							{{else}}
+								{{away.abbr}}
+							{{/if}} 
+							
+							{{#if visitor_pos}} &#127944;{{/if}}
 						</td>
 						<td class="text-capitalize {{#if home_winning}} winning {{/if}}"
 							style="text-align:left">
-							{{extrainfo.hnn}} {{#if home_pos}} &#127944;{{/if}}
+							{{#if extrainfo}}
+								{{extrainfo.hnn}} 
+							{{else}}
+								{{home.abbr}}
+							{{/if}}
+
+							{{#if home_pos}} &#127944;{{/if}}
 						</td>
 
 						<td style="text-align:left">{{away.score.T}}</td>
