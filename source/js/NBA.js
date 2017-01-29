@@ -153,6 +153,20 @@ NBA.prototype.massageData = function(newData, callback) {
 				newData.sports_content.games.game[i].period_time.game_clock = "";
 		}
 
+		//console.log(JSON.stringify(newData.sports_content.games.game[i].period_time));
+
+		// Cleaning up time column, currently can get too long
+		if (newData.sports_content.games.game[i].period_time.period_status.includes('Qtr') &&
+			!newData.sports_content.games.game[i].period_time.period_status.includes('End')) {
+			// #th Qtr ==> #Q 
+			newData.sports_content.games.game[i].period_time.period_status = 
+				`${newData.sports_content.games.game[i].period_time.period_value}Q`;
+		} else if(newData.sports_content.games.game[i].period_time.period_status.includes('End')) {
+			// End of 1st Qtr ==> End of 1st 
+			newData.sports_content.games.game[i].period_time.period_status = 
+				newData.sports_content.games.game[i].period_time.period_status.replace('Qtr', '');
+		}
+
 		// game is in overtime?
 		var overtime = parseInt(newData.sports_content.games.game[i].period_time.period_value);
 		var status = parseInt(newData.sports_content.games.game[i].period_time.game_status);
