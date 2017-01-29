@@ -58,7 +58,7 @@ var libs = [
 	'source/libs/bootstrap-4.0.0-dist/js/bootstrap.min.js',
 	//'source/libs/bootstrap_custom/js/bootstrap.min.js',
 	//'source/libs/mdl/material.min.js',
-	//'source/libs/jquery.xml2json.js',
+	'source/libs/jquery.xml2json.js',
 	//'source/libs/countdown.min.js',
 	'source/libs/handlebars.runtimev4.0.5.min.js',
 ];
