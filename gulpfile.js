@@ -141,13 +141,11 @@ function minifyHTML() {
 
 	return gulp.src('source/new_tab.html')
 		.pipe(inlinesource())
-		.pipe(inject(
-			gulp.src(libsToInclude, 
-				{read: false})//.pipe(print())
-				,{
-					ignorePath: 'Chrome/src/', 
-					addRootSlash: false
-				})
+		.pipe(
+			inject(
+				gulp.src(libsToInclude, {read: false})/*.pipe(print())*/ ,  // arg 1
+				{ ignorePath: 'Chrome/src/', addRootSlash: false }			// arg 2
+			)
 		)
 		.pipe(htmlmin({
 			collapseWhitespace: true, 
@@ -198,10 +196,13 @@ gulp.task('compress', gulp.series(handlebars, concatLibs, uglifyJS, minifyHTML, 
 gulp.task('default', gulp.series('dev'));
 
 // zips the extension with the name of current version # from the manifest file
-gulp.task('release', function() {
+gulp.task('zip', function() {
 	var json = JSON.parse(fs.readFileSync('./Chrome/manifest.json'));
 	var file_name = json.version.split('.').join('_');
 
+	// var manifest = require('./Chrome/manifest.json');
+	// var file_name = manifest.version;
+	
 	console.log(file_name);
 
 	return gulp.src('Chrome/**')
