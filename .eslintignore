@@ -1,5 +1,3 @@
-# JS files not meant for ESLint:
-gulpfile.js
 # JS files not yet ready for linting:
 pageHandler.js
 Links.js

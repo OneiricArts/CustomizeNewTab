@@ -1,46 +1,43 @@
-/*****************************************************************************
-  REQUIREMENTS (no package file, install these yourself for now)
-******************************************************************************/
 
-var gulp = require('gulp');
-var exec = require('child_process').exec;
-var htmlmin = require('gulp-htmlmin');
-var uglify = require("gulp-uglify");
-var concat = require('gulp-concat');
-var fs = require('fs');
-var zip = require('gulp-zip');
-var babel = require('gulp-babel');
-var util = require('gulp-util');
-var inlinesource = require('gulp-inline-source');
-var inject = require('gulp-inject');
-var series = require('stream-series');
-var print = require('gulp-print');
+const gulp = require('gulp');
+const exec = require('child_process').exec;
+const htmlmin = require('gulp-htmlmin');
+const uglify = require('gulp-uglify');
+const concat = require('gulp-concat');
+const fs = require('fs');
+const zip = require('gulp-zip');
+const babel = require('gulp-babel');
+const util = require('gulp-util');
+const inlinesource = require('gulp-inline-source');
+const inject = require('gulp-inject');
+// const series = require('stream-series');
+// const print = require('gulp-print');
 
-/*****************************************************************************
+/** ***********************************************************************************************
  * Source files
-******************************************************************************/
+***************************************************************************************************/
 
 // all js files needed, in order of inclusion
-var jsfiles = [
-  //'source/js/*.js'
+const jsfiles = [
+  // 'source/js/*.js'
   'source/js/Base.js',
   'source/js/Sports.js',
   'source/js/NBA.js',
-  //'source/js/NFLoff.js',
-  //'source/js/NFLnews.js',
+  // 'source/js/NFLoff.js',
+  // 'source/js/NFLnews.js',
   'source/js/Links.js',
-  //'source/js/bookmarksBar.js',
+  // 'source/js/bookmarksBar.js',
   'source/js/widget.js',
   'source/js/sport.js',
   'source/js/NHL.js',
   'source/js/MLB.js',
   'source/js/NFL_new.js',
   'source/js/pageHandler.js',
-  'source/js/googleAnalytics.js'
+  'source/js/googleAnalytics.js',
 ];
 
 // ES6 files need to be put through babel before they can be uglified
-var jsfilesES6 = [
+const jsfilesES6 = [
   'source/js/widget.js',
   'source/js/sport.js',
   'source/js/NHL.js',
@@ -50,101 +47,98 @@ var jsfilesES6 = [
 ];
 
 // libraries to be included, in order
-var libs = [
+const libs = [
   'source/libs/jquery-2.1.4.min.js',
-  //'source/libs/jquery-ui.min.js', // used to be needed because of $.highlight
-  //'source/libs/bootstrap-3.3.5-dist/js/bootstrap.min.js',
+  // 'source/libs/jquery-ui.min.js', // used to be needed because of $.highlight
+  // 'source/libs/bootstrap-3.3.5-dist/js/bootstrap.min.js',
   'source/libs/tether.min.js',
   'source/libs/bootstrap-4.0.0-dist/js/bootstrap.min.js',
-  //'source/libs/bootstrap_custom/js/bootstrap.min.js',
-  //'source/libs/mdl/material.min.js',
+  // 'source/libs/bootstrap_custom/js/bootstrap.min.js',
+  // 'source/libs/mdl/material.min.js',
   'source/libs/jquery.xml2json.js',
-  //'source/libs/countdown.min.js',
+  // 'source/libs/countdown.min.js',
   'source/libs/handlebars.runtimev4.0.5.min.js',
 ];
 
 // css files, will be inlined
-var cssFiles = [
-  //'source/libs/bootstrap-3.3.5-dist/css/bootstrap.min.css',
+const cssFiles = [
+  // 'source/libs/bootstrap-3.3.5-dist/css/bootstrap.min.css',
   'source/libs/bootstrap-4.0.0-dist/css/bootstrap.min.css',
-  //'source/libs/mdl/material.min.css',
+  // 'source/libs/mdl/material.min.css',
 ];
 
 
-/*****************************************************************************
- * Copy included files into /src/ where they are part of the dev loaded
- * extension in Chrome
-******************************************************************************/
+/** ***********************************************************************************************
+ * Copy relevant files into /src/ where they are part of the dir that is loaded  in Chrome
+***************************************************************************************************/
 
-function moveLibs () {
+function moveLibs() {
   return gulp.src(libs)
   .pipe(concat('libs.min.js'))
   .pipe(gulp.dest('Chrome/src/'));
-};
+}
 
 function moveJS() {
   return gulp.src(jsfiles)
   .pipe(gulp.dest('Chrome/src/'));
-};
+}
 
 function moveCSS() {
   return gulp.src(cssFiles)
   .pipe(gulp.dest('Chrome/src/'));
-};
+}
 
 function moveHTML() {
-  var myJsFiles = ['Chrome/src/libs.min.js', 'Chrome/src/templates.js'];
+  const myJsFiles = ['Chrome/src/libs.min.js', 'Chrome/src/templates.js'];
 
   // inject (  src([], {read: false})   , optionsForInject    )
   return gulp.src('source/new_tab.html')
     .pipe(inject(
-      gulp.src( myJsFiles.concat(jsfiles),
-      {
-        read: false,
-      })//.pipe(print())
+      gulp.src(myJsFiles.concat(jsfiles),
+        {
+          read: false,
+        })// .pipe(print())
       , {
         ignorePath: ['source/js/', 'source/libs/', 'source/libs/bootstrap-4.0.0-dist/js/',
         'Chrome/src/'],
-        addRootSlash: false
+        addRootSlash: false,
       }
     ))
     .pipe(inject(
       gulp.src(cssFiles,
-      {
-        read: false,
-        //'cwd': __dirname + '/Chrome/src'
-      }),
+        {
+          read: false,
+        // 'cwd': __dirname + '/Chrome/src'
+        }),
       {
         ignorePath: 'source/libs/bootstrap-4.0.0-dist/css/',
-        addRootSlash: false
+        addRootSlash: false,
       }
     ))
     .pipe(gulp.dest('Chrome/src/'));
-};
+}
 
-/*****************************************************************************
+/** ***********************************************************************************************
  * Transform source files into ones that will go into production
-******************************************************************************/
+***************************************************************************************************/
 
 function handlebars(cb) {
-  return exec('handlebars -m ./source/templates/> ./Chrome/src/templates.js',
-    function (err, stdout, stderr) {
-      console.log(stdout);
-      console.log(stderr);
-      cb(err);
+  return exec('handlebars -m ./source/templates/> ./Chrome/src/templates.js', (err, stdout, stderr) => {
+    console.log(stdout);
+    console.log(stderr);
+    cb(err);
   });
-};
+}
 
 function minifyHTML() {
-
-  var libsToInclude = ['Chrome/src/libs.min.js', 'Chrome/src/templates.js', 'Chrome/src/app.min.js'];
+  const libsToInclude = ['Chrome/src/libs.min.js', 'Chrome/src/templates.js', 'Chrome/src/app.min.js'];
 
   return gulp.src('source/new_tab.html')
     .pipe(inlinesource())
     .pipe(
       inject(
-        gulp.src(libsToInclude, {read: false})/*.pipe(print())*/ ,  // arg 1
-        { ignorePath: 'Chrome/src/', addRootSlash: false }			// arg 2
+        gulp.src(libsToInclude, { read: false }) /* .pipe(print())*/, // arg 1
+        { ignorePath: 'Chrome/src/', addRootSlash: false } // arg 2
       )
     )
     .pipe(htmlmin({
@@ -154,70 +148,71 @@ function minifyHTML() {
       //removeStyleLinkTypeAttributes: true,
       //removeScriptTypeAttributes: true
     }))
-  .pipe(gulp.dest('Chrome/src/'))
-};
+    .pipe(gulp.dest('Chrome/src/'));
+}
 
 function uglifyJS() {
   return gulp.src(jsfiles)
     .pipe(babel({
       only: jsfilesES6,
-      presets: ['es2015']
+      presets: ['es2015'],
     }))
     .pipe(concat('app.min.js'))
     .pipe(uglify().on('error', util.log))
     .pipe(gulp.dest('Chrome/src/'));
-};
+}
 
 function concatLibs() {
   // libraries are already minified, so just combine
   return gulp.src(libs)
     .pipe(concat('libs.min.js'))
     .pipe(gulp.dest('Chrome/src/'));
-};
+}
 
-/*****************************************************************************
- * Gulp tasks that can be called from cl or Visual Studio Code
-******************************************************************************/
+/** ***********************************************************************************************
+ * Helper functions for tasks
+***************************************************************************************************/
 
-// no effeciency steps, can see error lines, etc.
-gulp.task('dev', gulp.series(handlebars, moveLibs, moveJS, moveCSS, moveHTML, function watch() {
+function watchCode() {
   gulp.watch(['./source/templates/*.handlebars'], handlebars);
   gulp.watch(jsfiles, moveJS);
   gulp.watch(['./source/*.html'], moveHTML);
-}));
+}
+
+/** ***********************************************************************************************
+ * Gulp tasks that can be called from cl or Visual Studio Code
+***************************************************************************************************/
+
+// no effeciency steps, can see error lines, etc.
+gulp.task('dev', gulp.series(handlebars, moveLibs, moveJS, moveCSS, moveHTML, watchCode));
 
 // full effeciency workflow
-gulp.task('compress', gulp.series(handlebars, concatLibs, uglifyJS, minifyHTML, function watch() {
-  gulp.watch(['./source/templates/*.handlebars'], handlebars);
-  gulp.watch(jsfiles, uglifyJS);
-  gulp.watch(['./source/*.html'], minifyHTML);
-}));
+gulp.task('compress', gulp.series(handlebars, concatLibs, uglifyJS, minifyHTML, watchCode));
 
 gulp.task('default', gulp.series('dev'));
 
 // zips the extension with the name of current version # from the manifest file
-gulp.task('zip', function() {
-  var json = JSON.parse(fs.readFileSync('./Chrome/manifest.json'));
-  var file_name = json.version.split('.').join('_');
+gulp.task('zip', () => {
+  const json = JSON.parse(fs.readFileSync('./Chrome/manifest.json'));
+  const fileName = json.version.split('.').join('_');
 
   // var manifest = require('./Chrome/manifest.json');
-  // var file_name = manifest.version;
+  // var fileName = manifest.version;
 
-  console.log(file_name);
+  console.log(fileName);
 
   return gulp.src('Chrome/**')
-    .pipe(zip(file_name+'.zip'))
+    .pipe(zip(`${fileName}.zip`))
     .pipe(gulp.dest('.'));
 });
 
 // TODO: right now have to run dev/compress twice after cleaning
-gulp.task('clean', function(cb) {
+gulp.task('clean', (cb) => {
   // everything built goes into /src
-  exec('rm Chrome/src/*',
-    function (err, stdout, stderr) {
-      console.log(stdout);
-      console.log(stderr);
-      cb(err);
+  exec('rm Chrome/src/*', (err, stdout, stderr) => {
+    console.log(stdout);
+    console.log(stderr);
+    cb(err);
   });
 
   console.log('cleaned Chrome/src/');
