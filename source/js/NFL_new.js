@@ -190,13 +190,14 @@ class NFL extends Sport {
   // this function alters passed object
   labelScheduleData(schedule) {
     for (let i = 0; i < schedule.gms.length; i += 1) {
-
+      // can't check for score table in handlebars, because it 0 is a valid entry,
+      // but if(0) is false
       if (schedule.gms[i].home.score[1] !== null) {
         schedule.gms[i].scoreTable = true;
       }
 
       // if (!isNaN(schedule.gms[i].extrainfo.q) || schedule.gms[i].extrainfo.q === 'P') {
-      if (schedule.gms[i].qtr && !schedule.gms[i].qtr.includes('Final')) {
+      if (schedule.gms[i].qtr && !schedule.gms[i].qtr.includes('Final') && !isNaN(schedule.gms[i].qtr)) {
         schedule.gms[i].playing = true;
       }
 

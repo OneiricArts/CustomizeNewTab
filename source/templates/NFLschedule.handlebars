@@ -113,7 +113,11 @@
 										</thead>
 										<tbody>
 											<tr>
-												<td class="text-left col-md-6">{{extrainfo.vnn}}</td>
+											
+												<td class="text-left col-md-6">
+													{{#if extrainfo}} {{extrainfo.vnn}} 
+													{{else}} {{away.abbr}} {{/if}} 
+												</td>
 												<td class="text-right col-md-1">{{away.score.[1]}}</td>
 												<td class="text-right col-md-1">{{away.score.[2]}}</td>
 												<td class="text-right col-md-1">{{away.score.[3]}}</td>
@@ -122,7 +126,10 @@
 												<td class="text-right col-md-1">{{away.score.[T]}}</td>
 											</tr>
 											<tr>
-												<td class="text-left col-md-6">{{extrainfo.hnn}}</td>
+												<td class="text-left col-md-6">
+													{{#if extrainfo}} {{extrainfo.hnn}} 
+													{{else}} {{home.abbr}} {{/if}} 
+												</td>
 												<td class="text-right col-md-1">{{home.score.[1]}}</td>
 												<td class="text-right col-md-1">{{home.score.[2]}}</td>
 												<td class="text-right col-md-1">{{home.score.[3]}}</td>
