@@ -144,7 +144,7 @@ pageHandeler.prototype.loadDev = function(){
 	$('#_dev_btn').show();
 	$('#_dev_btn').on('click', {self: this}, function(event) {
 		var self = event.data.self;
-		self.data.message = true;
+		//self.data.message = true;
 		self.data = null;
 		self.saveData();
 		location.reload();
