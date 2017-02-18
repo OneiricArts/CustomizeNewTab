@@ -48,6 +48,16 @@ class NFL extends Sport {
       const today = new Date();
       const playOffStartDate = new Date(2017, 0, 7);
 
+      /* TODO: REMOVE */
+      const imlazy = true;
+      if (imlazy) {
+        const combinedData = {};
+        combinedData.gms = [];
+        callback.call(this, combinedData);
+        return;
+      }
+      /* /TODO */
+
       if (today > playOffStartDate) {
         const firstKey = Object.keys(data)[0];
         const gameDate = new Date(firstKey.substring(0, 4),
