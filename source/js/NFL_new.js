@@ -51,7 +51,7 @@ class NFL extends Sport {
       if (today > playOffStartDate) {
         const firstKey = Object.keys(data)[0];
         const gameDate = new Date(firstKey.substring(0, 4),
-          (parseInt(firstKey.substring(4, 6), 2) - 1), firstKey.substring(6, 8));
+          (parseInt(firstKey.substring(4, 6), 10) - 1), firstKey.substring(6, 8));
 
 
         // console.log(gameDate);
@@ -73,10 +73,18 @@ class NFL extends Sport {
             console.log(jsonObj);
 
             if (jsonObj.gms) {
-              for (let i = 0; i < jsonObj.gms.g.length; i += 1) {
-                combinedData.gms.push(data[jsonObj.gms.g[i].eid]);
-                combinedData.gms[i].extrainfo = jsonObj.gms.g[i];
-                combinedData.gms[i].eid = jsonObj.gms.g[i].eid;
+              if (jsonObj.gms.g.length) {
+                for (let i = 0; i < jsonObj.gms.g.length; i += 1) {
+                  combinedData.gms.push(data[jsonObj.gms.g[i].eid]);
+                  combinedData.gms[i].extrainfo = jsonObj.gms.g[i];
+                  combinedData.gms[i].eid = jsonObj.gms.g[i].eid;
+                }
+              } else {
+                for (const key of Object.keys(data).sort()) {
+                  combinedData.gms.push(data[key]);
+                  combinedData.gms[combinedData.gms.length - 1].eid = key;
+                  combinedData.gms[combinedData.gms.length - 1].extrainfo = jsonObj.gms.g;
+                }
               }
             } else {
               for (const key of Object.keys(data).sort()) {
