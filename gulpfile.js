@@ -42,6 +42,7 @@ const jsfilesES6 = [
   'source/js/sport.js',
   'source/js/NHL.js',
   'source/js/MLB.js',
+  'source/js/NBA.js',
   'source/js/NFL_new.js',
   //'source/js/bookmarksBar.js',
 ];
