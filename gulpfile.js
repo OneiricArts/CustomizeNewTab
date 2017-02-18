@@ -75,18 +75,18 @@ const cssFiles = [
 
 function moveLibs() {
   return gulp.src(libs)
-  .pipe(concat('libs.min.js'))
-  .pipe(gulp.dest('Chrome/src/'));
+    .pipe(concat('libs.min.js'))
+    .pipe(gulp.dest('Chrome/src/'));
 }
 
 function moveJS() {
   return gulp.src(jsfiles)
-  .pipe(gulp.dest('Chrome/src/'));
+    .pipe(gulp.dest('Chrome/src/'));
 }
 
 function moveCSS() {
   return gulp.src(cssFiles)
-  .pipe(gulp.dest('Chrome/src/'));
+    .pipe(gulp.dest('Chrome/src/'));
 }
 
 function moveHTML() {
@@ -101,7 +101,7 @@ function moveHTML() {
         })// .pipe(print())
       , {
         ignorePath: ['source/js/', 'source/libs/', 'source/libs/bootstrap-4.0.0-dist/js/',
-        'Chrome/src/'],
+          'Chrome/src/'],
         addRootSlash: false,
       }
     ))
@@ -109,7 +109,7 @@ function moveHTML() {
       gulp.src(cssFiles,
         {
           read: false,
-        // 'cwd': __dirname + '/Chrome/src'
+          // 'cwd': __dirname + '/Chrome/src'
         }),
       {
         ignorePath: 'source/libs/bootstrap-4.0.0-dist/css/',
@@ -124,11 +124,12 @@ function moveHTML() {
 ***************************************************************************************************/
 
 function handlebars(cb) {
-  return exec('handlebars -m ./source/templates/> ./Chrome/src/templates.js', (err, stdout, stderr) => {
-    console.log(stdout);
-    console.log(stderr);
-    cb(err);
-  });
+  return exec('handlebars -m ./source/templates/> ./Chrome/src/templates.js',
+    (err, stdout, stderr) => {
+      console.log(stdout);
+      console.log(stderr);
+      cb(err);
+    });
 }
 
 function minifyHTML() {
@@ -136,12 +137,10 @@ function minifyHTML() {
 
   return gulp.src('source/new_tab.html')
     .pipe(inlinesource())
-    .pipe(
-      inject(
-        gulp.src(libsToInclude, { read: false }) /* .pipe(print())*/, // arg 1
-        { ignorePath: 'Chrome/src/', addRootSlash: false } // arg 2
-      )
-    )
+    .pipe(inject(
+      gulp.src(libsToInclude, { read: false }) /* .pipe(print())*/, // arg 1
+      { ignorePath: 'Chrome/src/', addRootSlash: false } // arg 2
+    ))
     .pipe(htmlmin({
       collapseWhitespace: true,
       removeComments: true,
