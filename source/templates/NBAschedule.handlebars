@@ -66,95 +66,94 @@
 	<div class="card-block">
 
 		{{#if schedule.game.length}}	
-				<table id="NBA_game_table" 
-				class="table table-sm">
-					<thead>
-						<tr>
-							<th>
-								<!--<span class="glyphicon glyphicon-time"></span>-->
-								<!--&#128348;-->
-							</th>
-							<th style="text-align:left">Visitor</th>
-							<th style="text-align:left">@Home</th>
-							<th style="text-align:left">V</th>
-							<th style="text-align:left">H</th>
-							<th style="text-align:right">
-								<!--<span class="glyphicon glyphicon-edit"></span>-->
-							</th>
-						</tr>
-					</thead>
-					<tbody id="NBA-schedul-games">
+		<table id="NBA_game_table" 
+		class="table table-sm">
+			<thead>
+				<tr>
+					<th>
+						<!--<span class="glyphicon glyphicon-time"></span>-->
+						<!--&#128348;-->
+					</th>
+					<th style="text-align:left">Visitor</th>
+					<th style="text-align:left">@Home</th>
+					<th style="text-align:left">V</th>
+					<th style="text-align:left">H</th>
+					<th style="text-align:right">
+						<!--<span class="glyphicon glyphicon-edit"></span>-->
+					</th>
+				</tr>
+			</thead>
+			<tbody id="NBA-schedul-games">
 
-						{{#each schedule.game}}
-						{{#unless hidden}}
+				{{#each schedule.game}}
+				{{#unless hidden}}
 
-							<tr id={{id}} data-toggle="collapse" 
-							data-target=#collapse-{{id}} 
-							class="{{#if close_game}}table-danger{{/if}} {{#if fav_team}}table-success{{/if}}">
+					<tr id={{id}} data-toggle="collapse" 
+					data-target=#collapse-{{id}} 
+					class="{{#if close_game}}table-danger{{/if}} {{#if fav_team}}table-success{{/if}}">
 
-								<td> 
-									{{period_time.period_status}} 
-									{{period_time.game_clock}}
-									{{#if overtime}} OT{{overtime}}{{/if}}
-								</td>
+						<td> 
+							{{period_time.period_status}} 
+							{{period_time.game_clock}}
+							{{#if overtime}} OT{{overtime}}{{/if}}
+						</td>
 
-								<td id="away_team" {{#if visitor.winning}}class="winning"{{/if}}
-								style="text-align:left">{{visitor.nickname}}
-								{{#if playoffs.visitor_wins}}({{playoffs.visitor_wins}}){{/if}}
-								</td>
+						<td id="away_team" {{#if visitor.winning}}class="winning"{{/if}}
+						style="text-align:left">{{visitor.nickname}}
+						{{#if playoffs.visitor_wins}}({{playoffs.visitor_wins}}){{/if}}
+						</td>
 
-								<td id="home_team" {{#if home.winning}}class="winning"{{/if}}
-								style="text-align:left">{{home.nickname}}
-								{{#if playoffs.home_wins}}({{playoffs.home_wins}}){{/if}}
-								</td>
+						<td id="home_team" {{#if home.winning}}class="winning"{{/if}}
+						style="text-align:left">{{home.nickname}}
+						{{#if playoffs.home_wins}}({{playoffs.home_wins}}){{/if}}
+						</td>
 
-								<td id="v-score" style="text-align:left">{{visitor.score}}</td>
-								<td id="h-score" style="text-align:left">{{home.score}}</td> 
+						<td id="v-score" style="text-align:left">{{visitor.score}}</td>
+						<td id="h-score" style="text-align:left">{{home.score}}</td> 
 
-								<td style="text-align:right">
-								<button type="button" id="remove-game-btn" class="btn btn-sm btn-outline-secondary">
-								<!--<span class="glyphicon glyphicon-trash"></span>-->
-								&#9587;
-								</button></td>
-							</tr>
+						<td style="text-align:right">
+						<button type="button" id="remove-game-btn" class="btn btn-sm btn-outline-secondary">
+						<!--<span class="glyphicon glyphicon-trash"></span>-->
+						&#9587;
+						</button></td>
+					</tr>
 
-							<tr>
-								<td colspan="6" style="padding: 0" class="nba-collapse" id=c{{id}}>
-									<div id=collapse-{{id}} class="collapse">
-										<center style="padding:5px">
+					<tr>
+						<td colspan="6" style="padding: 0" class="nba-collapse" id=c{{id}}>
+							<div id=collapse-{{id}} class="collapse">
+								<center style="padding:5px">
 
-											<p>Channels:
-											{{#each broadcasters.tv.broadcaster}}
-												{{display_name}}{{#unless @last}}, {{/unless}}
-											{{/each}}</p>
+									<p>Channels:
+									{{#each broadcasters.tv.broadcaster}}
+										{{display_name}}{{#unless @last}}, {{/unless}}
+									{{/each}}</p>
 
-											{{!--
-											<p> "stat.NBA.com box score doesn't work until game start"</p>
-											<a class="btn btn-default btn-xs" 
-											href="http://stats.nba.com/game/#!/{{id}}/" 
-											role="button">stats.NBA.com Box Score</a>
-											--}}
+									{{!--
+									<p> "stat.NBA.com box score doesn't work until game start"</p>
+									<a class="btn btn-default btn-xs" 
+									href="http://stats.nba.com/game/#!/{{id}}/" 
+									role="button">stats.NBA.com Box Score</a>
+									--}}
 
-											<a class="btn btn-sm btn-outline-primary" 
-											href="http://www.nba.com/games/{{game_url}}" 
-											role="button">NBA.com Game Info</a>
+									<a class="btn btn-sm btn-outline-primary" 
+									href="http://www.nba.com/games/{{game_url}}" 
+									role="button">NBA.com Game Info</a>
 
-											<button id="boxscore-btn"
-												class="btn btn-sm btn-outline-primary" value="{{id}}"
-												data-toggle="modal" data-target="#NBA-boxscore">
-												Box Score
-											</button>
-										</center>
-									</div>
-								</td>
-							</tr>
-						{{/unless}}
-						{{/each}}
+									<button id="boxscore-btn"
+										class="btn btn-sm btn-outline-primary" value="{{id}}"
+										data-toggle="modal" data-target="#NBA-boxscore">
+										Box Score
+									</button>
+								</center>
+							</div>
+						</td>
+					</tr>
+				{{/unless}}
+				{{/each}}
 
-					</tbody>
-				</table>		
+			</tbody>
+		</table>		
 		{{else}}
-			
 		<div class="alert" style="margin-bottom:0">
 			No games today &#x1f622;<br>
 			<div class="btn-group btn-group-sm" role="group" aria-label="NBA Links">
@@ -163,7 +162,6 @@
 				<a href="http://www.reddit.com/r/nba" class="btn btn-sm btn-outline-primary">r/NBA</a>
 			</div>
 		</div>
-
 		{{/if}}
 
 	</div>	
