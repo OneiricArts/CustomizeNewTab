@@ -16,6 +16,7 @@
 	</div>
 
 	<div class="card-block">
+		{{#if schedule.gms.length}}
 		<table id="NFL-schedule-table" class="table table-sm">
 			<thead>
 				<tr>
@@ -146,6 +147,16 @@
 				{{/unless}}{{/each}}
 			</tbody>
 		</table>
+		{{else}}
+		<div class="alert" style="margin-bottom:0">
+			Offseason &#x1f622;<br>
+			<div class="btn-group btn-group-sm" role="group" aria-label="MLB Links">
+				<a href="http://nfl.com" class="btn btn-sm btn-outline-primary">NFL</a>
+				<a href="http://www.espn.com/nfl/" class="btn btn-sm btn-outline-primary">ESPN</a>
+				<a href="http://www.reddit.com/r/nfl" class="btn btn-sm btn-outline-primary">r/NFL</a>
+			</div>
+		</div>
+		{{/if}}
 	</div>
 </div>
 			
