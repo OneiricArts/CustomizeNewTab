@@ -8,6 +8,7 @@ const babel = require('gulp-babel');
 const util = require('gulp-util');
 const inlinesource = require('gulp-inline-source');
 const inject = require('gulp-inject');
+const manifest = require('./Chrome/manifest.json');
 // const print = require('gulp-print');
 
 /** ***********************************************************************************************
@@ -190,11 +191,9 @@ gulp.task('default', gulp.series('dev'));
 
 // zips the extension with the name of current version # from the manifest file
 gulp.task('zip', (cb) => {
-  var manifest = require('./Chrome/manifest.json');
-  var fileName = manifest.version.split('.').join('_');;
+  const fileName = manifest.version.split('.').join('_');
   console.log(fileName);
 
-  var zipCommand = `zip -r ${fileName}.zip Chrome/**`;
   return exec(zipCommand,
     (err, stdout, stderr) => {
       console.log(stdout);
