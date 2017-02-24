@@ -194,6 +194,7 @@ gulp.task('zip', (cb) => {
   const fileName = manifest.version.split('.').join('_');
   console.log(fileName);
 
+  const zipCommand = `zip -r ${fileName}.zip Chrome/**`;
   return exec(zipCommand,
     (err, stdout, stderr) => {
       console.log(stdout);
