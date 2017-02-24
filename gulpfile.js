@@ -171,9 +171,15 @@ function concatLibs() {
  * Helper functions for tasks
 ***************************************************************************************************/
 
-function watchCode() {
+function watchCodeDev() {
   gulp.watch(['./source/templates/*.handlebars'], handlebars);
   gulp.watch(jsfiles, moveJS);
+  gulp.watch(['./source/*.html'], moveHTML);
+}
+
+function watchCodeCompress() {
+  gulp.watch(['./source/templates/*.handlebars'], handlebars);
+  gulp.watch(jsfiles, uglifyJS);
   gulp.watch(['./source/*.html'], moveHTML);
 }
 
@@ -182,10 +188,10 @@ function watchCode() {
 ***************************************************************************************************/
 
 // no effeciency steps, can see error lines, etc.
-gulp.task('dev', gulp.series(handlebars, moveLibs, moveJS, moveCSS, moveHTML, watchCode));
+gulp.task('dev', gulp.series(handlebars, moveLibs, moveJS, moveCSS, moveHTML, watchCodeDev));
 
 // full effeciency workflow
-gulp.task('compress', gulp.series(handlebars, concatLibs, uglifyJS, minifyHTML, watchCode));
+gulp.task('compress', gulp.series(handlebars, concatLibs, uglifyJS, minifyHTML, watchCodeCompress));
 
 gulp.task('default', gulp.series('dev'));
 
