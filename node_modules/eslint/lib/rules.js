@@ -40,7 +40,7 @@ function define(ruleId, ruleModule) {
 function load(rulesDir, cwd) {
     const newRules = loadRules(rulesDir, cwd);
 
-    Object.keys(newRules).forEach(function(ruleId) {
+    Object.keys(newRules).forEach(ruleId => {
         define(ruleId, newRules[ruleId]);
     });
 }
@@ -53,7 +53,7 @@ function load(rulesDir, cwd) {
  */
 function importPlugin(plugin, pluginName) {
     if (plugin.rules) {
-        Object.keys(plugin.rules).forEach(function(ruleId) {
+        Object.keys(plugin.rules).forEach(ruleId => {
             const qualifiedRuleId = `${pluginName}/${ruleId}`,
                 rule = plugin.rules[ruleId];
 
@@ -70,9 +70,24 @@ function importPlugin(plugin, pluginName) {
 function getHandler(ruleId) {
     if (typeof rules[ruleId] === "string") {
         return require(rules[ruleId]);
-    } else {
-        return rules[ruleId];
     }
+    return rules[ruleId];
+
+}
+
+/**
+ * Get an object with all currently loaded rules
+ * @returns {Map} All loaded rules
+ */
+function getAllLoadedRules() {
+    const allRules = new Map();
+
+    Object.keys(rules).forEach(name => {
+        const rule = getHandler(name);
+
+        allRules.set(name, rule);
+    });
+    return allRules;
 }
 
 /**
@@ -89,6 +104,7 @@ module.exports = {
     load,
     importPlugin,
     get: getHandler,
+    getAllLoadedRules,
     testClear,
 
     /**

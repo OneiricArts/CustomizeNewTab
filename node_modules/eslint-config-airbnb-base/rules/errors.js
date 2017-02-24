@@ -1,7 +1,17 @@
 module.exports = {
   rules: {
     // require trailing commas in multiline object literals
-    'comma-dangle': ['error', 'always-multiline'],
+    'comma-dangle': ['error', {
+      arrays: 'always-multiline',
+      objects: 'always-multiline',
+      imports: 'always-multiline',
+      exports: 'always-multiline',
+      functions: 'always-multiline',
+    }],
+
+    // Disallow await inside of loops
+    // http://eslint.org/docs/rules/no-await-in-loop
+    'no-await-in-loop': 'error',
 
     // disallow assignment in conditional expressions
     'no-cond-assign': ['error', 'always'],

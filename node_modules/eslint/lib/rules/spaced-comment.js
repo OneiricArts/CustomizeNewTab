@@ -5,6 +5,7 @@
 "use strict";
 
 const lodash = require("lodash");
+const astUtils = require("../ast-utils");
 
 //------------------------------------------------------------------------------
 // Helpers
@@ -88,8 +89,7 @@ function createExceptionsPattern(exceptions) {
             pattern += exceptions.map(escapeAndRepeat).join("|");
             pattern += ")";
         }
-
-        pattern += "(?:$|[\n\r]))";
+        pattern += `(?:$|[${Array.from(astUtils.LINEBREAKS).join("")}]))`;
     }
 
     return pattern;
@@ -240,7 +240,7 @@ module.exports = {
         const config = context.options[1] || {};
         const balanced = config.block && config.block.balanced;
 
-        const styleRules = ["block", "line"].reduce(function(rule, type) {
+        const styleRules = ["block", "line"].reduce((rule, type) => {
             const markers = parseMarkersOption(config[type] && config[type].markers || config.markers);
             const exceptions = config[type] && config[type].exceptions || config.exceptions || [];
             const endNeverPattern = "[ \t]+$";
@@ -279,10 +279,10 @@ module.exports = {
                             end += match[0].length;
                         }
                         return fixer.insertTextAfterRange([start, end], " ");
-                    } else {
-                        end += match[0].length;
-                        return fixer.replaceTextRange([start, end], commentIdentifier + (match[1] ? match[1] : ""));
                     }
+                    end += match[0].length;
+                    return fixer.replaceTextRange([start, end], commentIdentifier + (match[1] ? match[1] : ""));
+
                 },
                 message,
                 data: { refChar }
@@ -302,12 +302,12 @@ module.exports = {
                 fix(fixer) {
                     if (requireSpace) {
                         return fixer.insertTextAfterRange([node.start, node.end - 2], " ");
-                    } else {
-                        const end = node.end - 2,
-                            start = end - match[0].length;
-
-                        return fixer.replaceTextRange([start, end], "");
                     }
+                    const end = node.end - 2,
+                        start = end - match[0].length;
+
+                    return fixer.replaceTextRange([start, end], "");
+
                 },
                 message
             });

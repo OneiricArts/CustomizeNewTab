@@ -39,8 +39,11 @@ exports.fn = function(item) {
 
         var intersection = {},
             hasTransform = false,
+            hasClip = item.hasAttr('clip-path') || item.hasAttr('mask'),
             intersected = item.content.every(function(inner) {
                 if (inner.isElem() && inner.hasAttr()) {
+                    // don't mess with possible styles (hack until CSS parsing is implemented)
+                    if (inner.hasAttr('class')) return false;
                     if (!Object.keys(intersection).length) {
                         intersection = inner.attrs;
                     } else {
@@ -62,7 +65,7 @@ exports.fn = function(item) {
 
                 for (var name in intersection) {
 
-                    if (!allPath || name !== 'transform') {
+                    if (!allPath && !hasClip || name !== 'transform') {
 
                         g.removeAttr(name);
 

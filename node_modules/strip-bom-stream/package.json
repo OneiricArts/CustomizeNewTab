@@ -23,7 +23,9 @@
     "email": "sindresorhus@gmail.com"
   },
   "_npmVersion": "2.11.2",
-  "_phantomChildren": {},
+  "_phantomChildren": {
+    "is-utf8": "0.2.1"
+  },
   "_requested": {
     "raw": "strip-bom-stream@^1.0.0",
     "scope": null,

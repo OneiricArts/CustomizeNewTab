@@ -36,9 +36,7 @@ module.exports = {
         function isPrecededByTokens(node, testTokens) {
             const tokenBefore = sourceCode.getTokenBefore(node);
 
-            return testTokens.some(function(token) {
-                return tokenBefore.value === token;
-            });
+            return testTokens.some(token => tokenBefore.value === token);
         }
 
         /**
@@ -62,9 +60,9 @@ module.exports = {
                 return isPrecededByTokens(node, ["do"]);
             } else if (parentType === "SwitchCase") {
                 return isPrecededByTokens(node, [":"]);
-            } else {
-                return isPrecededByTokens(node, [")"]);
             }
+            return isPrecededByTokens(node, [")"]);
+
         }
 
         /**
@@ -82,7 +80,7 @@ module.exports = {
                 return numLinesComments;
             }
 
-            comments.forEach(function(comment) {
+            comments.forEach(comment => {
                 numLinesComments++;
 
                 if (comment.type === "Block") {
