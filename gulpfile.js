@@ -4,13 +4,10 @@ const exec = require('child_process').exec;
 const htmlmin = require('gulp-htmlmin');
 const uglify = require('gulp-uglify');
 const concat = require('gulp-concat');
-const fs = require('fs');
-const zip = require('gulp-zip');
 const babel = require('gulp-babel');
 const util = require('gulp-util');
 const inlinesource = require('gulp-inline-source');
 const inject = require('gulp-inject');
-// const series = require('stream-series');
 // const print = require('gulp-print');
 
 /** ***********************************************************************************************
@@ -192,18 +189,18 @@ gulp.task('compress', gulp.series(handlebars, concatLibs, uglifyJS, minifyHTML, 
 gulp.task('default', gulp.series('dev'));
 
 // zips the extension with the name of current version # from the manifest file
-gulp.task('zip', () => {
-  const json = JSON.parse(fs.readFileSync('./Chrome/manifest.json'));
-  const fileName = json.version.split('.').join('_');
-
-  // var manifest = require('./Chrome/manifest.json');
-  // var fileName = manifest.version;
-
+gulp.task('zip', (cb) => {
+  var manifest = require('./Chrome/manifest.json');
+  var fileName = manifest.version.split('.').join('_');;
   console.log(fileName);
 
-  return gulp.src('Chrome/**')
-    .pipe(zip(`${fileName}.zip`))
-    .pipe(gulp.dest('.'));
+  var zipCommand = `zip -r ${fileName}.zip Chrome/**`;
+  return exec(zipCommand,
+    (err, stdout, stderr) => {
+      console.log(stdout);
+      console.log(stderr);
+      cb(err);
+    });
 });
 
 // TODO: right now have to run dev/compress twice after cleaning
