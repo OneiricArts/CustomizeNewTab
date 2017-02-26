@@ -101,8 +101,7 @@ function moveHTML() {
         ignorePath: ['source/js/', 'source/libs/', 'source/libs/bootstrap-4.0.0-dist/js/',
           'Chrome/src/'],
         addRootSlash: false,
-      }
-    ))
+      }))
     .pipe(inject(
       gulp.src(cssFiles,
         {
@@ -112,8 +111,7 @@ function moveHTML() {
       {
         ignorePath: 'source/libs/bootstrap-4.0.0-dist/css/',
         addRootSlash: false,
-      }
-    ))
+      }))
     .pipe(gulp.dest('Chrome/src/'));
 }
 
@@ -124,8 +122,8 @@ function moveHTML() {
 function handlebars(cb) {
   return exec('handlebars -m ./source/templates/> ./Chrome/src/templates.js',
     (err, stdout, stderr) => {
-      console.log(stdout);
-      console.log(stderr);
+      util.log(stdout);
+      util.log(stderr);
       cb(err);
     });
 }
@@ -136,9 +134,8 @@ function minifyHTML() {
   return gulp.src('source/new_tab.html')
     .pipe(inlinesource())
     .pipe(inject(
-      gulp.src(libsToInclude, { read: false }) /* .pipe(print())*/, // arg 1
-      { ignorePath: 'Chrome/src/', addRootSlash: false } // arg 2
-    ))
+      gulp.src(libsToInclude, { read: false }) /* .pipe(print())*/, // arg 1 for inject
+      { ignorePath: 'Chrome/src/', addRootSlash: false })) // arg 2 for inject
     .pipe(htmlmin({
       collapseWhitespace: true,
       removeComments: true,
@@ -149,7 +146,7 @@ function minifyHTML() {
     .pipe(gulp.dest('Chrome/src/'));
 }
 
-function uglifyJS() {
+function minifyJS() {
   return gulp.src(jsfiles)
     .pipe(babel({
       only: jsfilesES6,
@@ -179,7 +176,7 @@ function watchCodeDev() {
 
 function watchCodeCompress() {
   gulp.watch(['./source/templates/*.handlebars'], handlebars);
-  gulp.watch(jsfiles, uglifyJS);
+  gulp.watch(jsfiles, minifyJS);
   gulp.watch(['./source/*.html'], moveHTML);
 }
 
@@ -191,20 +188,20 @@ function watchCodeCompress() {
 gulp.task('dev', gulp.series(handlebars, moveLibs, moveJS, moveCSS, moveHTML, watchCodeDev));
 
 // full effeciency workflow
-gulp.task('compress', gulp.series(handlebars, concatLibs, uglifyJS, minifyHTML, watchCodeCompress));
+gulp.task('compress', gulp.series(handlebars, concatLibs, minifyJS, minifyHTML, watchCodeCompress));
 
 gulp.task('default', gulp.series('dev'));
 
 // zips the extension with the name of current version # from the manifest file
 gulp.task('zip', (cb) => {
   const fileName = manifest.version.split('.').join('_');
-  console.log(fileName);
+  util.log(fileName);
 
   const zipCommand = `zip -r ${fileName}.zip Chrome/**`;
   return exec(zipCommand,
     (err, stdout, stderr) => {
-      console.log(stdout);
-      console.log(stderr);
+      util.log(stdout);
+      util.log(stderr);
       cb(err);
     });
 });
@@ -213,10 +210,10 @@ gulp.task('zip', (cb) => {
 gulp.task('clean', (cb) => {
   // everything built goes into /src
   exec('rm Chrome/src/*', (err, stdout, stderr) => {
-    console.log(stdout);
-    console.log(stderr);
+    util.log(stdout);
+    util.log(stderr);
     cb(err);
   });
 
-  console.log('cleaned Chrome/src/');
+  util.log('cleaned Chrome/src/');
 });
