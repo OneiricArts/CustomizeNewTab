@@ -2,7 +2,6 @@
 const gulp = require('gulp');
 const exec = require('child_process').exec;
 const htmlmin = require('gulp-htmlmin');
-const uglify = require('gulp-uglify');
 const concat = require('gulp-concat');
 const babel = require('gulp-babel');
 const util = require('gulp-util');
@@ -32,17 +31,6 @@ const jsfiles = [
   'source/js/NFL_new.js',
   'source/js/pageHandler.js',
   'source/js/googleAnalytics.js',
-];
-
-// ES6 files need to be put through babel before they can be uglified
-const jsfilesES6 = [
-  'source/js/widget.js',
-  'source/js/sport.js',
-  'source/js/NHL.js',
-  'source/js/MLB.js',
-  'source/js/NBA.js',
-  'source/js/NFL_new.js',
-  //'source/js/bookmarksBar.js',
 ];
 
 // libraries to be included, in order
@@ -148,12 +136,10 @@ function minifyHTML() {
 
 function minifyJS() {
   return gulp.src(jsfiles)
-    .pipe(babel({
-      only: jsfilesES6,
-      presets: ['es2015'],
-    }))
     .pipe(concat('app.min.js'))
-    .pipe(uglify().on('error', util.log))
+    .pipe(babel({
+      presets: ['babili'],
+    }))
     .pipe(gulp.dest('Chrome/src/'));
 }
 
