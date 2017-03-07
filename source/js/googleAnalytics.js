@@ -1,73 +1,114 @@
-(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-})(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+/* global ga:false */
+/* global gaFF:false */
 
-/*
-	how to setup for extension:
-	https://davidsimpson.me/2014/05/27/add-googles-universal-analytics-tracking-chrome-extension/
-	didn't know i had to do the check, and specify /new_tab.html
-*/
-ga('create', 'UA-72036968-1', 'auto');
-ga('set', 'checkProtocolTask', function(){});
-ga('send', 'pageview', '/new_tab.html');
+/* ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+    UNIVERSAL FUNCTIONS TO SEND GA DATA
+        - AUTO PICKS BETWEEN CHROME OR FIREFOX SENDING METHODS
+        - CAN BE USED IN OTHER FILES WITHOUT WORRYING ABOUT CHROME V. FIREFOX
+   ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ */
 
-/* send browser dimensions */
-//var dimensions = window.innerHeight + "x" + window.innerWidth;
-//ga('send', 'Browser Dimensions', 'plixels', dimensions);
+// try to find ga function
+const gaChrome = (typeof ga === 'function');
+const gaFirefox = (typeof gaFF === 'function');
 
-/* load time */
+function gaSendPageView() {
+  if (gaChrome) {
+    ga('send', 'pageview', {
+      page: '/new_tab.html',
+    });
+  } else if (gaFirefox) {
+    gaFF('&t=pageview&dp=/new_tab.html');
+  }
+}
+
+function gaSendLoadTime(timeSincePageLoad) {
+  if (gaChrome) {
+    ga('send', 'timing', {
+      timingLabel: 'JS_Dependencies',
+      timingVar: 'load',
+      timingValue: timeSincePageLoad,
+    });
+  } else if (gaFirefox) {
+    gaFF(`&t=timing&utv=load&utt=${timeSincePageLoad}&utl=JS_Dependencies`);
+  }
+}
+
+function gaSendEvent(o) {
+  if (gaChrome) {
+    ga('send', 'event', {
+      eventCategory: o.ec,
+      eventAction: o.ea,
+      eventLabel: o.el,
+    });
+  } else if (gaFirefox) {
+    gaFF(`&t=event&ec=${o.ec}&ea=${o.ea}&el=${o.el}`);
+  }
+}
+
+function gaSendException(errorMsg) {
+  if (gaChrome) {
+    ga('send', 'exception', {
+      exDescription: errorMsg,
+    });
+  } else if (gaFirefox) {
+    gaFF(`&t=exception&exd=${errorMsg}`);
+  }
+}
+
+/* ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+    HELPER FUNCTIONS
+   ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ */
+
+function sendClickEvent(e, o) {
+  let label = e.target.id;
+
+  if (label === '') {
+    label = e.target.className;
+  } if (label === '') {
+    label = e.target.tagName.toLowerCase();
+  }
+
+  if (o && o.label) {
+    label = o.label;
+  }
+
+  gaSendEvent({
+    ec: 'user_interaction',
+    ea: 'click',
+    el: label,
+  });
+}
+
+/* ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+    INITIAL TRACKING EVENTS
+      - SPECIAL CASES CAN BE USED IN RESPECTIVE FILES
+   ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ */
+
+gaSendPageView();
+
 if (window.performance) {
-	var timeSincePageLoad = Math.round(performance.now());
-	ga('send', 'timing', 'JS Dependencies', 'load', timeSincePageLoad);
+  gaSendLoadTime(Math.round(performance.now()));
 }
 
-function description(e, default_val) {
-	var descrip = e.target.id;
-	if(descrip === "") {
-		descrip = e.target.className;
-	}
-	if(descrip === "") {
-		descrip = default_val;
-	}	
-	return descrip;
-}
+// send browser dimensions
+// var dimensions = window.innerHeight + "x" + window.innerWidth;
+// ga('send', 'Browser Dimensions', 'plixels', dimensions);
 
-$('html').on('click', 'a', function(e){
-	ga('send', 'event', description(e,'link'), 'click');
-});
+// track which features are being clicked on
+$('html').on('click', 'a', (e) => { sendClickEvent(e); });
+$('html').on('click', 'button', (e) => { sendClickEvent(e); });
+$('html').on('click', 'span', (e) => { sendClickEvent(e); });
+$('html').on('click', 'tr', (e) => { sendClickEvent(e, { label: 'game_row' }); });
 
-$('html').on('click', 'button', function(e){
-	ga("send", "event", description(e,'button'), 'click');
-});
+// send uncaught (unexpected) exceptions to google analytics, if local installation show alert
+window.onerror = (msg, url, line, col, error) => {
+  let extra = !col ? '' : `\n column: ${col}`;
+  extra += !error ? '' : `\n error: ${error}`;
+  const errorMsg = `Error: ${msg} \n url:${url} \n line: ${line} ${extra}`;
 
-$('html').on('click', 'span', function(e){
-	ga("send", "event", description(e,'span'), 'click');
-});
-
-$('html').on('click', 'tr', function(e){
-	ga("send", "event", 'game_row', 'click');
-});
-
-/* 
-	send uncaught exceptions to google analytics for now, will
-	look into post to server later
-*/
-window.onerror = function(msg, url, line, col, error) {
- 
-	var extra = !col ? '' : '\ncolumn: ' + col;
-	extra += !error ? '' : '\nerror: ' + error;
-	error_msg = "Error: " + msg + "\nurl: " + url + "\nline: " + line + extra;
-
-	if(devEnv) {
-		alert(error_msg);
-	}
-	
-	else {
-		ga('send', 'exception', {
-			'exDescription': error_msg,
-		});		
-	}
-
-	//ga("send", "event", msg, 'exception');
+  if (devEnv) {
+    alert(errorMsg); // eslint-disable-line no-alert
+  } else {
+    gaSendException(errorMsg);
+  }
 };

@@ -30,6 +30,8 @@ const jsfiles = [
   'source/js/MLB.js',
   'source/js/NFL_new.js',
   'source/js/pageHandler.js',
+  'source/js/googleAnalyticsChrome.js',     // Chrome version by default
+  // 'source/js/googleAnalyticsFirefox.js', // will replace Chrome version when building for FF
   'source/js/googleAnalytics.js',
 ];
 
@@ -166,6 +168,17 @@ function watchCodeCompress() {
   gulp.watch(['./source/*.html'], moveHTML);
 }
 
+function firefox(done) {
+  const index = jsfiles.indexOf('source/js/googleAnalyticsChrome.js');
+  if (index === -1) {
+    util.log(util.colors.bgRed('googleAnalyticsChrome.js not in jsfiles'));
+  } else {
+    jsfiles[index] = 'source/js/googleAnalyticsFirefox.js';
+    // util.log(jsfiles);
+  }
+  done();
+}
+
 /** ***********************************************************************************************
  * Gulp tasks that can be called from cl or Visual Studio Code
 ***************************************************************************************************/
@@ -175,6 +188,9 @@ gulp.task('dev', gulp.series(handlebars, moveLibs, moveJS, moveCSS, moveHTML, wa
 
 // full effeciency workflow
 gulp.task('compress', gulp.series(handlebars, concatLibs, minifyJS, minifyHTML, watchCodeCompress));
+
+// Firefox -- compressed
+gulp.task('firefox', gulp.series(firefox, handlebars, concatLibs, minifyJS, minifyHTML, watchCodeCompress));
 
 gulp.task('default', gulp.series('dev'));
 
