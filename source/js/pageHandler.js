@@ -143,6 +143,10 @@ pageHandeler.prototype.loadMessage = function(){
 pageHandeler.prototype.loadDev = function(){
 	$('#_dev_btn').show();
 	$('#_dev_btn').on('click', {self: this}, function(event) {
+		
+		// STOP ALL OTHER EVENTS
+		event.stopImmediatePropagation();
+		
 		var self = event.data.self;
 		//self.data.message = true;
 		self.data = null;
@@ -157,8 +161,15 @@ pageHandeler.prototype.loadWidgets = function(){
 
 		key = this.widgetKeys[i];
 
+		// turn widget on
 		if( (key in this.data) && (this.data[key] == true) && (key in this) ) {
 			this[key].on();
+
+			gaSendEvent({
+				ec: 'Active_Widgets_On_Init',
+				ea: 'InitActive',
+				el: key,
+			});
 		}
 		else {
 			$('#page_options #'+key+'-button').trigger("click");
@@ -186,6 +197,11 @@ pageHandeler.prototype.setDefaults = function(){
 function triggerWidget(event) {
 
 	var that = event.data.that;
+
+	// DO NOT SEND TO GOOGLE ANALYTICS, stops other GA click addEventListener
+	// DO trigger any other events (i.e. _dev_btn event)
+	event.stopPropagation();
+
 	var key = $(this).attr('id').split('-')[0];
 
 	//console.log($(this));
