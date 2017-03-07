@@ -100,8 +100,10 @@
 						<div id=collapse-{{game_pk}} class="collapse">
 							<div style="padding: 5px">
 
-								<h6>Alert</h6>
-								<p>{{alerts.brief_text}}</p>
+								{{#if alerts.brief_text}}
+									<h6>Alert</h6>
+									<p>{{alerts.brief_text}}</p>
+								{{/if}}
 									
 								<center> <h4>
 									{{away_team_name}} ({{away_win}}-{{away_loss}}) @ 
