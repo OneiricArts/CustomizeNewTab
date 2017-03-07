@@ -119,7 +119,9 @@ NBA.prototype.massageData = function(newData, callback) {
 
 
 		try {
-			if(newData.sports_content.games.game[i].period_time.game_status === "1") {
+			if(newData.sports_content.games.game[i].period_time.period_status === "PPD") {
+				newData.sports_content.games.game[i].period_time.period_status = "Postponed";
+			} else if(newData.sports_content.games.game[i].period_time.game_status === "1") {
 				var hours = parseInt(newData.sports_content.games.game[i].time.substring(0,2));
 				var minutes = parseInt(newData.sports_content.games.game[i].time.substring(2,4));
 				var yyyy = parseInt(newData.sports_content.games.game[i].date.substring(0,4));
