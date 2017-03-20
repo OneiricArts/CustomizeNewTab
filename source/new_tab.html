@@ -1,192 +1,185 @@
 <!doctype html>
 <html>
-  
-	<head>
-		<title>New Tab - Sports</title>
 
-		<link inline href="libs/bootstrap-4.0.0-dist/css/bootstrap.min.css"> 
-		<!-- inject:css -->
-		<!-- endinject -->
+<head>
+  <title>New Tab - Sports</title>
 
-		<style type="text/css">
+  <link inline href="libs/bootstrap-4.0.0-dist/css/bootstrap.min.css">
+  <!-- inject:css -->
+  <!-- endinject -->
 
-			.winning{
-				font-weight: bold;
-			}
-			
-			.flair {
-				color: #aaaaaa;
-			}
+  <style type="text/css">
+    .winning {
+      font-weight: bold;
+    }
+    
+    .flair {
+      color: #aaaaaa;
+    }
+    
+    .card-block {
+      padding: 0px;
+    }
+    
+    .table {
+      margin-bottom: 0;
+    }
+    
+    .container-fluid {
+      /* push down navbar*/
+      padding-top: 20px;
+      /* so plus button isn't stuck at bottom */
+      padding-bottom: 20px;
+    }
+    
+    .flash {
+      /* used to flash table row on update */
+      animation: flash 1s ease-out;
+      animation-iteration-count: 1;
+    }
+    
+    @keyframes flash {
+      0% {
+        background-color: none;
+      }
+      50% {
+        background-color: #FFFF99;
+      }
+      100% {
+        background-color: none;
+      }
+    }
+    
+    a {
+      /* material design copy: links are bright pink */
+      color: #ff4081;
+    }
+    
+    html {
+      font-size: 14px;
+    }
+    
+    @media (min-width: 20em) {
+      .card-columns {
+        column-count: 1;
+      }
+    }
+    
+    @media (min-width: 40em) {
+      .card-columns {
+        column-count: 2;
+      }
+    }
+    
+    @media (min-width: 48em) {
+      .card-columns {
+        column-count: 2;
+      }
+    }
+    
+    @media (min-width: 70em) {
+      .card-columns {
+        column-count: 3;
+      }
+    }
+    
+    @media (min-width: 95em) {
+      .card-columns {
+        column-count: 4;
+      }
+    }
+  </style>
+</head>
 
-			.card-block {
-				padding: 0px;
-			}
-			
-			.table {
-				margin-bottom: 0;
-			}
+<!--https://uigradients.com/# great ideas for background gradients-->
 
-			.container-fluid {
-				padding-top: 20px;    /* push down navbar*/
-				padding-bottom: 20px; /* so plus button isn't stuck at bottom */
-			}
+<body style="background: linear-gradient(to left, #457fca , #5691c8);">
 
-			/* used to flash table row on update */
-			.flash{
-				animation: flash 1s ease-out;
-				animation-iteration-count: 1;
-			} @keyframes flash {
-				0% { background-color:none;}
-				50% { background-color:#FFFF99;}        
-				100% {background-color:none;}
-			}
+  <div id="bookmarks_bar"></div>
 
-			/* material design replacement*/
-			a {
-				color: #ff4081; /* bright pink */
-			}
+  <!--<nav class="navbar navbar-light bg-faded">-->
+  <nav id="page_options" class="navbar navbar-dark bg-inverse">
+    <form class="form-inline float-xs-left">
+      <button id="NFL-button" class="btn btn-sm btn-outline-success" type="button">NFL</button>
+      <button id="NBA-button" class="btn btn-sm btn-outline-success" type="button">NBA</button>
+      <button id="NHL-button" class="btn btn-sm btn-outline-success" type="button">NHL</button>
+      <button id="MLB-button" class="btn btn-sm btn-outline-success" type="button">MLB</button>
+      <button id="Links-button" class="btn btn-sm btn-outline-success" type="button">Links</button>
+      <button id="_dev_btn" class="btn btn-sm btn-outline-success" style="display: none" type="button">Dev</button>
+    </form>
+    <form class="form-inline float-xs-right text-muted hidden-md-down">
+      Sports New Tab Page by OneiricArts &middot; 0.9.8 &middot;
+      <a id="subreddit" href="https://www.reddit.com/r/SportsNewTabPage/">
+      r/SportsNewTabPage</a> &middot;
 
-			html {
-				font-size: 14px;
-			}
+      <a id="changelog" href="https://github.com/OneiricArts/CustomizeNewTab/releases">
+      Changelog</a> &middot;
 
-			@media (min-width: 20em) {
-				.card-columns {
-					column-count: 1;
-				}
-			}
+      <a id="hints" href="https://github.com/OneiricArts/CustomizeNewTab/wiki/Hints">
+      Hints</a>
+    </form>
+  </nav>
 
-			@media (min-width: 40em) {
-				.card-columns {
-					column-count: 2;
-				}
-			}
+  <div class="container-fluid">
 
-			@media (min-width: 48em) {
-				.card-columns {
-					column-count: 2;
-				}
-			}
+    <div id="no-internet-alert" class="alert alert-danger" role="alert" style="display:none">
+      <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+      <span class="sr-only">Error:</span>
+      <h4>No internet connection detected :(</h4>
+      This page will auto-refresh when a connection is detected. If this is incorrect, please
+      <a href="https://github.com/OneiricArts/CustomizeNewTab/issues">submit a github issue</a>.
+    </div>
 
-			@media (min-width: 70em) {
-				.card-columns {
-					column-count: 3;
-				}
-			}
+    <div class="card-columns">
+      <div id="NFL_widget"></div>
+      <div id="NBA_col"></div>
+      <div id="NHL_widget"></div>
+      <div id="MLB_widget"></div>
+      <div id="Links_col">
+        <div id="bookmark-panel"></div>
+      </div>
+    </div>
 
-			@media (min-width: 95em) {
-				.card-columns {
-					column-count: 4;
-				}
-			}
-		</style>
-	</head>
+  </div>
 
-	<!--https://uigradients.com/# great ideas for background gradients-->
-	<body style="background: linear-gradient(to left, #457fca , #5691c8);">
-		
-		<div id="bookmarks_bar"></div>
+  <!-- Links Modal-->
+  <div class="modal fade" id="addCustomLinkModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog modal-sm" role="document">
+      <div class="modal-content">
 
-		<!--<nav class="navbar navbar-light bg-faded">-->
-		<nav id="page_options" class="navbar navbar-dark bg-inverse">
-			<form class="form-inline float-xs-left">
-				<button id="NFL-button" class="btn btn-sm btn-outline-success" type="button">NFL</button>
-				<button id="NBA-button" class="btn btn-sm btn-outline-success" type="button">NBA</button>
-				<button id="NHL-button" class="btn btn-sm btn-outline-success" type="button">NHL</button>
-				<button id="MLB-button" class="btn btn-sm btn-outline-success" type="button">MLB</button>
-				<button id="Links-button" class="btn btn-sm btn-outline-success" type="button">Links</button>
-				<button id="_dev_btn" class="btn btn-sm btn-outline-success" style="display: none" type="button">Dev</button>
-			</form>
-			<form class="form-inline float-xs-right text-muted hidden-md-down">
-				Sports New Tab Page by OneiricArts &middot; 0.9.8 &middot;
-				<a id="subreddit" 
-				href="https://www.reddit.com/r/SportsNewTabPage/">
-				r/SportsNewTabPage</a> &middot;
-				
-				<a id="changelog" 
-				href="https://github.com/OneiricArts/CustomizeNewTab/releases">
-				Changelog</a> &middot;
-				
-				<a id="hints" 
-				href="https://github.com/OneiricArts/CustomizeNewTab/wiki/Hints">
-				Hints</a> 
-			</form>
-		</nav>
-		
-		<div class="container-fluid">
+        <div class="modal-header">
 
-			<div id="no-internet-alert" class="alert alert-danger" role="alert" style="display:none">
-				<span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
-				<span class="sr-only">Error:</span>
-				<h4>No internet connection detected :(</h4>
-				This page will auto-refresh when a connection is detected.
-				If this is incorrect, please 
-				<a href="https://github.com/OneiricArts/CustomizeNewTab/issues">submit a github issue</a>.
-			</div> 
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+          </button>
 
-			<div class="card-columns">
-				<div id="NFL_widget"></div>
-				<div id="NBA_col"></div>
-				<div id="NHL_widget"></div>
-				<div id="MLB_widget"></div>
-				<div id="Links_col">
-					<div id="bookmark-panel"></div>
-				</div>
-			</div>
-			
-		</div>
-	
-		<!-- Links Modal-->
-		<div class="modal fade" id="addCustomLinkModal" tabindex="-1" role="dialog" 
-		aria-labelledby="myModalLabel">
-			<div class="modal-dialog modal-sm" role="document">
-				<div class="modal-content">
+          <h4 class="modal-title" id="myModalLabel">Add Link</h4>
+        </div>
 
-					<div class="modal-header">
+        <div class="modal-body">
+          <span class=" glyphicon glyphicon-warning-sign"></span> Please make sure the URL contains the 'http://www' part
+          <form class="form-horizontal">
+            <div class="form-group-sm">
+              <input type="text" class="form-control" id="bookmark_name" placeholder="Name">
+            </div>
+            <div class="form-group-sm">
+              <input type="text" class="form-control" id="bookmark_url" placeholder="URL">
+            </div>
+          </form>
+        </div>
 
-						<button type="button" class="close" data-dismiss="modal" 
-						aria-label="Close">
-						<span aria-hidden="true">&times;</span>
-						</button>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button>
 
-						<h4 class="modal-title" id="myModalLabel">Add Link</h4>
-					</div>
+          <button type="button" id="addBookmark" class="btn btn-primary" data-dismiss="modal">Add Link</button>
+        </div>
 
-					<div class="modal-body">
-						<span class=" glyphicon glyphicon-warning-sign"></span> 
-							Please make sure the URL contains the 'http://www' part
-						<form class="form-horizontal">
-							<div class="form-group-sm">
-								<input type="text" class="form-control" 
-								id="bookmark_name" placeholder="Name">
-							</div>
-							<div class="form-group-sm">
-								<input type="text" class="form-control" 
-								id="bookmark_url" placeholder="URL">
-							</div>
-						</form>
-					</div>
+      </div>
+    </div>
+  </div>
 
-					<div class="modal-footer">
-						<button type="button" class="btn btn-danger" 
-						data-dismiss="modal">Cancel</button>
+  <!-- inject:js -->
+  <!-- endinject -->
+</body>
 
-						<button type="button" id="addBookmark" class="btn btn-primary" 
-						data-dismiss="modal">Add Link</button>
-					</div>
-
-				</div>
-			</div>
-		</div>	
-
-		<!-- inject:js -->
-		<!-- endinject -->
-	</body>
-	
 </html>
-
-
-
-
-
-
