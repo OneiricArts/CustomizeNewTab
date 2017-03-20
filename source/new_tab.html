@@ -2,44 +2,24 @@
 <html>
   
 	<head>
-		<!--<link rel="stylesheet" type="text/css" href="bootstrap.min.css">-->
-		<!-- <link rel="stylesheet" type="text/css" href="bootstrap.min.css"> -->
-		<!-- <link inline href="libs/bootstrap_custom/css/bootstrap.min.css"> -->
-		<link inline href="libs/bootstrap-4.0.0-dist/css/bootstrap.min.css"> 
+		<title>New Tab - Sports</title>
 
-		<!-- <link rel="stylesheet" href="/material.min.css"> -->
-		<!-- <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons"> -->
+		<link inline href="libs/bootstrap-4.0.0-dist/css/bootstrap.min.css"> 
 		<!-- inject:css -->
 		<!-- endinject -->
 
 		<style type="text/css">
 
-			/* 
-				why inline? I don't want to deal with more css than is in the header, 
-				since it is a !@#@ to maintain for a side project. this may change with a
-				smaller bootstrap, and using some flex-box lib instead. 
-
-				but until then, this is the most effecient place for css
-			*/
-		
 			.winning{
 				font-weight: bold;
 			}
 			
-			.redZone{}
-			.possession{}
-
 			.flair {
 				color: #aaaaaa;
 			}
 
 			.card-block {
 				padding: 0px;
-			}
-
-			.list-group-item {
-				/*padding-left: 10px;
-				padding-right: 10px;*/
 			}
 			
 			.table {
@@ -51,21 +31,11 @@
 				padding-bottom: 20px; /* so plus button isn't stuck at bottom */
 			}
 
-			.widgets { /* container for widgets */
-				padding-right: 10px;
-				padding-left: 10px; 
-			}
-
-			.widget { /* a widget */
-				padding-right: 5px;
-				padding-left: 5px;
-			}
-
+			/* used to flash table row on update */
 			.flash{
 				animation: flash 1s ease-out;
 				animation-iteration-count: 1;
-			}
-			@keyframes flash {
+			} @keyframes flash {
 				0% { background-color:none;}
 				50% { background-color:#FFFF99;}        
 				100% {background-color:none;}
@@ -75,17 +45,6 @@
 			a {
 				color: #ff4081; /* bright pink */
 			}
-
-			/*@media (min-width: 991px) {
-				#MLB_widget, #NFL_col{
-					float: right;
-				}
-			}
-			@media (min-width: 768px) and (max-width: 991px) {
-				#MLB_widget{
-					float: right;
-				}
-			}*/
 
 			html {
 				font-size: 14px;
@@ -123,11 +82,8 @@
 		</style>
 	</head>
 
-	<!-- <body background="https://upload.wikimedia.org/wikipedia/commons/9/97/Emerald_Bay.jpg"> -->
-	<!-- <body background="/imgs/gsw.jpg"> -->
-	<!-- <body background="/imgs/Emerald_Bay2.jpeg"> -->
+	<!--https://uigradients.com/# great ideas for background gradients-->
 	<body style="background: linear-gradient(to left, #457fca , #5691c8);">
-	<!-- <body style="background-color: #F2F2F2"> -->
 		
 		<div id="bookmarks_bar"></div>
 
@@ -159,37 +115,14 @@
 		
 		<div class="container-fluid">
 
-			<!-- <div id="update-alert" class="alert alert-success" role="alert" style="display:none">
-				Update 0.5.6! (this message will show for 5 times each update)
-				<ul>
-					<li>click anywhere on a game row  more info on the game, 
-					changes when a game is in progress. let me know what else to include.</li>
-					<li>NBA AutoUpdate is off by default, press to turn on each time.)</li>
-				</ul>
-			</div> -->
-			<!--<div id="update-alert" class="alert alert-info" role="alert" style="padding: 5px 15px 5px 15px">
-					Major update: MLB + NHL included (but rough)!
-					Grid layout with some combinations of widgets might look funky. Its being worked on, 
-					but feedback is welcome.
-			</div>-->
-
 			<div id="no-internet-alert" class="alert alert-danger" role="alert" style="display:none">
 				<span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
 				<span class="sr-only">Error:</span>
-				My code says you don't have an Internet Connection :(   ... if wrong, report 
-				<a href="https://www.reddit.com/r/SportsNewTabPage/comments/4657hm/bug_report/">here</a>. 
-				The page will auto-refresh when a connection is detected.
+				<h4>No internet connection detected :(</h4>
+				This page will auto-refresh when a connection is detected.
+				If this is incorrect, please 
+				<a href="https://github.com/OneiricArts/CustomizeNewTab/issues">submit a github issue</a>.
 			</div> 
-
-			<!-- <a href="https://www.google.com/">
-			<div id="custom-message" class="alert alert-success alert-dismissible" role="alert" style="display: none;">
-			<button id="custom-message-btn" type="button" class="close" data-dismiss="alert" aria-label="Close">
-			<span aria-hidden="true">&times;</span></button>
-				<strong>Click me to give feedback and vote for background</strong>
-				<span id="background_color"></span>
-			</div>
-			</a> -->
-
 
 			<div class="card-columns">
 				<div id="NFL_widget"></div>
@@ -199,8 +132,9 @@
 				<div id="Links_col">
 					<div id="bookmark-panel"></div>
 				</div>
-			</div> <!-- /row widgets-->
 			</div>
+			
+		</div>
 	
 		<!-- Links Modal-->
 		<div class="modal fade" id="addCustomLinkModal" tabindex="-1" role="dialog" 
@@ -231,7 +165,6 @@
 								id="bookmark_url" placeholder="URL">
 							</div>
 						</form>
-
 					</div>
 
 					<div class="modal-footer">
@@ -245,22 +178,6 @@
 				</div>
 			</div>
 		</div>	
-
-		<!-- <script src="libs.min.js"></script>
-		<script src="templates.js"></script>
-		<script src="app.min.js"></script> -->
-
-		<!-- <script src="libs.min.js"></script>
-		<script src="templates.js"></script>
-		<script src="Base.js"></script>
-		<script src="Sports.js"></script>
-		<script src="NBA.js"></script>
-		<script src="NFLoff.js"></script>
-		<script src="NFLnews.js"></script>
-		<script src="Links.js"></script>
-		<script src="pageHandler.js"></script>
-		<script src="NHL.js"></script>
-		<script src="googleAnalytics.js"></script> -->
 
 		<!-- inject:js -->
 		<!-- endinject -->
