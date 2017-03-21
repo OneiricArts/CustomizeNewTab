@@ -1,6 +1,3 @@
-
-[//]: #	"NOTE TO SELF: update this more regularly"
-
 ## What is it?
 ![Screenshot](./screenshots/README.png?raw=true)
 
@@ -8,16 +5,45 @@
 
 [Get it on the Chrome Store](https://chrome.google.com/webstore/detail/sports-new-tab-page-beta/cbdhcjkifbkbckpoejnakoekiheijpei)
 
-This is a replacement for Chrome's New Tab Page with something more useful, and sports oriented. Putting sports scores/schedules on the new tab page allows easy access to see current games, as well as which games are worth tuning into (close NBA games are highlighted, NFL games with a team in the red zone are highlighted, etc.).
+This extension replaces Chrome's New Tab Page with one that provides a sports-oriented experience. See live scores for current NBA, NFL, NHL, and MLB games, plus some other features:
 
-Lastly, it helps me work on my JavaScript/frontend skills.
+* see close NBA games highlighted
+* see which NFL games feature a team in the red zone (scoring threat)
+* see NBA box score and detailed stats for all games
 
-I will probably work on this forever, and have unlimited ideas (productivity widgets like Google Calendar). I like it much better than the default New Tab, and like where it is going :)
+### State of Extension
 
-### More info in Wiki 
+The first part of developing this extension was basically making something that worked and people liked using (functionality and performance). That part went really well. **Now, I am focused on improving code quality and eliminating technical debt.** I was considering rewriting the entire thing and leveraging ES6/7 features from the beginning, but I have written it well enough that I can rewrite it in parts and still be able to simultaneously add functionality/bug fixes.
 
-Information on building (uses gulp.js) and other general info (bugs, future plans, etc.) in wiki. [(Link to wiki)](https://github.com/OneiricArts/CustomizeNewTab/wiki/)
+Rough outline of plan (~~striked through~~ means completed):
 
-### Licenses & Acknowledgements  
+1. ~~Step 1: Building a prototype to answer:~~  
+   - ~~Is it technically possible for me to build a sports-centric new tab page with live scores, box scores, etc? Do I find it useful? Do other people find it useful? Yes Yes Yes~~
+2. ~~Build a functioning protype with functionality and performance that is signifincantly better than other alternatives.~~
+   - ~~Context aware highlighting to provide real time info. that leads to me being able to catch good moments of games~~
+   - ~~Build system that results in a optimized final build of the extension & fast start-up time~~ 
+3. A code base that a new dev could pick up very easily
+   - async/promises to eliminate callback hell and make logic more readable (including promisified wrappers around Chrome APIs)
+   - restructure objects that are too strongly tied in the current OO design, remphasize truely shared features (now that I have a good knowledge of the APIs and how I want widgets to behave)
+   - Comprehensive automated tests
+   - ~~Metrics to monitor performance, error rates, and telemetry data~~
+   - Firefox port, will also ensure cross platform code
+4. Start adding more functionality again
+   - Beautiful backgrounds that don't degregade performance (start leveraging background pages)
+   - Bookmark Bar widget to reach feature parity with Chrome's default new tab page
 
-Need to add footer and credit http://www.flaticon.com/free-icon/scoreboard-tied_79638#term=scores&page=1&position=13
+### More info in Wiki
+
+Information on building (uses gulp.js) and other general info (bugs, future plans, etc.) [in project wiki](https://github.com/OneiricArts/CustomizeNewTab/wiki/).
+
+### Acknowledgements  
+
+> "If I have seen further, it is by standing on the shoulders of giants." - Isaac Newton
+
+Icon made by [freepik](http://www.flaticon.com/authors/freepik) from www.flaticon.com  [link](http://www.flaticon.com/free-icon/scoreboard-tied_79638#term=scores&page=1&position=13)
+
+Open Source Libraries: [Bootstrap4](https://v4-alpha.getbootstrap.com/), [jQuery](https://jquery.com/)
+
+Build Tools: [Gulp.js](http://gulpjs.com/), [Bable.js](https://babeljs.io/), [babili](https://github.com/babel/babili)
+
+and more!
