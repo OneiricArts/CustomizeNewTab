@@ -17,6 +17,7 @@ const manifest = require('./Chrome/manifest.json');
 // all js files needed, in order of inclusion
 const jsfiles = [
   // 'source/js/*.js'
+  'source/js/handlebars-helpers.js',
   'source/js/browser.js',
   'source/js/Base.js',
   'source/js/Sports.js',

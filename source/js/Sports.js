@@ -133,16 +133,6 @@ Sports.prototype.cacheGames = function(callback) {
 
 
 
-/*Handlebars.registerHelper('lookup', function(obj, field, options) {
-	//return obj[field];
-	console.log(obj);
-
-	if (true)
-		return options.fn(this);
-	else
-		return options.inverse(this);
-	//return obj.hasOwnProperty(field);
-});*/
 
 
 

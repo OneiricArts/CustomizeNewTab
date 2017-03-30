@@ -54,9 +54,6 @@ class BookmarksBar extends Widget {
 	}
 }
 
-Handlebars.registerHelper("log", function(something) {
-	console.log(something);
-});
 
 var a = new BookmarksBar()
 if(dev_env) {

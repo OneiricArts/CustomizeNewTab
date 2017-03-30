@@ -14,10 +14,6 @@ class Widget {
 		this.dataKey;
 		this.domElement;
 
-		// Handlebars helper functions
-		Handlebars.registerHelper('addOne', function(value) {
-			return value + 1;
-		});
 	}
 
 	on() {
