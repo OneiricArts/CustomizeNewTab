@@ -47,6 +47,24 @@ class browser { // eslint-disable-line no-unused-vars
     });
   }
 
+ /**
+   * (async) Removes all items from chrome.storage.local
+   * @static
+   * @returns {Promise} resolves on success, rejects on error, no other return
+   */
+  static clearLocalStorage() {
+    return new Promise((resolve, reject) => {
+      chrome.storage.local.clear(() => {
+        const err = chrome.runtime.lastError;
+        if (err) {
+          reject(err);
+        } else {
+          resolve();
+        }
+      });
+    });
+  }
+
   /**
    * (async) Gets a list of top sites (that are displayed on the default new tab page)
    * @static

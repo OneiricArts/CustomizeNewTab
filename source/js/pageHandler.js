@@ -33,20 +33,18 @@ class PageHandeler extends Base {
 
   loadFunctionality() {
     if (devEnv) {
-      this.loadDev();
+      PageHandeler.loadDev();
     }
     this.loadWidgets();
   }
 
-  loadDev() {
+  static loadDev() {
     $('#_dev_btn').show();
-    $('#_dev_btn').on('click', { self: this }, (event) => {
+    $('#_dev_btn').on('click', async (event) => {
       // STOP ALL OTHER EVENTS
       event.stopImmediatePropagation();
 
-      const self = event.data.self;
-      self.data = null;
-      self.saveData();
+      await browser.clearLocalStorage();
       location.reload();
     });
   }
