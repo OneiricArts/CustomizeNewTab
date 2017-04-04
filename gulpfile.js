@@ -39,10 +39,8 @@ const jsfiles = [
 const libs = [
   'source/libs/jquery-2.1.4.min.js',
   // 'source/libs/jquery-ui.min.js', // used to be needed because of $.highlight
-  // 'source/libs/bootstrap-3.3.5-dist/js/bootstrap.min.js',
-  'source/libs/tether.min.js',
+  'source/libs/tether.min.js', // needed in bootstrap 4
   'source/libs/bootstrap-4.0.0-dist/js/bootstrap.min.js',
-  // 'source/libs/bootstrap_custom/js/bootstrap.min.js',
   // 'source/libs/mdl/material.min.js',
   'source/libs/jquery.xml2json.js',
   // 'source/libs/countdown.min.js',
@@ -51,7 +49,6 @@ const libs = [
 
 // css files, will be inlined
 const cssFiles = [
-  // 'source/libs/bootstrap-3.3.5-dist/css/bootstrap.min.css',
   'source/libs/bootstrap-4.0.0-dist/css/bootstrap.min.css',
   // 'source/libs/mdl/material.min.css',
 ];
