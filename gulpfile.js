@@ -23,8 +23,6 @@ const jsfiles = [
   'source/js/Base.js',
   'source/js/Sports.js',
   'source/js/NBA.js',
-  // 'source/js/NFLoff.js',
-  // 'source/js/NFLnews.js',
   'source/js/Links.js',
   // 'source/js/bookmarksBar.js',
   'source/js/widget.js',
