@@ -24,7 +24,6 @@ const jsfiles = [
   'source/js/Sports.js',
   'source/js/NBA.js',
   'source/js/Links.js',
-  // 'source/js/bookmarksBar.js',
   'source/js/widget.js',
   'source/js/sport.js',
   'source/js/NHL.js',
