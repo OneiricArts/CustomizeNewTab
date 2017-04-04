@@ -13,7 +13,7 @@ function NBA() {
 
 	this.updateGamesID;
 
-	this.rowId = '#NBA_col';
+	this.rowId = '#NBA_widget';
 	this.autoUpdateButtonId = this.rowId + ' #autoupdate-btn';
 };
 
@@ -45,14 +45,14 @@ NBA.prototype.yyyymmdd = function(changeDay) {
 NBA.prototype.cacheButtonActions = function() {
 	var that = this;
 	$('body').on('click', '#NBA_game_table #remove-game-btn', {that: that}, this.removeGame);
-	$('body').on('click', '#NBA_col #reset_games', this.resetSchedule.bind(this));
-	$('body').on('click', '#NBA_col #update-btn', this.updateSchedule.bind(this));
-	$('body').on('click', '#NBA_col #autoupdate-btn', {that: that}, this.autoupdateSchedule);
-	$('body').on('click', '#NBA_col #standings-btn', this.standings.bind(this));
-	$('body').on('click', '#NBA_col #boxscore-btn', {that: that}, this.boxscore);
-	$('body').on('click', '#NBA_col #tomorrow-btn', this.tomorrowSchedule.bind(this));
-	$('body').on('click', '#NBA_col #yesterday-btn', this.yesterdaySchedule.bind(this));
-	$('body').on('click', '#NBA_col #today-btn', this.todaySchedule.bind(this));
+	$('body').on('click', '#NBA_widget #reset_games', this.resetSchedule.bind(this));
+	$('body').on('click', '#NBA_widget #update-btn', this.updateSchedule.bind(this));
+	$('body').on('click', '#NBA_widget #autoupdate-btn', {that: that}, this.autoupdateSchedule);
+	$('body').on('click', '#NBA_widget #standings-btn', this.standings.bind(this));
+	$('body').on('click', '#NBA_widget #boxscore-btn', {that: that}, this.boxscore);
+	$('body').on('click', '#NBA_widget #tomorrow-btn', this.tomorrowSchedule.bind(this));
+	$('body').on('click', '#NBA_widget #yesterday-btn', this.yesterdaySchedule.bind(this));
+	$('body').on('click', '#NBA_widget #today-btn', this.todaySchedule.bind(this));
 };
 
 NBA.prototype.removeGame = function(event) {
@@ -235,7 +235,7 @@ NBA.prototype.writeToTemplate = function() {
 	this.data.sports_content.games.date = this.data.sports_content.sports_meta.season_meta.calendar_date;
 
 	this.displayTemplate('NBAschedule', 'schedule', 
-		this.data.sports_content.games, $('#NBA_col'));
+		this.data.sports_content.games, $('#NBA_widget'));
 };
 
 
