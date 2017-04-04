@@ -1,37 +1,39 @@
 <!-- Links -->
 
+{{#* inline "add-link-button"}}
+  <button class="btn btn-sm float-xs-right btn-outline-secondary" 
+    data-toggle="modal" data-target="#add-my-link-modal" type="button">
+    Add Link
+  </button>
+{{/inline}}
 
 <div class="card">
-{{#if links.customSites}}
+  {{#if links.myLinks}}
+    <div class="card-header">My Links {{> add-link-button}}</div>
 
-<div class="card-header">Custom Links
-	<button id="NFL-button" class="btn btn-sm float-xs-right btn-outline-secondary" 
-	data-toggle="modal" data-target="#addCustomLinkModal"
-	type="button">Add Link</button>
-</div>
+    <div class="list-group list-group-flush">
+      {{#each links.myLinks}}
+        <a href="{{url}}" data-index="{{@index}}"
+        class="list-group-item list-group-item-action">{{title}}
+          <button id="remove-my-link"
+            class="btn btn-sm float-xs-right btn-outline-secondary">
+            &#9587;
+          </button>
+        </a>
+      {{/each}}
+    </div>
+  {{/if}}
 
-<div id="custom-sites" class="list-group list-group-flush">
-	{{#each links.customSites}}
-		<a href="{{url}}" id="{{@index}}_customLink"
-		class="list-group-item list-group-item-action">{{title}}
-				<button id="remove_customLink"
-					class="btn btn-sm float-xs-right btn-outline-secondary">
-					<!--<span class="glyphicon glyphicon-trash"></span> -->
-					&#9587;
-				</button>
-			</a>
-	{{/each}}
-</div>
-{{/if}}
+  <div class="card-header">Chrome Top Sites
+    {{#unless links.myLinks}}{{> add-link-button}}{{/unless}}
+  </div>
 
-<div class="card-header">Chrome Top Sites</div>
-
-<div id="top-sites" class="list-group list-group-flush">
-	{{#each links.topSites}}
-		<a href="{{url}}"
-		class="list-group-item list-group-item-action">{{title}}</a>
-	{{/each}}
-</div>
+  <div id="top-sites" class="list-group list-group-flush">
+    {{#each links.topSites}}
+      <a href="{{url}}"
+      class="list-group-item list-group-item-action">{{title}}</a>
+    {{/each}}
+  </div>
 
 </div>
 
@@ -46,8 +48,8 @@ style="height: 40px; width:40px; line-height: 22px; vertical-align:middle; borde
  <!-- FAB to add custom Links requires material css + js -->	
 {{!-- <button id="tt3" class="mdl-button mdl-js-button mdl-button--fab mdl-button--mini-fab 
 mdl-js-ripple-effect pull-right" data-toggle="modal" data-target="#addCustomLinkModal">
-	<i class="material-icons">&#43;</i>
-	<div class="mdl-tooltip mdl-tooltip--left" for="tt3">Add your own Link</div>
+  <i class="material-icons">&#43;</i>
+  <div class="mdl-tooltip mdl-tooltip--left" for="tt3">Add your own Link</div>
 </button> --}}
 
 
