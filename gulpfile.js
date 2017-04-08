@@ -51,6 +51,7 @@ const libs = [
 const cssFiles = [
   'source/libs/bootstrap-4.0.0-dist/css/bootstrap.min.css',
   // 'source/libs/mdl/material.min.css',
+  'source/style.css',
 ];
 
 
@@ -96,7 +97,7 @@ function moveHTML() {
           // 'cwd': __dirname + '/Chrome/src'
         }),
       {
-        ignorePath: 'source/libs/bootstrap-4.0.0-dist/css/',
+        ignorePath: ['source/libs/bootstrap-4.0.0-dist/css/', 'source/'],
         addRootSlash: false,
       }))
     .pipe(gulp.dest('Chrome/src/'));
