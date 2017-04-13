@@ -17,24 +17,26 @@ The first part of developing this extension was basically making something that 
 
 Rough outline of plan (~~striked through~~ means completed):
 
-1. ~~Step 1: Building a prototype to answer:~~  
+1. ~~Building a prototype to answer:~~  
    - ~~Is it technically possible for me to build a sports-centric new tab page with live scores, box scores, etc? Do I find it useful? Do other people find it useful? Yes Yes Yes~~
 2. ~~Build a functioning protype with functionality and performance that is signifincantly better than other alternatives.~~
    - ~~Context aware highlighting to provide real time info. that leads to me being able to catch good moments of games~~
    - ~~Build system that results in a optimized final build of the extension & fast start-up time~~ 
-3. A code base that a new dev could pick up very easily
-   - async/promises to eliminate callback hell and make logic more readable (including promisified wrappers around Chrome APIs)
+3. Clean code base so that a new dev could pick it up very easily (track with [project](https://github.com/OneiricArts/CustomizeNewTab/projects/1)/milestone)
+   - async/promises to eliminate callback hell and make logic more readable (~~including promisified wrappers around Chrome APIs~~)
    - restructure objects that are too strongly tied in the current OO design, remphasize truely shared features (now that I have a good knowledge of the APIs and how I want widgets to behave)
    - Comprehensive automated tests
    - ~~Metrics to monitor performance, error rates, and telemetry data~~
    - Firefox port, will also ensure cross platform code
 4. Start adding more functionality again
-   - Beautiful backgrounds that don't degregade performance (start leveraging background pages)
+   - Beautiful backgrounds that don't degregade performance (start leveraging background scripts)
    - Bookmark Bar widget to reach feature parity with Chrome's default new tab page
+   - Today's events from Google Calendar
+   - Progressive Web App for mobile (PWAs in Android continue to get better)
 
 ### More info in Wiki
 
-Information on building (uses gulp.js) and other general info (bugs, future plans, etc.) [in project wiki](https://github.com/OneiricArts/CustomizeNewTab/wiki/).
+Information on building (uses gulp.js) and other general info (permissions, future plans, etc.) [in project wiki](https://github.com/OneiricArts/CustomizeNewTab/wiki/).
 
 ### Acknowledgements  
 
@@ -42,8 +44,10 @@ Information on building (uses gulp.js) and other general info (bugs, future plan
 
 Icon made by [freepik](http://www.flaticon.com/authors/freepik) from www.flaticon.com  [link](http://www.flaticon.com/free-icon/scoreboard-tied_79638#term=scores&page=1&position=13)
 
-Open Source Libraries: [Bootstrap4](https://v4-alpha.getbootstrap.com/), [jQuery](https://jquery.com/)
+Open Source Libraries: [Bootstrap4](https://v4-alpha.getbootstrap.com/), [jQuery](https://jquery.com/), [Handlebars](http://handlebarsjs.com/), [Lodash](https://lodash.com/)
 
-Build Tools: [Gulp.js](http://gulpjs.com/), [Bable.js](https://babeljs.io/), [babili](https://github.com/babel/babili)
+Build Tools: [Gulp.js](http://gulpjs.com/), [Bable.js](https://babeljs.io/), [Babili](https://github.com/babel/babili) (+used [UglifyJS](https://github.com/mishoo/UglifyJS2))
+
++S/O to [VS Code](https://code.visualstudio.com/) ([JSDoc](http://usejsdoc.org/) style comments in code primarily used for [IntelliSense](https://code.visualstudio.com/docs/languages/javascript#_intellisense))
 
 and more!
