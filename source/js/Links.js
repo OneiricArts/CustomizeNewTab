@@ -19,7 +19,6 @@ class Links extends WidgetNew { // eslint-disable-line no-unused-vars
       check if its still an array and carry over the data
 
       also, if it is an array, need to change it to an object
-      @TODO
     */
     if (Object.prototype.toString.call(this.data) === '[object Array]') {
       const arr = this.data;
