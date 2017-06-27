@@ -47,7 +47,7 @@ class Links extends WidgetNew { // eslint-disable-line no-unused-vars
   }
 
   async showLinks() {
-    const mostVisitedURLs = await browser.getTopSites();
+    const mostVisitedURLs = await browser.topSites.get();
     const dataObj = {
       topSites: mostVisitedURLs.slice(0, 5),
       myLinks: this.data.myLinks,

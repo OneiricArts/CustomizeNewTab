@@ -49,17 +49,17 @@ class WidgetNew { // eslint-disable-line no-unused-vars
    * @returns {Promise} all async functions return a promise
    */
   async loadData() {
-    const loadedData = await browser.getLocalStorage(this.datakey);
+    const loadedData = await browser.storage.local.get(this.datakey);
     if (loadedData[this.datakey]) { this.data = loadedData[this.datakey]; }
   }
 
   /**
    * (async) Saves current this.data to chrome.local.storage
    * @example synchronous usage (rarely needed): await this.saveData()
-   * @returns {Promise} will resolve when browser.setLocalStorage is completed
+   * @returns {Promise} will resolve when set is completed
    */
   saveData() {
-    return browser.setLocalStorage({ [this.datakey]: this.data });
+    return browser.storage.local.set({ [this.datakey]: this.data });
   }
 
   /**

@@ -44,7 +44,7 @@ class PageHandeler extends Base {
       // STOP ALL OTHER EVENTS
       event.stopImmediatePropagation();
 
-      await browser.clearLocalStorage();
+      await browser.storage.local.clear();
       location.reload();
     });
   }
