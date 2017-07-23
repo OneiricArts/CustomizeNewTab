@@ -15,30 +15,21 @@ window.addEventListener('offline', () => { $('#no-internet-alert').fadeIn(); });
 // reload page when online for cleanest reset
 window.addEventListener('online', () => { document.location.reload(); });
 
-class PageHandeler extends Base {
+class PageHandeler extends WidgetNew {
   constructor() {
     super();
-    this.datakey = 'pageHndler_widgets';
+    this.datakey = 'pageHandler_widgets';
 
-    this.NFL = new NFL();
-    this.NBA = new NBA();
-    this.NHL = new NHL();
-    this.MLB = new MLB();
+    this.NFL = new NFL(); this.NBA = new NBA(); this.NHL = new NHL(); this.MLB = new MLB();
     this.Links = new Links();
-
     this.widgetKeys = ['NFL', 'NBA', 'NHL', 'MLB', 'Links'];
+
+    // defaults, will get overriden by loadData()
+    this.data.NFL = false; this.data.NBA = false; this.data.NHL = false;
+    this.data.MLB = true; this.data.Links = true;
   }
 
-  /* this.data.<stuff> is set in this.setDefaults */
-
-  loadFunctionality() {
-    if (devEnv) {
-      PageHandeler.loadDev();
-    }
-    this.loadWidgets();
-  }
-
-  static loadDev() {
+  static async loadDev() {
     $('#_dev_btn').show();
     $('#_dev_btn').on('click', async (event) => {
       // STOP ALL OTHER EVENTS
@@ -52,70 +43,46 @@ class PageHandeler extends Base {
   loadWidgets() {
     for (let i = 0; i < this.widgetKeys.length; i += 1) {
       const key = this.widgetKeys[i];
-
-      // turn widget on
-      if ((key in this.data) && (this.data[key] === true) && (key in this)) {
+      if (this.data[key] === true) {
         this[key].on();
         gaSendEvent({ ec: 'Active_Widgets_On_Init', ea: 'InitActive', el: key });
-      } else { // buttons are on by default -- turn them off if needed
+      } else {
+        // buttons are on by default -- turn them off if needed
         $(`#page_options #${key}-button`).trigger('click');
       }
     }
   }
 
-  setDefaults() {
-    for (let i = 0; i < this.widgetKeys.length; i += 1) {
-      this.data[this.widgetKeys[i]] = false;
-    }
-
-    this.data.NBA = true;
-    this.data.NFL = true;
-    this.data.MLB = false;
-    this.data.NHL = true;
-    this.data.Links = true;
-
-    this.loadFunctionality();
-  }
-
   triggerWidget(event) {
-    const that = event.data.that;
-
     // DO NOT SEND TO GOOGLE ANALYTICS, stops other GA click addEventListener
     // DO trigger any other events (i.e. _dev_btn event)
     event.stopPropagation();
 
-    const key = $(this).attr('id').split('-')[0];
-
-    // console.log($(this));
-
+    // change to data-attribute?
     $(this).toggleClass('btn-outline-success').toggleClass('btn-outline-secondary');
-    let id = `#${key}_col`;
+    const key = $(this).attr('id').split('-')[0];
+    $(`#${key}_widget`).toggle();
 
-    if ($(id).length === 0) {
-      id = `#${key}_widget`;
-    }
-    $(id).toggle();
-
+    const self = event.data.self;
     if ($(this).hasClass('btn-outline-success')) {
-      that.data[key] = true;
-      if (key in that) {
-        that[key].on();
-      }
+      self.data[key] = true;
+      self[key].on();
     } else {
-      that.data[key] = false;
-      if (key in that) {
-        that[key].off();
-      }
+      self.data[key] = false;
+      self[key].off();
     }
-    that.saveData();
+
+    self.saveData();
   }
 
-  init() {
-    const that = this;
-    $('#page_options button').on('click', { that }, this.triggerWidget);
+  async init() {
+    $('#page_options button').on('click', { self: this }, this.triggerWidget);
     // $('body').on('click', $('#page_options button'), triggerWidget);
 
-    that.loadData(this.loadFunctionality, this.setDefaults);
+    if (devEnv) { PageHandeler.loadDev(); }
+
+    await this.loadData();
+    this.loadWidgets();
   }
 }
 
