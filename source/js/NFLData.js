@@ -1,0 +1,153 @@
+const NFLData = {
+
+  async getNFLData() {
+    // get main data
+    const url = 'http://www.nfl.com/liveupdate/scores/scores.json';
+    const scores = await (await fetch(url)).json();
+
+    // get additional data
+    const specificUrl = 'http://www.nfl.com/liveupdate/scorestrip/ss.json';
+    const scorestrip = await (await fetch(specificUrl)).json();
+
+    // combine data
+    let combinedData = this.combineNFLAPIData(scores, scorestrip);
+
+    combinedData = this.labelScheduleData(combinedData);
+
+    return combinedData;
+  },
+
+  combineNFLAPIData(primaryData, additionalData) {
+    const combinedData = {};
+
+    combinedData.gms = _.map(primaryData, (v, k) => {
+      const g = v;
+      g.gid = k;
+      return g;
+    });
+
+    _.map(combinedData.gms, (v, i) => {
+      const g = v;
+      g.extrainfo = additionalData.gms[i];
+      g.eid = additionalData.gms[i].eid;
+      return g;
+    });
+
+    combinedData.w = additionalData.w;
+
+    return combinedData;
+  },
+
+  labelScheduleData(data) {
+    _.map(data.gms, (v) => {
+      const game = v;
+
+      // if (!isNaN(schedule.gms[i].extrainfo.q) || schedule.gms[i].extrainfo.q === 'P') {
+      if (game.qtr && !game.qtr.includes('Final') && !isNaN(game.qtr)) {
+        game.playing = true;
+      }
+
+      // can't check for score table in handlebars, because it 0 is a valid entry,
+      // but if(0) is false
+      if (game.home.score[1] !== null) {
+        game.scoreTable = true;
+      }
+
+      // label whos winning
+      if (game.home.score.T !== null) {
+        const homeScore = parseInt(game.home.score.T, 10);
+        const visitorScore = parseInt(game.away.score.T, 10);
+
+        if (homeScore > visitorScore) {
+          game.home_winning = true;
+        }
+        if (visitorScore > homeScore) {
+          game.visitor_winning = true;
+        }
+      }
+
+      // who has possession
+      if (game.playing &&
+        game.posteam === game.home.abbr) {
+        game.home_pos = true;
+      } else if (game.playing &&
+        game.posteam === game.away.abbr) {
+        game.visitor_pos = true;
+      }
+
+
+      // local time
+      if (game.extrainfo) {
+        const hours = parseInt(game.extrainfo.t.split(':')[0], 10);
+
+        const options = {};
+        if (hours >= 0 && hours <= 10) {
+          options.ampm = 'PM';
+        } else {
+          options.ampm = 'AM';
+        }
+
+        game.t = this.toLocalTime(
+          game.extrainfo.t.split(':')[0] - 1,
+          game.extrainfo.t.split(':')[1],
+          options,
+        ).split(' ')[0];
+      } else {
+        game.t = `${game.eid.substring(4, 6)}.${game.eid.substring(6, 8)}`;
+      }
+
+      /**
+       * tweaking game.qtr looks
+       */
+      if (game.qtr === 'final overtime') {
+        // overtime makes column too long
+        game.qtr = 'final OT';
+      } else if (game.qtr === 'Pregame') {
+        // pregame is useless info
+        game.qtr = `${game.extrainfo.d} ${game.t}`;
+      }
+
+      if (devEnv) {
+        if (game.home.abbr === 'SF' || game.away.abbr === 'SF' ||
+            game.home.abbr === 'NE' || game.away.abbr === 'NE') {
+          game.fav_team = true;
+        }
+      }
+    });
+
+    return data;
+  },
+
+  toLocalTime(hrs, mins, opts) {
+    let options = opts;
+    if (!opts) {
+      options = {};
+    }
+
+    try {
+      let hours = parseInt(hrs, 10);
+      const minutes = parseInt(mins, 10);
+
+      // convert to 24 hours if need to (and provide AM/PM)
+      if (options.ampm === 'PM' && hours < 12) {
+        hours += 12;
+      } else if (options.ampm === 'AM' && hours === 12) {
+        hours = 0;
+      }
+
+      // EST + 5 = UTC
+      const EST_UTC_OFFSET = 5;
+
+      const date = new Date();
+      date.setUTCHours((hours + EST_UTC_OFFSET) % 24, minutes, 0);
+
+      if (!options.format) {
+        options.format = { hour: '2-digit', minute: '2-digit' };
+      }
+      return date.toLocaleTimeString([], options.format);
+    } catch (e) {
+      console.log(e);
+      return null;
+    }
+  },
+};

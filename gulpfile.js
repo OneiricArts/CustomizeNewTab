@@ -28,6 +28,7 @@ const jsfiles = [
   'source/js/sport.js',
   'source/js/NHL.js',
   'source/js/MLB.js',
+  'source/js/NFLData.js',
   'source/js/NFL.js',
   'source/js/pageHandler.js',
   'source/js/googleAnalyticsChrome.js',     // Chrome version by default
@@ -42,7 +43,7 @@ const libs = [
   'source/libs/tether.min.js', // needed in bootstrap 4
   'source/libs/bootstrap-4.0.0-dist/js/bootstrap.min.js',
   // 'source/libs/mdl/material.min.js',
-  'source/libs/jquery.xml2json.js',
+  // 'source/libs/jquery.xml2json.js',
   // 'source/libs/countdown.min.js',
   'source/libs/handlebars.runtimev4.0.5.min.js',
   'source/libs/lodash.core.min.js',

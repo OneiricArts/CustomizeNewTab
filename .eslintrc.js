@@ -19,6 +19,7 @@ module.exports = {
     "WidgetNew": false,
     "Sport": false,
     "NBA": false,
+    "NFLData": false,
     "NFL": false,
     "NHL": false,
     "MLB": false,
