@@ -95,10 +95,10 @@ if (window.performance) {
 // ga('send', 'Browser Dimensions', 'plixels', dimensions);
 
 // track which features are being clicked on
-$('html').on('click', 'a', (e) => { sendClickEvent(e); });
-$('html').on('click', 'button', (e) => { sendClickEvent(e); });
-$('html').on('click', 'span', (e) => { sendClickEvent(e); });
-$('html').on('click', 'tr', (e) => { sendClickEvent(e, { label: 'game_row' }); });
+$('html').on('click', 'a', e => sendClickEvent(e));
+$('html').on('click', 'button', e => sendClickEvent(e));
+$('html').on('click', 'span', e => sendClickEvent(e));
+$('html').on('click', 'tr', e => sendClickEvent(e, { label: 'game_row' }));
 
 // send uncaught (unexpected) exceptions to google analytics, if local installation show alert
 window.onerror = (msg, url, line, col, error) => {
