@@ -45,6 +45,7 @@ const libs = [
   'source/libs/jquery.xml2json.js',
   // 'source/libs/countdown.min.js',
   'source/libs/handlebars.runtimev4.0.5.min.js',
+  'source/libs/lodash.core.min.js',
 ];
 
 // css files, will be inlined
