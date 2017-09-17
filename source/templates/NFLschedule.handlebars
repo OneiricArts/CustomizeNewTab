@@ -1,162 +1,161 @@
 
 <div id="NFL-panel" class="card">
 
-	<div class="card-header">
-		<span>&#127944; NFL // Week {{schedule.w}} </span>
+  <div class="card-header">
+    <span>&#127944; NFL // Week {{schedule.w}} </span>
 
-		<button id="refresh_scores" class="btn btn-sm float-xs-right btn-outline-secondary">
-			<!--<span class="glyphicon glyphicon-refresh"></span> -->
-			Update
-		</button>
+    <button id="refresh_scores" class="btn btn-sm float-xs-right btn-outline-secondary">
+      <!--<span class="glyphicon glyphicon-refresh"></span> -->
+      Update
+    </button>
 
-		<button id="reset_games" class="btn btn-sm float-xs-right btn-outline-secondary">
-			<!--<span class="glyphicon glyphicon-cloud-download"></span> -->
-			Reset
-		</button>
-	</div>
+    <button id="reset_games" class="btn btn-sm float-xs-right btn-outline-secondary">
+      <!--<span class="glyphicon glyphicon-cloud-download"></span> -->
+      Reset
+    </button>
+  </div>
 
-	<div class="card-block">
-		{{#if schedule.gms.length}}
-		<table id="NFL-schedule-table" class="table table-sm">
-			<thead>
-				<tr>
-					<th>
-						<!--<span class="glyphicon glyphicon-time"></span>-->
-					</th>
-					<th style="text-align:left">Visitor</th>
-					<th style="text-align:left">@Home</th>
-					<th style="text-align:left">V</th>
-					<th style="text-align:left">H</th>
-					<th style="text-align:right">
-						<!--<span class="glyphicon glyphicon-edit"></span>-->
-					</th>
-				</tr>
-			</thead>
-			<tbody id="NFL-schedule-games">
-				{{#each schedule.gms}}{{#unless hidden}}
+  <div class="card-block">
+    {{#if schedule.gms.length}}
+    <table id="NFL-schedule-table" class="table table-sm">
+      <thead>
+        <tr>
+          <th>
+            <!--<span class="glyphicon glyphicon-time"></span>-->
+          </th>
+          <th style="text-align:left">Visitor</th>
+          <th style="text-align:left">@Home</th>
+          <th style="text-align:left">V</th>
+          <th style="text-align:left">H</th>
+          <th style="text-align:right">
+            <!--<span class="glyphicon glyphicon-edit"></span>-->
+          </th>
+        </tr>
+      </thead>
+      <tbody id="NFL-schedule-games">
+        {{#each schedule.gms}}{{#unless hidden}}
 
-					<tr id={{eid}} data-toggle="collapse" data-target=#collapse-{{eid}}
-					class="{{#if redzone}}table-danger{{/if}} {{#if fav_team}}table-success{{/if}}">
+          <tr id={{eid}} data-toggle="collapse" data-target=#collapse-{{eid}}
+          class="{{#if redzone}}table-danger{{/if}} {{#if fav_team}}table-success{{/if}}">
 
-						{{#if qtr}}
-							{{#if playing}}
-								<td> {{qtr}}Q, {{clock}}</td>
-							{{else}}
-								<td class="text-capitalize"> {{qtr}}</td>
-							{{/if}}
-						{{else}}
-							{{#if extrainfo}}
-								<td> {{extrainfo.d}} {{extrainfo.t}}</td>
-							{{else}}
-								<td>{{t}}</td>
-							{{/if}}
-						{{/if}}
+            {{#if qtr}}
+              {{#if playing}}
+                <td> {{qtr}}Q, {{clock}}</td>
+              {{else}}
+                <td class="text-capitalize"> {{qtr}}</td>
+              {{/if}}
+            {{else}}
+              {{#if extrainfo}}
+                <td> {{extrainfo.d}} {{extrainfo.t}}</td>
+              {{else}}
+                <td>{{t}}</td>
+              {{/if}}
+            {{/if}}
 
-						<td class="text-capitalize {{#if visitor_winning}} winning {{/if}}"
-							style="text-align:left">
-							{{#if extrainfo}}
-								{{extrainfo.vnn}} 
-							{{else}}
-								{{away.abbr}}
-							{{/if}} 
-							
-							{{#if visitor_pos}} &#127944;{{/if}}
-						</td>
-						<td class="text-capitalize {{#if home_winning}} winning {{/if}}"
-							style="text-align:left">
-							{{#if extrainfo}}
-								{{extrainfo.hnn}} 
-							{{else}}
-								{{home.abbr}}
-							{{/if}}
+            <td class="text-capitalize {{#if visitor_winning}} winning {{/if}}"
+              style="text-align:left">
+              {{#if extrainfo}}
+                {{extrainfo.vnn}}
+              {{else}}
+                {{away.abbr}}
+              {{/if}}
 
-							{{#if home_pos}} &#127944;{{/if}}
-						</td>
+              {{#if visitor_pos}} &#127944;{{/if}}
+            </td>
+            <td class="text-capitalize {{#if home_winning}} winning {{/if}}"
+              style="text-align:left">
+              {{#if extrainfo}}
+                {{extrainfo.hnn}}
+              {{else}}
+                {{home.abbr}}
+              {{/if}}
 
-						<td style="text-align:left">{{away.score.T}}</td>
-						<td style="text-align:left">{{home.score.T}}</td>
+              {{#if home_pos}} &#127944;{{/if}}
+            </td>
 
-						<td style="text-align:right">
-						<button type="button" id="remove-game-btn" 
-						class="btn btn-sm float-xs-right btn-outline-secondary">
-						<!--<span class="glyphicon glyphicon-trash"></span>-->
-						&#9587;
-						</button></td>
-					</tr>
+            <td style="text-align:left">{{away.score.T}}</td>
+            <td style="text-align:left">{{home.score.T}}</td>
 
-					<tr id=c{{eid}}><td colspan="6" style="padding: 0" class="nfl-collapse">
-						<div id=collapse-{{eid}} class="collapse">
-							<center style="padding: 5px">
+            <td style="text-align:right">
+            <button type="button" id="remove-game-btn"
+            class="btn btn-sm float-xs-right btn-outline-secondary">
+            <!--<span class="glyphicon glyphicon-trash"></span>-->
+            &#9587;
+            </button></td>
+          </tr>
 
-								{{#if media.tv}}
-									<p> Game on {{media.tv}} </p>
-								{{/if}}
+          <tr id=c{{eid}}><td colspan="6" style="padding: 0" class="nfl-collapse">
+            <div id=collapse-{{eid}} class="collapse">
+              <center style="padding: 5px">
 
-								{{#if playing}}
-									<p>
-									{{posteam}} ball on the {{yl}} | 
-									{{down}} & {{togo}} 
-									</p>
-								{{/if}}
+                {{#if media.tv}}
+                  <p> Game on {{media.tv}} </p>
+                {{/if}}
 
-								{{#if scoreTable}}
-									<table class="table table-sm style:width:100%">
-										<thead>
-											<tr>
-												<th class="text-left col-md-6">&nbsp;</th>
-												<th class="text-right col-md-1">1</th>
-												<th class="text-right col-md-1">2</th>
-												<th class="text-right col-md-1">3</th>
-												<th class="text-right col-md-1">4</th>
-												<th class="text-right col-md-1">OT</th>
-												<th class="text-right col-md-1">T</th>
-											</tr>
-										</thead>
-										<tbody>
-											<tr>
-											
-												<td class="text-left col-md-6">
-													{{#if extrainfo}} {{extrainfo.vnn}} 
-													{{else}} {{away.abbr}} {{/if}} 
-												</td>
-												<td class="text-right col-md-1">{{away.score.[1]}}</td>
-												<td class="text-right col-md-1">{{away.score.[2]}}</td>
-												<td class="text-right col-md-1">{{away.score.[3]}}</td>
-												<td class="text-right col-md-1">{{away.score.[4]}}</td>
-												<td class="text-right col-md-1">{{away.score.[5]}}</td>
-												<td class="text-right col-md-1">{{away.score.[T]}}</td>
-											</tr>
-											<tr>
-												<td class="text-left col-md-6">
-													{{#if extrainfo}} {{extrainfo.hnn}} 
-													{{else}} {{home.abbr}} {{/if}} 
-												</td>
-												<td class="text-right col-md-1">{{home.score.[1]}}</td>
-												<td class="text-right col-md-1">{{home.score.[2]}}</td>
-												<td class="text-right col-md-1">{{home.score.[3]}}</td>
-												<td class="text-right col-md-1">{{home.score.[4]}}</td>
-												<td class="text-right col-md-1">{{home.score.[5]}}</td>
-												<td class="text-right col-md-1">{{home.score.[T]}}</td>
-											</tr>
-										</tbody>
-									</table>
-								{{/if}}
-							</center>
-						</div>
-					</td></tr>
-				{{/unless}}{{/each}}
-			</tbody>
-		</table>
-		{{else}}
-		<div class="alert" style="margin-bottom:0">
-			Offseason &#x1f622;<br>
-			<div class="btn-group btn-group-sm" role="group" aria-label="MLB Links">
-				<a href="http://nfl.com" class="btn btn-sm btn-outline-primary">NFL</a>
-				<a href="http://www.espn.com/nfl/" class="btn btn-sm btn-outline-primary">ESPN</a>
-				<a href="http://www.reddit.com/r/nfl" class="btn btn-sm btn-outline-primary">r/NFL</a>
-			</div>
-		</div>
-		{{/if}}
-	</div>
+                {{#if playing}}
+                  <p>
+                  {{posteam}} ball on the {{yl}} |
+                  {{down}} & {{togo}}
+                  </p>
+                {{/if}}
+
+                {{#if scoreTable}}
+                  <table class="table table-sm style:width:100%">
+                    <thead>
+                      <tr>
+                        <th class="text-left col-md-6">&nbsp;</th>
+                        <th class="text-right col-md-1">1</th>
+                        <th class="text-right col-md-1">2</th>
+                        <th class="text-right col-md-1">3</th>
+                        <th class="text-right col-md-1">4</th>
+                        <th class="text-right col-md-1">OT</th>
+                        <th class="text-right col-md-1">T</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+
+                        <td class="text-left col-md-6">
+                          {{#if extrainfo}} {{extrainfo.vnn}}
+                          {{else}} {{away.abbr}} {{/if}}
+                        </td>
+                        <td class="text-right col-md-1">{{away.score.[1]}}</td>
+                        <td class="text-right col-md-1">{{away.score.[2]}}</td>
+                        <td class="text-right col-md-1">{{away.score.[3]}}</td>
+                        <td class="text-right col-md-1">{{away.score.[4]}}</td>
+                        <td class="text-right col-md-1">{{away.score.[5]}}</td>
+                        <td class="text-right col-md-1">{{away.score.[T]}}</td>
+                      </tr>
+                      <tr>
+                        <td class="text-left col-md-6">
+                          {{#if extrainfo}} {{extrainfo.hnn}}
+                          {{else}} {{home.abbr}} {{/if}}
+                        </td>
+                        <td class="text-right col-md-1">{{home.score.[1]}}</td>
+                        <td class="text-right col-md-1">{{home.score.[2]}}</td>
+                        <td class="text-right col-md-1">{{home.score.[3]}}</td>
+                        <td class="text-right col-md-1">{{home.score.[4]}}</td>
+                        <td class="text-right col-md-1">{{home.score.[5]}}</td>
+                        <td class="text-right col-md-1">{{home.score.[T]}}</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                {{/if}}
+              </center>
+            </div>
+          </td></tr>
+        {{/unless}}{{/each}}
+      </tbody>
+    </table>
+    {{else}}
+    <div class="alert" style="margin-bottom:0">
+      Offseason &#x1f622;<br>
+      <div class="btn-group btn-group-sm" role="group" aria-label="MLB Links">
+        <a href="http://nfl.com" class="btn btn-sm btn-outline-primary">NFL</a>
+        <a href="http://www.espn.com/nfl/" class="btn btn-sm btn-outline-primary">ESPN</a>
+        <a href="http://www.reddit.com/r/nfl" class="btn btn-sm btn-outline-primary">r/NFL</a>
+      </div>
+    </div>
+    {{/if}}
+  </div>
 </div>
-			
