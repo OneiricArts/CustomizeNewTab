@@ -25,7 +25,7 @@ class PageHandeler extends WidgetNew {
     this.widgetKeys = ['NFL', 'NBA', 'NHL', 'MLB', 'Links'];
 
     // defaults, will get overriden by loadData()
-    this.data.NFL = false; this.data.NBA = false; this.data.NHL = false;
+    this.data.NFL = true; this.data.NBA = false; this.data.NHL = false;
     this.data.MLB = true; this.data.Links = true;
   }
 
