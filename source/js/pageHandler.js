@@ -93,4 +93,6 @@ $(document).ready(() => {
   if (!navigator.onLine) {
     $('#no-internet-alert').show();
   }
+
+  $('#extension-version').text(chrome.app.getDetails().version);
 });
