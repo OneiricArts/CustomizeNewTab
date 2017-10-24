@@ -22,14 +22,20 @@ const NFLData = {
 
     combinedData.gms = _.map(primaryData, (v, k) => {
       const g = v;
-      g.gid = k;
+      g.eid = parseInt(k, 10);
       return g;
     });
 
-    _.map(combinedData.gms, (v, i) => {
+    // convert ss.json games array to object
+    const additionalDataObj = {};
+    for (let i = 0; i < additionalData.gms.length; i += 1) {
+      const g = additionalData.gms[i];
+      additionalDataObj[g.eid] = g;
+    }
+
+    _.map(combinedData.gms, (v) => {
       const g = v;
-      g.extrainfo = additionalData.gms[i];
-      g.eid = additionalData.gms[i].eid;
+      g.extrainfo = additionalDataObj[g.eid];
       return g;
     });
 
