@@ -132,8 +132,7 @@ NBA.prototype.massageData = function(newData, callback) {
 
 				var EST_UTC_OFFSET = 5; // EST + 5 = UTC
 
-				// setUTCHours is 0-23, NBA API is 1 - 24 for hours
-				date.setUTCHours( (hours+EST_UTC_OFFSET-1)%24, minutes);
+				date.setUTCHours(hours+EST_UTC_OFFSET%24, minutes);
 				var gametime = date.toLocaleTimeString([], {hour: '2-digit', minute: '2-digit'});
 				newData.sports_content.games.game[i].period_time.period_status = gametime;
 			}
