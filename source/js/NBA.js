@@ -28,7 +28,7 @@ NBA.prototype.off = function () {
 NBA.prototype.yyyymmdd = function(changeDay) {
 
 	if(changeDay) {
-		this.today.setDate(this.today.getDate() + changeDay); 
+		this.today.setDate(this.today.getDate() + changeDay);
 	}
 	else {
 		this.today = new Date();
@@ -97,14 +97,14 @@ NBA.prototype.massageData = function(newData, callback) {
 		var newGame = newData.sports_content.games.game[i];
 
 		/* check if scores or times have changed, and if so, put a flag to highlight row */
-		if( this.data && this.data.sports_content && this.data.sports_content.games.game[i] && 
-			(newData.sports_content.games.game[i].id == 
+		if( this.data && this.data.sports_content && this.data.sports_content.games.game[i] &&
+			(newData.sports_content.games.game[i].id ==
 				this.data.sports_content.games.game[i].id) ) {
 
 			//this.data.sfsdfa[i];
 
 			var oldGame = this.data.sports_content.games.game[i];
-			
+
 			/* highlight */
 			var same;
 			if( newGame.home.score === '' ) {
@@ -139,14 +139,14 @@ NBA.prototype.massageData = function(newData, callback) {
 			}
 		}
 		catch (e) {
-			console.log(e); 
+			console.log(e);
 		}
 
 		/* quarter status */
 
-		/* 
+		/*
 			clear game_clock if game is done or in half-time, the API sometimes
-				still returns a value. 
+				still returns a value.
 			Clear game_clock if 'Start/End of' (0.00 is redundant)
 		*/
 		if( newData.sports_content.games.game[i].period_time.period_status === "Final" ||
@@ -161,12 +161,12 @@ NBA.prototype.massageData = function(newData, callback) {
 		// Cleaning up time column, currently can get too long
 		if (newData.sports_content.games.game[i].period_time.period_status.includes('Qtr') &&
 			!newData.sports_content.games.game[i].period_time.period_status.includes('End')) {
-			// #th Qtr ==> #Q 
-			newData.sports_content.games.game[i].period_time.period_status = 
+			// #th Qtr ==> #Q
+			newData.sports_content.games.game[i].period_time.period_status =
 				`${newData.sports_content.games.game[i].period_time.period_value}Q`;
 		} else if(newData.sports_content.games.game[i].period_time.period_status.includes('End')) {
-			// End of 1st Qtr ==> End of 1st 
-			newData.sports_content.games.game[i].period_time.period_status = 
+			// End of 1st Qtr ==> End of 1st
+			newData.sports_content.games.game[i].period_time.period_status =
 				newData.sports_content.games.game[i].period_time.period_status.replace('Qtr', '');
 		}
 
@@ -193,8 +193,8 @@ NBA.prototype.massageData = function(newData, callback) {
 		if(status == 2 && period_value > 3 ) {
 
 			var game_clock_min = parseFloat(game_clock.split(':')[0]);
-			
-			/* 
+
+			/*
 				last 5 minutes of regulation, or all of OT (OT is only 5 mins)
 				if there is no :, it means there are only seconds left, which i currently
 				check by length of split
@@ -204,7 +204,7 @@ NBA.prototype.massageData = function(newData, callback) {
 				if( Math.abs(difference) < 6 ) {
 					// mark as close game, and if its hidden, show
 					newData.sports_content.games.game[i].close_game = true;
-					//newData.sports_content.games.game[i].hidden = false; 
+					//newData.sports_content.games.game[i].hidden = false;
 				}
 			}
 		}
@@ -215,8 +215,8 @@ NBA.prototype.massageData = function(newData, callback) {
 
 /*
 	case: no games
-		- for now: handle in template, still want functionality of being able to 
-		cycle through games. 
+		- for now: handle in template, still want functionality of being able to
+		cycle through games.
 
 		- later: good place to put other informatoin (standings)
 */
@@ -234,22 +234,22 @@ NBA.prototype.writeToTemplate = function() {
 	this.data.sports_content.games.month = this.today.getMonth()+1;
 	this.data.sports_content.games.date = this.data.sports_content.sports_meta.season_meta.calendar_date;
 
-	this.displayTemplate('NBAschedule', 'schedule', 
+	this.displayTemplate('NBAschedule', 'schedule',
 		this.data.sports_content.games, $('#NBA_widget'));
 };
 
 
 NBA.prototype.updateEachGame = function(newData) {
 	console.log('NBA updating');
-	
+
 	for (var i=0; i < this.data.sports_content.games.game.length &&
 	i < newData.sports_content.games.game.length; i++) {
-		if(this.data.sports_content.games.game[i].id !== 
+		if(this.data.sports_content.games.game[i].id !==
 			newData.sports_content.games.game[i].id){
 			console.log('data not same -- error');
 			break;
 		}
-		if(this.data.sports_content.games.game[i]['hidden'] && 
+		if(this.data.sports_content.games.game[i]['hidden'] &&
 			!this.data.sports_content.games.game[i].close_game) {
 			newData.sports_content.games.game[i]['hidden'] = true;
 		}
@@ -289,7 +289,7 @@ NBA.prototype.continueAutoUpdate = function() {
 		this.getDataSchedule();
 	}
 	else {
-		this.turnOffAutoUpdate();		
+		this.turnOffAutoUpdate();
 	}
 };
 
@@ -301,7 +301,7 @@ NBA.prototype.turnOffAutoUpdate = function() {
 		btn.find('span').toggleClass('glyphicon-remove', true);
 		btn.find('span').toggleClass('glyphicon-ok', false);
 		btn.toggleClass('btn-success', false);
-		btn.toggleClass('btn-default', true)		
+		btn.toggleClass('btn-default', true)
 	}
 };
 
@@ -310,18 +310,18 @@ NBA.prototype.highlightGames = function() {
 		if(this.data.sports_content.games.game[i].highlight) {
 			var rowId = '#'+this.data.sports_content.games.game[i].id;
 			//$(rowId).effect("highlight", {color: '#FFFF99'}, 2000);
-			//$(rowId).fadeIn(100).fadeOut(100).fadeIn(100).fadeOut(100).fadeIn(100).fadeIn(100).fadeOut(100).fadeIn(100);	
-			
+			//$(rowId).fadeIn(100).fadeOut(100).fadeIn(100).fadeOut(100).fadeIn(100).fadeIn(100).fadeOut(100).fadeIn(100);
+
 			// doing it this way to remove jQueryUI dependency for now
 			$(rowId).addClass("flash");
 			setTimeout( removeHighlight, 2000);
 			function removeHighlight(){ $(rowId).removeClass("flash"); }
-			
-			// clear after highlighted	
+
+			// clear after highlighted
 			this.data.sports_content.games.game[i].highlight == false;
 		}
 	}
-	/* 
+	/*
 		clear highlight values, so doesn't hihglight before newdata comes in
 		fixes bug where the same things highlight on new tab open
 			--> put it in loop above
@@ -339,14 +339,14 @@ NBA.prototype.standings = function() {
 };
 
 NBA.prototype.showStandings = function(data) {
-	
+
 	//var templ = $('#NBA-standings-template').html();
 
-	this.displayTemplate('NBAstandings', 'teams', 
-		data.sports_content.standings.conferences.West.team, 
+	this.displayTemplate('NBAstandings', 'teams',
+		data.sports_content.standings.conferences.West.team,
 		$('#NBA-standings #West') );
-	this.displayTemplate('NBAstandings', 'teams', 
-		data.sports_content.standings.conferences.East.team, 
+	this.displayTemplate('NBAstandings', 'teams',
+		data.sports_content.standings.conferences.East.team,
 		$('#NBA-standings #East') );
 
 	// Mark Playoff teams with grey line
@@ -358,18 +358,18 @@ NBA.prototype.showStandings = function(data) {
 NBA.prototype.boxscore = function(event) {
 	var self = event.data.that;
 
-	//href="http://data.nba.com/json/cms/noseason/game/{{@root.schedule.date}}/{{id}}/boxscore.json" 
+	//href="http://data.nba.com/json/cms/noseason/game/{{@root.schedule.date}}/{{id}}/boxscore.json"
 
 	function twoDigits(n) {
 		return n<10? '0'+n:''+n
 	}
 
-	var date = 
+	var date =
 		twoDigits(self.today.getFullYear()) +
 		twoDigits(self.today.getMonth()+1) +
 		twoDigits(self.today.getDate());
 
-	var url = 'http://data.nba.com/json/cms/noseason/game/' 
+	var url = 'http://data.nba.com/json/cms/noseason/game/'
 		+ date
 		//+ self.yyyymmdd()
 		+ '/'
@@ -380,7 +380,7 @@ NBA.prototype.boxscore = function(event) {
 };
 
 NBA.prototype.showBoxscore = function(data) {
-	
+
 	console.log(data);
 	try {
 		var players = data.sports_content.game.home.players.player;
@@ -388,14 +388,14 @@ NBA.prototype.showBoxscore = function(data) {
 		data.sports_content.game.home.players.bench = players;
 		// players = data.sports_content.game.home.players.player;
 		// data.sports_content.game.home.players.bench = players.splice(5,8);
-		
+
 
 		var players = data.sports_content.game.visitor.players.player;
 		data.sports_content.game.visitor.players.starters = players.splice(0,5);
 		data.sports_content.game.visitor.players.bench = players;
 
-		this.displayTemplate('NBAboxscore', 'game', 
-			data.sports_content.game, 
+		this.displayTemplate('NBAboxscore', 'game',
+			data.sports_content.game,
 			$('#NBA-boxscore .modal-content') );
 	} catch(e) {console.log(e);}
 };
