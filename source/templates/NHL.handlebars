@@ -1,11 +1,11 @@
 <!-- HANDLEBARS TEMPLATE -->
-		
+
 
 <div id="NHL-panel" class="card car">
 
 	<div class="card-header">
-		<span>&#127954; NHL // {{schedule.month}}.{{schedule.day}}</span> 
-		<div class="btn-group" role="group" aria-label="...">  
+		<span>&#127954; NHL // {{schedule.month}}.{{schedule.day}}</span>
+		<div class="btn-group" role="group" aria-label="...">
 			<button id="yesterday-btn"
 				class="btn btn-sm btn-secondary">
 				<!--<span class="glyphicon glyphicon-chevron-left"></span> -->
@@ -22,13 +22,13 @@
 			</button>
 		</div>
 
-		<button id="refresh_scores" 
+		<button id="refresh_scores"
 			class="btn btn-sm float-xs-right btn-outline-secondary">
 			<!--<span class="glyphicon glyphicon-refresh"></span> -->
 			Update
 		</button>
 
-		<button id="reset_games" 
+		<button id="reset_games"
 			class="btn btn-sm float-xs-right btn-outline-secondary">
 			<!--<span class="glyphicon glyphicon-cloud-download"></span> -->
 			Reset
@@ -36,12 +36,12 @@
 
 		<span id="today"></span>
 	</div>
-	
+
 
 	<div class="card-block">
 
-		{{#if schedule.games.length}}	
-			<table id="NHL_game_table" 
+		{{#if schedule.games.length}}
+			<table id="NHL_game_table"
 			class="table table-sm">
 				<thead>
 					<tr>
@@ -51,7 +51,7 @@
 						<th style="text-align:left">Visitor</th>
 						<th style="text-align:left">@Home</th>
 						<th style="text-align:left">V</th>
-						<th style="text-align:left">H</th>	
+						<th style="text-align:left">H</th>
 						<th style="text-align:right">
 							<!--<span class="glyphicon glyphicon-edit">-->
 						</span></th>
@@ -71,9 +71,9 @@
 
 						<td id="home_team" {{#if htswinning}}class="winning"{{/if}}
 						style="text-align:left; text-transform: capitalize;">{{htcommon}}</td>
-			
+
 						<td style="text-align:left">{{ats}}</td>
-						<td style="text-align:left">{{hts}}</td> 
+						<td style="text-align:left">{{hts}}</td>
 
 						<td style="text-align:right">
 						<button type="button" id="remove-game-btn" class="btn btn-sm btn-outline-secondary">
@@ -103,7 +103,5 @@
 			{{/if}}
 		{{/if}}
 
-	</div>	
+	</div>
 </div>
-
-
