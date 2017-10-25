@@ -5,113 +5,36 @@ class NHL extends Sport {
 	constructor() {
 		super();
 		this.dataKey = 'NHL';
-		//this.schedule_url = 'http://live.nhle.com/GameData/GCScoreboard/2016-04-14.jsonp';
-		this.schedule_url_start = 'http://live.nhle.com/GameData/GCScoreboard/';
-		this.schedule_url_end = '.jsonp';
-		this.schedule_url =  this.schedule_url_start + this.yyyymmdd() + this.schedule_url_end;
 	}
 
-	formatDate(yyyy, mm, dd) { return yyyy + '-' + mm + '-' + dd;}
-
-	updateNewData(newData) {
-		try {
-			
-            // if data is for the same week, carry over any data that I need to
-            if (this.data.currentDate === newData.currentDate) {
-                for (var i = 0; i < this.data.games.length && newData.games.length; i++) {
-                    if (this.data.games[i].id == newData.games[i].id
-                        && this.data.games[i].hidden) {
-                        newData.games[i]['hidden'] = true;
-                    } 
-                }
-            }
-        } catch(e) {
-			// this.data is set to null on reset / change date, triggering this
-			log('NHL : updateNewData : ' + e); 
-		}
-	}
-
-	writeToTemplate(error) {
-		if(error) {
-			if(!this.data) {this.data = {};}
-			this.data['error'] = true;
-			this.data.games = null;
-		}
+	writeToTemplate() {
 
 		this.data.day = this.today.getDate();
 		this.data.month = this.today.getMonth()+1;
 
-		this.displayTemplate('NHL', 'schedule', 
+		this.displayTemplate('NHL', 'schedule',
 			this.data, $('#NHL_widget'));
 	}
 
-	getJsonData(url, callback) {
-		$.getJSON(url, function(result) {
-			this.massageData.call(this, result, callback);
-		}.bind(this)).fail(function(result){
-			/*
-				responseText:
-					loadScoreboard({_valid_json_})
-				need to get text inside the () and parse that
-			*/
-			try {
-				var json = result.responseText.substring(result.responseText.indexOf('(')+1, 
-						    							 result.responseText.lastIndexOf(')'));
-				var result = JSON.parse(json);
-				this.massageData.call(this, result, callback);
-			}
-			catch(e) {
-				console.log(result.responseText);
-				this.writeErrorMessage(true);
-			}
-		}.bind(this));
-		// TODO handle timeout
+	displaySchedule(newData) {
+		const updateNewData = newData;
+
+    try {
+			for (let i = 0; i < updateNewData.games.length; i += 1) {
+				if (updateNewData.games[i].cnt.id === this.data.games[i].cnt.id) {
+					updateNewData.games[i].cnt.carry_over = this.data.games[i].cnt.carry_over;
+				}
+      }
+    } catch (e) {} // don't carry anything over
+
+    this.data = updateNewData;
+		this.saveData(this.writeScheduleToDOM());
 	}
 
-	massageData(result, callback) {
-		try {
-			for (var i = 0; i < result.games.length; i++) {
-
-				/*
-					Names are all uppercase initially. Transform them to lower case, 
-					so can capitalize only the first litter via CSS
-				*/
-				result.games[i].atcommon = result.games[i].atcommon.toLowerCase();
-				result.games[i].htcommon = result.games[i].htcommon.toLowerCase();
-
-				var game = result.games[i];
-
-				/* mark who's winning 
-				********************************************************************************************/
-				var ats = parseInt(game.ats);
-				var hts = parseInt(game.hts);
-				result.games[i]['atswinning'] = ats > hts;
-				result.games[i]['htswinning'] = hts > ats;
-
-				/* time to local 
-				*********************************************************************************************/
-				var time_to_show;
-
-				if ( game.bs.includes('PM') || game.bs.includes('AM') ) {
-					try {
-						var timeArr = game.bs.split(':');
-						result.games[i].bs = this.toLocalTime(timeArr[0], timeArr[1].split(' ')[0], 
-							{'date':this.today, 
-							'ampm': timeArr[1].split(' ')[1]});
-					}
-
-					catch(e) {
-						//time_to_show = game.bs;
-						console.log('>> time_to_show excption' + e);
-					}
-				}
-				//result.data.games.game[i]['time_to_show'] = time_to_show;
-			}
-			callback.call(this, result);
-		}
-		catch(e) {
-			console.log('fudge cakes -- massageData' + e);
-		}
+	async getJsonData(url, callback) {
+		const data = {};
+		data.games = (await NHLData.getSchedule(this.today));
+		callback.call(this, data);
 	}
 
 	cacheButtonActions() {
@@ -128,14 +51,13 @@ class NHL extends Sport {
 
 	removeGame(event) {
 		var self = event.data.self;
-		var id = $(this).closest('tr').attr('id');
+		var id = parseInt($(this).closest('tr').attr('id'), 10);
 
 		$('#'+id).remove();
-		$('#c'+id).remove();
 
 		for (var i = 0; i < self.data.games.length; i++) {
-			if(id == self.data.games[i].id) {
-				self.data.games[i]['hidden'] = true;
+			if(id === self.data.games[i].cnt.id) {
+				self.data.games[i].cnt.carry_over.hidden = true;
 				break;
 			}
 		}
@@ -143,4 +65,3 @@ class NHL extends Sport {
 		self.saveData();
 	}
 }
-

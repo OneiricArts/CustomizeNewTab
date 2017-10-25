@@ -60,20 +60,20 @@
 				<tbody>
 
 					{{#each schedule.games}}
-					{{#unless hidden}}
+					{{#unless cnt.carry_over.hidden}}
 
-					<tr id={{id}} class="{{#if close_game}}danger{{/if}} {{#if fav_team}}success{{/if}}">
+					<tr id={{cnt.id}} class="{{#if cnt.close_game}}danger{{/if}}">
 
-						<td>{{bs}}</td>
+						<td>{{cnt.status}}</td>
 
-						<td id="away_team" {{#if atswinning}}class="winning"{{/if}}
-						style="text-align:left; text-transform: capitalize;">{{atcommon}}</td>
+						<td {{#if cnt.away_team_winning}}class="winning"{{/if}}
+						style="text-align:left; text-transform: capitalize;">{{cnt.away_team_name}}</td>
 
-						<td id="home_team" {{#if htswinning}}class="winning"{{/if}}
-						style="text-align:left; text-transform: capitalize;">{{htcommon}}</td>
+						<td {{#if cnt.home_team_winning}}class="winning"{{/if}}
+						style="text-align:left; text-transform: capitalize;">{{cnt.home_team_name}}</td>
 
-						<td style="text-align:left">{{ats}}</td>
-						<td style="text-align:left">{{hts}}</td>
+						<td style="text-align:left">{{cnt.away_team_score}}</td>
+						<td style="text-align:left">{{cnt.home_team_score}}</td>
 
 						<td style="text-align:right">
 						<button type="button" id="remove-game-btn" class="btn btn-sm btn-outline-secondary">
