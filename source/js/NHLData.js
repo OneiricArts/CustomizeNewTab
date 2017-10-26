@@ -34,8 +34,9 @@ const NHLData = {
 
     try {
       const scores = await (await fetch(url)).json();
-      let labeledData = this.labelScheduleData(scores.dates[0].games);
-      labeledData = labeledData.reverse();
+      const labeledData = this.labelScheduleData(scores.dates[0].games);
+      // labeledData = labeledData.reverse();
+      // maybe reverse when games are live?
       return labeledData;
     } catch (e) {
       console.log('// NHL DATA RETREIVAL FAILED //');
