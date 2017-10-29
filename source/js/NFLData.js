@@ -81,7 +81,6 @@ const NFLData = {
         game.visitor_pos = true;
       }
 
-
       // local time
       if (game.extrainfo) {
         const hours = parseInt(game.extrainfo.t.split(':')[0], 10);
