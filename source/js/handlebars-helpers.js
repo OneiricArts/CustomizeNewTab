@@ -27,3 +27,5 @@ Handlebars.registerHelper('lookup', (obj, field, options) => {
   // return options.inverse(this);
   // return obj.hasOwnProperty(field);
 });
+
+Handlebars.partials = Handlebars.templates;

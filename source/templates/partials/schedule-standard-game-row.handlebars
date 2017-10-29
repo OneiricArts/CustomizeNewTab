@@ -1,0 +1,25 @@
+<tr
+  id={{cnt.id}}
+  class="{{#if close_game}}danger{{/if}}
+         {{#if fav_team}}success{{/if}}"
+  data-toggle="collapse"
+  data-target=#collapse-{{cnt.id}}
+>
+
+  <td> {{cnt.status}} </td>
+
+  <td {{#if cnt.awayTeamWinning}} class="winning" {{/if}}
+      style="text-align:left; text-transform: capitalize;">
+      {{cnt.awayTeamName}}
+  </td>
+
+  <td {{#if cnt.homeTeamWinning}} class="winning" {{/if}}
+      style="text-align:left; text-transform: capitalize;">
+      {{cnt.homeTeamName}}
+  </td>
+
+  <td style="text-align:left">{{cnt.awayTeamScore}}</td>
+  <td style="text-align:left">{{cnt.homeTeamScore}}</td>
+
+  {{> partials/schedule_remove_game_button }}
+</tr>

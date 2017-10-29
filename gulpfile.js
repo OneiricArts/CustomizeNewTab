@@ -111,7 +111,7 @@ function moveHTML() {
 ***************************************************************************************************/
 
 function handlebars(cb) {
-  return exec('handlebars -m ./source/templates/> ./Chrome/src/templates.js',
+  return exec('handlebars -m ./source/templates> ./Chrome/src/templates.js',
     (err, stdout, stderr) => {
       util.log(stdout);
       util.log(stderr);
@@ -158,13 +158,13 @@ function concatLibs() {
 ***************************************************************************************************/
 
 function watchCodeDev() {
-  gulp.watch(['./source/templates/*.handlebars'], handlebars);
+  gulp.watch(['./source/templates/'], handlebars);
   gulp.watch(jsfiles, moveJS);
   gulp.watch(['./source/*.html'], moveHTML);
 }
 
 function watchCodeCompress() {
-  gulp.watch(['./source/templates/*.handlebars'], handlebars);
+  gulp.watch(['./source/templates/'], handlebars);
   gulp.watch(jsfiles, minifyJS);
   gulp.watch(['./source/*.html'], moveHTML);
 }
