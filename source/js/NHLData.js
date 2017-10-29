@@ -1,7 +1,6 @@
 const NHLData = {
 
   async getSchedule(date = new Date()) {
-    date.setDate(date.getDate());
 
     const startDate = this.formatDate(date);
     const endDate = this.formatDate(date);

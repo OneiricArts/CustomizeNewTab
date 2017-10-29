@@ -9,11 +9,9 @@ const NFLData = {
     const specificUrl = 'http://www.nfl.com/liveupdate/scorestrip/ss.json';
     const scorestrip = await (await fetch(specificUrl)).json();
 
-    // combine data
     let combinedData = this.combineNFLAPIData(scores, scorestrip);
 
     combinedData = this.labelScheduleData(combinedData);
-
     return combinedData;
   },
 
@@ -80,7 +78,6 @@ const NFLData = {
         game.posteam === game.away.abbr) {
         game.visitor_pos = true;
       }
-
 
       // local time
       if (game.extrainfo) {
