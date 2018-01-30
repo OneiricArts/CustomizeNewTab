@@ -5,11 +5,15 @@ const NFLData = {
     const url = 'http://www.nfl.com/liveupdate/scores/scores.json';
     const scores = await (await fetch(url)).json();
 
-    // get additional data
-    const specificUrl = 'http://www.nfl.com/liveupdate/scorestrip/ss.json';
-    const scorestrip = await (await fetch(specificUrl)).json();
-
-    let combinedData = this.combineNFLAPIData(scores, scorestrip);
+    let combinedData = {};
+    try {
+      // get additional data
+      const specificUrl = 'http://www.nfl.com/liveupdate/scorestrip/ss.json';
+      const scorestrip = await (await fetch(specificUrl)).json();
+      combinedData = this.combineNFLAPIData(scores, scorestrip);
+    } catch (e) {
+      combinedData = this.combineNFLAPIData(scores, null);
+    }
 
     combinedData = this.labelScheduleData(combinedData);
     return combinedData;
@@ -23,6 +27,10 @@ const NFLData = {
       g.eid = parseInt(k, 10);
       return g;
     });
+
+    if (!additionalData) {
+      return combinedData;
+    }
 
     // convert ss.json games array to object
     const additionalDataObj = {};
@@ -96,7 +104,7 @@ const NFLData = {
           options,
         ).split(' ')[0];
       } else {
-        game.t = `${game.eid.substring(4, 6)}.${game.eid.substring(6, 8)}`;
+        game.t = `${game.eid.toString().substring(4, 6)}.${game.eid.toString().substring(6, 8)}`;
       }
 
       /**
