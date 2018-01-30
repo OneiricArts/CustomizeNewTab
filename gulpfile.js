@@ -28,6 +28,7 @@ const jsfiles = [
   'source/js/sport.js',
   'source/js/NHLData.js',
   'source/js/NHL.js',
+  'source/js/MLBData.js',
   'source/js/MLB.js',
   'source/js/NFLData.js',
   'source/js/NFL.js',

@@ -99,7 +99,7 @@ const NFLData = {
         }
 
         game.t = this.toLocalTime(
-          game.extrainfo.t.split(':')[0] - 1,
+          game.extrainfo.t.split(':')[0],
           game.extrainfo.t.split(':')[1],
           options,
         ).split(' ')[0];

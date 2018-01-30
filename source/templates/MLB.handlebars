@@ -1,11 +1,11 @@
 <!-- HANDLEBARS TEMPLATE -->
-		
+
 
 <div class="card">
 
 	<div class="card-header">
-		<span>&#9918; MLB // {{schedule.month}}.{{schedule.day}}</span> 
-		<div class="btn-group" role="group">  
+		<span>&#9918; MLB // {{schedule.month}}.{{schedule.day}}</span>
+		<div class="btn-group" role="group">
 			<button id="yesterday-btn"
 				class="btn btn-sm btn-secondary">
 				<!--<span class="glyphicon glyphicon-chevron-left"></span> -->
@@ -22,23 +22,23 @@
 			</button>
 		</div>
 
-		<button id="refresh_scores" 
+		<button id="refresh_scores"
 			class="btn btn-sm float-xs-right btn-outline-secondary">
 			<!--<span class="glyphicon glyphicon-refresh"></span> -->
 			Refresh
 		</button>
 
-		<button id="reset_games" 
+		<button id="reset_games"
 			class="btn btn-sm float-xs-right btn-outline-secondary">
 			<!--<span class="glyphicon glyphicon-cloud-download"></span> -->
 			Reset
 		</button>
 	</div>
-	
+
 
 	<div class="card-block">
 
-		{{#if schedule.game.length}}	
+		{{#if schedule.games.length}}
 			<table class="table table-sm">
 				<thead>
 					<tr>
@@ -47,7 +47,7 @@
 						<th style="text-align:left">Visitor</th>
 						<th style="text-align:left">@Home</th>
 						<th style="text-align:left">V</th>
-						<th style="text-align:left">H</th>	
+						<th style="text-align:left">H</th>
 						<th style="text-align:right">
 							<span class="glyphicon glyphicon-edit">
 						</span></th>
@@ -55,28 +55,16 @@
 				</thead>
 				<tbody>
 
-					{{#each schedule.game}}
+					{{#each schedule.games}}
 					{{#unless hidden}}
 
-					<tr id={{game_pk}} data-toggle="collapse" data-target=#collapse-{{game_pk}}
+					<tr id={{cnt.id}} data-toggle="collapse" data-target=#collapse-{{cnt.id}}
 					class="{{#if close_game}}danger{{/if}} {{#if fav_team}}success{{/if}}">
 
 						<td>
-							{{#if time_to_show}}
-								{{time_to_show}}
-
-								{{#if topofinning}}
-									<!--<span class="glyphicon glyphicon-triangle-top"></span> -->
-									&#9650;
-								{{else}}
-									{{#if bottomofinning}}
-										<!--<span class="glyphicon glyphicon-triangle-bottom"></span> -->
-										&#9660;
-									{{/if}}
-								{{/if}}
-							{{else}}
-								{{time}} {{time_zone}}
-							{{/if}}
+							{{cnt.status}}
+								{{#if cnt.topOfInning}}&#9650;{{/if}}
+								{{#if cnt.bottomOfInning}} &#9660; {{/if}}
 						</td>
 
 						<td id="away_team" {{#if atwinning}}class="winning"{{/if}}
@@ -84,30 +72,30 @@
 
 						<td id="home_team" {{#if htwinning}}class="winning"{{/if}}
 						style="text-align:left; text-transform: capitalize;">{{home_team_name}}</td>
-			
+
 						<td style="text-align:left">{{linescore.r.away}}</td>
-						<td style="text-align:left">{{linescore.r.home}}</td> 
+						<td style="text-align:left">{{linescore.r.home}}</td>
 
 						<td style="text-align:right">
-						<button type="button" id="remove-game-btn" 
+						<button type="button" id="remove-game-btn"
 						class="btn btn-sm float-xs-right btn-outline-secondary">
 						<!--<span class="glyphicon glyphicon-trash"></span>-->
 						&#9587;
 						</button></td>
 					</tr>
 
-					<tr id=c{{game_pk}}><td colspan="6" style="padding: 0" class="table-info">
-						<div id=collapse-{{game_pk}} class="collapse">
+					<tr id=c{{cnt.id}}><td colspan="6" style="padding: 0" class="table-info">
+						<div id=collapse-{{cnt.id}} class="collapse">
 							<div style="padding: 5px">
 
 								{{#if alerts.brief_text}}
 									<h6>Alert</h6>
 									<p>{{alerts.brief_text}}</p>
 								{{/if}}
-									
+
 								<center> <h4>
-									{{away_team_name}} ({{away_win}}-{{away_loss}}) @ 
-									{{home_team_name}} ({{home_win}}-{{home_loss}}) 
+									{{away_team_name}} ({{away_win}}-{{away_loss}}) @
+									{{home_team_name}} ({{home_win}}-{{home_loss}})
 								</h4></center>
 								<small>
 								{{#if linescore}}
@@ -145,11 +133,11 @@
 										</tbody>
 									</table>
 								{{/if}}
-								
+
 								{{#if home_runs}}
 									<h6>Home Runs</h6>
 									{{#if home_runs.player.length}}
-										<p> 
+										<p>
 											{{#each home_runs.player}}
 												{{name_display_roster}} {{#unless @last}} ; {{/unless}}
 											{{/each}}
@@ -219,7 +207,5 @@
 
 		{{/if}}
 
-	</div>	
+	</div>
 </div>
-
-
