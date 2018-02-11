@@ -331,10 +331,8 @@ NBA.prototype.highlightGames = function() {
 };
 
 NBA.prototype.standings = function() {
-	var url = 'http://data.nba.com/json/cms/'
-		+this.data.sports_content.sports_meta.season_meta.standings_season_year
-		+'/standings/conference.json';
-	this.getData(url, this.showStandings);
+	const year = this.data.sports_content.sports_meta.season_meta.standings_season_year;
+	NBAData.getStandings(year).then(result => this.showStandings(result));
 };
 
 NBA.prototype.showStandings = function(data) {
@@ -356,31 +354,11 @@ NBA.prototype.showStandings = function(data) {
 
 NBA.prototype.boxscore = function(event) {
 	var self = event.data.that;
-
-	//href="http://data.nba.com/json/cms/noseason/game/{{@root.schedule.date}}/{{id}}/boxscore.json"
-
-	function twoDigits(n) {
-		return n<10? '0'+n:''+n
-	}
-
-	var date =
-		twoDigits(self.today.getFullYear()) +
-		twoDigits(self.today.getMonth()+1) +
-		twoDigits(self.today.getDate());
-
-	var url = 'http://data.nba.com/json/cms/noseason/game/'
-		+ date
-		//+ self.yyyymmdd()
-		+ '/'
-		+ $(this).val()
-		+ '/boxscore.json';
-
-	self.getData(url, self.showBoxscore);
+	NBAData.getBoxScore(self.today, $(this).val())
+		.then(result => self.showBoxscore(result));
 };
 
 NBA.prototype.showBoxscore = function(data) {
-
-	console.log(data);
 	try {
 		var players = data.sports_content.game.home.players.player;
 		data.sports_content.game.home.players.starters = players.splice(0,5);
