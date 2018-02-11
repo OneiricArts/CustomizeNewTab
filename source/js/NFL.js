@@ -3,7 +3,7 @@ class NFL extends Sport {
 
   constructor() {
     super();
-    this.dataKey = 'NFL';
+    this.datakey = 'NFL';
     this.schedule_url = 'http://www.nfl.com/liveupdate/scores/scores.json';
   }
 
@@ -14,7 +14,7 @@ class NFL extends Sport {
       this.data.games = null;
     }
 
-    this.displayTemplate('NFLschedule', 'schedule', this.data, $('#NFL_widget'));
+    WidgetNew.displayTemplate('NFLschedule', 'schedule', this.data, $('#NFL_widget'));
   }
 
   async getJsonData(url, callback) {
@@ -41,7 +41,8 @@ class NFL extends Sport {
     }
 
     this.data = updateNewData;
-    this.saveData(this.writeScheduleToDOM());
+    this.saveData();
+    this.writeScheduleToDOM()
   }
 
   cacheButtonActions() {

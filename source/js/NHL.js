@@ -4,7 +4,7 @@ class NHL extends Sport {
 
 	constructor() {
 		super();
-		this.dataKey = 'NHL';
+		this.datakey = 'NHL';
 	}
 
 	writeToTemplate() {
@@ -12,7 +12,7 @@ class NHL extends Sport {
 		this.data.day = this.today.getDate();
 		this.data.month = this.today.getMonth()+1;
 
-		this.displayTemplate('NHL', 'schedule',
+		WidgetNew.displayTemplate('NHL', 'schedule',
 			this.data, $('#NHL_widget'));
 	}
 
@@ -28,8 +28,9 @@ class NHL extends Sport {
     } catch (e) {} // don't carry anything over
 
     this.data = updateNewData;
-		this.saveData(this.writeScheduleToDOM());
-	}
+    this.saveData();
+    this.writeScheduleToDOM();
+  }
 
 	async getJsonData(url, callback) {
 		const data = {};

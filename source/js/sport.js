@@ -1,4 +1,4 @@
-class Sport extends Widget { // eslint-disable-line no-unused-vars
+class Sport extends WidgetNew { // eslint-disable-line no-unused-vars
 
   constructor() {
     super();
@@ -30,17 +30,20 @@ class Sport extends Widget { // eslint-disable-line no-unused-vars
     this.getJsonData(this.schedule_url, this.displaySchedule);
   }
 
-  loadLocalSchedule() {
-    this.loadData(() => {
+  async loadLocalSchedule() {
+    await this.loadData();
+    if (!_.isEmpty(this.data)) {
       this.writeScheduleToDOM();
       this.getDataSchedule();
-    },
-    this.getDataSchedule);
+    } else {
+      this.getDataSchedule();
+    }
   }
 
   displaySchedule(newData) {
     this.data = newData;
-    this.saveData(this.writeScheduleToDOM());
+    this.writeScheduleToDOM();
+    this.saveData();
   }
 
   writeScheduleToDOM() {
@@ -50,7 +53,8 @@ class Sport extends Widget { // eslint-disable-line no-unused-vars
 
   resetSchedule() {
     this.data = null;
-    this.saveData(this.getDataSchedule);
+    this.getDataSchedule();
+    this.saveData();
   }
 
   updateSchedule() { this.getDataSchedule(); }
