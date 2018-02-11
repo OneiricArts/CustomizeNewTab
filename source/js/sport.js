@@ -1,75 +1,37 @@
-"use strict";
-
-class Sport extends Widget {
+class Sport extends Widget { // eslint-disable-line no-unused-vars
 
   constructor() {
     super();
-    this.schedule_url_start;
-    this.schedule_url_end;
-    this.schedule_url;
     this.today = new Date();
   }
 
   init() {
     this.loadLocalSchedule();
     this.cacheButtonActions();
-    this.specificInit();
   }
 
   /*
     OVERWRITE in extending classes for unique functionality
   */
-  specificInit() {}
+  /* eslint class-methods-use-this: ["error", { "exceptMethods": ["cacheButtonActions",
+    writeToTemplate, highlightGames, getJsonData] }] */
   cacheButtonActions() {}
   writeToTemplate() {}
-  dataOutOfDate(newData) {return true;}
-  updateNewData(newData) {}
-  massageData(data, callback) {callback.call(this, data);}
+  getJsonData() {}
   highlightGames() {}
-  formatDate() {}
 
-  yyyymmdd(changeDay) {
-    if(changeDay) {
-      this.today.setDate(this.today.getDate() + changeDay);
-    }
-    else {
-      this.today = new Date();
-    }
-
-    function twoDigits(n) {
-      return n<10? '0'+n:''+n
-    }
-
-    var string = this.formatDate(
-        this.today.getFullYear(),
-        twoDigits(this.today.getMonth()+1),
-        twoDigits(this.today.getDate())
-      );
-
-    return string;
-  }
-
+  /* eslint no-unused-expressions: [2, { allowTernary: true }]*/
   changeDay(n) {
-    this.schedule_url = this.schedule_url_start + this.yyyymmdd(n) + this.schedule_url_end;
+    n ? this.today.setDate(this.today.getDate() + n) : this.today = new Date();
     this.resetSchedule();
   }
 
-  getJsonData(url, callback) {
-    $.getJSON(url, function(result) {
-      this.massageData.call(this, result, callback);
-    }.bind(this))
-    .fail(function(result){
-      //this.massageData.call(this, result, callback);
-    }.bind(this));
-    // TODO handle timeout
-  }
-
-  getDataSchedule () {
+  getDataSchedule() {
     this.getJsonData(this.schedule_url, this.displaySchedule);
   }
 
   loadLocalSchedule() {
-    this.loadData( function(){
+    this.loadData(() => {
       this.writeScheduleToDOM();
       this.getDataSchedule();
     },
@@ -77,7 +39,6 @@ class Sport extends Widget {
   }
 
   displaySchedule(newData) {
-    this.updateNewData(newData);
     this.data = newData;
     this.saveData(this.writeScheduleToDOM());
   }
@@ -92,11 +53,5 @@ class Sport extends Widget {
     this.saveData(this.getDataSchedule);
   }
 
-  updateSchedule() {
-    this.getDataSchedule();
-  }
-
-  writeErrorMessage() {
-    this.writeToTemplate(true);
-  }
+  updateSchedule() { this.getDataSchedule(); }
 }
