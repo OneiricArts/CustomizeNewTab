@@ -38,7 +38,7 @@ const jsfiles = [
 
 // libraries to be included, in order
 const libs = [
-  'source/libs/jquery-2.1.4.min.js',
+  'source/libs/jquery-3.3.1.slim.min.js',
   // 'source/libs/jquery-ui.min.js', // used to be needed because of $.highlight
   'source/libs/tether.min.js', // needed in bootstrap 4
   'source/libs/bootstrap-4.0.0-dist/js/bootstrap.min.js',
