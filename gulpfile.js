@@ -21,6 +21,7 @@ const jsfiles = [
   'source/js/browser.js',
   'source/js/dataFetchers/NHLData.js',
   'source/js/dataFetchers/NFLData.js',
+  'source/js/dataFetchers/MLBData.js',
   'source/js/widget-new.js',
   'source/js/Base.js',
   'source/js/Sports.js',
