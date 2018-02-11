@@ -1,21 +1,21 @@
 // VSCODE FILE
 {
-    "compilerOptions": {
-        "target": "ES6"
-    },
-    "exclude": [
-        // "NFL.js",
-        // "NFLoff.js",
-        // "NFLpost.js"
-        // "bookmarksBar.js"
-    ],
-    "dependencies": {
-        "lodash": "^4.17.0"
-    },
-    "typeAcquisition": {
-        "include": [
-            "lodash",
-            "jquery"
-        ]
-    }
+  "compilerOptions": {
+    "target": "ES6"
+  },
+  "exclude": [
+    // "NFL.js",
+    // "NFLoff.js",
+    // "NFLpost.js"
+    // "bookmarksBar.js"
+  ],
+  "dependencies": {
+    "lodash": "^4.17.0"
+  },
+  "typeAcquisition": {
+    "include": [
+      "lodash",
+      "jquery"
+    ]
+  }
 }
