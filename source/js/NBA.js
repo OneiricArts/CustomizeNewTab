@@ -74,11 +74,7 @@ class NBA extends Sport { // eslint-disable-line
     for (let i = 0; i < this.data.sports_content.games.game.length; i += 1) {
       if (this.data.sports_content.games.game[i].highlight) {
         const rowId = `#${this.data.sports_content.games.game[i].id}`;
-        // $(rowId).effect("highlight", {color: '#FFFF99'}, 2000);
-        // $(rowId).fadeIn(100).fadeOut(100).fadeIn(100).fadeOut(100)
-        //         .fadeIn(100).fadeIn(100).fadeOut(100).fadeIn(100);
 
-        // doing it this way to remove jQueryUI dependency for now
         $(rowId).addClass('flash');
         setTimeout(() => $(rowId).removeClass('flash'), 2000);
 

@@ -78,7 +78,7 @@ class WidgetNew { // eslint-disable-line no-unused-vars
     if (showAffect) {
       $element.hide();
       $element.html(output);
-      $element.fadeIn(500);
+      $element.show().addClass('fade-in');
     } else {
       $element.html(output);
     }
