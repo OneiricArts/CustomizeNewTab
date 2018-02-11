@@ -23,6 +23,7 @@ module.exports = {
     "NFL": false,
     "NHL": false,
     "MLB": false,
+    "MLBData": false,
     "Links": false,
     // temp:
     "Base": false
