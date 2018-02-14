@@ -146,4 +146,40 @@ const NBAData = { // eslint-disable-line no-unused-vars
     const twoDigits = n => (n < 10 ? `0${n}` : `${n}`);
     return `${yyyy}${twoDigits(mm)}${twoDigits(dd)}`;
   },
+
+  carryOverData(oldD, newD) {
+    const oldData = oldD;
+    const newData = newD;
+    try {
+      for (let i = 0; i < oldData.sports_content.games.game.length &&
+        i < newData.sports_content.games.game.length; i += 1) {
+        if (oldData.sports_content.games.game[i].id !==
+          newData.sports_content.games.game[i].id) {
+          console.log('data not same -- error');
+          break;
+        }
+
+        const oldGame = oldData.sports_content.games.game[i];
+        const newGame = newData.sports_content.games.game[i];
+
+        // hide?
+        if (oldGame.hidden && !oldGame.close_game) {
+          newGame.hidden = true;
+        }
+
+        // highlight?
+        let same;
+        if (newGame.home.score === '') {
+          same = true;
+        } else {
+          same = (parseInt(newGame.home.score, 10) + parseInt(newGame.visitor.score, 10)) ===
+                 (parseInt(oldGame.home.score, 10) + parseInt(oldGame.visitor.score, 10));
+        }
+        newData.sports_content.games.game[i].highlight = !same;
+      }
+    } catch (excption) {
+      // do nothing
+    }
+    return newData;
+  },
 };

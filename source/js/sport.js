@@ -10,6 +10,23 @@ class Sport extends WidgetNew { // eslint-disable-line no-unused-vars
     this.cacheButtonActions();
   }
 
+  async loadLocalSchedule() {
+    await this.loadData();
+    if (!_.isEmpty(this.data)) {
+      this.writeScheduleToDOM();
+      this.getSchedule();
+    } else {
+      this.getSchedule();
+    }
+  }
+
+  async getSchedule() {
+    const schedule = await this.getJsonData();
+    this.data = schedule;
+    this.writeScheduleToDOM();
+    this.saveData();
+  }
+
   /*
     OVERWRITE in extending classes for unique functionality
   */
@@ -26,27 +43,6 @@ class Sport extends WidgetNew { // eslint-disable-line no-unused-vars
     this.resetSchedule();
   }
 
-  async getDataSchedule() {
-    const schedule = await this.getJsonData();
-    this.displaySchedule(schedule);
-  }
-
-  async loadLocalSchedule() {
-    await this.loadData();
-    if (!_.isEmpty(this.data)) {
-      this.writeScheduleToDOM();
-      this.getDataSchedule();
-    } else {
-      this.getDataSchedule();
-    }
-  }
-
-  displaySchedule(newData) {
-    this.data = newData;
-    this.writeScheduleToDOM();
-    this.saveData();
-  }
-
   writeScheduleToDOM() {
     this.writeToTemplate();
     this.highlightGames();
@@ -54,9 +50,9 @@ class Sport extends WidgetNew { // eslint-disable-line no-unused-vars
 
   resetSchedule() {
     this.data = null;
-    this.getDataSchedule();
+    this.getSchedule();
     this.saveData();
   }
 
-  updateSchedule() { this.getDataSchedule(); }
+  updateSchedule() { this.getSchedule(); }
 }

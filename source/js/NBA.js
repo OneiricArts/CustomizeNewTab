@@ -19,45 +19,8 @@ class NBA extends Sport { // eslint-disable-line
 
   async getJsonData() {
     const data = await NBAData.getSchedule(this.today);
-    return data;
-  }
-
-  displaySchedule(newResult) {
-    const newData = newResult;
-    try {
-      for (let i = 0; i < this.data.sports_content.games.game.length &&
-        i < newData.sports_content.games.game.length; i += 1) {
-        if (this.data.sports_content.games.game[i].id !==
-          newData.sports_content.games.game[i].id) {
-          console.log('data not same -- error');
-          break;
-        }
-
-        const oldGame = this.data.sports_content.games.game[i];
-        const newGame = newData.sports_content.games.game[i];
-
-        // hide?
-        if (oldGame.hidden && !oldGame.close_game) {
-          newGame.hidden = true;
-        }
-
-        // highlight?
-        let same;
-        if (newGame.home.score === '') {
-          same = true;
-        } else {
-          same = (parseInt(newGame.home.score, 10) + parseInt(newGame.visitor.score, 10)) ===
-                 (parseInt(oldGame.home.score, 10) + parseInt(oldGame.visitor.score, 10));
-        }
-        newData.sports_content.games.game[i].highlight = !same;
-      }
-    } catch (excption) {
-      // do nothing
-    }
-
-    this.data = newData;
-    this.saveData();
-    this.writeScheduleToDOM();
+    const combinedData = NBAData.carryOverData(this.data, data);
+    return combinedData;
   }
 
   writeToTemplate() {

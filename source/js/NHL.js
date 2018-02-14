@@ -13,26 +13,11 @@ class NHL extends Sport { // eslint-disable-line no-unused-vars
       this.data, $('#NHL_widget'));
   }
 
-  displaySchedule(newData) {
-    const updateNewData = newData;
-
-    try {
-      for (let i = 0; i < updateNewData.games.length; i += 1) {
-        if (updateNewData.games[i].cnt.id === this.data.games[i].cnt.id) {
-          updateNewData.games[i].cnt.carry_over = this.data.games[i].cnt.carry_over;
-        }
-      }
-    } catch (e) { /* don't carry anything over */ }
-
-    this.data = updateNewData;
-    this.saveData();
-    this.writeScheduleToDOM();
-  }
-
   async getJsonData() {
     const data = {};
     data.games = (await NHLData.getSchedule(this.today));
-    return data;
+    const combinedData = NHLData.carryOverData(this.data, data);
+    return combinedData;
   }
 
   cacheButtonActions() {

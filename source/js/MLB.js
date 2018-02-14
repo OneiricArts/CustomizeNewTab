@@ -7,28 +7,8 @@ class MLB extends Sport { // eslint-disable-line no-unused-vars
 
   async getJsonData() {
     const data = await MLBData.getSchedule(this.today);
-    return data;
-  }
-
-  displaySchedule(newResult) {
-    const newData = newResult;
-    try {
-      // if data is for the same week, carry over any data that I need to
-      if (this.data && this.data.subject && this.data.subject === newData.subject) {
-        for (let i = 0; i < this.data.data.games.game.length
-          && newData.data.games.game.length; i += 1) {
-          if (this.data.data.games.game[i].game_pk === newData.data.games.game[i].game_pk
-            && this.data.data.games.game[i].hidden) {
-            newData.data.games.game[i].hidden = true;
-          }
-        }
-      }
-    } catch (excption) {
-      // do nothing
-    }
-
-    this.data = newData;
-    this.saveData(this.writeScheduleToDOM());
+    const combinedData = MLBData.carryOverData(this.data, data);
+    return combinedData;
   }
 
   writeToTemplate() {

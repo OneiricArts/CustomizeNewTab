@@ -118,4 +118,19 @@ const NHLData = { // eslint-disable-line no-unused-vars
 
     return data;
   },
+
+  carryOverData(oldD, newD) {
+    const oldData = oldD;
+    const newData = newD;
+
+    try {
+      for (let i = 0; i < newData.games.length; i += 1) {
+        if (newData.games[i].cnt.id === oldData.games[i].cnt.id) {
+          newData.games[i].cnt.carry_over = oldData.games[i].cnt.carry_over;
+        }
+      }
+    } catch (e) { /* don't carry anything over */ }
+
+    return newData;
+  },
 };

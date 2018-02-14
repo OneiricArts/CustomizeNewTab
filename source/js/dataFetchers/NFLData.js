@@ -160,4 +160,24 @@ const NFLData = { // eslint-disable-line no-unused-vars
       return null;
     }
   },
+
+  carryOverData(oldD, newD) {
+    const oldData = oldD;
+    const newData = newD;
+
+    try {
+      // if data is for the same week, carry over any data that I need to
+      if (oldData && oldData.gms && oldData.w === newData.w) {
+        for (let i = 0; i < newData.gms.length && oldData.gms.length; i += 1) {
+          if (newData.gms[i].eid === oldData.gms[i].eid && oldData.gms[i].hidden) {
+            newData.gms[i].hidden = true;
+          }
+        }
+      }
+    } catch (e) {
+      // don't carry anything over
+    }
+
+    return newData;
+  },
 };
