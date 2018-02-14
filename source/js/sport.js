@@ -26,8 +26,9 @@ class Sport extends WidgetNew { // eslint-disable-line no-unused-vars
     this.resetSchedule();
   }
 
-  getDataSchedule() {
-    this.getJsonData(this.schedule_url, this.displaySchedule);
+  async getDataSchedule() {
+    const schedule = await this.getJsonData();
+    this.displaySchedule(schedule);
   }
 
   async loadLocalSchedule() {

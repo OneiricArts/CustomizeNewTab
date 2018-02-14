@@ -16,11 +16,9 @@ class NFL extends Sport { // eslint-disable-line no-unused-vars
     WidgetNew.displayTemplate('NFLschedule', 'schedule', this.data, $('#NFL_widget'));
   }
 
-  async getJsonData(url, callback) {
+  async getJsonData() { // eslint-disable-line class-methods-use-this
     const data = await NFLData.getNFLData();
-
-    // display data
-    callback.call(this, data);
+    return data;
   }
 
   displaySchedule(newData) {

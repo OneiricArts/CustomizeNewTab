@@ -17,9 +17,9 @@ class NBA extends Sport { // eslint-disable-line
     this.turnOffAutoUpdate();
   }
 
-  async getJsonData(url, callback) {
+  async getJsonData() {
     const data = await NBAData.getSchedule(this.today);
-    callback.call(this, data);
+    return data;
   }
 
   displaySchedule(newResult) {

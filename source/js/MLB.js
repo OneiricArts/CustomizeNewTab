@@ -5,10 +5,9 @@ class MLB extends Sport { // eslint-disable-line no-unused-vars
     this.datakey = 'MLB';
   }
 
-  async getJsonData(url, callback) {
-    let data = {};
-    data = (await MLBData.getSchedule(this.today));
-    callback.call(this, data);
+  async getJsonData() {
+    const data = await MLBData.getSchedule(this.today);
+    return data;
   }
 
   displaySchedule(newResult) {

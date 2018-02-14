@@ -29,10 +29,10 @@ class NHL extends Sport { // eslint-disable-line no-unused-vars
     this.writeScheduleToDOM();
   }
 
-  async getJsonData(url, callback) {
+  async getJsonData() {
     const data = {};
     data.games = (await NHLData.getSchedule(this.today));
-    callback.call(this, data);
+    return data;
   }
 
   cacheButtonActions() {
