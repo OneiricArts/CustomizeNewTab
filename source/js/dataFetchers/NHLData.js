@@ -1,5 +1,4 @@
-const NHLData = {
-
+const NHLData = { // eslint-disable-line no-unused-vars
   async getSchedule(date = new Date()) {
 
     const startDate = this.formatDate(date);
