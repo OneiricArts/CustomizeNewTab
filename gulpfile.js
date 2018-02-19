@@ -165,12 +165,13 @@ function watchCodeDev() {
   gulp.watch(['./source/templates/*.handlebars'], handlebars);
   gulp.watch(jsfiles, moveJS);
   gulp.watch(['./source/*.html'], moveHTML);
+  gulp.watch(['./source/*.css'], moveCSS);
 }
 
 function watchCodeCompress() {
   gulp.watch(['./source/templates/*.handlebars'], handlebars);
   gulp.watch(jsfiles, minifyJS);
-  gulp.watch(['./source/*.html'], moveHTML);
+  gulp.watch(['./source/*.html', './source/*.css'], minifyHTML);
 }
 
 function firefox(done) {
