@@ -11,6 +11,7 @@
 		"http://*.nba.com/*",
 		"http://*.nhle.com/*",
 		"http://*.mlb.com/*",
+		"https://*.unsplash.com/*",
 		"topSites"
 	],
 	"icons": { "16": "icon16.png",

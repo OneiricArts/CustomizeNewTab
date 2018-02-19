@@ -30,6 +30,7 @@ const jsfiles = [
   'source/js/MLB.js',
   'source/js/NFL.js',
   'source/js/NBA.js',
+  'source/js/backgrounds.js',
   'source/js/pageHandler.js',
   'source/js/googleAnalyticsChrome.js',     // Chrome version by default
   // 'source/js/googleAnalyticsFirefox.js', // will replace Chrome version when building for FF

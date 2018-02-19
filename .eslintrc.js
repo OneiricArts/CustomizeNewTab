@@ -28,6 +28,7 @@ module.exports = {
     "MLB": false,
     "MLBData": false,
     "Links": false,
+    "Backgrounds": false,
   },
   "rules": {
   }
