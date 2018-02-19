@@ -100,15 +100,28 @@ $('html').on('click', 'button', e => sendClickEvent(e));
 $('html').on('click', 'span', e => sendClickEvent(e));
 $('html').on('click', 'tr', e => sendClickEvent(e, { label: 'game_row' }));
 
+/**
+ *
+ * @param {string} errorMsg
+ * @param {boolean} showAlert
+ */
+function gaLogException(errorMsg, showAlert = true) {
+  if (devEnv) {
+    if (showAlert) {
+      alert(errorMsg); // eslint-disable-line no-alert
+    } else {
+      console.log(errorMsg); // eslint-disable-line no-console
+    }
+  } else {
+    gaSendException(errorMsg);
+  }
+}
+
 // send uncaught (unexpected) exceptions to google analytics, if local installation show alert
 window.onerror = (msg, url, line, col, error) => {
   let extra = !col ? '' : `\n column: ${col}`;
   extra += !error ? '' : `\n error: ${error}`;
   const errorMsg = `Error: ${msg} \n url:${url} \n line: ${line} ${extra}`;
 
-  if (devEnv) {
-    alert(errorMsg); // eslint-disable-line no-alert
-  } else {
-    gaSendException(errorMsg);
-  }
+  gaLogException(errorMsg);
 };

@@ -15,6 +15,7 @@ module.exports = {
     "devEnv": false,
     "log": false,
     "gaSendEvent": false,
+    "gaLogException": false,
     "Widget": false,
     "WidgetNew": false,
     "Sport": false,
