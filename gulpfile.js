@@ -19,6 +19,9 @@ const jsfiles = [
   // 'source/js/*.js'
   'source/js/handlebars-helpers.js',
   'source/js/browser.js',
+  'source/js/dataFetchers/NHLData.js',
+  'source/js/dataFetchers/NFLData.js',
+  'source/js/dataFetchers/MLBData.js',
   'source/js/widget-new.js',
   'source/js/Base.js',
   'source/js/Sports.js',
@@ -26,10 +29,8 @@ const jsfiles = [
   'source/js/Links.js',
   'source/js/widget.js',
   'source/js/sport.js',
-  'source/js/NHLData.js',
   'source/js/NHL.js',
   'source/js/MLB.js',
-  'source/js/NFLData.js',
   'source/js/NFL.js',
   'source/js/pageHandler.js',
   'source/js/googleAnalyticsChrome.js',     // Chrome version by default
@@ -89,7 +90,12 @@ function moveHTML() {
           read: false,
         })// .pipe(print())
       , {
-        ignorePath: ['source/js/', 'source/libs/', 'source/libs/bootstrap-4.0.0-dist/js/',
+        ignorePath: [
+          // have to put more specific paths before less specific paths
+          'source/js/dataFetchers/',
+          'source/js/',
+          'source/libs/bootstrap-4.0.0-dist/js/',
+          'source/libs/',
           'Chrome/src/'],
         addRootSlash: false,
       }))
