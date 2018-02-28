@@ -1,4 +1,4 @@
-const MLBData = {
+const MLBData = { // eslint-disable-line no-unused-vars
   async getSchedule(date = new Date()) {
     date.setDate(date.getDate() + 0);
     const url = `http://gd2.mlb.com/components/game/mlb/${this.formattedDate(date)}/master_scoreboard.json`;

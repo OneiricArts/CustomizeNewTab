@@ -1,5 +1,4 @@
-const NFLData = {
-
+const NFLData = { // eslint-disable-line no-unused-vars
   async getNFLData() {
     // get main data
     const url = 'http://www.nfl.com/liveupdate/scores/scores.json';

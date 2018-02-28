@@ -1,5 +1,4 @@
-
-class NFL extends Sport {
+class NFL extends Sport { // eslint-disable-line no-unused-vars
 
   constructor() {
     super();
