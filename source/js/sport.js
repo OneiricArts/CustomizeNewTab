@@ -1,102 +1,61 @@
-"use strict";
+class Sport extends WidgetNew { // eslint-disable-line no-unused-vars
 
-class Sport extends Widget {
+  constructor() {
+    super();
+    this.today = new Date();
+  }
 
-	constructor() {
-		super();
-		this.schedule_url_start;
-		this.schedule_url_end;
-		this.schedule_url;
-		this.today = new Date();
-	}
+  init() {
+    this.loadLocalSchedule();
+    this.cacheButtonActions();
+  }
 
-	init() {
-		this.loadLocalSchedule();
-		this.cacheButtonActions();
-		this.specificInit();
-	}
+  /*
+    OVERWRITE in extending classes for unique functionality
+  */
+  /* eslint class-methods-use-this: ["error", { "exceptMethods": ["cacheButtonActions",
+    writeToTemplate, highlightGames, getJsonData] }] */
+  cacheButtonActions() {}
+  writeToTemplate() {}
+  getJsonData() {}
+  highlightGames() {}
 
-	/*
-		OVERWRITE in extending classes for unique functionality
-	*/
-	specificInit() {}
-	cacheButtonActions() {}
-	writeToTemplate() {}
-	dataOutOfDate(newData) {return true;}
-	updateNewData(newData) {}
-	massageData(data, callback) {callback.call(this, data);}
-	highlightGames() {}
-	formatDate() {}
+  /* eslint no-unused-expressions: [2, { allowTernary: true }]*/
+  changeDay(n) {
+    n ? this.today.setDate(this.today.getDate() + n) : this.today = new Date();
+    this.resetSchedule();
+  }
 
-	yyyymmdd(changeDay) {
-		if(changeDay) {
-			this.today.setDate(this.today.getDate() + changeDay); 
-		}
-		else {
-			this.today = new Date();
-		}
+  getDataSchedule() {
+    this.getJsonData(this.schedule_url, this.displaySchedule);
+  }
 
-		function twoDigits(n) {
-			return n<10? '0'+n:''+n
-		}
+  async loadLocalSchedule() {
+    await this.loadData();
+    if (!_.isEmpty(this.data)) {
+      this.writeScheduleToDOM();
+      this.getDataSchedule();
+    } else {
+      this.getDataSchedule();
+    }
+  }
 
-		var string = this.formatDate( 
-				this.today.getFullYear(), 
-				twoDigits(this.today.getMonth()+1), 
-				twoDigits(this.today.getDate())
-			);
+  displaySchedule(newData) {
+    this.data = newData;
+    this.writeScheduleToDOM();
+    this.saveData();
+  }
 
-		return string;
-	}
+  writeScheduleToDOM() {
+    this.writeToTemplate();
+    this.highlightGames();
+  }
 
-	changeDay(n) {
-		this.schedule_url = this.schedule_url_start + this.yyyymmdd(n) + this.schedule_url_end;
-		this.resetSchedule();
-	}
+  resetSchedule() {
+    this.data = null;
+    this.getDataSchedule();
+    this.saveData();
+  }
 
-	getJsonData(url, callback) {
-		$.getJSON(url, function(result) {
-			this.massageData.call(this, result, callback);
-		}.bind(this))
-		.fail(function(result){
-			//this.massageData.call(this, result, callback);
-		}.bind(this));
-		// TODO handle timeout
-	}
-
-	getDataSchedule () {
-		this.getJsonData(this.schedule_url, this.displaySchedule);
-	}
-
-	loadLocalSchedule() {
-		this.loadData( function(){
-			this.writeScheduleToDOM();
-			this.getDataSchedule();
-		}, 
-		this.getDataSchedule);
-	}
-
-	displaySchedule(newData) {
-		this.updateNewData(newData);
-		this.data = newData;
-		this.saveData(this.writeScheduleToDOM());
-	}
-
-	writeScheduleToDOM() {
-		this.writeToTemplate();
-		this.highlightGames();
-	}
-
-	resetSchedule() {
-		this.data = null;
-		this.saveData(this.getDataSchedule);
-	}
-
-	updateSchedule() {
-		this.getDataSchedule();
-	}
-
-	writeErrorMessage() {
-		this.writeToTemplate(true);
-	}
+  updateSchedule() { this.getDataSchedule(); }
 }

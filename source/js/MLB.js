@@ -2,7 +2,7 @@ class MLB extends Sport {
 
   constructor() {
     super();
-    this.dataKey = 'MLB';
+    this.datakey = 'MLB';
   }
 
   async getJsonData(url, callback) {
@@ -33,7 +33,7 @@ class MLB extends Sport {
   }
 
   writeToTemplate() {
-    this.displayTemplate('MLB', 'schedule', this.data.data.games, $('#MLB_widget'));
+    WidgetNew.displayTemplate('MLB', 'schedule', this.data.data.games, $('#MLB_widget'));
   }
 
   cacheButtonActions() {

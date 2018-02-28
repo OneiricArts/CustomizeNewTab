@@ -2,7 +2,7 @@ class NBA extends Sport { // eslint-disable-line
 
   constructor() {
     super();
-    this.dataKey = 'NBA_DATA';
+    this.datakey = 'NBA_DATA';
     this.$game_table = $('#NBA-panel #NBA_game_table');
     this.$game_template = $('#NBA-schedule-template').html();
 
@@ -56,7 +56,8 @@ class NBA extends Sport { // eslint-disable-line
     }
 
     this.data = newData;
-    this.saveData(this.writeScheduleToDOM());
+    this.saveData();
+    this.writeScheduleToDOM();
   }
 
   writeToTemplate() {
@@ -73,7 +74,7 @@ class NBA extends Sport { // eslint-disable-line
     this.data.sports_content.games.date =
       this.data.sports_content.sports_meta.season_meta.calendar_date;
 
-    this.displayTemplate('NBAschedule', 'schedule',
+    WidgetNew.displayTemplate('NBAschedule', 'schedule',
       this.data.sports_content.games, $('#NBA_widget'));
   }
 
@@ -175,8 +176,8 @@ class NBA extends Sport { // eslint-disable-line
 
     // var templ = $('#NBA-standings-template').html();
 
-    this.displayTemplate('NBAstandings', 'teams', data.sports_content.standings.conferences.West.team, $('#NBA-standings #West'));
-    this.displayTemplate('NBAstandings', 'teams', data.sports_content.standings.conferences.East.team, $('#NBA-standings #East'));
+    WidgetNew.displayTemplate('NBAstandings', 'teams', data.sports_content.standings.conferences.West.team, $('#NBA-standings #West'));
+    WidgetNew.displayTemplate('NBAstandings', 'teams', data.sports_content.standings.conferences.East.team, $('#NBA-standings #East'));
 
     // Mark Playoff teams with grey line
     const border = 'border-bottom:3pt solid grey;';
@@ -187,6 +188,6 @@ class NBA extends Sport { // eslint-disable-line
   async boxscore(event) {
     const self = event.data.that;
     const data = await NBAData.getBoxScore(self.today, $(this).val());
-    self.displayTemplate('NBAboxscore', 'game', data.sports_content.game, $('#NBA-boxscore .modal-content'));
+    WidgetNew.displayTemplate('NBAboxscore', 'game', data.sports_content.game, $('#NBA-boxscore .modal-content'));
   }
 }

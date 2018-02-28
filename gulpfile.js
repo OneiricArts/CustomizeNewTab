@@ -25,7 +25,6 @@ const jsfiles = [
   'source/js/dataFetchers/NBAData.js',
   'source/js/widget-new.js',
   'source/js/Links.js',
-  'source/js/widget.js',
   'source/js/sport.js',
   'source/js/NHL.js',
   'source/js/MLB.js',
