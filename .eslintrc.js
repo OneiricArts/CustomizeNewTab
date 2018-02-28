@@ -18,6 +18,7 @@ module.exports = {
     "Widget": false,
     "WidgetNew": false,
     "Sport": false,
+    "NBAData": false,
     "NBA": false,
     "NFLData": false,
     "NFL": false,
@@ -25,8 +26,6 @@ module.exports = {
     "MLB": false,
     "MLBData": false,
     "Links": false,
-    // temp:
-    "Base": false
   },
   "rules": {
   }
