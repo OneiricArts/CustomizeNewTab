@@ -1,32 +1,32 @@
   .winning {
     font-weight: bold;
   }
-  
+
   .flair {
     color: #aaaaaa;
   }
-  
+
   .card-block {
     padding: 0px;
   }
-  
+
   .table {
     margin-bottom: 0;
   }
-  
+
   .container-fluid {
     /* push down navbar*/
     padding-top: 20px;
     /* so plus button isn't stuck at bottom */
     padding-bottom: 20px;
   }
-  
+
   .flash {
     /* used to flash table row on update */
     animation: flash 1s ease-out;
     animation-iteration-count: 1;
   }
-  
+
   @keyframes flash {
     0% {
       background-color: none;
@@ -38,7 +38,7 @@
       background-color: none;
     }
   }
-  
+
   @keyframes fadeIn {
     to {
       opacity: 1;
@@ -54,38 +54,37 @@
     /* material design copy: links are bright pink */
     color: #ff4081;
   }
-  
+
   html {
     font-size: 14px;
   }
-  
+
   @media (min-width: 20em) {
     .card-columns {
       column-count: 1;
     }
   }
-  
+
   @media (min-width: 40em) {
     .card-columns {
       column-count: 2;
     }
   }
-  
+
   @media (min-width: 48em) {
     .card-columns {
       column-count: 2;
     }
   }
-  
+
   @media (min-width: 70em) {
     .card-columns {
       column-count: 3;
     }
   }
-  
+
   @media (min-width: 95em) {
     .card-columns {
       column-count: 4;
     }
   }
-  
