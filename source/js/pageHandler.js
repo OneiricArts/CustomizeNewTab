@@ -10,7 +10,7 @@ window.log = (message) => {
   if (devEnv) { console.log(message); } // eslint-disable-line no-console
 };
 
-window.addEventListener('offline', () => { $('#no-internet-alert').fadeIn(); });
+window.addEventListener('offline', () => { $('#no-internet-alert').addClass('fade-in').show(); });
 
 // reload page when online for cleanest reset
 window.addEventListener('online', () => { document.location.reload(); });
