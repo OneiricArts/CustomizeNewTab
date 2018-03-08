@@ -119,12 +119,11 @@ const MLBData = { // eslint-disable-line no-unused-vars
     const oldData = oldD;
     const newData = newD;
     try {
-      // if data is for the same week, carry over any data that I need to
-      if (oldData && oldData.subject && oldData.data.subject === newData.subject) {
-        for (let i = 0; i < oldData.data.data.games.game.length
+      if (oldData && oldData.subject && oldData.subject === newData.subject) {
+        for (let i = 0; i < oldData.data.games.game.length
           && newData.data.games.game.length; i += 1) {
-          if (oldData.data.data.games.game[i].game_pk === newData.data.games.game[i].game_pk
-            && oldData.data.data.games.game[i].hidden) {
+          if (oldData.data.games.game[i].game_pk === newData.data.games.game[i].game_pk
+            && oldData.data.games.game[i].hidden) {
             newData.data.games.game[i].hidden = true;
           }
         }
