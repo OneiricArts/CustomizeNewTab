@@ -58,7 +58,7 @@ const NBAData = { // eslint-disable-line no-unused-vars
 
           const date = new Date(yyyy, mm, dd);
 
-          const EST_UTC_OFFSET = 5; // EST + 5 = UTC
+          const EST_UTC_OFFSET = 5 - 1; // EST + 5 = UTC
 
           date.setUTCHours((hours + EST_UTC_OFFSET) % 24, minutes);
           const gametime = date.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
