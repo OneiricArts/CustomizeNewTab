@@ -1,7 +1,9 @@
 
 {{#> layouts/schedule-card }}
+  {{#*inline "name"}} MLB {{/inline}}
 
-  {{#*inline "nav"}}
-    {{> partials/schedule-date-switcher }}
-  {{/inline}}
+	{{#* inline "cardHeader" }}
+		{{> partials/schedule-date-switcher }}
+		{{> partials/schedule-reset-button }}
+	{{/inline}}
 {{/ layouts/schedule-card }}

@@ -2,14 +2,19 @@
 
 <div class="card">
 	<div class="card-header">
-		<span>&#9918; MLB // {{schedule.month}}.{{schedule.day}}</span>
-		{{> partials/schedule-date-switcher }}
-		{{> partials/schedule-refresh-button }}
-		{{> partials/schedule-reset-button }}
+		{{!-- name is required --}}
+		<span>&#9918; {{>name}} // {{schedule.month}}.{{schedule.day}}</span>
+
+		{{!-- partial with default, does not have to be provided --}}
+		{{#> cardHeader }}
+			{{> partials/schedule-date-switcher }}
+			{{> partials/schedule-refresh-button }}
+			{{> partials/schedule-reset-button }}
+		{{/cardHeader}}
 	</div>
 
 	<div class="card-block">
 		hellow
-		{{> nav}}
+
 	</div>
 </div>
