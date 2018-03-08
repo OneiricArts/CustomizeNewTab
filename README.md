@@ -17,11 +17,11 @@ The first part of developing this extension was basically making something that 
 
 Rough outline of plan (~~striked through~~ means completed):
 
-1. ~~Building a prototype to answer:~~  
+1. ~~Building a prototype to answer:~~
    - ~~Is it technically possible for me to build a sports-centric new tab page with live scores, box scores, etc? Do I find it useful? Do other people find it useful? Yes Yes Yes~~
 2. ~~Build a functioning protype with functionality and performance that is signifincantly better than other alternatives.~~
    - ~~Context aware highlighting to provide real time info. that leads to me being able to catch good moments of games~~
-   - ~~Build system that results in a optimized final build of the extension & fast start-up time~~ 
+   - ~~Build system that results in a optimized final build of the extension & fast start-up time~~
 3. Clean code base so that a new dev could pick it up very easily (track with [project](https://github.com/OneiricArts/CustomizeNewTab/projects/1)/milestone)
    - async/promises to eliminate callback hell and make logic more readable (~~including promisified wrappers around Chrome APIs~~)
    - restructure objects that are too strongly tied in the current OO design, remphasize truely shared features (now that I have a good knowledge of the APIs and how I want widgets to behave)
@@ -29,7 +29,7 @@ Rough outline of plan (~~striked through~~ means completed):
    - ~~Metrics to monitor performance, error rates, and telemetry data~~
    - Firefox port, will also ensure cross platform code
 4. Start adding more functionality again
-   - Beautiful backgrounds that don't degregade performance (start leveraging background scripts)
+   - ~~Beautiful backgrounds that don't degregade performance (start leveraging background scripts)~~
    - Bookmark Bar widget to reach feature parity with Chrome's default new tab page
    - Today's events from Google Calendar
    - Progressive Web App for mobile (PWAs in Android continue to get better)
@@ -38,7 +38,7 @@ Rough outline of plan (~~striked through~~ means completed):
 
 Information on building (uses gulp.js) and other general info (permissions, future plans, etc.) [in project wiki](https://github.com/OneiricArts/CustomizeNewTab/wiki/).
 
-### Acknowledgements  
+### Acknowledgements
 
 > "If I have seen further, it is by standing on the shoulders of giants." - Isaac Newton
 

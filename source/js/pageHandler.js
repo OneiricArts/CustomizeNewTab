@@ -90,6 +90,9 @@ $(document).ready(() => {
   const obj = new PageHandeler();
   obj.init();
 
+  const backGround = new Backgrounds();
+  backGround.on();
+
   if (!navigator.onLine) {
     $('#no-internet-alert').show();
   }
