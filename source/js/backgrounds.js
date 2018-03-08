@@ -93,6 +93,12 @@ class Backgrounds extends WidgetNew { // eslint-disable-line no-unused-vars
 
     try {
       const response = await fetch(url);
+
+      const ratelimitRemaining = response.headers.get('X-Ratelimit-Remaining');
+      if (ratelimitRemaining < 10) {
+        gaLogException(`${ratelimitRemaining} Unsplash API rate-limit-remaining`, false);
+      }
+
       if (response.status === 200) {
         const arrayOfPhotos = await response.json();
         this.data.photos = arrayOfPhotos;
