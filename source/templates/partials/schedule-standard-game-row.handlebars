@@ -6,6 +6,8 @@
   data-target=#collapse-{{cnt.id}}
 >
 
+  {{!-- get rid of collapse? --}}
+
   <td> {{cnt.status}} </td>
 
   <td {{#if cnt.awayTeamWinning}} class="winning" {{/if}}
@@ -21,5 +23,9 @@
   <td style="text-align:left">{{cnt.awayTeamScore}}</td>
   <td style="text-align:left">{{cnt.homeTeamScore}}</td>
 
+  {{!-- this partial is overkill? --}}
   {{> partials/schedule_remove_game_button }}
 </tr>
+
+{{#> extraRow }}
+{{/extraRow}}

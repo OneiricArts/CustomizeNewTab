@@ -1,9 +1,30 @@
 
 {{#> layouts/schedule-card }}
-  {{#*inline "name"}} MLB {{/inline}}
+  {{#*inline "name"}}&#9918; MLB{{/inline}}
 
 	{{#* inline "cardHeader" }}
 		{{> partials/schedule-date-switcher }}
 		{{> partials/schedule-reset-button }}
 	{{/inline}}
-{{/ layouts/schedule-card }}
+
+  {{#*inline "games"}}
+		{{#each schedule.games}}
+			{{!-- {{> partials/schedule-standard-game-row }} --}}
+
+			{{#> partials/schedule-standard-game-row }}
+				{{>extraRow}}
+			{{/partials/schedule-standard-game-row}}
+		{{/each}}
+	{{/inline}}
+
+{{/layouts/schedule-card }}
+
+
+{{!-- EXTRA MLB INFO --}}
+{{#* inline "extraRow"}}
+	<tr>
+		<td>
+			testadf
+		</td>
+	</tr>
+{{/inline}}

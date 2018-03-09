@@ -3,7 +3,7 @@
 <div class="card">
 	<div class="card-header">
 		{{!-- name is required --}}
-		<span>&#9918; {{>name}} // {{schedule.month}}.{{schedule.day}}</span>
+		{{>name}} // {{schedule.displayDate}}
 
 		{{!-- partial with default, does not have to be provided --}}
 		{{#> cardHeader }}
@@ -14,7 +14,10 @@
 	</div>
 
 	<div class="card-block">
-		hellow
+		hello
 
+		{{#> layouts/schedule-table }}
+			{{>games}}
+		{{/layouts/schedule-table }}
 	</div>
 </div>

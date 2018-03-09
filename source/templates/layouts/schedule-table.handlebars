@@ -1,0 +1,17 @@
+
+
+<table class="table table-striped table-sm">
+  {{> partials/schedule-table-header }}
+
+  <tbody>
+    {{#> games }}
+      <tr>
+        <td colspan="6" style="padding: 0">
+          <center style="padding:5px">
+            No games today
+          </center>
+        </td>
+      </tr>
+    {{/games}}
+  </tbody>
+</table>

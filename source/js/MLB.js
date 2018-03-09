@@ -23,7 +23,7 @@ class MLB extends Sport {
 				newData.data.games.game = [newData.data.games.game];
 			}
 		} catch(e) {}
-		        
+
 		try {
             // if data is for the same week, carry over any data that I need to
             if (this.data && this.data.subject && this.data.subject === newData.subject) {
@@ -32,7 +32,7 @@ class MLB extends Sport {
                     if (this.data.data.games.game[i].game_pk == newData.data.games.game[i].game_pk
                         && this.data.data.games.game[i].hidden) {
                         newData.data.games.game[i]['hidden'] = true;
-                    } 
+                    }
                 }
             }
         } catch(excption) {}
@@ -42,7 +42,37 @@ class MLB extends Sport {
 	}
 
 	writeToTemplate(error) {
-		this.displayTemplate('MLB', 'schedule', this.data.data.games, $('#MLB_widget'));
+		this.data = {
+			schedule: {
+				displayDate: '04.18',
+				games: [
+					{
+						cnt: {
+							status: '4 am',
+							awayTeamName: 'rockets',
+							homeTeamName: 'warriors',
+							awayTeamScore: 60,
+							homeTeamScore: 90,
+							awayTeamWinning: false,
+							homeTeamWinning: true,
+						}
+					},
+					{
+						cnt: {
+							status: '4 am',
+							awayTeamName: 'rockets',
+							homeTeamName: 'warriors',
+							awayTeamScore: 60,
+							homeTeamScore: 90,
+							awayTeamWinning: false,
+							homeTeamWinning: true,
+						}
+					},
+				]
+			}
+		};
+
+		this.displayTemplate('MLB', 'schedule', this.data.schedule, $('#MLB_widget'));
 	}
 
 	cacheButtonActions() {
@@ -89,7 +119,7 @@ class MLB extends Sport {
 			for (var i = 0; i < result.data.games.game.length; i++) {
 				var game = result.data.games.game[i];
 
-				/* time status 
+				/* time status
 				*********************************************************************************************/
 				var time_to_show;
 
@@ -99,9 +129,9 @@ class MLB extends Sport {
 					time_to_show = game.status.status;
 				}
 				else if (game.status.status === "In Progress") {
-					
+
 					time_to_show = game.status.inning;
-					
+
 					if(game.status.inning_state === 'Top') {
 						result.data.games.game[i]['topofinning'] = true;
 					}
@@ -109,13 +139,13 @@ class MLB extends Sport {
 					if(game.status.inning_state === 'Bottom') {
 						result.data.games.game[i]['bottomofinning'] = true;
 					}
-				} 
+				}
 
 				else if (game.status.status === "Delayed") {
 					time_to_show = "Delayed";
 				}
 
-				else if (game.status.status === "Preview" || game.status.status === "Pre-Game" 
+				else if (game.status.status === "Preview" || game.status.status === "Pre-Game"
 						|| game.status.status === "Warmup") {
 
 					try {
@@ -148,7 +178,7 @@ class MLB extends Sport {
 				}
 				result.data.games.game[i]['time_to_show'] = time_to_show;
 
-				/* winning 
+				/* winning
 				********************************************************************************************/
 				if(game.linescore) {
 					var at_score = parseInt(game.linescore.r.away);

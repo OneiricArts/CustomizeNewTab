@@ -1,0 +1,9 @@
+{{#each schedule.games}}
+
+  {{unless carryOver.hidden}}
+  {{!-- {{> partials/schedule-standard-game-row }} --}}
+
+  {{#> partials/schedule-standard-game-row }}
+    {{>extraRow}}
+  {{/partials/schedule-standard-game-row}}
+{{/each}}
