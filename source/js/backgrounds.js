@@ -81,7 +81,8 @@ class Backgrounds extends WidgetNew { // eslint-disable-line no-unused-vars
 
     const paramsArr = {
       client_id: APPLICATION_ID,
-      // featured: true,
+      featured: true,
+      // query: 'sport',
       orientation: 'landscape',
       count: 30,                           // number of photos to return
       sig: Math.ceil(Math.random() * 100), // https://github.com/unsplash/unsplash-source-js/issues/9
