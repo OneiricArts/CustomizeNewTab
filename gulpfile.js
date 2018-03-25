@@ -216,6 +216,16 @@ gulp.task('zip', (cb) => {
     });
 });
 
+// TODO: replace with gulp eslint so i can have a task fail if it doesn't pass
+//  dont have tests --- so i guess dont zip if eslint fails?
+gulp.task('lint', (cb) => {
+  exec('./node_modules/.bin/eslint --color source/js', (err, stdout, stderr) => {
+    util.log(stdout);
+    util.log(stderr);
+    cb(err);
+  });
+});
+
 // TODO: right now have to run dev/compress twice after cleaning
 gulp.task('clean', (cb) => {
   // everything built goes into /src

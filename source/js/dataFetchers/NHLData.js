@@ -1,6 +1,5 @@
 const NHLData = { // eslint-disable-line no-unused-vars
   async getSchedule(date = new Date()) {
-
     const startDate = this.formatDate(date);
     const endDate = this.formatDate(date);
 
@@ -39,6 +38,7 @@ const NHLData = { // eslint-disable-line no-unused-vars
     } catch (e) {
       console.log('// NHL DATA RETREIVAL FAILED //');
       console.log(e);
+      return undefined;
     }
   },
 

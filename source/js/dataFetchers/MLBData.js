@@ -11,6 +11,7 @@ const MLBData = { // eslint-disable-line no-unused-vars
     } catch (e) {
       console.log('// MLB DATA RETREIVAL FAILED //');
       console.log(e);
+      return [];
     }
   },
 
@@ -45,9 +46,11 @@ const MLBData = { // eslint-disable-line no-unused-vars
         } else if (!Array.isArray(data.data.games.game)) {
           data.data.games.game = [data.data.games.game];
         }
-      } catch (e) { }
+      } catch (e) {
+        return data;
+      }
 
-      for (let i = 0; i < data.data.games.game.length; i++) {
+      for (let i = 0; i < data.data.games.game.length; i += 1) {
         const game = data.data.games.game[i];
 
         /* time status
