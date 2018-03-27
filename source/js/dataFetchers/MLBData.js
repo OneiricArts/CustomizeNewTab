@@ -38,6 +38,8 @@ const MLBData = { // eslint-disable-line no-unused-vars
   },
 
   labelScheduleData(ad) {
+    const curatedGames = [];
+
     const data = ad;
     try {
       try {
@@ -49,27 +51,40 @@ const MLBData = { // eslint-disable-line no-unused-vars
       } catch (e) {
         return data;
       }
+      console.log(data);
 
       for (let i = 0; i < data.data.games.game.length; i += 1) {
         const game = data.data.games.game[i];
+        const curatedGame = {};
+
+        /* game id
+        *******************************************************************************************/
+        curatedGame.id = game.game_pk;
+
+        /* team names
+        *******************************************************************************************/
+        curatedGame.awayTeamName = game.away_team_name;
+        curatedGame.homeTeamName = game.home_team_name;
 
         /* time status
         *******************************************************************************************/
         let timeToShow;
+        let topOfInning = false;
+        let bottomOfInning = false;
 
         // console.log('>>>>>> ===== ' + game.status.status);
 
-        if (game.status.status === 'Final' || game.status.status === 'Postponed') {
+        if (['Final', 'Postponed', 'Completed Early', 'Cancelled'].includes(game.status.status)) {
           timeToShow = game.status.status;
         } else if (game.status.status === 'In Progress') {
           timeToShow = game.status.inning;
 
           if (game.status.inning_state === 'Top') {
-            data.data.games.game[i].topofinning = true;
+            topOfInning = true;
           }
 
           if (game.status.inning_state === 'Bottom') {
-            data.data.games.game[i].bottomofinning = true;
+            bottomOfInning = true;
           }
         } else if (game.status.status === 'Delayed') {
           timeToShow = 'Delayed';
@@ -101,21 +116,57 @@ const MLBData = { // eslint-disable-line no-unused-vars
             console.log('>> time_to_show excption');
           }
         }
-        data.data.games.game[i].time_to_show = timeToShow;
 
-        /* winning
+        let time = '';
+        if (topOfInning) {
+          time += `${SYMBOLS.HTML_UP_ARROW}${SYMBOLS.HTML_NON_BREAKING_SPACE}`;
+        } else if (bottomOfInning) {
+          time += `${SYMBOLS.HTML_DOWN_ARROW}${SYMBOLS.HTML_NON_BREAKING_SPACE}`;
+        }
+
+        if (!timeToShow) {
+          timeToShow = `${game.time} ${game.time_zone}`;
+        }
+
+        time += Handlebars.Utils.escapeExpression(timeToShow);
+        curatedGame.status = time;
+
+        /* scores & winning
         *******************************************************************************************/
         if (game.linescore) {
           const atScore = parseInt(game.linescore.r.away, 10);
           const htScore = parseInt(game.linescore.r.home, 10);
-          data.data.games.game[i].atwinning = atScore > htScore;
-          data.data.games.game[i].htwinning = htScore > atScore;
+
+          curatedGame.awayTeamScore = game.linescore.r.away;
+          curatedGame.homeTeamScore = game.linescore.r.home;
+
+          curatedGame.awayTeamWinning = atScore > htScore;
+          curatedGame.homeTeamWinning = htScore > atScore;
         }
+
+        /* extra info
+        *******************************************************************************************/
+        curatedGame.alerts = game.alerts;
+        curatedGame.linescore = game.linescore;
+        curatedGame.home_runs = game.home_runs;
+        curatedGame.pitcher = game.pitcher;
+        curatedGame.home_probable_pitcher = game.home_probable_pitcher;
+        curatedGame.opposing_pitcher = game.opposing_pitcher;
+        curatedGame.away_probable_pitcher = game.away_probable_pitcher;
+        curatedGame.losing_pitcher = game.losing_pitcher;
+        curatedGame.winning_pitcher = game.winning_pitcher;
+
+        curatedGames.push(curatedGame);
       }
     } catch (e) {
       console.log(`fudge cakes -- massageData ${e}`);
     }
-    return data;
+
+    const displayDate = `${data.data.games.month}.${data.data.games.day}`;
+    return {
+      displayDate,
+      games: curatedGames,
+    };
   },
 
   carryOverData(oldD, newD) {

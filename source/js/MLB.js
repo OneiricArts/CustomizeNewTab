@@ -3,16 +3,35 @@ class MLB extends Sport { // eslint-disable-line no-unused-vars
   constructor() {
     super();
     this.datakey = 'MLB';
+    this.data.schedule = {
+      games: [],
+    };
+    this.links = [
+      {
+        href: '"http://mlb.mlb.com/home',
+        title: 'MLB',
+      },
+      {
+        href: '"http://www.espn.com/mlb/',
+        title: 'MLB',
+      },
+      {
+        href: 'http://www.reddit.com/r/mlb',
+        title: 'r/MLB',
+      },
+    ];
   }
 
   async getJsonData() {
-    const data = await MLBData.getSchedule(this.today);
-    const combinedData = MLBData.carryOverData(this.data, data);
-    return combinedData;
+    const schedule = await MLBData.getSchedule(this.today);
+    console.log(schedule);
+    const combinedSchedule = MLBData.carryOverData(this.data.schedule, schedule);
+    return combinedSchedule;
   }
 
   writeToTemplate() {
-    WidgetNew.displayTemplate('MLB', 'schedule', this.data.data.games, $('#MLB_widget'));
+    this.data.schedule.links = this.links;
+    WidgetNew.displayTemplate('MLB', 'schedule', this.data.schedule, $('#MLB_widget'));
   }
 
   cacheButtonActions() {
@@ -42,5 +61,22 @@ class MLB extends Sport { // eslint-disable-line no-unused-vars
     }
 
     that.saveData();
+  }
+
+  /**
+   * OVERRIDING FROM SPORT.JS UNTIL THIS.DATA IS CHANGED EVERYWHERE
+   */
+
+  async getSchedule() {
+    const schedule = await this.getJsonData();
+    this.data.schedule = schedule;
+    this.writeScheduleToDOM();
+    this.saveData();
+  }
+
+  resetSchedule() {
+    this.data.schedule = null;
+    this.getSchedule();
+    this.saveData();
   }
 }
