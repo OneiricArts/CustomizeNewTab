@@ -16,6 +16,7 @@ module.exports = {
     "log": false,
     "gaSendEvent": false,
     "gaLogException": false,
+    "SYMBOLS": false,
     "Widget": false,
     "WidgetNew": false,
     "Sport": false,
