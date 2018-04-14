@@ -1,0 +1,12 @@
+<div class="alert" style="margin-bottom:0">
+  No games today &#x1f622;
+  <br>
+
+  {{#if schedule.links}}
+    <div class="btn-group btn-group-sm" role="group" aria-label="Links">
+      {{#each schedule.links}}
+        <a href={{href}} class="btn btn-sm btn-outline-primary">{{title}}</a>
+      {{/each}}
+    </div>
+  {{/if}}
+</div>
