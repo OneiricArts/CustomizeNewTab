@@ -19,6 +19,7 @@ const jsfiles = [
   // 'source/js/*.js'
   'source/js/handlebars-helpers.js',
   'source/js/browser.js',
+  'source/js/dataFetchers/helpers.js',
   'source/js/dataFetchers/NHLData.js',
   'source/js/dataFetchers/NFLData.js',
   'source/js/dataFetchers/MLBData.js',
