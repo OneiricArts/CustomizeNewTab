@@ -90,8 +90,7 @@ const MLBData = { // eslint-disable-line no-unused-vars
               hours -= 12;
             }
 
-            const EST_UTC_OFFSET = 5; // EST + 5 = UTC
-            date.setUTCHours((hours + EST_UTC_OFFSET) % 24, minutes);
+            date.setUTCHours((hours + helpers.etUtcOffset()) % 24, minutes);
             timeToShow = date.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
           } catch (e) {
             timeToShow = `${game.time} ${game.time_zone}`;
