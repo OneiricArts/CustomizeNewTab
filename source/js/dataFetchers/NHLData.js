@@ -80,7 +80,7 @@ const NHLData = { // eslint-disable-line no-unused-vars
         date.setUTCHours(utcHours);
         date.setMinutes(utcMinutes);
 
-        game.cnt.status = date.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }).split(' ')[0];
+        game.cnt.status = helpers.toLocalTime(date, true);
       }
 
       /**

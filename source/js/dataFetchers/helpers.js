@@ -16,7 +16,7 @@ const helpers = {}; // eslint-disable-line no-unused-vars
  * @returns {number} offset (4 or 5)
  *
  */
-helpers.etUtcOffset = (date = new Date()) => {
+const etUtcOffset = (date = new Date()) => {
   const jan = new Date(date.getFullYear(), 0, 1);
   const jul = new Date(date.getFullYear(), 6, 1);
 
@@ -28,4 +28,25 @@ helpers.etUtcOffset = (date = new Date()) => {
   const EST_UTC_OFFSET = 5;
   const EDT_UTC_OFFSET = 4;
   return dalightSavingsTime ? EDT_UTC_OFFSET : EST_UTC_OFFSET;
+};
+
+const etToUTC = (date) => {
+  date.setUTCHours((date.getHours() + etUtcOffset(date)) % 24);
+  return date;
+};
+
+/**
+ * Convert date in EST/EDT or UTC to user (current system) local time
+ * @param {Date} date
+ * @param {boolean} utc - has to be UTC || (EST/EDT)
+ */
+helpers.toLocalTime = (date, utc = false) => {
+  let convertedDate = date;
+
+  if (!utc) {
+    convertedDate = etToUTC(convertedDate);
+  }
+
+  const options = { hour: '2-digit', minute: '2-digit' };
+  return convertedDate.toLocaleTimeString([], options).split(' ')[0];
 };

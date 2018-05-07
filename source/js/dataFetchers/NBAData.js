@@ -56,10 +56,8 @@ const NBAData = { // eslint-disable-line no-unused-vars
           const mm = parseInt(game.date.substring(4, 6), 10);
           const dd = parseInt(game.date.substring(6, 8), 10);
 
-          const date = new Date(yyyy, mm, dd);
-
-          date.setUTCHours((hours + helpers.etUtcOffset()) % 24, minutes);
-          const gametime = date.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+          const date = new Date(yyyy, mm, dd, hours, minutes);
+          const gametime = helpers.toLocalTime(date);
           game.period_time.period_status = gametime;
         }
       } catch (e) {

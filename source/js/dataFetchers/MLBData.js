@@ -82,7 +82,6 @@ const MLBData = { // eslint-disable-line no-unused-vars
             let hours = parseInt(timeArr[0], 10);
             const minutes = parseInt(timeArr[1], 10);
 
-            const date = new Date(yyyy, mm, dd);
 
             if (game.ampm === 'PM') {
               hours += 12;
@@ -90,8 +89,8 @@ const MLBData = { // eslint-disable-line no-unused-vars
               hours -= 12;
             }
 
-            date.setUTCHours((hours + helpers.etUtcOffset()) % 24, minutes);
-            timeToShow = date.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+            const date = new Date(yyyy, mm, dd, hours, minutes);
+            timeToShow = helpers.toLocalTime(date);
           } catch (e) {
             timeToShow = `${game.time} ${game.time_zone}`;
             console.log('>> time_to_show excption');
