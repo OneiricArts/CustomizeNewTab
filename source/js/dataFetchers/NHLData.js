@@ -69,7 +69,8 @@ const NHLData = { // eslint-disable-line no-unused-vars
       if (game.status.abstractGameState === 'Final') {
         game.cnt.status = game.status.detailedState;
       } else if (game.status.abstractGameState === 'Live') {
-        game.cnt.status = `${game.linescore.currentPeriod}Q ${game.linescore.currentPeriodTimeRemaining}`;
+        // use game.linescore.currentPeriodOrdinal if includes "OT"?
+        game.cnt.status = `${game.linescore.currentPeriodOrdinal} ${game.linescore.currentPeriodTimeRemaining}`;
       } else {
         const unformattedTime = game.gameDate.split('T')[1];
         const utcHours = unformattedTime.split(':')[0];
