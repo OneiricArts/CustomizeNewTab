@@ -46,7 +46,7 @@
               {{/if}}
             {{else}}
               {{#if extrainfo}}
-                <td> {{extrainfo.d}} {{t}}</td>
+                <td> {{extrainfo.gameSchedule.gameDate}} {{t}}</td>
               {{else}}
                 <td>{{t}}</td>
               {{/if}}
@@ -55,7 +55,7 @@
             <td class="text-capitalize {{#if visitor_winning}} winning {{/if}}"
               style="text-align:left">
               {{#if extrainfo}}
-                {{extrainfo.vnn}}
+                {{extrainfo.gameSchedule.visitorNickname}}
               {{else}}
                 {{away.abbr}}
               {{/if}}
@@ -65,7 +65,7 @@
             <td class="text-capitalize {{#if home_winning}} winning {{/if}}"
               style="text-align:left">
               {{#if extrainfo}}
-                {{extrainfo.hnn}}
+                {{extrainfo.gameSchedule.homeNickname}}
               {{else}}
                 {{home.abbr}}
               {{/if}}
@@ -116,7 +116,7 @@
                       <tr>
 
                         <td class="text-left col-md-6">
-                          {{#if extrainfo}} {{extrainfo.vnn}}
+                          {{#if extrainfo}} {{extrainfo.gameSchedule.visitorNickname}}
                           {{else}} {{away.abbr}} {{/if}}
                         </td>
                         <td class="text-right col-md-1">{{away.score.[1]}}</td>
@@ -128,7 +128,7 @@
                       </tr>
                       <tr>
                         <td class="text-left col-md-6">
-                          {{#if extrainfo}} {{extrainfo.hnn}}
+                          {{#if extrainfo}} {{extrainfo.gameSchedule.homeNickname}}
                           {{else}} {{home.abbr}} {{/if}}
                         </td>
                         <td class="text-right col-md-1">{{home.score.[1]}}</td>

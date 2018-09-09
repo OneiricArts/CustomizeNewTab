@@ -7,7 +7,7 @@ const NFLData = { // eslint-disable-line no-unused-vars
     let combinedData = {};
     try {
       // get additional data
-      const specificUrl = 'http://www.nfl.com/liveupdate/scorestrip/ss.json';
+      const specificUrl = 'https://feeds.nfl.com/feeds-rs/scores.json';
       const scorestrip = await (await fetch(specificUrl)).json();
       combinedData = this.combineNFLAPIData(scores, scorestrip);
     } catch (e) {
@@ -33,9 +33,9 @@ const NFLData = { // eslint-disable-line no-unused-vars
 
     // convert ss.json games array to object
     const additionalDataObj = {};
-    for (let i = 0; i < additionalData.gms.length; i += 1) {
-      const g = additionalData.gms[i];
-      additionalDataObj[g.eid] = g;
+    for (let i = 0; i < additionalData.gameScores.length; i += 1) {
+      const g = additionalData.gameScores[i];
+      additionalDataObj[g.gameSchedule.gameId] = g;
     }
 
     _.map(combinedData.gms, (v) => {
@@ -44,7 +44,7 @@ const NFLData = { // eslint-disable-line no-unused-vars
       return g;
     });
 
-    combinedData.w = additionalData.w;
+    combinedData.w = additionalData.week;
 
     return combinedData;
   },
@@ -88,7 +88,7 @@ const NFLData = { // eslint-disable-line no-unused-vars
 
       // local time
       if (game.extrainfo) {
-        const hours = parseInt(game.extrainfo.t.split(':')[0], 10);
+        const hours = parseInt(game.extrainfo.gameSchedule.gameTimeEastern.split(':')[0], 10);
 
         const options = {};
         if (hours >= 0 && hours <= 10) {
@@ -98,10 +98,13 @@ const NFLData = { // eslint-disable-line no-unused-vars
         }
 
         game.t = this.toLocalTime(
-          game.extrainfo.t.split(':')[0] - 1,
-          game.extrainfo.t.split(':')[1],
+          game.extrainfo.gameSchedule.gameTimeEastern.split(':')[0] - 1,
+          game.extrainfo.gameSchedule.gameTimeEastern.split(':')[1],
           options,
         ).split(' ')[0];
+
+        const gameDate = new Date(game.extrainfo.gameSchedule.gameDate);
+        game.extrainfo.gameSchedule.gameDate = gameDate.toLocaleString('en-us', { weekday: 'short' });
       } else {
         game.t = `${game.eid.toString().substring(4, 6)}.${game.eid.toString().substring(6, 8)}`;
       }
@@ -114,7 +117,7 @@ const NFLData = { // eslint-disable-line no-unused-vars
         game.qtr = 'final OT';
       } else if (game.qtr === 'Pregame') {
         // pregame is useless info
-        game.qtr = `${game.extrainfo.d} ${game.t}`;
+        game.qtr = `${game.extrainfo.gameSchedule.gameDate} ${game.t}`;
       }
 
       if (devEnv) {
