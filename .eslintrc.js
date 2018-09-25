@@ -11,7 +11,6 @@ module.exports = {
   },
   "globals": {
     "Handlebars": false,
-    "_": false,
     "devEnv": false,
     "log": false,
     "gaSendEvent": false,
