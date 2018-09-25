@@ -50,8 +50,9 @@ const NHLData = { // eslint-disable-line no-unused-vars
     return `${yyyy}-${twoDigits(mm)}-${twoDigits(dd)}`;
   },
 
-  labelScheduleData(data) {
-    _.map(data, (v) => {
+  labelScheduleData(oldData) {
+    let data = oldData;
+    data = data.map((v) => {
       const game = v;
 
       game.cnt = {};
@@ -115,6 +116,8 @@ const NHLData = { // eslint-disable-line no-unused-vars
        * //////////////////////////////////////////////////////////////////////
        */
       game.cnt.carry_over = {};
+
+      return game;
     });
 
     return data;
