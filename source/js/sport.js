@@ -12,7 +12,20 @@ class Sport extends WidgetNew { // eslint-disable-line no-unused-vars
 
   async loadLocalSchedule() {
     await this.loadData();
-    if (!_.isEmpty(this.data)) {
+
+    /**
+     * replaces `!_.isEmpty(this.data)`
+     *  other alternative (Object.getOwnPropertyNames(this.data).length > 0)
+     *
+     * Object.keys({1:{}, 3:2}).length  // 2
+     * Object.keys([1]).length          // 1
+     *
+     * Object.keys({}).length           // 0
+     * Object.keys([]).length           // 0
+     *
+     * Object.keys(null).length         // TypeError: Cannot convert undefined or null to object
+     */
+    if (this.data && Object.keys(this.data).length > 0) {
       this.writeScheduleToDOM();
       this.getSchedule();
     } else {
