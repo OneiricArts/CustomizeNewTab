@@ -101,6 +101,11 @@ const MLBData = { // eslint-disable-line no-unused-vars
             console.log('>> time_to_show excption');
           }
         }
+
+        if (game.time === 'TBD') {
+          timeToShow = game.time;
+        }
+
         data.data.games.game[i].time_to_show = timeToShow;
 
         /* winning
