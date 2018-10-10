@@ -27,7 +27,9 @@ const MLBData = { // eslint-disable-line no-unused-vars
     // case where only one game: API provides object instead of array, so create array with obj
     try {
       if (data.data.games.game && !Array.isArray(data.data.games.game)) {
-        return [data.data.games.game];
+        const convertedData = data;
+        convertedData.data.games.game = [data.data.games.game];
+        return convertedData;
       }
       return data;
     } catch (e) {
