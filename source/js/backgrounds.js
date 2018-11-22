@@ -71,8 +71,7 @@ class Backgrounds extends WidgetNew { // eslint-disable-line no-unused-vars
       const image = await (await fetch(this.data.currentPhoto.photoURL)).blob();
       reader.readAsDataURL(image);
     } catch (e) {
-      const errorMsg = `// Backgrounds fetch image error // ${e}`;
-      gaLogException(errorMsg, false);
+      gaLogException(`Unsplash // Backgrounds fetch image error // ${e}`, false);
     }
   }
 
@@ -97,7 +96,7 @@ class Backgrounds extends WidgetNew { // eslint-disable-line no-unused-vars
 
       const ratelimitRemaining = response.headers.get('X-Ratelimit-Remaining');
       if (ratelimitRemaining < 10) {
-        gaLogException(`${ratelimitRemaining} Unsplash API rate-limit-remaining`, false);
+        gaLogException(`Unsplash // ${ratelimitRemaining} Unsplash API rate-limit-remaining`, false);
       }
 
       if (response.status === 200) {
@@ -106,10 +105,10 @@ class Backgrounds extends WidgetNew { // eslint-disable-line no-unused-vars
         this.saveData();
         this.updateBackgroundDataForNextPageLoad();
       } else {
-        gaLogException(`Unsplash API Failed with ${await response.text()}`);
+        gaLogException(`Unsplash // API Failed with ${await response.text()}`);
       }
     } catch (e) {
-      const errorMsg = `Backgrounds fetch api error ${e}`;
+      const errorMsg = `Unsplash // Backgrounds fetch api error ${e}`;
       gaLogException(errorMsg, false);
     }
   }
