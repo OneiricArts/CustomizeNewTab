@@ -88,7 +88,8 @@ const NFLData = { // eslint-disable-line no-unused-vars
 
       // local time
       if (game.extrainfo) {
-        const hours = parseInt(game.extrainfo.gameSchedule.gameTimeEastern.split(':')[0], 10);
+        let hours = parseInt(game.extrainfo.gameSchedule.gameTimeEastern.split(':')[0], 10);
+        const mins = parseInt(game.extrainfo.gameSchedule.gameTimeEastern.split(':')[1], 10);
 
         const options = {};
         if (hours >= 0 && hours <= 10) {
@@ -97,14 +98,19 @@ const NFLData = { // eslint-disable-line no-unused-vars
           options.ampm = 'AM';
         }
 
-        game.t = this.toLocalTime(
-          game.extrainfo.gameSchedule.gameTimeEastern.split(':')[0] - 1,
-          game.extrainfo.gameSchedule.gameTimeEastern.split(':')[1],
-          options,
-        ).split(' ')[0];
+        // convert to 24 hours if need to (and provide AM/PM)
+        if (options.ampm === 'PM' && hours < 12) {
+          hours += 12;
+        } else if (options.ampm === 'AM' && hours === 12) {
+          hours = 0;
+        }
 
         const gameDate = new Date(game.extrainfo.gameSchedule.gameDate);
         game.extrainfo.gameSchedule.gameDate = gameDate.toLocaleString('en-us', { weekday: 'short' });
+
+        game.t = helpers.toLocalTime(
+          new Date(gameDate.getFullYear(), gameDate.getMonth(), gameDate.getDate(), hours, mins),
+        );
       } else {
         game.t = `${game.eid.toString().substring(4, 6)}.${game.eid.toString().substring(6, 8)}`;
       }
@@ -129,39 +135,6 @@ const NFLData = { // eslint-disable-line no-unused-vars
     });
 
     return data;
-  },
-
-  toLocalTime(hrs, mins, opts) {
-    let options = opts;
-    if (!opts) {
-      options = {};
-    }
-
-    try {
-      let hours = parseInt(hrs, 10);
-      const minutes = parseInt(mins, 10);
-
-      // convert to 24 hours if need to (and provide AM/PM)
-      if (options.ampm === 'PM' && hours < 12) {
-        hours += 12;
-      } else if (options.ampm === 'AM' && hours === 12) {
-        hours = 0;
-      }
-
-      // EST + 5 = UTC
-      const EST_UTC_OFFSET = 5;
-
-      const date = new Date();
-      date.setUTCHours((hours + EST_UTC_OFFSET) % 24, minutes, 0);
-
-      if (!options.format) {
-        options.format = { hour: '2-digit', minute: '2-digit' };
-      }
-      return date.toLocaleTimeString([], options.format);
-    } catch (e) {
-      console.log(e);
-      return null;
-    }
   },
 
   carryOverData(oldD, newD) {
