@@ -16,6 +16,7 @@ const manifest = require('./Chrome/manifest.json');
 
 // all js files needed, in order of inclusion
 const jsfiles = [
+  'source/js/backgrounds.js',
   // 'source/js/*.js'
   'source/js/handlebars-helpers.js',
   'source/js/browser.js',
@@ -31,7 +32,6 @@ const jsfiles = [
   'source/js/MLB.js',
   'source/js/NFL.js',
   'source/js/NBA.js',
-  'source/js/backgrounds.js',
   'source/js/pageHandler.js',
   'source/js/googleAnalyticsChrome.js',     // Chrome version by default
   // 'source/js/googleAnalyticsFirefox.js', // will replace Chrome version when building for FF
