@@ -1,25 +1,24 @@
 {
-  // VSCODE file
   // See https://go.microsoft.com/fwlink/?LinkId=733558
   // for the documentation about the tasks.json format
-  "version": "0.1.0",
-  "command": "gulp",
-  "isShellCommand": true,
-  "args": [
-    "--no-color"
-  ],
+  "version": "2.0.0",
   "tasks": [
     {
-      "taskName": "default",
-      "identifier": "default",
-      "args": [],
-      "isBuildCommand": true,
-      "isWatching": false,
-      "problemMatcher": [
-        "$lessCompile",
-        "$tsc",
-        "$jshint"
-      ]
+      "type": "gulp",
+      "task": "default",
+      "group": {
+        "kind": "build",
+        "isDefault": true
+      }
     }
   ]
 }
+
+/*
+Keybding:
+{
+  "key": "ctrl+c",
+  "command": "workbench.action.tasks.terminate",
+  "args": "gulp: default"
+}
+*/
