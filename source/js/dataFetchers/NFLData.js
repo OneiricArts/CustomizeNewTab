@@ -20,10 +20,9 @@ const NFLData = { // eslint-disable-line no-unused-vars
 
   combineNFLAPIData(primaryData, additionalData) {
     const combinedData = {};
-
-    combinedData.gms = _.map(primaryData, (v, k) => {
-      const g = v;
-      g.eid = parseInt(k, 10);
+    combinedData.gms = Object.entries(primaryData).map(([key, value]) => {
+      const g = value;
+      g.eid = parseInt(key, 10);
       return g;
     });
 
@@ -38,7 +37,7 @@ const NFLData = { // eslint-disable-line no-unused-vars
       additionalDataObj[g.gameSchedule.gameId] = g;
     }
 
-    _.map(combinedData.gms, (v) => {
+    combinedData.gms = combinedData.gms.map((v) => {
       const g = v;
       g.extrainfo = additionalDataObj[g.eid];
       return g;
@@ -49,8 +48,10 @@ const NFLData = { // eslint-disable-line no-unused-vars
     return combinedData;
   },
 
-  labelScheduleData(data) {
-    _.map(data.gms, (v) => {
+  labelScheduleData(oldData) {
+    const data = oldData;
+
+    data.gms = data.gms.map((v) => {
       const game = v;
 
       // if (!isNaN(schedule.gms[i].extrainfo.q) || schedule.gms[i].extrainfo.q === 'P') {
@@ -132,6 +133,8 @@ const NFLData = { // eslint-disable-line no-unused-vars
           game.fav_team = true;
         }
       }
+
+      return game;
     });
 
     return data;

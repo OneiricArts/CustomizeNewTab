@@ -87,7 +87,7 @@ class Backgrounds extends WidgetNew { // eslint-disable-line no-unused-vars
       sig: Math.ceil(Math.random() * 100), // https://github.com/unsplash/unsplash-source-js/issues/9
     };
 
-    const paramsString = _.map(Object.keys(paramsArr), k => `&${k}=${paramsArr[k].toString()}`).join('');
+    const paramsString = Object.entries(paramsArr).map(([key, value]) => `&${key}=${value.toString()}`).join('');
 
     const url = `https://api.unsplash.com/photos/random/?${paramsString}`;
 

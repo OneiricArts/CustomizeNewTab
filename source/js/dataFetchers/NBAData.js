@@ -37,7 +37,7 @@ const NBAData = { // eslint-disable-line no-unused-vars
 
   labelScheduleData(data) {
     const newData = data;
-    _.map(newData.sports_content.games.game, (v) => {
+    newData.sports_content.games.game = newData.sports_content.games.game.map((v) => {
       const game = v;
 
       const homeScore = parseInt(game.home.score, 10);
@@ -128,6 +128,8 @@ const NBAData = { // eslint-disable-line no-unused-vars
           }
         }
       }
+
+      return game;
     });
 
     return newData;
