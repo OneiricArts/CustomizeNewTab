@@ -24,7 +24,7 @@ const etUtcOffset = (date = new Date()) => {
   const dalightSavingsTime = date.getTimezoneOffset() < stdTimezoneOffset;
 
   // EST + 5 = UTC
-  // EDT + 5 = UTC
+  // EDT + 4 = UTC
   const EST_UTC_OFFSET = 5;
   const EDT_UTC_OFFSET = 4;
   return dalightSavingsTime ? EDT_UTC_OFFSET : EST_UTC_OFFSET;
