@@ -1,40 +1,66 @@
-class Backgrounds extends WidgetNew { // eslint-disable-line no-unused-vars
 
-  constructor() {
-    super();
-    this.datakey = 'Backgrounds_data';
+(async function backgroundsCNT() {
+  const datakey = 'Backgrounds_data';
 
-    this.data = {
-      photos: [],
-      currentPhoto: {
-        photoURL: '',
-        photoDataURL: '',
-        attribution: {
-          imageLink: '',
-          profileLink: '',
-          fullName: '',
-          unsplashAppName: 'Sports_New_Tab_Extension',
-        },
+  let data = {
+    photos: [],
+    currentPhoto: {
+      photoURL: '',
+      photoDataURL: '',
+      attribution: {
+        imageLink: '',
+        profileLink: '',
+        fullName: '',
+        unsplashAppName: 'Sports_New_Tab_Extension',
       },
-    };
+    },
+  };
+
+  function get(key) {
+    return new Promise((resolve, reject) => {
+      chrome.storage.local.get(key, (result) => {
+        const err = chrome.runtime.lastError;
+        if (err) {
+          reject(err);
+        } else {
+          resolve(result);
+        }
+      });
+    });
   }
 
-  async init() {
-    await this.loadData();
-    this.setBackground();
-    this.updateBackgroundDataForNextPageLoad();
+  function set(object) {
+    return new Promise((resolve, reject) => {
+      chrome.storage.local.set(object, () => {
+        const err = chrome.runtime.lastError;
+        if (err) {
+          reject(err);
+        } else {
+          resolve();
+        }
+      });
+    });
   }
 
-  setBackground() {
-    if (this.data.currentPhoto.photoDataURL) {
+  function saveData() {
+    return set({ [datakey]: data });
+  }
+
+  async function loadData() {
+    const loadedData = await get(datakey);
+    if (loadedData[datakey]) { data = loadedData[datakey]; }
+  }
+
+  function setBackground() {
+    if (data.currentPhoto.photoDataURL) {
       $('body').css({
-        backgroundImage: `url(${this.data.currentPhoto.photoDataURL})`,
+        backgroundImage: `url(${data.currentPhoto.photoDataURL})`,
         backgroundSize: 'cover',
       });
 
-      if (this.data.currentPhoto.attribution) {
+      if (data.currentPhoto.attribution) {
         WidgetNew.displayTemplate('backgroundsAttribution', 'attribution',
-          this.data.currentPhoto.attribution, $('#backgrounds-attribution'));
+          data.currentPhoto.attribution, $('#backgrounds-attribution'));
       }
     } else {
       $('body').css({
@@ -43,39 +69,39 @@ class Backgrounds extends WidgetNew { // eslint-disable-line no-unused-vars
     }
   }
 
-  async updateBackgroundDataForNextPageLoad() {
-    window.log(this.data.photos.length);
+  async function updateBackgroundDataForNextPageLoad() {
+    window.log(data.photos.length);
     const chanceOfChangingPicture = Math.random() > 0.7 || true;
 
     if (!chanceOfChangingPicture) return;
 
     // select Current Photo For Next PageLoad
-    if (this.data.photos.length > 0) {
-      const photo = this.data.photos.shift();
-      this.data.currentPhoto.attribution.fullName = photo.user.name;
-      this.data.currentPhoto.attribution.profileLink = photo.user.links.html;
-      this.data.currentPhoto.attribution.imageLink = photo.links.html;
-      this.data.currentPhoto.photoURL = photo.urls.regular;
+    if (data.photos.length > 0) {
+      const photo = data.photos.shift();
+      data.currentPhoto.attribution.fullName = photo.user.name;
+      data.currentPhoto.attribution.profileLink = photo.user.links.html;
+      data.currentPhoto.attribution.imageLink = photo.links.html;
+      data.currentPhoto.photoURL = photo.urls.regular;
     } else {
-      await this.getRandomPhototsFromUnsplash();
+      await getRandomPhototsFromUnsplash();
     }
 
     // save photo as Data URL for next page load
     try {
       const reader = new FileReader();
       reader.onloadend = () => {
-        this.data.currentPhoto.photoDataURL = reader.result;
-        this.saveData();
+        data.currentPhoto.photoDataURL = reader.result;
+        saveData();
       };
 
-      const image = await (await fetch(this.data.currentPhoto.photoURL)).blob();
+      const image = await (await fetch(data.currentPhoto.photoURL)).blob();
       reader.readAsDataURL(image);
     } catch (e) {
       gaLogException(`Unsplash // Backgrounds fetch image error // ${e}`, false);
     }
   }
 
-  async getRandomPhototsFromUnsplash() {
+  async function getRandomPhototsFromUnsplash() {
     const APPLICATION_ID = '79952897a5ed06ea68f7e970b88de925600429730cddc67b656f4cb4f32b9670';
 
     const paramsArr = {
@@ -101,9 +127,9 @@ class Backgrounds extends WidgetNew { // eslint-disable-line no-unused-vars
 
       if (response.status === 200) {
         const arrayOfPhotos = await response.json();
-        this.data.photos = arrayOfPhotos;
-        this.saveData();
-        this.updateBackgroundDataForNextPageLoad();
+        data.photos = arrayOfPhotos;
+        saveData();
+        updateBackgroundDataForNextPageLoad();
       } else {
         gaLogException(`Unsplash // API Failed with ${await response.text()}`);
       }
@@ -112,4 +138,8 @@ class Backgrounds extends WidgetNew { // eslint-disable-line no-unused-vars
       gaLogException(errorMsg, false);
     }
   }
-}
+
+  await loadData();
+  setBackground();
+  updateBackgroundDataForNextPageLoad();
+}());
