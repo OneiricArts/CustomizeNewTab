@@ -43,6 +43,24 @@ const etToUTC = (date) => {
   return date;
 };
 
+const pacificTimeUTCOffset = (date = new Date()) => {
+  // PST -8 = UTC // PDT -7 = UTC
+  const PDT_UTC_OFFSET = -7; const PST_UTC_OFFSET = -8;
+  return isDaylightSavingsTimeOn(date) ? PDT_UTC_OFFSET : PST_UTC_OFFSET;
+};
+
+/**
+ * https://stackoverflow.com/a/9070729
+ *
+ * @param {Date} clientDate
+ * @returns {Date} dateInPT
+ */
+helpers.dateInPT = (clientDate = new Date()) => {
+  const utc = clientDate.getTime() + (clientDate.getTimezoneOffset() * 60000);
+  const pacificTime = new Date(utc + (3600000 * pacificTimeUTCOffset(clientDate)));
+  return pacificTime;
+};
+
 /**
  * Convert date in EST/EDT or UTC to user (current system) local time
  * @param {Date} date
