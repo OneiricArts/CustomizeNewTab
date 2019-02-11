@@ -14,6 +14,7 @@
         unsplashAppName: 'Sports_New_Tab_Extension',
       },
     },
+    query: '',
   };
 
   function get(key) {
@@ -113,6 +114,11 @@
       sig: Math.ceil(Math.random() * 100), // https://github.com/unsplash/unsplash-source-js/issues/9
     };
 
+    if (data.query) {
+      paramsArr.query = data.query;
+      paramsArr.featured = false;
+    }
+
     const paramsString = Object.entries(paramsArr).map(([key, value]) => `&${key}=${value.toString()}`).join('');
 
     const url = `https://api.unsplash.com/photos/random/?${paramsString}`;
@@ -138,6 +144,18 @@
       gaLogException(errorMsg, false);
     }
   }
+
+  /**
+   * API to the outside
+   */
+
+  window.CNT_setBackgroundTopic = async (topic) => {
+    data.query = topic;
+    data.photos = [];
+    console.log('wait...');                 // eslint-disable-line no-console
+    await getRandomPhototsFromUnsplash();
+    console.log('done');                    // eslint-disable-line no-console
+  };
 
   await loadData();
   setBackground();
