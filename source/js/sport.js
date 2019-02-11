@@ -2,7 +2,7 @@ class Sport extends WidgetNew { // eslint-disable-line no-unused-vars
 
   constructor() {
     super();
-    this.today = new Date();
+    this.today = helpers.dateInPT(new Date());
   }
 
   init() {
