@@ -187,18 +187,22 @@ function firefox(done) {
   done();
 }
 
+function setup() {
+  return exec('mkdir -p Chrome/src');
+}
+
 /** ***********************************************************************************************
  * Gulp tasks that can be called from cl or Visual Studio Code
 ***************************************************************************************************/
 
 // no effeciency steps, can see error lines, etc.
-gulp.task('dev', gulp.series(handlebars, moveLibs, moveJS, moveCSS, moveHTML, watchCodeDev));
+gulp.task('dev', gulp.series(setup, handlebars, moveLibs, moveJS, moveCSS, moveHTML, watchCodeDev));
 
 // full effeciency workflow
-gulp.task('compress', gulp.series(handlebars, concatLibs, minifyJS, minifyHTML, watchCodeCompress));
+gulp.task('compress', gulp.series(setup, handlebars, concatLibs, minifyJS, minifyHTML, watchCodeCompress));
 
 // Firefox -- compressed
-gulp.task('firefox', gulp.series(firefox, handlebars, concatLibs, minifyJS, minifyHTML, watchCodeCompress));
+gulp.task('firefox', gulp.series(setup, firefox, handlebars, concatLibs, minifyJS, minifyHTML, watchCodeCompress));
 
 gulp.task('default', gulp.series('dev'));
 
