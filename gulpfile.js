@@ -117,7 +117,7 @@ function moveHTML() {
 ***************************************************************************************************/
 
 function handlebars(cb) {
-  return exec('handlebars -m ./source/templates/> ./Chrome/src/templates.js',
+  return exec('./node_modules/handlebars/bin/handlebars -m ./source/templates/> ./Chrome/src/templates.js',
     (err, stdout, stderr) => {
       util.log(stdout);
       util.log(stderr);
