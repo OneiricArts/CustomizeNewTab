@@ -20,6 +20,10 @@
     "handlebars": "^4.0.14"
   },
   "scripts": {
+    "start": "./node_modules/gulp/bin/gulp.js dev",
+    "build": "./node_modules/gulp/bin/gulp.js compress",
+    "zip": "./node_modules/gulp/bin/gulp.js zip",
+    "clean": "./node_modules/gulp/bin/gulp.js clean",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
